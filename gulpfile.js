@@ -46,7 +46,7 @@ function compile (compiler, src, opts) {
 
 function docs (target) {
     return function() {
-        var docgen = purescript.docgen();
+        var docgen = purescript.pscDocs();
         docgen.on('error', function(e) {
             console.error(e.message);
             docgen.end();
