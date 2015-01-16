@@ -1,0 +1,25 @@
+{
+  "name": "purescript-echarts",
+  "license": "MIT",
+  "authors": [
+    "John A. De Goes <john@degoes.net> (http://degoes.net)"
+  ],
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "node_modules",
+    "output",
+    "tests",
+    "tmp",
+    "bower.json",
+    "Gruntfile.js",
+    "gulpfile.js",
+    "package.json"
+  ],
+  "dependencies": {
+    "echarts":              "~2.1.10",
+    "purescript-argonaut":  "~0.2.10"
+  },
+  "devDependencies": {
+  }
+}
