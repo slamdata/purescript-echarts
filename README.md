@@ -17,3 +17,7 @@ The API is a low-level, type-safe, straightforward binding to Echarts:
 ## Examples
 
 The `examples` directory contains an `index.html`, which contains a demonstration of each of the 12 different chart types, showing how the Purescript Echarts API may be used.
+
+## Tests
+
+This project has no tests. However, all bound functions are exercised in the examples, to ensure the bindings and necessary wrapping, unwrapping, encoding, and decoding has been performed correctly.
