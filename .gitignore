@@ -3,3 +3,6 @@
 /bower_components/
 /tmp/
 /node_modules/
+/dist/
+.psci_modules
+.psci

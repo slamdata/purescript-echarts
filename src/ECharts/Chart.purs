@@ -1,0 +1,106 @@
+module ECharts.Chart where
+
+
+import DOM
+import Data.Maybe 
+import Data.Function
+import Control.Monad.Eff
+
+import Data.Argonaut.Core
+import Data.Argonaut.Encode
+
+foreign import data EChart :: *
+foreign import data ZRender :: *
+
+foreign import data EChartInit :: !
+foreign import data EChartResize :: !
+foreign import data EChartClear :: !
+foreign import data EChartRefresh :: !
+foreign import data EChartDispose :: !
+foreign import data EChartThemeSet :: !
+
+
+data Theme = ThemeName String | ThemeConfig Json
+
+
+instance themeEncodeJson :: EncodeJson Theme where
+  encodeJson theme = case theme of
+    ThemeName name -> fromString name
+    ThemeConfig a -> encodeJson a
+
+
+
+
+foreign import initImpl """
+function initImpl(node, theme) {
+  return function() {
+    return echarts.init(node, theme);
+  };
+}
+""" :: forall e. Fn2 Node Json (Eff (dom :: DOM, echartInit :: EChartInit|e) EChart)
+
+init :: forall e.  Maybe Theme -> Node ->
+        Eff (dom :: DOM, echartInit :: EChartInit|e) EChart
+init theme dom = 
+  runFn2 initImpl dom (encodeJson theme)
+
+
+
+foreign import setThemeImpl """
+function setThemeImpl(args, chart) {
+  return function() {
+    chart.setTheme.apply(chart, args);
+  };
+}
+""" :: forall e. Fn2 Json EChart (Eff e EChart)
+
+setTheme :: forall e. Theme -> EChart ->
+            Eff (dom :: DOM, echartTheme :: EChartThemeSet|e) EChart
+setTheme theme chart = do
+  runFn2 setThemeImpl (encodeJson theme) chart
+
+
+
+
+foreign import getZRender """
+function getZRender(chart) {
+  return function() {
+    return chart.getZRender();
+  };
+}
+""" :: forall e. EChart -> Eff e ZRender
+
+
+
+
+foreign import resize """
+function resize(chart) {
+  return function() {
+    return chart.resize();
+  };
+}
+""" :: forall e. EChart -> Eff (dom :: DOM, echartResize :: EChartResize|e) Unit
+
+foreign import refresh """
+function refresh(chart) {
+  return function( ){
+    return chart.refresh();
+  };
+}
+""" :: forall e. EChart -> Eff (dom :: DOM, echartRefresh :: EChartRefresh|e) Unit
+
+foreign import clear """
+function clear(chart) {
+  return function() {
+    return chart.clear();
+  };
+}
+""" :: forall e. EChart -> Eff (dom :: DOM, echartClear :: EChartClear|e) Unit
+
+foreign import dispose """
+function dispose() {
+  return function() {
+    return chart.dispose();
+  };
+}
+""" :: forall e. EChart -> Eff (dom :: DOM, echartDispose :: EChartDispose|e) Unit
