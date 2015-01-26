@@ -1,23 +1,25 @@
 {
-  "name": "purescript-echarts",
-  "license": "MIT",
-  "repository": "git@github.com:slamdata/purescript-echarts.git",
-  "contributors": [
-    "John A. De Goes <john@degoes.net> (http://degoes.net)"
-  ],
-  "devDependencies": {
-    "ecstatic": "^0.5.8",
-    "express": "^4.11.0",
-    "gulp": "~3.8.10",
-    "gulp-browserify": "^0.5.1",
-    "gulp-concat": "^2.4.3",
-    "gulp-jsvalidate": "~1.0.1",
-    "gulp-purescript": "~0.1.2",
-    "gulp-rename": "^1.2.0",
-    "gulp-run": "~1.6.6",
-    "run-sequence": "~1.0.2"
-  },
-  "dependencies": {
-    "gulp-livereload": "^3.4.0"
+    "name": "purescript-echarts",
+    "license": "MIT",
+    "name":       "purescript-echarts",
+    "license":    "MIT",
+    "repository": "git@github.com:slamdata/purescript-echarts.git",
+    "contributors": [
+        "John A. De Goes <john@degoes.net> (http://degoes.net)"
+    ],
+    "devDependencies": {
+        "ecstatic": "^0.5.8",
+        "express": "^4.11.0",
+        "gulp": "~3.8.10",
+        "gulp-browserify": "^0.5.1",
+        "gulp-concat": "^2.4.3",
+        "gulp-jsvalidate": "~1.0.1",
+        "gulp-purescript": "~0.1.2",
+        "gulp-rename": "^1.2.0",
+        "gulp-run": "~1.6.6",
+        "run-sequence": "~1.0.2",
+        "gulp-livereload": "^3.4.0"
   }
 }
+
+
