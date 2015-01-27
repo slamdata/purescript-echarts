@@ -49,7 +49,26 @@ instance dataZoomEncodeJson :: EncodeJson DataZoom where
       "yAxisIndex" := obj.yAxisIndex,
       "start" := obj.start,
       "end" := obj.end,
-      "showDetaile" := obj.showDetail,
+      "showDetail" := obj.showDetail,
       "realtime" := obj.realtime,
       "zoomlock" := obj.zoomlock
     ]
+dataZoomDefault = {
+  show: Nothing,
+  orient: Nothing,
+  x: Nothing,
+  y: Nothing,
+  width: Nothing,
+  height: Nothing,
+  backgroundColor: Nothing,
+  dataBackgroundColor: Nothing,
+  fillerColor: Nothing,
+  handleColor: Nothing,
+  xAxisIndex: Nothing,
+  yAxisIndex: Nothing,
+  start: Nothing,
+  end: Nothing,
+  showDetail: Nothing,
+  realtime: Nothing,
+  zoomlock: Nothing
+  }

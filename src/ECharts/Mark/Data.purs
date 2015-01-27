@@ -17,7 +17,6 @@ newtype MarkPointData =
     yAxis :: Maybe Number,
     "type" :: Maybe String
   }
-
 instance mpDataEncodeJson :: EncodeJson MarkPointData where
   encodeJson (MarkPointData mp) =
     fromObject $ fromList $
@@ -31,7 +30,7 @@ instance mpDataEncodeJson :: EncodeJson MarkPointData where
       "type" := mp.type
     ]
 
-emptyMPData =
+markPointDataDefault =
   {
     name: Nothing,
     value: Nothing,

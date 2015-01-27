@@ -11,7 +11,7 @@ import ECharts.Color
 
 newtype Grid =
   Grid {
-    "x" :: PercentOrPixel,
+    "x" :: Maybe PercentOrPixel,
     "x2" :: Maybe PercentOrPixel,
     "y" :: Maybe PercentOrPixel,
     "y2" :: Maybe PercentOrPixel,
@@ -36,4 +36,15 @@ instance gridEncodeJson :: EncodeJson Grid where
       "borderWidth" := obj.borderWidth,
       "borderColor" := obj.borderColor
     ]
-  
+
+gridDefault = {
+  x: Nothing,
+  y: Nothing,
+  x2: Nothing,
+  y2: Nothing,
+  width: Nothing,
+  height: Nothing,
+  backgroundColor: Nothing,
+  borderWidth: Nothing,
+  borderColor: Nothing
+  }

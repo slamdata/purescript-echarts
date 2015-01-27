@@ -5,6 +5,9 @@ import Data.Maybe
 import ECharts.Chart
 import ECharts.Options.Unsafe 
 import Utils
+import Control.Monad.Eff
+
+{-
 options = {
     backgroundColor: "#1b1b1b",
     color: ["gold","aqua","lime"],
@@ -557,3 +560,7 @@ map11 id = do
            >>= setOptionUnsafe options true
 
   return unit
+
+-}
+map11 :: forall a. a -> Eff _ Unit
+map11 _ = return unit

@@ -28,6 +28,13 @@ newtype ForceCategory =
     "itemStyle" :: Maybe ItemStyle
     }
 
+forceCategoryDefault = {
+  name: Nothing,
+  symbol: Nothing,
+  symbolSize: Nothing,
+  itemStyle: Nothing
+  }
+
 instance forceCategoryEncodeJson :: EncodeJson ForceCategory where
    encodeJson (ForceCategory fc) = fromObject $ fromList $ [
      "name" := fc.name,
@@ -52,6 +59,21 @@ newtype Node =
     "draggable" :: Maybe Boolean,
     "category" :: Maybe ForceCategory
     }
+
+nodeDefault value = {
+  name: Nothing,
+  label: Nothing,
+  value: value,
+  ignore: Nothing,
+  symbol: Nothing,
+  symbolSize: Nothing,
+  itemStyle: Nothing,
+  initial: Nothing,
+  fixX: Nothing,
+  fixY: Nothing,
+  draggable: Nothing,
+  category: Nothing
+  }
 
 instance nodeEncodeJson :: EncodeJson Node where
   encodeJson (Node n) = fromObject $ fromList $ [

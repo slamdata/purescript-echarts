@@ -1,8 +1,6 @@
 module ECharts.Events (
   EventType(..),
   EventParam(),
-  Listen(),
-  Unlisten(),
   Sub(),
   listen
   ) where
@@ -12,17 +10,14 @@ import Control.Monad.Eff
 import Data.Argonaut.Core
 
 import ECharts.Chart
+import ECharts.Effects
 
 data EventType = Refresh | Restore | Resize | Click | DoubleClick | Hover
                | DataChanged | DataZoom | DataRange | DataRangeHoverLink
                | LegendSelected | LegendHoverLink | MapSelected | PieSelected
                | DataViewChanged | MapRoam | MagicTypeChanged
 
-
 type EventParam = Json
-
-foreign import data Listen :: !
-foreign import data Unlisten :: !
 
 newtype Sub = Sub (forall eff. Eff (unlisten :: Unlisten|eff) Unit)
 

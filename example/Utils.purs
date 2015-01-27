@@ -6,6 +6,7 @@ import DOM
 import Math (floor)
 import Data.Array
 import Data.Maybe
+import Data.Tuple
 
 foreign import undefine  """
 function undefine(a) {
@@ -79,11 +80,13 @@ function randomLst(count) {
 """ :: forall e.  Number -> Eff (random :: Random|e) [Number]
 
 
-randomInList :: forall a e. [a] -> Eff (random :: Random|e) a
+randomInList :: forall a e. [a] -> Eff (random :: Random|e) (Tuple a Number)
 randomInList lst = do 
   let l = length lst
   rnd <- random
   let i = floor (rnd * l)
   return $ case lst !! i of
-    Just x -> x
+    Just x -> Tuple x i
+
+
       

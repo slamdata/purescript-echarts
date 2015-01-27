@@ -38,6 +38,12 @@ instance evoDetailEncodeJson :: EncodeJson EvolutionDetail where
     "img" := e.img
     ]
 
+evolutionDetailDefault = {
+  link: Nothing,
+  text: Nothing,
+  img: Nothing
+  }
+
 newtype Evolution =
   Evolution {
     "time" :: Date,
@@ -58,6 +64,12 @@ newtype OneEvent =
     "weight" :: Maybe Number,
     "evolution" :: Maybe [Evolution]
     }
+
+oneEventDefault = {
+  name: Nothing,
+  weight: Nothing,
+  evolution: Nothing
+  }
 
 instance oneEventEncodeJson :: EncodeJson OneEvent where
   encodeJson (OneEvent oe) = fromObject $ fromList $ [

@@ -28,6 +28,11 @@ instance legendItemEncodeJson :: EncodeJson LegendItem where
       "icon" := obj.icon,
       "textStyle" := obj.textStyle
     ]
+legendItemDefault = {
+  name: Nothing,
+  icon: Nothing,
+  textStyle: Nothing
+  }
 
 newtype Legend =
   Legend {
@@ -49,7 +54,7 @@ newtype Legend =
     "data" :: Maybe [LegendItem]
     }
 
-emptyLegend = {
+legendDefault = {
   show: Nothing,
   orient: Nothing,
   x: Nothing,

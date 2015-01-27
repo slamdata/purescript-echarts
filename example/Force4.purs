@@ -2,7 +2,6 @@ module Force4 where
 
 import Control.Monad.Eff
 import Control.Monad.Eff.Random
-import qualified ECharts.Force as EF
 import ECharts.Chart
 import ECharts.Options.Unsafe
 
@@ -14,6 +13,26 @@ import Data.Tuple.Nested
 import Data.Foldable
 import Data.Traversable
 import Utils
+
+type EFLink =
+  {
+    source :: String,
+    target :: String,
+    weight :: Number
+  }
+
+type EFNode =
+  {
+    value :: Number,
+    id :: String,
+    name :: String,
+    depth :: Number,
+    initial :: Tuple Number Number,
+    fixY :: Boolean,
+    fixX :: Boolean,
+    category :: Number 
+  }
+
 
 constMinRadius = 2
 constMaxRadius = 10
@@ -38,12 +57,12 @@ function clientHeight(id) {
 }
 """ :: forall e. String -> Eff e Number
 
-data MockData = MockData [EF.Node] [EF.Link]
+data MockData = MockData [EFNode] [EFLink]
 
 randomInRange min max = 
   (\x -> (max - min) * x + min) <$> random
 
-createRootNode :: forall e. Number -> Eff (random :: Random|e) EF.Node
+createRootNode :: forall e. Number -> Eff (random :: Random|e) EFNode
 createRootNode depth = do
   width <- clientWidth "force4"
   height <- clientHeight "force4"
@@ -65,7 +84,7 @@ createRootNode depth = do
     }
 
     
-createNodeWithIndex :: forall e. String -> Number -> Eff (random :: Random|e) EF.Node
+createNodeWithIndex :: forall e. String -> Number -> Eff (random :: Random|e) EFNode
 createNodeWithIndex idx depth = do
   node <- createRootNode depth
   return $ node{id = idx,
@@ -73,21 +92,21 @@ createNodeWithIndex idx depth = do
                 category = if depth == constMaxDepth then 0 else 1}
                
 
-mkChild :: forall e. EF.Node -> String ->
-           Eff (random::Random|e) (Tuple EF.Node EF.Link)
+mkChild :: forall e. EFNode -> String ->
+           Eff (random::Random|e) (Tuple EFNode EFLink)
 mkChild node idx = do 
   child <- createNodeWithIndex idx (node.depth + 1)
   let link = {source: node.name, target: child.name, weight: 1}
   return $ Tuple child link
 
-mkChildren :: forall e. EF.Node -> Eff (random::Random|e) [Tuple EF.Node EF.Link]
+mkChildren :: forall e. EFNode -> Eff (random::Random|e) [Tuple EFNode EFLink]
 mkChildren node = do
   childrenCount <- randomInRange constMinChildren constMaxChildren
   let ids = (\x -> node.id <> ":" <> show x) <$> (1..childrenCount)
   sequence $ mkChild node <$> ids
 
 
-forceMockThreeDataI :: [Tuple EF.Node EF.Link] -> MockData ->
+forceMockThreeDataI :: [Tuple EFNode EFLink] -> MockData ->
                        Number -> Eff _ MockData 
 forceMockThreeDataI current accum 0 = return accum
 forceMockThreeDataI current accum n = do

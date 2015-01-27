@@ -1,6 +1,5 @@
 module ECharts.AddData (
   AdditionalData(..),
-  AddData(),
   addData
   ) where
 
@@ -13,8 +12,8 @@ import Data.Argonaut.Combinators
 
 import ECharts.Chart
 import ECharts.Item.Data
+import ECharts.Effects
 
-foreign import data AddData :: !
 
 
 newtype AdditionalData =

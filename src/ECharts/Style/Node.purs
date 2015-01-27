@@ -26,3 +26,8 @@ instance nodeStyleEncodeJson :: EncodeJson NodeStyle where
       "borderWidth" := ns.borderWidth
     ]
   
+nodeStyleDefault = {
+  color: Nothing,
+  borderColor: Nothing,
+  borderWidth: Nothing
+  }

@@ -1,4 +1,7 @@
-module ECharts.Formatter where
+module ECharts.Formatter(
+  FormatParams(),
+  Formatter(..)
+  ) where
 
 import Data.Maybe
 import Data.StrMap (fromList, StrMap (..))
@@ -6,12 +9,13 @@ import Data.Tuple
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Combinators
-import Data.Argonaut.Extension.Func
+
 
 import Data.Function
 
 import Control.Monad.Eff
 
+import ECharts.Utils
 import ECharts.Common
 import ECharts.Item.Value
 
@@ -29,11 +33,10 @@ function effArrToFn(arr) {
   };
 }
 """ :: forall eff a b. (a -> Eff eff b) -> Fn1 a b
-
                 
 instance formatterEncodeJson :: EncodeJson Formatter where
   encodeJson (Template str) = encodeJson str
-  encodeJson (FormatFunc func) = encodeJson $ effArrToFn func
+  encodeJson (FormatFunc func) = func2json $ effArrToFn func
 
 
 

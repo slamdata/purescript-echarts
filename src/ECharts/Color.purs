@@ -3,14 +3,11 @@ module ECharts.Color where
 import Data.Function
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
-import Data.Argonaut.Extension.Func
 
 import ECharts.Item.Value
+import ECharts.Utils
 
 type Color = String
-
-
-
 
 newtype ColorFuncParam =
   ColorFuncParam {
@@ -23,9 +20,9 @@ newtype ColorFuncParam =
       }
   }
 
-data CalculableColor = SimpleColor Color | ColorFunc (ColorFuncParam -> Color)
 
+data CalculableColor = SimpleColor Color | ColorFunc (ColorFuncParam -> Color)
 instance calculableColorEncodeJson :: EncodeJson CalculableColor where
   encodeJson cc = case cc of
     SimpleColor color -> encodeJson color
-    ColorFunc func -> encodeJson $ mkFn1 func
+    ColorFunc func -> func2json $ mkFn1 func

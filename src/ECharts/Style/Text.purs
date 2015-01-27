@@ -19,31 +19,20 @@ data TextBaseline = TBLTop
                   | TBLBottom
                   | TBLMiddle
 
-instance textBaselineShow :: Show TextBaseline where
-  show tbl = case tbl of
+instance textBaselineEncodeJson :: EncodeJson TextBaseline where
+  encodeJson a = fromString $ case a of 
     TBLTop -> "top"
     TBLBottom -> "bottom"
     TBLMiddle -> "middle"
 
-instance textBaselineEncodeJson :: EncodeJson TextBaseline where
-  encodeJson = fromString <<< show
-
-
-
-
-
-
 data FontStyle = FSNormal | FSItalic | FSOblique
-
-instance fontStyleShow :: Show FontStyle where
-  show fs = case fs of
+instance fontStyleEncodeJson :: EncodeJson FontStyle where
+  encodeJson a = fromString $ case a of 
     FSNormal -> "normal"
     FSItalic -> "italic"
     FSOblique -> "oblique"
 
-instance fontStyleEncodeJson :: EncodeJson FontStyle where
-  encodeJson = fromString <<< show
-
+    
 data FontWeight = FWNormal
                 | FWBold
                 | FWBolder
@@ -58,8 +47,8 @@ data FontWeight = FWNormal
                 | FW800
                 | FW900
 
-instance fontWeightShow :: Show FontWeight where
-  show fw = case fw of
+instance fontWeightEncodeJson :: EncodeJson FontWeight where
+  encodeJson a = fromString $ case a of 
     FWNormal -> "normal"
     FWBold -> "bold"
     FWBolder -> "bolder"
@@ -73,11 +62,7 @@ instance fontWeightShow :: Show FontWeight where
     FW700 -> "700"
     FW800 -> "800"
     FW900 -> "900"
-  
-
-instance fontWeightEncodeJson :: EncodeJson FontWeight where
-  encodeJson = fromString <<< show
-
+    
 newtype TextStyle = 
   TextStyle {
     color :: Maybe Color,
@@ -106,7 +91,7 @@ instance textStyleEncodeJson :: EncodeJson TextStyle where
     ]
 
 
-nullStyle =
+textStyleDefault =
   {
     color: Nothing,
     decoration: Nothing,

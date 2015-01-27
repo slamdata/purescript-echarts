@@ -1,4 +1,9 @@
-module ECharts.Mark.Line where
+module ECharts.Mark.Line (
+  MarkLine(..),
+  markLineDefault,
+  addMarkLine,
+  delMarkLine
+  ) where
 
 
 import ECharts.Chart
@@ -7,7 +12,7 @@ import ECharts.Mark.Effect
 import ECharts.Mark.Data
 import ECharts.Style.Item
 import ECharts.Symbol
-
+import ECharts.Effects
 
 import Data.Maybe
 import Control.Monad.Eff
@@ -45,7 +50,7 @@ instance mlEncodeJson :: EncodeJson MarkLine where
       "itemStyle" := ml.itemStyle
     ]
 
-emptyMarkLine =
+markLineDefault =
   {
     symbol: Nothing,
     symbolSize: Nothing,
@@ -62,10 +67,11 @@ function addMarkLineImpl(ml, chart) {
     return chart.addMarkLine(ml);
   };
 }
-""" :: forall e. Fn2 Json EChart (Eff e EChart)
+""" :: forall e. Fn2 Json EChart (Eff (addMarkLineECharts::AddMarkLine|e) EChart)
 
 
-addMarkLine :: forall e a. MarkLine  -> EChart -> Eff e EChart
+addMarkLine :: forall e a. MarkLine  -> EChart -> 
+               Eff (addMarkLineECharts::AddMarkLine|e) EChart
 addMarkLine ml chart = runFn2 addMarkLineImpl (encodeJson ml) chart
 
 
@@ -77,8 +83,10 @@ function delMarkLineImpl(idx, name, chart) {
     return chart.delMarkLine(idx, name);
   };
 }
-""" :: forall e. Fn3 Number String EChart (Eff e EChart)
+""" :: forall e. Fn3 Number String EChart
+       (Eff (removeMarkLine::RemoveMarkLine|e) EChart)
 
-delMarkLine :: forall e. Number -> String -> EChart -> Eff e EChart
+delMarkLine :: forall e. Number -> String -> EChart -> 
+               Eff (removeMarkLine::RemoveMarkLine|e) EChart
 delMarkLine idx name chart = runFn3 delMarkLineImpl idx name chart
 

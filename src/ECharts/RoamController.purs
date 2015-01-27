@@ -28,9 +28,6 @@ newtype RoamController =
     "step" :: Maybe Number,
     "mapTypeControl" :: StrMap Boolean
     }
-
-
-
 instance roamControllerEncodeJson :: EncodeJson RoamController where
   encodeJson (RoamController obj) =
     fromObject $ fromList $
@@ -49,3 +46,18 @@ instance roamControllerEncodeJson :: EncodeJson RoamController where
       "step" := obj.step,
       "mapTypeControl" := obj.mapTypeControl
     ]
+roamControllerDefault = {
+  show: Nothing,
+  x: Nothing,
+  y: Nothing,
+  width: Nothing,
+  height: Nothing,
+  backgroundColor: Nothing,
+  borderColor: Nothing,
+  borderWidth: Nothing,
+  padding: Nothing,
+  fillerColor: Nothing,
+  handleColor: Nothing,
+  step: Nothing,
+  mapTypeControl: Nothing
+  }

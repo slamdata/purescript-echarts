@@ -68,3 +68,28 @@ instance dataRangeEncodeJson :: EncodeJson DataRange where
       "text" := obj.text,
       "textStyle" := obj.textStyle
     ]
+
+dataRangeDefault = {
+  show: Nothing,
+  orient: Nothing,
+  x: Nothing,
+  y: Nothing,
+  backgroundColor: Nothing,
+  borderColor: Nothing,
+  borderWidth: Nothing,
+  padding: Nothing,
+  itemGap: Nothing,
+  itemWidth: Nothing,
+  itemHeight: Nothing,
+  min: Nothing,
+  max: Nothing,
+  precision: Nothing,
+  splitNumber: Nothing,
+  selectedMode: Nothing,
+  calculable: Nothing,
+  hoverLink: Nothing,
+  realtime: Nothing,
+  formatter: Nothing,
+  text: Nothing,
+  textStyle: Nothing
+  }

@@ -9,24 +9,12 @@ import Data.Argonaut.Combinators
 
 import ECharts.Color
 
-data AreaType = Fill
-
-instance areaTypeShow :: Show AreaType where
-  show Fill = "fill"
-
-instance areaTypeEncodeJson :: EncodeJson AreaType where
-  encodeJson = encodeJson <<< show
-
-newtype AreaStyle =
-  AreaStyle {
-    color :: Maybe Color,
-    "type" :: Maybe AreaType
-  }
+newtype AreaStyle = AreaStyle Color
 
 instance areaStyleEncodeJson :: EncodeJson AreaStyle where
-  encodeJson (AreaStyle as) =
+  encodeJson (AreaStyle color) =
     fromObject $ fromList $
     [
-      "color" := as.color,
-      "type" := as.type
+      "color" := color,
+      "type" := "fill"
     ]

@@ -94,5 +94,4 @@ line4 id = do
            >>= setOptionUnsafe options true
 
 
-  getOption chart >>= log
   return unit

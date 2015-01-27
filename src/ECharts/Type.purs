@@ -6,9 +6,8 @@ import Data.Argonaut.Encode
 data ChartType = Line | Bar | Scatter | Candlestick | Pie | Radar
                | Chord | Force | Map | Gauge | Funnel | EventRiver
 
-
-instance chartTypeShow :: Show ChartType where
-  show ct = case ct of
+instance chartTypeEncodeJson :: EncodeJson ChartType where
+  encodeJson a = fromString $ case a of 
     Line -> "line"
     Bar -> "bar"
     Scatter -> "scatter"
@@ -21,7 +20,4 @@ instance chartTypeShow :: Show ChartType where
     Gauge -> "gauge"
     Funnel -> "funnel"
     EventRiver -> "eventRiver"
-
-instance chartTypeEncodeJson :: EncodeJson ChartType where
-  encodeJson = encodeJson <<< show
 

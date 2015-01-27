@@ -1,4 +1,8 @@
-module ECharts.Options where
+module ECharts.Options (
+  Option(..),
+  optionDefault,
+  setOption
+  ) where
 
 import Control.Monad.Eff
 import Data.Maybe
@@ -21,9 +25,9 @@ import ECharts.DataZoom
 import ECharts.RoamController
 import ECharts.Grid
 import ECharts.Axis
+import ECharts.Utils
+import ECharts.Effects
 
-
-foreign import data EChartOptionSet :: !
 
 newtype Option =
   Option {
@@ -75,7 +79,7 @@ instance optionsEncodeJson :: EncodeJson Option where
       "polar" := opts.polar
     ]
 
-emptyOptions = {
+optionDefault = {
   "backgroundColor": Nothing,
   "color": Nothing,
   "renderAsImage": Nothing,
@@ -99,19 +103,7 @@ emptyOptions = {
 foreign import setOptionImpl """
 function setOptionImpl(option, notMerge, chart) {
   return function() {
-    var unnull = function(obj) {
-      if (obj == null || typeof(obj) != 'object') {
-        return obj;
-      }
-      var temp = new obj.constructor();
-      for (var i in obj) {
-        if (obj.hasOwnProperty(i) && obj[i] !== null && obj[i] !== undefined) {
-          temp[i] = unnull(obj[i]);
-        }
-      }
-      return temp;
-    };
-    return chart.setOption(unnull(option), notMerge);
+    return chart.setOption(option, notMerge);
   };
 }
 """ :: forall e.
@@ -122,13 +114,6 @@ setOption :: forall e.
              Boolean ->
              EChart ->
              Eff (echartSetOption::EChartOptionSet|e) EChart
-setOption opts notMerge chart = runFn3 setOptionImpl (encodeJson opts) notMerge chart
-
-foreign import getOption """
-function getOption(chart) {
-  return function() {
-    return chart.getOption();
-  };
-}
-""" :: forall e. EChart -> Eff e Json
+setOption opts notMerge chart = runFn3 setOptionImpl 
+                                (unnull <<< encodeJson $ opts) notMerge chart
 

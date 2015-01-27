@@ -1,4 +1,8 @@
-module ECharts.Image where
+module ECharts.Image (
+  ImgType(..),
+  getDataURL,
+  getImage
+  ) where 
 
 import DOM
 import Control.Monad.Eff
@@ -7,8 +11,8 @@ import Data.Argonaut.Core
 import Data.Argonaut.Encode
 
 import ECharts.Chart 
+import ECharts.Effects
 
-foreign import data ImageMaking :: !
 
 data ImgType = PNG | JPEG
 

@@ -1,4 +1,8 @@
-module ECharts.Series where
+module ECharts.Series (
+  setSeries,
+  Series(..),
+  seriesDefault
+  ) where 
 
 import Control.Monad.Eff
 import Data.Function
@@ -24,6 +28,7 @@ import ECharts.Series.Gauge
 import ECharts.Series.EventRiver
 import ECharts.Axis
 import ECharts.Title
+import ECharts.Utils
 
 newtype Series =
   Series {
@@ -135,8 +140,8 @@ newtype Series =
     "eventList" :: Maybe [OneEvent]
     }
 
-emptySeries :: ChartType -> _
-emptySeries chartType = {
+seriesDefault :: ChartType -> _
+seriesDefault chartType = {
   "type": chartType,
   "name": Nothing,
   "tooltip": Nothing,
@@ -335,15 +340,6 @@ function setSeriesImpl(series, notMerge, chart) {
 
 setSeries :: forall e. [Series] -> Boolean -> EChart -> Eff e EChart
 setSeries series merge chart =
-  runFn3 setSeriesImpl (encodeJson <$> series) merge chart
+  runFn3 setSeriesImpl (unnull <<< encodeJson <$> series) merge chart
 
-foreign import getSeriesImpl """
-function getSeriesImpl(chart) {
-  return function() {
-    return chart.getSeries();
-  };
-}
-""" :: forall e. EChart -> Eff e [Json]
-
-getSeries = getSeriesImpl
 

@@ -7,23 +7,17 @@ import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Combinators
 
-
 import ECharts.Color
-
-
 
 data LineType = Solid
               | Dotted
               | Dashed
 
-instance linetypeShow :: Show LineType where
-  show lt = case lt of
+instance linetypeEncodeJson :: EncodeJson LineType where
+  encodeJson a = fromString $ case a of
     Solid -> "solid"
     Dotted -> "dotted"
-    Dashed -> "dashed"
-
-instance linetypeEncodeJson :: EncodeJson LineType where
-  encodeJson = encodeJson <<< show
+    Dashed -> "dashed"    
 
 
 newtype LineStyle =
@@ -47,3 +41,13 @@ instance lineStyleEncodeJson :: EncodeJson LineStyle where
       "shadowOffsetX" := ls.shadowOffsetX,
       "shadowOffsetY" := ls.shadowOffsetY
     ]
+
+
+lineStyleDefault = {
+  color: Nothing,
+  type: Nothing,
+  width: Nothing,
+  shadowColor: Nothing,
+  shadowOffsetX: Nothing,
+  shadowOffsetY: Nothing
+  }

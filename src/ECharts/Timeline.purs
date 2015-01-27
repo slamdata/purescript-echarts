@@ -90,3 +90,32 @@ instance timelineEncodeJson :: EncodeJson Timeline where
       "currentIndex" := obj.currentIndex,
       "data" := obj.data
     ]
+
+timelineDefault = {
+  show: Nothing,
+  type: Nothing,
+  notMerge: Nothing,
+  realtime: Nothing,
+  x: Nothing,
+  y: Nothing,
+  x2: Nothing,
+  y2: Nothing,
+  width: Nothing,
+  height: Nothing,
+  backgroundColor: Nothing,
+  borderWidth: Nothing,
+  borderColor: Nothing,
+  padding: Nothing,
+  controlPosition: Nothing,
+  autoPlay: Nothing,
+  loop: Nothing,
+  playInterval: Nothing,
+  lineStyle: Nothing,
+  label: Nothing,
+  checkpointStyle: Nothing,
+  controlStyle: Nothing,
+  symbol: Nothing,
+  symbolSize: Nothing,
+  currentIndex: Nothing,
+  data: Nothing
+  }

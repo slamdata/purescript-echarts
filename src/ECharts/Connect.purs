@@ -1,14 +1,11 @@
 module ECharts.Connect (
-  connect, Connection(), Connect(), Disconnect()
+  connect, Connection()
   ) where
-
 
 import Data.Function
 import ECharts.Chart
 import Control.Monad.Eff
-
-foreign import data Connect :: !
-foreign import data Disconnect :: !
+import ECharts.Effects
 
 newtype Connection = Connection (forall eff. Eff (disconnect::Disconnect|eff) Unit)
 

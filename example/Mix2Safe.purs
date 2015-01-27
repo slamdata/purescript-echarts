@@ -23,9 +23,9 @@ import ECharts.Style.Item
 
 
 options :: Option
-options = Option $ emptyOptions {
-  tooltip = Just $ Tooltip emptyTooltip {trigger = Just TriggerAxis},
-  toolbox = Just $ Toolbox emptyToolbox {
+options = Option $ optionDefault {
+  tooltip = Just $ Tooltip tooltipDefault {trigger = Just TriggerAxis},
+  toolbox = Just $ Toolbox toolboxDefault {
     show = Just true,
     y = Just YBottom ,
     feature = Just $ Feature {
@@ -60,59 +60,57 @@ options = Option $ emptyOptions {
       }
     },
   calculable = Just true,
-  legend = Just $ Legend $ emptyLegend {
+  legend = Just $ Legend $ legendDefault {
     "data" = Just $ (LegendString <$> ["直接访问","邮件营销","联盟广告","视频广告",
                                          "搜索引擎","百度","谷歌","必应","其他"])
     
     },
-  xAxis = Just $ OneAxis $ Axis $ emptyAxis {
+  xAxis = Just $ OneAxis $ Axis $ axisDefault {
     "type" = Just CategoryAxis,
-    "splitLine" = Just $ AxisSplitLine {
-      "show": Just false,
-      "onGap": Nothing,
-      "lineStyle": Nothing
+    "splitLine" = Just $ AxisSplitLine  $ axisSplitLineDefault {
+      "show" = Just false
       },
     "data" = Just $ (CommonAxisData <$>
                      ["周一","周二","周三","周四","周五","周六","周日"])
     },
-  yAxis = Just $ OneAxis $ Axis $ emptyAxis {
+  yAxis = Just $ OneAxis $ Axis $ axisDefault {
     "type" = Just ValueAxis,
     "position" = Just RightAxis
     },
   series = Just $ [
-    Series $ (emptySeries Bar){
+    Series $ (seriesDefault Bar){
        "name" = Just "直接访问",
        "data" = Just $ ((Value <<< Simple) <$> [320, 332, 301, 334, 390, 330, 320])
        },
-    Series $ (emptySeries Bar) {
+    Series $ (seriesDefault Bar) {
       "name" = Just "邮件营销",
-      "tooltip" = Just $ Tooltip $ emptyTooltip {trigger = Just TriggerItem},
+      "tooltip" = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem},
       "stack" = Just "广告",
       "data" = Just $ ((Value <<< Simple) <$> [120, 132, 101, 134, 90, 230, 210])
       },
-    Series $ (emptySeries Bar) {
+    Series $ (seriesDefault Bar) {
       "name" = Just "联盟广告",
-      "tooltip" = Just $ Tooltip $ emptyTooltip {trigger = Just TriggerItem},
+      "tooltip" = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem},
       "stack" = Just "广告",
       "data" = Just $ ((Value <<< Simple) <$> [220, 182, 191, 234, 290, 330, 310])
       },
-    Series $ (emptySeries Bar) {
+    Series $ (seriesDefault Bar) {
       "name" = Just "视频广告",
-      "tooltip" = Just $ Tooltip $ emptyTooltip {trigger = Just TriggerItem},
+      "tooltip" = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem},
       "stack" = Just "广告",
       "data" = Just $ ((Value <<< Simple) <$> [150, 232, 201, 154, 190, 330, 410])
       },
-    Series $ (emptySeries Line) {
+    Series $ (seriesDefault Line) {
       "data" = Just $ ((Value <<< Simple) <$>
                        [862, 1018, 964, 1026, 1679, 1600, 1570])
       },
-    Series $ (emptySeries Pie) {
+    Series $ (seriesDefault Pie) {
       "name" = Just "搜索引擎细分",
       "center" = Just (Tuple 160 130),
       "radius" = Just $ Rs {inner: 0, outer: 50},
       "itemStyle" = Just $ ItemStyle {
         "emphasis": Nothing,
-        "normal": Just $ IStyle $ emptyIStyle {
+        "normal": Just $ IStyle $ istyleDefault {
           "labelLine" = Just $ ItemLabelLine {
              "show": Just true,
              "length" : Just 20,
@@ -120,21 +118,21 @@ options = Option $ emptyOptions {
              }
           }
         },
-      "tooltip" = Just $ Tooltip $ emptyTooltip {
+      "tooltip" = Just $ Tooltip $ tooltipDefault {
         trigger = Just TriggerItem,
         formatter = Just $ Template "{a} <br/>{b} : {c} ({d}%)"
         },
       "data" = Just $ [
-        Dat $ (emptyData (Simple 1047)){
+        Dat $ (dataDefault (Simple 1047)){
            "name" = Just "百度"
            },
-        Dat $ (emptyData (Simple 264)){
+        Dat $ (dataDefault (Simple 264)){
           "name" = Just "谷歌"
           },
-        Dat $ (emptyData (Simple 145)){
+        Dat $ (dataDefault (Simple 145)){
           "name" = Just "必应"
           },
-        Dat $ (emptyData (Simple 102)){
+        Dat $ (dataDefault (Simple 102)){
           "name" = Just "其他"
           }
         ]

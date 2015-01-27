@@ -28,3 +28,10 @@ instance chordStyleJson :: EncodeJson ChordStyle where
       "borderWidth" := cs.borderWidth,
       "borderColor" := cs.borderColor
     ]
+
+chordStyleDefault = {
+  width: Nothing,
+  color: Nothing,
+  borderWidth: Nothing,
+  borderColor: Nothing
+  }

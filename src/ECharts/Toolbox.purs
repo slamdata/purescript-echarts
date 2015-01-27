@@ -33,7 +33,7 @@ newtype Toolbox =
     "feature" :: Maybe Feature
     }
 
-emptyToolbox =
+toolboxDefault =
   {
     "show": Nothing,
     "orient": Nothing,
@@ -100,6 +100,15 @@ instance featureEncodeJson :: EncodeJson Feature where
       "saveAsImage" := obj.saveAsImage
     ]
 
+featureDefault = {
+  mark: Nothing,
+  dataZoom: Nothing,
+  dataView: Nothing,
+  magicType: Nothing,
+  restore: Nothing,
+  saveAsImage: Nothing
+  }
+
 newtype SaveAsImageFeature =
   SaveAsImageFeature {
     "show" :: Maybe Boolean,
@@ -117,6 +126,12 @@ instance saveAsImageEncodeJson :: EncodeJson SaveAsImageFeature where
       "type" := obj.type,
       "lang" := obj.lang
     ]
+saveAsImageFeatureDefault = {
+  show: Nothing,
+  title: Nothing,
+  type: Nothing,
+  lang: Nothing
+  }
 
 newtype RestoreFeature =
   RestoreFeature {
@@ -132,25 +147,35 @@ instance restoreFeatureEncodeJson :: EncodeJson RestoreFeature where
       "title" := obj.title
     ]
 
+restoreFeatureDefault = {
+  show: Nothing,
+  title: Nothing
+  }
+
 newtype DataZoomFeatureTitle =
   DataZoomFeatureTitle {
     dataZoom :: String,
     dataZoomReset :: String
     }
-instance dataviewFTitleEncodeJson :: EncodeJson DataZoomFeatureTitle where
+instance datazoomTitleEncodeJson :: EncodeJson DataZoomFeatureTitle where
   encodeJson (DataZoomFeatureTitle obj) =
     fromObject $ fromList $
     [
       "dataZoom" := obj.dataZoom,
       "dataZoomReset" := obj.dataZoomReset
     ]
-
+  
 newtype DataZoomFeature =
   DataZoomFeature {
-    "show" :: Boolean,
-    "title" :: DataZoomFeatureTitle
+    "show" :: Maybe Boolean,
+    "title" :: Maybe DataZoomFeatureTitle
     }
 
+dataZoomFeatureDefault = {
+  show: Nothing,
+  title: Nothing
+  }
+  
 instance dataviewFeatureEncodeJson :: EncodeJson DataZoomFeature where
   encodeJson (DataZoomFeature obj) =
     fromObject $ fromList $
@@ -168,6 +193,12 @@ newtype DataViewFeature =
     "lang" :: Maybe [String]
     }
 
+dataViewFeatureDefault = {
+  show: Nothing,
+  title: Nothing,
+  readOnly: Nothing,
+  lang: Nothing
+  }
 
 instance dataViewFeatureEncodeJson :: EncodeJson DataViewFeature where
   encodeJson (DataViewFeature obj) =
@@ -182,7 +213,7 @@ instance dataViewFeatureEncodeJson :: EncodeJson DataViewFeature where
 
 newtype MarkFeatureTitle =
   MarkFeatureTitle {
-    "mark" :: String,
+    "mark" :: Maybe String,
     "markUndo" :: String,
     "markClear" :: String
     }
@@ -212,6 +243,12 @@ instance markFeatureEncodeJson :: EncodeJson MarkFeature where
       "lineStyle" := obj.lineStyle
     ]
 
+markFeatureDefault = {
+  show: Nothing,
+  title: Nothing,
+  lineStyle: Nothing
+  }
+
 data MagicType = MagicLine | MagicBar | MagicStack | MagicTiled | MagicForce
                | MagicChord | MagicPie | MagicFunnel
 
@@ -233,6 +270,13 @@ newtype MagicTypeFeature =
     "option" :: Maybe Json,
     "type" :: Maybe [MagicType]
     }
+
+magicTypeFeature = {
+  show: Nothing,
+  title: Nothing,
+  option: Nothing,
+  type: Nothing
+  }
 
 instance magicTypeFeatureEncodeJson :: EncodeJson MagicTypeFeature where
   encodeJson (MagicTypeFeature obj) =

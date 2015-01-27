@@ -34,8 +34,8 @@ instance itemDataEncodeJson :: EncodeJson ItemData where
     ]
 
 -- Shortcut 
-emptyData :: ItemValue -> _
-emptyData value =
+dataDefault :: ItemValue -> _
+dataDefault value =
   {
     "value": value,
     "name": Nothing,

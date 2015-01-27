@@ -3,7 +3,6 @@ module ECharts.Tooltip where
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Combinators
-import Data.Argonaut.Extension.Func
 import Data.Maybe
 import Data.StrMap
 import Data.Function
@@ -15,29 +14,29 @@ import ECharts.Style.Text
 import ECharts.Style.Line
 import ECharts.Style.Area
 import ECharts.Formatter
-
+import ECharts.Utils
 
 data TooltipTrigger = TriggerItem | TriggerAxis
-
 instance tooltipTriggerEncodeJson :: EncodeJson TooltipTrigger where
   encodeJson TriggerItem = encodeJson "item"
   encodeJson TriggerAxis = encodeJson "axis"
 
-data TooltipPosition = Fixed [Number] | FuncPos ([Number] -> [Number])
 
+data TooltipPosition = Fixed [Number] | FuncPos ([Number] -> [Number])
 instance tooltipPositionEncodeJson :: EncodeJson TooltipPosition where
   encodeJson (Fixed nums) = encodeJson nums
-  encodeJson (FuncPos func) = encodeJson $ mkFn1 func
+  encodeJson (FuncPos func) = func2json $ mkFn1 func
+
 
 data TooltipAxisPointerType =
   LinePointer | CrossPointer | ShadowPointer | NonePointer
-
 instance tooltipAxisPointerTypeEncodeJson :: EncodeJson TooltipAxisPointerType where
   encodeJson a = encodeJson $ case a of
     LinePointer -> "line"
     CrossPointer -> "cross"
     ShadowPointer -> "shadow"
     NonePointer -> "none"
+
 
 newtype TooltipAxisPointer =
   TooltipAxisPointer {
@@ -46,7 +45,6 @@ newtype TooltipAxisPointer =
     "crossStyle" :: Maybe LineStyle,
     "shadowStyle" :: Maybe AreaStyle
     }
-
 instance tooltipAxisPointerEncodeJson :: EncodeJson TooltipAxisPointer where
   encodeJson (TooltipAxisPointer obj) =
     fromObject $ fromList $
@@ -56,6 +54,12 @@ instance tooltipAxisPointerEncodeJson :: EncodeJson TooltipAxisPointer where
       "crossStyle" := obj.crossStyle,
       "shadowStyle" := obj.shadowStyle
     ]
+tooltipAxisPointerDefault = {
+  type: Nothing,
+  lineStyle: Nothing,
+  crossStyle: Nothing,
+  shadowStyle: Nothing
+  }
 
 newtype Tooltip =
   Tooltip {
@@ -76,6 +80,7 @@ newtype Tooltip =
     "axisPointer" :: Maybe TooltipAxisPointer,
     "textStyle" :: Maybe TextStyle
     }
+
 
 instance tooltipEncodeJson :: EncodeJson Tooltip where
   encodeJson (Tooltip obj) =
@@ -99,7 +104,7 @@ instance tooltipEncodeJson :: EncodeJson Tooltip where
       "textStyle" := obj.textStyle
     ]
 
-emptyTooltip = {
+tooltipDefault = {
   "show": Nothing,
   "showContent": Nothing,
   "trigger": Nothing,

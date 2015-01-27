@@ -12,14 +12,10 @@ import ECharts.Color
 
 data LinkType = LTCurve | LTLine
 
-instance linkTypeShow :: Show LinkType where
-  show LTCurve = "curve"
-  show LTLine = "line"
-
 instance linkTypeEncodeJson :: EncodeJson LinkType where
-  encodeJson = encodeJson <<< show
-
-
+  encodeJson a = fromString $ case a of 
+    LTCurve -> "curve"
+    LTLine -> "line"
 
 newtype LinkStyle =
   LinkStyle {
@@ -36,3 +32,9 @@ instance linkStyleEncodeJson :: EncodeJson LinkStyle where
       "color" := ls.color,
       "width" := ls.width
     ]
+
+linkStyleDefault = {
+  type: Nothing,
+  color: Nothing,
+  width: Nothing
+  }

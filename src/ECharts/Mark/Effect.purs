@@ -17,7 +17,6 @@ newtype MarkPointEffect =
     color :: Maybe Color,
     shadowBlur :: Maybe Number
   }
-
 instance mpEffectEncodeJson :: EncodeJson MarkPointEffect where
   encodeJson (MarkPointEffect cfg) =
     fromObject $ fromList $
@@ -29,9 +28,7 @@ instance mpEffectEncodeJson :: EncodeJson MarkPointEffect where
       "color" := cfg.color,
       "shadowBlur" := cfg.shadowBlur
     ]
-      
-
-emptyMPEffect =
+markPointEffectDefault =
   {
     show: Nothing,
     loop: Nothing,

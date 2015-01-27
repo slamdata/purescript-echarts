@@ -14,7 +14,7 @@ import ECharts.Style.Text
 data LinkTarget = Self | Blank
 
 instance linkTargetEncodeJson :: EncodeJson LinkTarget where
-  encodeJson a = encodeJson $ case a of
+  encodeJson a = fromString $ case a of
     Self -> "self"
     Blank -> "blank"
 
@@ -59,3 +59,20 @@ instance titleEncodeJson :: EncodeJson Title where
       "textStyle" := obj.textStyle,
       "subtextStyle" := obj.subtextStyle
     ]
+
+titleDefault = {
+  text: Nothing,
+  link: Nothing,
+  subtext: Nothing,
+  sublink: Nothing,
+  subtarget: Nothing,
+  x: Nothing,
+  y: Nothing,
+  textAlign: Nothing,
+  backgroundColor: Nothing,
+  borderColor: Nothing,
+  padding: Nothing,
+  itemGap: Nothing,
+  textStyle: Nothing,
+  subtextStyle: Nothing
+  }

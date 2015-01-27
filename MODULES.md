@@ -4,8 +4,6 @@
 
 ### Types
 
-    data AddData :: !
-
     newtype AdditionalData where
       AdditionalData :: { additionalData :: Maybe String, dataGrow :: Boolean, isHead :: Boolean, datum :: ItemData, idx :: Number } -> AdditionalData
 
@@ -69,13 +67,13 @@
       TwoAxises :: Axis -> Axis -> Axises
 
     newtype Indicator where
-      Indicator :: { axisLabel :: AxisLabel, max :: Number, min :: Number, text :: String } -> Indicator
+      Indicator :: { axisLabel :: Maybe AxisLabel, max :: Maybe Number, min :: Maybe Number, text :: Maybe String } -> Indicator
 
     newtype Polar where
-      Polar :: { indicator :: [Indicator], "type" :: PolarType, splitArea :: AxisSplitArea, splitLine :: AxisSplitLine, axisLabel :: AxisLabel, axisLine :: AxisLine, scale :: Boolean, boundaryGap :: Tuple Number Number, name :: PolarName, splitNumber :: Number, startAngle :: Number, radius :: PercentOrPixel, center :: Tuple PercentOrPixel PercentOrPixel } -> Polar
+      Polar :: { indicator :: Maybe [Indicator], "type" :: Maybe PolarType, splitArea :: Maybe AxisSplitArea, splitLine :: Maybe AxisSplitLine, axisLabel :: Maybe AxisLabel, axisLine :: Maybe AxisLine, scale :: Maybe Boolean, boundaryGap :: Maybe (Tuple Number Number), name :: Maybe PolarName, splitNumber :: Maybe Number, startAngle :: Maybe Number, radius :: Maybe PercentOrPixel, center :: Maybe (Tuple PercentOrPixel PercentOrPixel) } -> Polar
 
     newtype PolarName where
-      PolarName :: { textStyle :: TextStyle, formatter :: Formatter, show :: Boolean } -> PolarName
+      PolarName :: { textStyle :: Maybe TextStyle, formatter :: Maybe Formatter, show :: Maybe Boolean } -> PolarName
 
     data PolarType where
       PolarPolygon :: PolarType
@@ -123,18 +121,6 @@
 
     data EChart :: *
 
-    data EChartClear :: !
-
-    data EChartDispose :: !
-
-    data EChartInit :: !
-
-    data EChartRefresh :: !
-
-    data EChartResize :: !
-
-    data EChartThemeSet :: !
-
     data Theme where
       ThemeName :: String -> Theme
       ThemeConfig :: Json -> Theme
@@ -157,15 +143,11 @@
 
     init :: forall e. Maybe Theme -> Node -> Eff (echartInit :: EChartInit, dom :: DOM | e) EChart
 
-    initImpl :: forall e. Fn2 Node Json (Eff (echartInit :: EChartInit, dom :: DOM | e) EChart)
-
     refresh :: forall e. EChart -> Eff (echartRefresh :: EChartRefresh, dom :: DOM | e) Unit
 
     resize :: forall e. EChart -> Eff (echartResize :: EChartResize, dom :: DOM | e) Unit
 
     setTheme :: forall e. Theme -> EChart -> Eff (echartTheme :: EChartThemeSet, dom :: DOM | e) EChart
-
-    setThemeImpl :: forall e. Fn2 Json EChart (Eff e EChart)
 
 
 ## Module ECharts.Color
@@ -208,10 +190,6 @@
     newtype MinMax where
       MinMax :: { max :: Number, min :: Number } -> MinMax
 
-    data OneMany a where
-      One :: a -> OneMany a
-      Many :: [a] -> OneMany a
-
     data PercentOrPixel where
       Percent :: Number -> PercentOrPixel
       Pixel :: Number -> PercentOrPixel
@@ -251,8 +229,6 @@
 
     instance minMaxEncodeJson :: EncodeJson MinMax
 
-    instance oneManyJsonEncode :: (EncodeJson a) => EncodeJson (OneMany a)
-
     instance percentOrPixelEncodeJson :: EncodeJson PercentOrPixel
 
     instance radiusEncodeJson :: EncodeJson Radius
@@ -270,11 +246,7 @@
 
 ### Types
 
-    data Connect :: !
-
     newtype Connection
-
-    data Disconnect :: !
 
 
 ### Values
@@ -328,23 +300,15 @@
 
     instance labelPositionEncodeJson :: EncodeJson LabelPosition
 
-    instance labelPositionShow :: Show LabelPosition
-
     instance locationEncodeJson :: EncodeJson Location
 
     instance orientEncodeJson :: EncodeJson Orient
 
     instance textAlignEncodeJson :: EncodeJson HorizontalAlign
 
-    instance textAlignShow :: Show HorizontalAlign
-
     instance xPosEncodeJson :: EncodeJson XPos
 
-    instance xPosShow :: Show XPos
-
     instance yPosEncodeJson :: EncodeJson YPos
-
-    instance yPosShow :: Show YPos
 
 
 ## Module ECharts.DataRange
@@ -373,6 +337,49 @@
     instance dataZoomEncodeJson :: EncodeJson DataZoom
 
 
+## Module ECharts.Effects
+
+### Types
+
+    data AddData :: !
+
+    data AddMarkLine :: !
+
+    data AddMarkPoint :: !
+
+    data Connect :: !
+
+    data Disconnect :: !
+
+    data EChartClear :: !
+
+    data EChartDispose :: !
+
+    data EChartInit :: !
+
+    data EChartOptionSet :: !
+
+    data EChartRefresh :: !
+
+    data EChartResize :: !
+
+    data EChartThemeSet :: !
+
+    data ImageMaking :: !
+
+    data Listen :: !
+
+    data LoadingHide :: !
+
+    data LoadingShow :: !
+
+    data RemoveMarkLine :: !
+
+    data RemoveMarkPoint :: !
+
+    data Unlisten :: !
+
+
 ## Module ECharts.Events
 
 ### Types
@@ -398,11 +405,7 @@
       MapRoam :: EventType
       MagicTypeChanged :: EventType
 
-    data Listen :: !
-
     newtype Sub
-
-    data Unlisten :: !
 
 
 ### Type Class Instances
@@ -413,15 +416,6 @@
 ### Values
 
     listen :: forall e. EventType -> (EventParam -> Eff (listen :: Listen | e) Unit) -> EChart -> Eff (listen :: Listen | e) Sub
-
-
-## Module ECharts.Force
-
-### Types
-
-    type Link = { weight :: Number, target :: String, source :: String }
-
-    type Node = { category :: Number, fixX :: Boolean, fixY :: Boolean, initial :: Tuple Number Number, depth :: Number, name :: String, id :: String, value :: Number }
 
 
 ## Module ECharts.Formatter
@@ -442,15 +436,13 @@
 
 ### Values
 
-    effArrToFn :: forall eff a b. (a -> Eff eff b) -> Fn1 a b
-
 
 ## Module ECharts.Grid
 
 ### Types
 
     newtype Grid where
-      Grid :: { borderColor :: Maybe Number, borderWidth :: Maybe Number, backgroundColor :: Maybe Color, height :: Maybe PercentOrPixel, width :: Maybe PercentOrPixel, y2 :: Maybe PercentOrPixel, y :: Maybe PercentOrPixel, x2 :: Maybe PercentOrPixel, x :: PercentOrPixel } -> Grid
+      Grid :: { borderColor :: Maybe Number, borderWidth :: Maybe Number, backgroundColor :: Maybe Color, height :: Maybe PercentOrPixel, width :: Maybe PercentOrPixel, y2 :: Maybe PercentOrPixel, y :: Maybe PercentOrPixel, x2 :: Maybe PercentOrPixel, x :: Maybe PercentOrPixel } -> Grid
 
 
 ### Type Class Instances
@@ -461,8 +453,6 @@
 ## Module ECharts.Image
 
 ### Types
-
-    data ImageMaking :: !
 
     data ImgType where
       PNG :: ImgType
@@ -480,11 +470,7 @@
 
     getDataURL :: forall e. ImgType -> EChart -> Eff (image :: ImageMaking | e) String
 
-    getDataURLImpl :: forall e. Fn2 String EChart (Eff e String)
-
     getImage :: forall e. ImgType -> EChart -> Eff (image :: ImageMaking, dom :: DOM | e) Node
-
-    getImageImpl :: forall e. Fn2 String EChart (Eff e Node)
 
 
 ## Module ECharts.Legend
@@ -526,27 +512,19 @@
 
     instance loadingEffectEncodeJson :: EncodeJson LoadingEffect
 
-    instance loadingEffectEq :: Eq LoadingEffect
-
-    instance loadingEffectShot :: Show LoadingEffect
-
     instance showLoadingOptions :: EncodeJson LoadingOption
 
 
 ### Values
 
-    hideLoading :: forall e. EChart -> Eff e EChart
+    hideLoading :: forall e. EChart -> Eff (hideLoadingECharts :: LoadingHide | e) EChart
 
-    showLoading :: forall e. LoadingOption -> EChart -> Eff e EChart
-
-    showLoadingImpl :: forall e a. Fn2 Json EChart (Eff e EChart)
+    showLoading :: forall e. LoadingOption -> EChart -> Eff (showLoadingECharts :: LoadingShow | e) EChart
 
 
 ## Module ECharts.Options
 
 ### Types
-
-    data EChartOptionSet :: !
 
     newtype Option where
       Option :: { series :: Maybe [Series], polar :: Maybe [Polar], yAxis :: Maybe Axises, xAxis :: Maybe Axises, grid :: Maybe Grid, roamController :: Maybe RoamController, dataZoom :: Maybe DataZoom, dataRange :: Maybe DataRange, legend :: Maybe Legend, title :: Maybe Title, toolbox :: Maybe Toolbox, tooltip :: Maybe Tooltip, timeline :: Maybe Timeline, animation :: Maybe Boolean, calculable :: Maybe Boolean, renderAsImage :: Maybe Boolean, color :: Maybe [Color], backgroundColor :: Maybe Color } -> Option
@@ -559,11 +537,7 @@
 
 ### Values
 
-    getOption :: forall e. EChart -> Eff e Json
-
     setOption :: forall e. Option -> Boolean -> EChart -> Eff (echartSetOption :: EChartOptionSet | e) EChart
-
-    setOptionImpl :: forall e. Fn3 Json Boolean EChart (Eff (echartSetOption :: EChartOptionSet | e) EChart)
 
 
 ## Module ECharts.RoamController
@@ -594,13 +568,9 @@
 
 ### Values
 
-    emptySeries :: ChartType -> _
-
-    getSeriesImpl :: forall e. EChart -> Eff e [Json]
+    seriesDefault :: ChartType -> _
 
     setSeries :: forall e. [Series] -> Boolean -> EChart -> Eff e EChart
-
-    setSeriesImpl :: forall e. Fn3 [Json] Boolean EChart (Eff e EChart)
 
 
 ## Module ECharts.Symbol
@@ -631,8 +601,6 @@
     instance dblSymbolSizeEncodeJson :: EncodeJson DoubleSymbolSize
 
     instance encodeJsonSymbol :: EncodeJson Symbol
-
-    instance showSymbol :: Show Symbol
 
     instance symbolSizeEncodeJson :: EncodeJson SymbolSize
 
@@ -690,7 +658,7 @@
       DataViewFeature :: { lang :: Maybe [String], readOnly :: Maybe Boolean, title :: Maybe String, show :: Maybe Boolean } -> DataViewFeature
 
     newtype DataZoomFeature where
-      DataZoomFeature :: { title :: DataZoomFeatureTitle, show :: Boolean } -> DataZoomFeature
+      DataZoomFeature :: { title :: Maybe DataZoomFeatureTitle, show :: Maybe Boolean } -> DataZoomFeature
 
     newtype DataZoomFeatureTitle where
       DataZoomFeatureTitle :: { dataZoomReset :: String, dataZoom :: String } -> DataZoomFeatureTitle
@@ -715,7 +683,7 @@
       MarkFeature :: { lineStyle :: Maybe LineStyle, title :: Maybe MarkFeatureTitle, show :: Maybe Boolean } -> MarkFeature
 
     newtype MarkFeatureTitle where
-      MarkFeatureTitle :: { markClear :: String, markUndo :: String, mark :: String } -> MarkFeatureTitle
+      MarkFeatureTitle :: { markClear :: String, markUndo :: String, mark :: Maybe String } -> MarkFeatureTitle
 
     newtype RestoreFeature where
       RestoreFeature :: { title :: Maybe String, show :: Maybe Boolean } -> RestoreFeature
@@ -731,9 +699,9 @@
 
     instance dataViewFeatureEncodeJson :: EncodeJson DataViewFeature
 
-    instance dataviewFTitleEncodeJson :: EncodeJson DataZoomFeatureTitle
-
     instance dataviewFeatureEncodeJson :: EncodeJson DataZoomFeature
+
+    instance datazoomTitleEncodeJson :: EncodeJson DataZoomFeatureTitle
 
     instance featureEncodeJson :: EncodeJson Feature
 
@@ -813,7 +781,14 @@
 
     instance chartTypeEncodeJson :: EncodeJson ChartType
 
-    instance chartTypeShow :: Show ChartType
+
+## Module ECharts.Utils
+
+### Values
+
+    func2json :: forall a. a -> Json
+
+    unnull :: Json -> Json
 
 
 ## Module ECharts.Item.Data
@@ -832,7 +807,7 @@
 
 ### Values
 
-    emptyData :: ItemValue -> _
+    dataDefault :: ItemValue -> _
 
 
 ## Module ECharts.Item.Value
@@ -892,13 +867,9 @@
 
 ### Values
 
-    addMarkLine :: forall e a. MarkLine -> EChart -> Eff e EChart
+    addMarkLine :: forall e a. MarkLine -> EChart -> Eff (addMarkLineECharts :: AddMarkLine | e) EChart
 
-    addMarkLineImpl :: forall e. Fn2 Json EChart (Eff e EChart)
-
-    delMarkLine :: forall e. Number -> String -> EChart -> Eff e EChart
-
-    delMarkLineImpl :: forall e. Fn3 Number String EChart (Eff e EChart)
+    delMarkLine :: forall e. Number -> String -> EChart -> Eff (removeMarkLine :: RemoveMarkLine | e) EChart
 
 
 ## Module ECharts.Mark.Point
@@ -916,13 +887,9 @@
 
 ### Values
 
-    addMarkPoint :: forall e. MarkPoint -> EChart -> Eff e EChart
+    addMarkPoint :: forall e. MarkPoint -> EChart -> Eff (addMarkPointECharts :: AddMarkPoint | e) EChart
 
-    addMarkPointImpl :: forall e. Fn2 Json EChart (Eff e EChart)
-
-    delMarkPoint :: forall e. Number -> String -> EChart -> Eff e EChart
-
-    delMarkPointImpl :: forall e. Fn3 Number String EChart (Eff e EChart)
+    delMarkPoint :: forall e. Number -> String -> EChart -> Eff (removeMarkPointECharts :: RemoveMarkPoint | e) EChart
 
 
 ## Module ECharts.Options.Unsafe
@@ -1020,19 +987,12 @@
 ### Types
 
     newtype AreaStyle where
-      AreaStyle :: { "type" :: Maybe AreaType, color :: Maybe Color } -> AreaStyle
-
-    data AreaType where
-      Fill :: AreaType
+      AreaStyle :: Color -> AreaStyle
 
 
 ### Type Class Instances
 
     instance areaStyleEncodeJson :: EncodeJson AreaStyle
-
-    instance areaTypeEncodeJson :: EncodeJson AreaType
-
-    instance areaTypeShow :: Show AreaType
 
 
 ## Module ECharts.Style.Checkpoint
@@ -1108,8 +1068,6 @@
 
     instance linetypeEncodeJson :: EncodeJson LineType
 
-    instance linetypeShow :: Show LineType
-
 
 ## Module ECharts.Style.Link
 
@@ -1128,8 +1086,6 @@
     instance linkStyleEncodeJson :: EncodeJson LinkStyle
 
     instance linkTypeEncodeJson :: EncodeJson LinkType
-
-    instance linkTypeShow :: Show LinkType
 
 
 ## Module ECharts.Style.Node
@@ -1186,15 +1142,9 @@
 
     instance fontStyleEncodeJson :: EncodeJson FontStyle
 
-    instance fontStyleShow :: Show FontStyle
-
     instance fontWeightEncodeJson :: EncodeJson FontWeight
 
-    instance fontWeightShow :: Show FontWeight
-
     instance textBaselineEncodeJson :: EncodeJson TextBaseline
-
-    instance textBaselineShow :: Show TextBaseline
 
     instance textStyleEncodeJson :: EncodeJson TextStyle
 
@@ -1209,24 +1159,6 @@
 ### Values
 
     jsDateToJson :: JSDate -> Json
-
-
-## Module Data.Argonaut.Extension.Func
-
-### Type Class Instances
-
-    instance fn0EncodeJson :: EncodeJson (Fn0 a)
-
-    instance fn1EncodeJson :: EncodeJson (Fn1 a b)
-
-    instance fn2EncodeJson :: EncodeJson (Fn2 a b c)
-
-    instance fn3EncodeJson :: EncodeJson (Fn3 a b c d)
-
-
-### Values
-
-    encodeFuncs :: forall a. a -> Json
 
 
 

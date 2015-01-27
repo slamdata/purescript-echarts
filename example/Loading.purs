@@ -2,6 +2,7 @@ module Loading where
 
 import Data.Array hiding (init)
 import Data.Maybe
+import Data.Tuple hiding (zip)
 import Control.Monad.Eff
 import Control.Monad.Eff.Random
 
@@ -19,10 +20,10 @@ allEffects = [Spin, Bar, Ring, Whirling, DynamicLine, Bubble]
 
 effect :: LoadingEffect -> LoadingOption
 effect eff = LoadingOption $ 
-  nullOption{
-    text = Just $ show eff,
+  loadingOptionDefault{
+    text = Just $ "effect",
     effect = Just eff,
-    textStyle = Just $ TextStyle $ nullStyle {fontSize = Just 20}
+    textStyle = Just $ TextStyle $ textStyleDefault {fontSize = Just 20}
   }
 
 options i =
@@ -81,11 +82,15 @@ dataStream =
           curstate <- curstateE
           case curstate of
             StartLoading _ -> do
-              eff <- randomInList allEffects
-              return $ StopLoading $ options (elemIndex eff allEffects)
+              effAndI <- randomInList allEffects
+              case effAndI of
+                Tuple eff i -> 
+                  return $ StopLoading $ options i
             StopLoading _ -> do
-              eff <- randomInList allEffects
-              return $ StartLoading (effect eff))
+              effAndI <- randomInList allEffects
+              case effAndI of
+                Tuple eff i ->
+                  return $ StartLoading (effect eff))
   (return $ StartLoading (effect Spin))
   (every 2000)
 

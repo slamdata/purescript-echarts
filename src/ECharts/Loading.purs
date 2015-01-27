@@ -1,9 +1,16 @@
-module ECharts.Loading where
+module ECharts.Loading (
+  LoadingEffect(..),
+  LoadingOption(..),
+  loadingOptionDefault,
+  showLoading,
+  hideLoading
+  ) where 
 
 import ECharts.Common
 import ECharts.Coords
 import ECharts.Chart
 import ECharts.Style.Text
+import ECharts.Effects
 
 import Data.Array (concat)
 import Data.Function
@@ -18,22 +25,14 @@ import Data.Argonaut.Encode
 
 data LoadingEffect = Spin | Bar | Ring | Whirling | DynamicLine | Bubble
 
-instance loadingEffectShot :: Show LoadingEffect where
-  show eff = case eff of
+instance loadingEffectEncodeJson :: EncodeJson LoadingEffect where
+  encodeJson a = fromString $ case a of
     Spin -> "spin"
     Bar -> "bar"
     Ring -> "ring"
     Whirling -> "whirling"
     DynamicLine -> "dynamicLine"
-    Bubble -> "bubble"
-
-instance loadingEffectEq :: Eq LoadingEffect where
-  (==) a b = (show a) == (show b)
-  (/=) a b = not $ a == b
-
-instance loadingEffectEncodeJson :: EncodeJson LoadingEffect where
-  encodeJson = fromString <<< show 
-
+    Bubble -> "bubble"    
 
 newtype LoadingOption = 
   LoadingOption {
@@ -45,7 +44,6 @@ newtype LoadingOption =
     effectOption :: Maybe Json,
     progress :: Maybe Number
     }
-
 instance showLoadingOptions :: EncodeJson LoadingOption where
   encodeJson (LoadingOption options) =
     fromObject $ M.fromList [
@@ -65,9 +63,10 @@ function showLoadingImpl(json, chart) {
     return chart.showLoading(json);
   };
 }
-""" :: forall e a. Fn2 Json EChart (Eff e EChart)
+""" :: forall e a. Fn2 Json EChart (Eff (showLoadingECharts::LoadingShow|e) EChart)
 
-showLoading :: forall e. LoadingOption -> EChart -> Eff e EChart
+showLoading :: forall e. LoadingOption -> EChart ->
+               Eff (showLoadingECharts::LoadingShow|e) EChart
 showLoading opts chart =
   runFn2 showLoadingImpl (encodeJson opts) chart
 
@@ -80,10 +79,10 @@ function hideLoading(chart) {
     return chart.hideLoading();
   };
 }
-""" :: forall e. EChart -> Eff e EChart
+""" :: forall e. EChart -> Eff (hideLoadingECharts::LoadingHide|e) EChart
 
 
-nullOption =
+loadingOptionDefault =
   {
     text: Nothing,
     x: Nothing,

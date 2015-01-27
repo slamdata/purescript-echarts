@@ -38,6 +38,13 @@ instance itemLabelEncodeJson :: EncodeJson ItemLabel where
       "formatter" := il.formatter,
       "textStyle" := il.textStyle
     ]
+itemLabelDefault = {
+  show: Nothing,
+  position: Nothing,
+  distance: Nothing,
+  formatter: Nothing,
+  textStyle: Nothing
+  }
 
 newtype ItemLabelLine =
   ItemLabelLine {
@@ -54,6 +61,11 @@ instance itemLabelLineEncodeJson :: EncodeJson ItemLabelLine where
       "length" := ill.length,
       "lineStyle" := ill.lineStyle
     ]
+itemLabelLineDefault = {
+  show: Nothing,
+  length: Nothing,
+  lineStyle: Nothing
+  }
 
 newtype IStyle =
   IStyle {
@@ -72,7 +84,7 @@ newtype IStyle =
     linkStyle :: Maybe LinkStyle
   }
 
-emptyIStyle =
+istyleDefault =
   {
     color: Nothing,
     borderColor: Nothing,
@@ -118,3 +130,8 @@ newtype ItemStyle =
 instance itemStyleEncodeJson :: EncodeJson ItemStyle where
   encodeJson (ItemStyle is) =
     fromObject $ fromList ["normal" := is.normal, "emphasis" := is.emphasis]
+
+itemStyleDefault = {
+  normal: Nothing,
+  emphasis: Nothing
+  }

@@ -1,10 +1,16 @@
-module ECharts.Mark.Point where
+module ECharts.Mark.Point (
+  MarkPoint(..),
+  markPointDefault,
+  addMarkPoint,
+  delMarkPoint
+  ) where
 
 import ECharts.Chart
 import ECharts.Common
 import ECharts.Symbol
 import ECharts.Mark.Effect
 import ECharts.Mark.Data
+import ECharts.Effects
 
 import Data.Maybe
 import Control.Monad.Eff
@@ -15,9 +21,6 @@ import Data.Tuple
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Combinators
-
-
-
 
 
 newtype MarkPoint =
@@ -42,7 +45,7 @@ instance markPointEncodeJson :: EncodeJson MarkPoint where
       "geoCoord" := mp.geoCoord
     ]
 
-emptyMarkPoint =
+markPointDefault =
   {
     symbol: Nothing,
     symbolSize: Nothing,
@@ -58,9 +61,11 @@ function delMarkPointImpl(idx, name, chart) {
     return chart.delMarkPoint(idx, name);
   };
 }
-""" :: forall e. Fn3 Number String EChart (Eff e EChart)
+""" :: forall e. Fn3 Number String EChart
+       (Eff (removeMarkPointECharts::RemoveMarkPoint|e) EChart)
 
-delMarkPoint :: forall e. Number -> String -> EChart -> Eff e EChart
+delMarkPoint :: forall e. Number -> String -> EChart -> 
+                (Eff (removeMarkPointECharts::RemoveMarkPoint|e) EChart)
 delMarkPoint idx name chart = runFn3 delMarkPointImpl idx name chart 
   
 foreign import addMarkPointImpl """
@@ -69,7 +74,8 @@ function addMarkPointImpl(mp, chart) {
     return chart.addMarkPoint(mp);
   };
 }
-""" :: forall e. Fn2 Json EChart (Eff e EChart)
+""" :: forall e. Fn2 Json EChart (Eff (addMarkPointECharts::AddMarkPoint|e) EChart)
 
-addMarkPoint :: forall e. MarkPoint -> EChart -> Eff e EChart
+addMarkPoint :: forall e. MarkPoint -> EChart -> 
+                (Eff (addMarkPointECharts::AddMarkPoint|e) EChart)
 addMarkPoint mp chart = runFn2 addMarkPointImpl (encodeJson mp) chart

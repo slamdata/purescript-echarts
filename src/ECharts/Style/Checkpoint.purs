@@ -29,3 +29,11 @@ instance checkpointStyleEncodeJson :: EncodeJson CheckpointStyle where
       "borderColor" := obj.borderColor,
       "label" := obj.label
     ]
+
+checkpointStyleDefault = {
+  symbol: Nothing,
+  symbolSize: Nothing,
+  color: Nothing,
+  borderColor: Nothing,
+  label: Nothing
+  }

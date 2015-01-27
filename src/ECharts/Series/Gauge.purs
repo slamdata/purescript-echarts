@@ -26,6 +26,12 @@ newtype Pointer =
     "color" :: Maybe Color
     }
 
+pointerDefault = {
+  length: Nothing,
+  width: Nothing,
+  color: Nothing
+  }
+
 instance pointerEncodeJson :: EncodeJson Pointer where
   encodeJson (Pointer p) = fromObject $ fromList $ [
     "length" := p.length,
@@ -39,6 +45,12 @@ newtype SplitLine =
     "length" :: Maybe Number,
     "lineStyle" :: Maybe LineStyle
     }
+
+splitLineDefault = {
+  show: Nothing,
+  length: Nothing,
+  lineStyle: Nothing
+  }
 
 instance splitLineEncodeJson :: EncodeJson SplitLine where
   encodeJson (SplitLine sl) = fromObject $ fromList $ [
@@ -60,6 +72,19 @@ newtype GaugeDetail =
     "formatter" :: Maybe Formatter,
     "textStyle" :: Maybe TextStyle
     }
+
+gaugeDetailDefault = {
+  show: Nothing,
+  backgroundColor: Nothing,
+  borderWidth: Nothing,
+  borderColor: Nothing,
+  width: Nothing,
+  height: Nothing,
+  offsetCenter: Nothing,
+  formatter: Nothing,
+  textStyle: Nothing
+  }
+
 
 instance gaugeDetailEncodeJson :: EncodeJson GaugeDetail where
   encodeJson (GaugeDetail gd) = fromObject $ fromList $ [
