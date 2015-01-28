@@ -2,10 +2,17 @@ module Force4 where
 
 import Control.Monad.Eff
 import Control.Monad.Eff.Random
-import ECharts.Chart
-import ECharts.Options.Unsafe
 
-import DOM 
+import ECharts.Chart
+import ECharts.Options
+import ECharts.Series
+import ECharts.Common
+import ECharts.Style.Item
+import ECharts.Series.Force
+import ECharts.Color
+
+
+
 import Data.Maybe
 import Data.Array hiding (init)
 import Data.Tuple
@@ -128,74 +135,59 @@ nodes = return []
 links :: Eff _ _
 links = return []
 
-mkOptions nodes links = 
- {
-    "title":
-    {
-      "text": "Force",
-      "subtext": "Force-directed tree",
-      "x": "right",
-      "y": "bottom"
-    },
-    "tooltip":
-    {
-      "trigger": "item",
-      "formatter": "{a} : {b}"
-    },
-    "toolbox":
-    {
-      "show": true,
-      "feature":
-      {
-        "restore": {"show": true},
-        "magicType": {"show": true, "type": ["force", "chord"]},
-        "saveAsImage": {"show" :true}
-      }
-    },
-    "legend":
-    {
-      "x": "left",
-      "data": ["叶子节点","非叶子节点", "根节点"]
-    },
-    "series":
-    [{
-      "type": "force",
-      "name": "Force tree",
-      "ribbonType": false,
-      "categories":
-      (
-        {
-          "name": "叶子节点",
-          "itemStyle": {"normal": {"color": "#ff7f50"}}
-        } /\
-        {
-          "name": "非叶子节点",
-          "itemStyle": {"normal": {"color": "#6f57bc"}}
-        } /\
-        {
-          "name": "根节点",
-          "itemStyle": {"normal": {"color": "af0000"}}
-        }
-      ),
-      "itemStyle":
-      {
-        "normal":
-        {
-          "label": {"show": false},
-          "nodeStyle":
-          {
-            "brushType": "both",
-            "strokeColor": "rgba(255, 215, 0, 0.6)",
-            "lineWidth": 1
+nodeNormalize :: EFNode -> Node
+nodeNormalize node = Node $ (nodeDefault node.value) {
+  "name" = Just node.name,
+  "initial" = Just node.initial,
+  "fixX" = Just  node.fixX,
+  "fixY" = Just node.fixY,
+  "category" = Just $ node.category
+  }
+
+
+linkNormalize link = Link {
+  source: Name link.source,
+  target: Name link.target,
+  weight: link.weight,
+  itemStyle: Nothing
+  }
+
+itemColor color = Just $ ItemStyle itemStyleDefault {
+  "normal" = Just $ IStyle istyleDefault {
+     "color" = Just $ SimpleColor color
+     }
+  }
+
+mkOptions nodes links = Option $ optionDefault {
+  "series" = Just $ Just <$> [
+     ForceSeries {
+        "common": universalSeriesDefault{
+           "name" = Just "Force tree"
+           },
+        "special": forceSeriesDefault {
+          "ribbonType" = Just true,
+          "categories" = Just [
+            ForceCategory $ forceCategoryDefault {
+               "name" = Just "first",
+               "itemStyle" = itemColor "#ff7f50"
+               },
+            ForceCategory $ forceCategoryDefault {
+              "name" = Just "second",
+              "itemStyle" = itemColor "#6f57bc"
+              },
+            ForceCategory $ forceCategoryDefault {
+              "name" = Just "third",
+              "itemStyle" = itemColor "#af0000"
+              }
+            ],
+          "nodes" = Just $ nodeNormalize <$> nodes,
+          "links" = Just $ linkNormalize <$> links,
+          "minRadius" = Just constMinRadius,
+          "maxRadius" = Just constMaxRadius
           }
+        
         }
-      },
-      "minRadius": constMinRadius,
-      "maxRadius": constMaxRadius,
-      "nodes": nodes,
-      "links": links
-      
-    }]
+     ]
   }
 
   
@@ -213,6 +205,6 @@ force4 id = do
   opts <- options
   chart <- getElementById id
            >>= init Nothing
-           >>= setOptionUnsafe opts true
+           >>= setOption opts true
 
   return unit

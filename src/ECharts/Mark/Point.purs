@@ -30,7 +30,7 @@ newtype MarkPoint =
     large :: Maybe Boolean,
     effect :: Maybe MarkPointEffect,
     "data" :: Maybe [MarkPointData],
-    geoCoord:: Maybe [GeoCoord]
+    geoCoord:: Maybe (StrMap (Tuple Number Number))
   }
 
 instance markPointEncodeJson :: EncodeJson MarkPoint where

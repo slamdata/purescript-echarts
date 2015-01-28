@@ -1,363 +1,149 @@
 module EventRiver1 where
 
-import ECharts.Chart
-import ECharts.Options.Unsafe
+
 import Data.Maybe
+import qualified Data.Date as D
 import Utils
 
-options = {
-    title : {
-        text: "Event River",
-        subtext: "纯属虚构"
+import ECharts.Chart
+import ECharts.Events
+import ECharts.Options
+import ECharts.Tooltip
+import ECharts.Toolbox
+import ECharts.Coords
+import ECharts.Legend
+import ECharts.Axis
+import ECharts.Series
+import ECharts.Common
+import ECharts.AddData
+import ECharts.Title
+import ECharts.Series.EventRiver
+
+
+
+
+options dateDefault = Option $ optionDefault {
+  "tooltip" = Just $ Tooltip tooltipDefault {
+     "trigger" = Just TriggerItem,
+     "enterable" = Just true
+     },
+  "title" = Just $ Title titleDefault {
+    "text" = Just "event river",
+    "subtext" = Just "subtext"
     },
-    tooltip : {
-        trigger: "item",
-        enterable: true
+  "legend" = Just $ Legend legendDefault {
+    "data" = Just $ legendItemDefault <$> ["first", "second"]
     },
-    legend: {
-        data:["财经事件", "政治事件"]
+  "toolbox" = Just $ Toolbox toolboxDefault {
+    "feature" = Just $ Feature featureDefault {
+       "mark" = Just $ MarkFeature $ markFeatureDefault {show = Just true},
+       "restore" = Just $ RestoreFeature $ restoreFeatureDefault {
+         "show" = Just true
+         },
+       "saveAsImage" = Just $ SaveAsImageFeature $ saveAsImageFeatureDefault {
+         "show" = Just true
+         }
+       }
     },
-    toolbox: {
-        show : true,
-        feature : {
-            mark : {show: true},
-            restore : {show: true},
-            saveAsImage : {show: true}
+  "xAxis" = Just $ OneAxis $ Axis axisDefault {
+    "type" = Just TimeAxis,
+    "boundaryGap" = Just $ ValueBoundaryGap 0.05 0.1
+    },
+  "series" = Just $ Just <$> [
+    EventRiverSeries {
+       "common": universalSeriesDefault {
+          "name" = Just "first"
+          },
+       "special": eventRiverSeriesDefault {
+         "weight" = Just 123,
+         "eventList" = Just [
+           OneEvent {
+              "name": Just "river1",
+              "weight": Just 123,
+              "evolution": Just [
+                Evolution {
+                   "time": fromMaybe dateDefault $ D.fromString "2014-05-01",
+                   "value": 14,
+                   "detail": Nothing
+                   },
+                Evolution {
+                  "time": fromMaybe dateDefault $ D.fromString "2014-05-02",
+                  "value": 34,
+                  "detail": Nothing
+                  },
+                Evolution {
+                  "time": fromMaybe dateDefault $ D.fromString "2014-05-03",
+                  "value": 60,
+                  "detail": Nothing
+                  }
+                ]
+              },
+           OneEvent {
+             "name": Just "river2",
+             "weight": Just 123,
+             "evolution": Just [
+               Evolution {
+                  "time": fromMaybe dateDefault $ D.fromString "2014-05-02",
+                  "value": 10,
+                  "detail": Nothing
+                  },
+               Evolution {
+                 "time": fromMaybe dateDefault $ D.fromString "2014-05-03",
+                 "value":  34,
+                 "detail": Nothing
+                 },
+               Evolution {
+                 "time": fromMaybe dateDefault $ D.fromString "2014-05-05",
+                 "value":  40,
+                 "detail": Nothing
+                 }
+               ]
+             }
+           ]
+         }
+       },
+
+    EventRiverSeries {
+      "common": universalSeriesDefault {
+         "name" = Just "second"
+         },
+      "special": eventRiverSeriesDefault {
+        "weight" = Just 123,
+        "eventList" = Just [
+          OneEvent {
+             "name": Just "Apec",
+             "weight": Just 123,
+             "evolution": Just [
+               Evolution {
+                  "time": fromMaybe dateDefault $ D.fromString "2014-05-06",
+                  "value": 14,
+                  "detail": Nothing
+                  },
+               Evolution {
+                 "time": fromMaybe dateDefault $ D.fromString "2014-05-08",
+                 "value":  12,
+                 "detail": Nothing
+                 },
+               Evolution {
+                 "time": fromMaybe dateDefault $ D.fromString "2014-05-10",
+                 "value":  14,
+                 "detail": Nothing
+                 }
+               ]
+             }
+          ]
+        
         }
-    },
-    xAxis : [
-        {
-            type : "time",
-            boundaryGap: [0.05,0.1]
-        }
-    ],
-    series : [
-        {
-            "name": "财经事件", 
-            "type": "eventRiver", 
-            "weight": 123, 
-            "eventList": [
-                {
-                    "name": "阿里巴巴上市", 
-                    "weight": 123, 
-                    "evolution": [
-                        {
-                            "time": "2014-05-01", 
-                            "value": 14, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-02", 
-                            "value": 34, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-03", 
-                            "value": 60, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-04", 
-                            "value": 40, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-05", 
-                            "value": 10, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }
-                    ]
-                }, 
-                {
-                    "name": "阿里巴巴上市2", 
-                    "weight": 123, 
-                    "evolution": [
-                        {
-                            "time": "2014-05-02", 
-                            "value": 10, 
-                            "detail": {
-                                "link": "www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-03", 
-                            "value": 34, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-04", 
-                            "value": 40, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-05", 
-                            "value": 10, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }
-                    ]
-                }, 
-                {
-                    "name": "三星业绩暴跌", 
-                    "weight": 123, 
-                    "evolution": [
-                        {
-                            "time": "2014-05-03", 
-                            "value": 24, 
-                            "detail": {
-                                "link": "www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-04", 
-                            "value": 34, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-05", 
-                            "value": 50, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-06", 
-                            "value": 30, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-07", 
-                            "value": 20, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }
-                    ]
-                }
-            ]
-        }, 
-        {
-            "name": "政治事件", 
-            "type": "eventRiver", 
-            "weight": 123, 
-            "eventList": [
-                {
-                    "name": "Apec峰会", 
-                    "weight": 123, 
-                    "evolution": [
-                        {
-                            "time": "2014-05-06", 
-                            "value": 14, 
-                            "detail": {
-                                "link": "www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-07", 
-                            "value": 34, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-08", 
-                            "value": 60, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-09", 
-                            "value": 40, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-10", 
-                            "value": 20, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }
-                    ]
-                }, 
-                {
-                    "name": "运城官帮透视", 
-                    "weight": 123, 
-                    "evolution": [
-                        {
-                            "time": "2014-05-08", 
-                            "value": 4, 
-                            "detail": {
-                                "link": "www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-09", 
-                            "value": 14, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-10", 
-                            "value": 30, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-11", 
-                            "value": 20, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-12", 
-                            "value": 10, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }
-                    ]
-                }, 
-                {
-                    "name": "底层公务员收入超过副部长", 
-                    "weight": 123, 
-                    "evolution": [
-                        {
-                            "time": "2014-05-11", 
-                            "value": 4, 
-                            "detail": {
-                                "link": "www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-12", 
-                            "value": 24, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-13", 
-                            "value": 40, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-14", 
-                            "value": 20, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-15", 
-                            "value": 15, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }, 
-                        {
-                            "time": "2014-05-16", 
-                            "value": 10, 
-                            "detail": {
-                                "link": "http://www.baidu.com", 
-                                "text": "百度指数", 
-                                "img": "../asset/ico/favicon.png"
-                            }
-                        }
-                    ]
-                }
-            ]
-        }
+      }
+
     ]
-    }
+  }
+
                     
 eventRiver id = do
+  d <- D.now
   chart <- getElementById id
            >>= init Nothing
-           >>= setOptionUnsafe options true
+           >>= setOption (options d) true
 
   return unit

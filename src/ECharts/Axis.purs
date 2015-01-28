@@ -199,6 +199,13 @@ instance axisDataEncodeJson :: EncodeJson AxisData where
       "textStyle" := obj.textStyle
     ]
 
+data AxisBoundaryGap = CatBoundaryGap Boolean
+                   | ValueBoundaryGap Number Number
+
+instance axisBoundaryGapEncodeJson :: EncodeJson AxisBoundaryGap where
+  encodeJson (CatBoundaryGap bool) = encodeJson bool
+  encodeJson (ValueBoundaryGap num1 num2) = encodeJson [num1, num2]
+
 
 newtype Axis =
   Axis {
@@ -208,7 +215,7 @@ newtype Axis =
     "name" :: Maybe String,
     "nameLocation" :: Maybe AxisNameLocation,
     "nameTextStyle" :: Maybe TextStyle,
-    "boundaryGap" :: Maybe (Tuple Number Number),
+    "boundaryGap" :: Maybe AxisBoundaryGap,
     "min" :: Maybe Number,
     "max" :: Maybe Number,
     "scale" :: Maybe Boolean,

@@ -1,4 +1,10 @@
-module ECharts.Series.EventRiver where
+module ECharts.Series.EventRiver (
+  EvolutionDetail(..),
+  evolutionDetailDefault,
+  Evolution(..),
+  OneEvent(..),
+  oneEventDefault
+  ) where 
 
 import Data.Maybe
 import Data.Argonaut.Core
@@ -7,7 +13,7 @@ import Data.Argonaut.Combinators
 import Data.Tuple
 import Data.StrMap
 import Data.Date (Date(..))
-import Data.Argonaut.Extension.Date
+
 
 import ECharts.Common
 import ECharts.Coords
@@ -23,6 +29,7 @@ import ECharts.Series.Force
 import ECharts.Series.Gauge
 import ECharts.Axis
 import ECharts.Title
+
 
 newtype EvolutionDetail =
   EvolutionDetail {
@@ -53,7 +60,7 @@ newtype Evolution =
 
 instance evoEncodeJson :: EncodeJson Evolution where
   encodeJson (Evolution e) = fromObject $ fromList $ [
-    "time" := e.time,
+    "time" := show e.time,
     "value" := e.value,
     "detail" := e.detail
     ]

@@ -67,7 +67,9 @@ instance minMaxEncodeJson :: EncodeJson MinMax where
     "max" := mm.max
     ]
 
-data Radius = R Number | Rs {inner :: Number, outer :: Number}
+type Center = Tuple PercentOrPixel PercentOrPixel
+
+data Radius = R PercentOrPixel | Rs {inner :: PercentOrPixel, outer :: PercentOrPixel}
 instance radiusEncodeJson :: EncodeJson Radius where
   encodeJson (R num) = encodeJson num
   encodeJson (Rs {inner = i, outer = o}) = encodeJson [i, o]

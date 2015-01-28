@@ -11,7 +11,22 @@ import Utils
 
 import ECharts.Chart
 import ECharts.Events
-import ECharts.Options.Unsafe
+import ECharts.Options
+import ECharts.Tooltip
+import ECharts.Toolbox
+import ECharts.Coords
+import ECharts.Legend
+import ECharts.Axis
+import ECharts.Series
+import ECharts.Type
+import ECharts.Item.Data
+import ECharts.Item.Value
+import ECharts.Common
+import ECharts.Formatter
+import ECharts.Style.Item
+import qualified  ECharts.DataZoom as Zoom
+
+simpleData = Value <<< Simple
 
 lineData :: Eff _ [Number]
 lineData = do 
@@ -23,55 +38,58 @@ barData = do
   lst <- randomLst 30
   return $ (\x -> round $ x * 10) <$> lst
 
-options_ line bar = {
-    tooltip : {
-        trigger: "axis"
+options_ :: [Number] -> [Number] -> Option
+options_ line bar = Option $ optionDefault {
+  tooltip = Just $ Tooltip tooltipDefault {trigger = Just TriggerAxis},
+  legend = Just $ Legend legendDefault {
+    "data" = Just $ legendItemDefault <$> ["fst","snd"]
     },
-    legend: {
-        data:["最高","最低"]
-    },
-    toolbox: {
-        show : true,
-        feature : {
-            mark : {show: true},
-            dataView : {readOnly:false},
-            magicType : {show: true, type: ["line", "bar", "stack", "tiled"]},
-            restore : {show: true},
-            saveAsImage : {show: true}
-        }
-    },
-    calculable : true,
-    dataZoom : {
-        show : true,
-        realtime : true,
-        start : 40,
-        end : 60
-    },
-    xAxis : [
-        {
-            type : "category",
-            boundaryGap : true,
-            "data": (\i -> "2013-03-" <> show i) <$> (1..30)
-        }
-    ],
-    yAxis : [
-        {
-            type : "value"
-        }
-    ],
-    series : [
-        {
-            name:"最高",
-            type:"line",
-            "data": line
+  toolbox = Just $ Toolbox $ toolboxDefault {
+    "show" = Just true,
+    "x" = Just XRight,
+    "feature" = Just $ Feature $ featureDefault {
+      "mark" = Just $ MarkFeature $ markFeatureDefault {show = Just true},
+      "dataView" = Just $ DataViewFeature $ dataViewFeatureDefault {
+        "show" = Just true,
+        "readOnly" = Just false
         },
-        {
-            name:"最低",
-            type:"bar",
-            "data": bar
+      "magicType" = Just $ MagicTypeFeature $ magicTypeFeatureDefault {
+        "show" = Just true,
+        "type" = Just [MagicLine, MagicBar, MagicStack, MagicTiled]
+        },
+      "restore" = Just $ RestoreFeature $ restoreFeatureDefault {
+        "show" = Just true
+        },
+      "saveAsImage" = Just $ SaveAsImageFeature $ saveAsImageFeatureDefault {
+        "show" = Just true
         }
+      }
+    },
+  "calculable" = Just true,
+  "dataZoom" = Just $ Zoom.DataZoom $ Zoom.dataZoomDefault {
+    "show" = Just true,
+    "realtime" = Just true,
+    "start" = Just 40,
+    "end" = Just 60
+    },
+  "xAxis" = Just $ OneAxis $ Axis $ axisDefault {
+    "type" = Just CategoryAxis,
+    "boundaryGap" = Just $ CatBoundaryGap true,
+    "data" = Just $ (\i -> CommonAxisData $ "2013-03-" <> show i) <$> (1..30) 
+    },
+  "yAxis" = Just $ OneAxis $ Axis $ axisDefault {"type" = Just ValueAxis},
+  "series" = Just $ Just <$> [
+    LineSeries {
+       "common": universalSeriesDefault{"name" = Just "fst"},
+       "special": lineSeriesDefault{"data" = Just $ simpleData <$> line}
+       },
+    BarSeries {
+      "common": universalSeriesDefault{"name" = Just "snd"},
+      "special": barSeriesDefault{"data" = Just $ simpleData <$> bar}
+      }
     ]
-    }
+  }
+
 
 options :: Eff _ _ 
 options = do
@@ -94,7 +112,7 @@ events id = do
   opts <- options
   chart <- getElementById id
            >>= init Nothing
-           >>= setOptionUnsafe opts true
+           >>= setOption opts true
 
   subscribe chart
   return unit

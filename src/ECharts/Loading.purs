@@ -11,6 +11,7 @@ import ECharts.Coords
 import ECharts.Chart
 import ECharts.Style.Text
 import ECharts.Effects
+import ECharts.Utils
 
 import Data.Array (concat)
 import Data.Function
@@ -22,6 +23,7 @@ import Control.Monad.Eff
 import Data.Argonaut.Core
 import Data.Argonaut.Combinators
 import Data.Argonaut.Encode
+
 
 data LoadingEffect = Spin | Bar | Ring | Whirling | DynamicLine | Bubble
 
@@ -68,7 +70,7 @@ function showLoadingImpl(json, chart) {
 showLoading :: forall e. LoadingOption -> EChart ->
                Eff (showLoadingECharts::LoadingShow|e) EChart
 showLoading opts chart =
-  runFn2 showLoadingImpl (encodeJson opts) chart
+  runFn2 showLoadingImpl (unnull (encodeJson opts)) chart
 
 
 

@@ -53,11 +53,11 @@ newtype Node =
     "symbolSize" :: Maybe SymbolSize,
     "itemStyle" :: Maybe ItemStyle,
 
-    "initial" :: Maybe [Number],
+    "initial" :: Maybe (Tuple Number Number),
     "fixX" :: Maybe Boolean,
     "fixY" :: Maybe Boolean,
     "draggable" :: Maybe Boolean,
-    "category" :: Maybe ForceCategory
+    "category" :: Maybe Number
     }
 
 nodeDefault value = {
@@ -102,7 +102,7 @@ newtype Link =
     source :: LinkEnd,
     target :: LinkEnd,
     weight :: Number,
-    itemStyle :: ItemStyle 
+    itemStyle :: Maybe ItemStyle 
     }
 
 instance linkEncodeJson :: EncodeJson Link where

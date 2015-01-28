@@ -66,7 +66,6 @@ gulp.task("prod", function() {
         modules: ["Main"],
         main: "Main"
     });
-    console.warning("Will not work because of chinese language");
     handleError(psc);
     return gulp.src(
         [paths.src].concat(paths.example).concat(paths.bowerSrc)

@@ -19,6 +19,7 @@ data ItemData = Value ItemValue
                 "itemStyle" :: Maybe ItemStyle,
                 "selected" :: Maybe Boolean
                     }
+              | Label String
 
 
 instance itemDataEncodeJson :: EncodeJson ItemData where
@@ -32,6 +33,9 @@ instance itemDataEncodeJson :: EncodeJson ItemData where
       "itemStyle" := conf.itemStyle,
       "selected" := conf.selected
     ]
+  encodeJson (Label name) =
+    fromObject $ fromList $ 
+    ["name" := name]
 
 -- Shortcut 
 dataDefault :: ItemValue -> _

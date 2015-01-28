@@ -481,8 +481,7 @@
       Legend :: { "data" :: Maybe [LegendItem], selected :: Maybe (StrMap Boolean), selectedMode :: Maybe SelectedMode, formatter :: Maybe Formatter, textStyle :: Maybe TextStyle, itemWidth :: Maybe Number, itemHeight :: Maybe Number, itemGap :: Maybe Number, padding :: Maybe (Corner Number), borderWidth :: Maybe Number, borderColor :: Maybe Color, backgroundColor :: Maybe Color, y :: Maybe YPos, x :: Maybe XPos, orient :: Maybe Orient, show :: Maybe Boolean } -> Legend
 
     data LegendItem where
-      LegendString :: String -> LegendItem
-      LegendItem :: { textStyle :: Maybe TextStyle, icon :: Maybe String, name :: Maybe String } -> LegendItem
+      LegendItem :: String -> { textStyle :: Maybe TextStyle, icon :: Maybe String } -> LegendItem
 
 
 ### Type Class Instances
@@ -527,7 +526,7 @@
 ### Types
 
     newtype Option where
-      Option :: { series :: Maybe [Series], polar :: Maybe [Polar], yAxis :: Maybe Axises, xAxis :: Maybe Axises, grid :: Maybe Grid, roamController :: Maybe RoamController, dataZoom :: Maybe DataZoom, dataRange :: Maybe DataRange, legend :: Maybe Legend, title :: Maybe Title, toolbox :: Maybe Toolbox, tooltip :: Maybe Tooltip, timeline :: Maybe Timeline, animation :: Maybe Boolean, calculable :: Maybe Boolean, renderAsImage :: Maybe Boolean, color :: Maybe [Color], backgroundColor :: Maybe Color } -> Option
+      Option :: { series :: Maybe [Maybe Series], polar :: Maybe [Polar], yAxis :: Maybe Axises, xAxis :: Maybe Axises, grid :: Maybe Grid, roamController :: Maybe RoamController, dataZoom :: Maybe DataZoom, dataRange :: Maybe DataRange, legend :: Maybe Legend, title :: Maybe Title, toolbox :: Maybe Toolbox, tooltip :: Maybe Tooltip, timeline :: Maybe Timeline, animation :: Maybe Boolean, calculable :: Maybe Boolean, renderAsImage :: Maybe Boolean, color :: Maybe [Color], backgroundColor :: Maybe Color } -> Option
 
 
 ### Type Class Instances
@@ -557,20 +556,49 @@
 
 ### Types
 
-    newtype Series where
-      Series :: { eventList :: Maybe [OneEvent], weight :: Maybe Number, gap :: Maybe Number, maxSize :: Maybe PercentOrPixel, minSize :: Maybe PercentOrPixel, funnelAlign :: Maybe HorizontalAlign, height :: Maybe PercentOrPixel, width :: Maybe PercentOrPixel, y2 :: Maybe PercentOrPixel, y :: Maybe PercentOrPixel, x2 :: Maybe PercentOrPixel, x :: Maybe PercentOrPixel, detail :: Maybe GaugeDetail, title :: Maybe Title, splitLine :: Maybe SplitLine, axisLabel :: Maybe AxisLabel, axisTick :: Maybe AxisTick, axisLine :: Maybe AxisLine, splitNumber :: Maybe Number, precision :: Maybe Number, max :: Maybe Number, min :: Maybe Number, endAngle :: Maybe Number, sortSub :: Maybe Sort, sort :: Maybe Sort, padding :: Maybe Number, showScaleText :: Maybe Boolean, showScale :: Maybe Boolean, ribbonType :: Maybe Boolean, steps :: Maybe Number, useWorker :: Maybe Boolean, draggable :: Maybe Number, gravity :: Maybe Number, scaling :: Maybe Number, linkSymbolSize :: Maybe Symbol, linkSymbol :: Maybe Symbol, maxRadius :: Maybe Number, minRadius :: Maybe Number, size :: Maybe Number, matrix :: Maybe Matrix, links :: Maybe [Link], nodes :: Maybe [Node], categories :: Maybe [ForceCategory], geoCoord :: Maybe (StrMap (Tuple Number Number)), textFixed :: Maybe (StrMap (Tuple Number Number)), nameMap :: Maybe (StrMap String), scaleLimit :: Maybe MinMax, roam :: Maybe Roam, showLegendSymbol :: Maybe Boolean, mapValuePrecision :: Maybe Number, mapValueCalculation :: Maybe MapValueCalculation, mapLocation :: Maybe Location, dataRangeHoverLink :: Maybe Boolean, hoverable :: Maybe Boolean, mapType :: Maybe String, polarIndex :: Maybe Number, selectedMode :: Maybe SelectedMode, selectedOffset :: Maybe Number, roseType :: Maybe RoseType, clockWise :: Maybe Boolean, minAngle :: Maybe Number, startAngle :: Maybe Number, radius :: Maybe Radius, center :: Maybe (Tuple Number Number), legendHoverLink :: Maybe Boolean, largeThreshold :: Maybe Number, large :: Maybe Boolean, smooth :: Maybe Boolean, showAllSymbol :: Maybe Boolean, symbolSize :: Maybe SymbolSize, symbolRotate :: Maybe Boolean, symbol :: Maybe Symbol, barHeight :: Maybe Number, barWidth :: Maybe Number, barMinHeight :: Maybe Number, barMinWidth :: Maybe Number, barCategoryGap :: Maybe PercentOrPixel, barGap :: Maybe PercentOrPixel, yAxisIndex :: Maybe Number, xAxisIndex :: Maybe Number, stack :: Maybe String, "data" :: Maybe [ItemData], markLine :: Maybe [MarkLine], markPoint :: Maybe [MarkPoint], itemStyle :: Maybe ItemStyle, clickable :: Maybe Boolean, tooltip :: Maybe Tooltip, name :: Maybe String, "type" :: ChartType } -> Series
+    data Series where
+      LineSeries :: { special :: LineSeriesRec, common :: UniversalSeriesRec } -> Series
+      BarSeries :: { special :: BarSeriesRec, common :: UniversalSeriesRec } -> Series
+      ScatterSeries :: { special :: ScatterSeriesRec, common :: UniversalSeriesRec } -> Series
+      CandlestickSeries :: { special :: CandlestickSeriesRec, common :: UniversalSeriesRec } -> Series
+      PieSeries :: { special :: PieSeriesRec, common :: UniversalSeriesRec } -> Series
+      RadarSeries :: { special :: RadarSeriesRec, common :: UniversalSeriesRec } -> Series
+      ChordSeries :: { special :: ChordSeriesRec, common :: UniversalSeriesRec } -> Series
+      ForceSeries :: { special :: ForceSeriesRec, common :: UniversalSeriesRec } -> Series
+      MapSeries :: { special :: MapSeriesRec, common :: UniversalSeriesRec } -> Series
+      GaugeSeries :: { special :: GaugeSeriesRec, common :: UniversalSeriesRec } -> Series
+      FunnelSeries :: { special :: FunnelSeriesRec, common :: UniversalSeriesRec } -> Series
+      EventRiverSeries :: { special :: EventRiverSeriesRec, common :: UniversalSeriesRec } -> Series
 
 
 ### Type Class Instances
 
-    instance seriesEncodeJson :: EncodeJson Series
+    instance encodeSeries :: EncodeJson Series
 
 
 ### Values
 
-    seriesDefault :: ChartType -> _
-
     setSeries :: forall e. [Series] -> Boolean -> EChart -> Eff e EChart
+
+
+## Module ECharts.SeriesAll
+
+### Types
+
+    newtype SeriesAll where
+      SeriesAll :: { eventList :: Maybe [OneEvent], weight :: Maybe Number, gap :: Maybe Number, maxSize :: Maybe PercentOrPixel, minSize :: Maybe PercentOrPixel, funnelAlign :: Maybe HorizontalAlign, height :: Maybe PercentOrPixel, width :: Maybe PercentOrPixel, y2 :: Maybe PercentOrPixel, y :: Maybe PercentOrPixel, x2 :: Maybe PercentOrPixel, x :: Maybe PercentOrPixel, detail :: Maybe GaugeDetail, title :: Maybe Title, splitLine :: Maybe SplitLine, axisLabel :: Maybe AxisLabel, axisTick :: Maybe AxisTick, axisLine :: Maybe AxisLine, splitNumber :: Maybe Number, precision :: Maybe Number, max :: Maybe Number, min :: Maybe Number, endAngle :: Maybe Number, sortSub :: Maybe Sort, sort :: Maybe Sort, padding :: Maybe Number, showScaleText :: Maybe Boolean, showScale :: Maybe Boolean, ribbonType :: Maybe Boolean, steps :: Maybe Number, useWorker :: Maybe Boolean, draggable :: Maybe Number, gravity :: Maybe Number, scaling :: Maybe Number, linkSymbolSize :: Maybe Symbol, linkSymbol :: Maybe Symbol, maxRadius :: Maybe Number, minRadius :: Maybe Number, size :: Maybe Number, matrix :: Maybe Matrix, links :: Maybe [Link], nodes :: Maybe [Node], categories :: Maybe [ForceCategory], geoCoord :: Maybe (StrMap (Tuple Number Number)), textFixed :: Maybe (StrMap (Tuple Number Number)), nameMap :: Maybe (StrMap String), scaleLimit :: Maybe MinMax, roam :: Maybe Roam, showLegendSymbol :: Maybe Boolean, mapValuePrecision :: Maybe Number, mapValueCalculation :: Maybe MapValueCalculation, mapLocation :: Maybe Location, dataRangeHoverLink :: Maybe Boolean, hoverable :: Maybe Boolean, mapType :: Maybe String, polarIndex :: Maybe Number, selectedMode :: Maybe SelectedMode, selectedOffset :: Maybe Number, roseType :: Maybe RoseType, clockWise :: Maybe Boolean, minAngle :: Maybe Number, startAngle :: Maybe Number, radius :: Maybe Radius, center :: Maybe (Tuple Number Number), legendHoverLink :: Maybe Boolean, largeThreshold :: Maybe Number, large :: Maybe Boolean, smooth :: Maybe Boolean, showAllSymbol :: Maybe Boolean, symbolSize :: Maybe SymbolSize, symbolRotate :: Maybe Boolean, symbol :: Maybe Symbol, barHeight :: Maybe Number, barWidth :: Maybe Number, barMinHeight :: Maybe Number, barMinWidth :: Maybe Number, barCategoryGap :: Maybe PercentOrPixel, barGap :: Maybe PercentOrPixel, yAxisIndex :: Maybe Number, xAxisIndex :: Maybe Number, stack :: Maybe String, "data" :: Maybe [ItemData], markLine :: Maybe [MarkLine], markPoint :: Maybe [MarkPoint], itemStyle :: Maybe ItemStyle, clickable :: Maybe Boolean, tooltip :: Maybe Tooltip, name :: Maybe String, "type" :: ChartType } -> SeriesAll
+
+
+### Type Class Instances
+
+    instance seriesEncodeJson :: EncodeJson SeriesAll
+
+
+### Values
+
+    seriesAllDefault :: ChartType -> _
+
+    setSeriesAll :: forall e. [SeriesAll] -> Boolean -> EChart -> Eff e EChart
 
 
 ## Module ECharts.Symbol

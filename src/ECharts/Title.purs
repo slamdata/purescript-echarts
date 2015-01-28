@@ -74,5 +74,7 @@ titleDefault = {
   padding: Nothing,
   itemGap: Nothing,
   textStyle: Nothing,
-  subtextStyle: Nothing
+  subtextStyle: Nothing,
+  borderWidth: Nothing,
+  target: Nothing
   }

@@ -7,73 +7,126 @@ import Control.Monad.Eff
 import Control.Monad.Eff.Random
 
 import Utils
-import ECharts.Loading
-import ECharts.Style.Text
 import ECharts.Chart
-import ECharts.Options.Unsafe
+import ECharts.Events
+import ECharts.Options
+import ECharts.Tooltip
+import ECharts.Toolbox
+import ECharts.Coords
+import ECharts.Legend
+import ECharts.Axis
+import ECharts.Series
+import ECharts.Type
+import ECharts.Item.Data
+import ECharts.Item.Value
+import ECharts.Common
+import ECharts.Formatter
+import ECharts.Style.Item
+import ECharts.AddData
+import ECharts.Title
+import ECharts.Style.Text
+import qualified ECharts.DataZoom as Zoom
+import qualified ECharts.Loading as L
 
 import Signal
 import Signal.Time
 
-allEffects :: [LoadingEffect]
-allEffects = [Spin, Bar, Ring, Whirling, DynamicLine, Bubble]
+simpleData = Value <<< Simple
 
-effect :: LoadingEffect -> LoadingOption
-effect eff = LoadingOption $ 
-  loadingOptionDefault{
+allEffects :: [L.LoadingEffect]
+allEffects = [L.Spin, L.Bar, L.Ring, L.Whirling, L.DynamicLine, L.Bubble]
+
+effect :: L.LoadingEffect -> L.LoadingOption
+effect eff = L.LoadingOption $ 
+  L.loadingOptionDefault{
     text = Just $ "effect",
     effect = Just eff,
     textStyle = Just $ TextStyle $ textStyleDefault {fontSize = Just 20}
   }
 
-options i =
-  let serieType = if i % 2 == 0 then "bar" else "line" in
-  {
-    tooltip : {
-        trigger: "axis"
-    },
-    toolbox: {
-        show : true,
-        feature : {
-            mark : {show: true},
-            dataView : {show: true, readOnly: false},
-            magicType : {show: true, type: ["line", "bar"]},
-            restore : {show: true},
-            saveAsImage : {show: true}
-        }
-    },
-    legend: {
-        data:["蒸发量","降水量"]
-    },
-    xAxis : [
-        {
-            type : "category",
-            data : ["1月","2月","3月","4月",
-                    "5月","6月","7月","8月","9月","10月","11月","12月"]
-        }
-    ],
-    yAxis : [
-        {
-            type : "value"
-        }
-    ],
-    series : [
-        {
-            name:"蒸发量",
-            type: serieType,
-            data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
+series true = [
+  LineSeries {
+     common: universalSeriesDefault {
+        "name" = Just "first"
         },
-        {
-            name:"降水量",
-            type: serieType,
-            data: [2.6, 5.9, 9.0, 
-                   26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
-        }
-    ]
+     special: lineSeriesDefault {
+       "data" = Just $ simpleData <$> [2.0, 4.9, 7.0, 23.2, 25.6,
+                                       76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
+       }
+     },
+  LineSeries {
+    common: universalSeriesDefault {
+       "name" = Just "second"
+       },
+    special: lineSeriesDefault {
+      "data" = Just $ simpleData <$> [2.6, 5.9, 9.0, 
+                                      26.4, 28.7, 70.7, 175.6, 182.2, 48.7,
+                                      18.8, 6.0, 2.3]
+      }
+    }
+  ]
+series false = [
+    BarSeries {
+     common: universalSeriesDefault {
+        "name" = Just "first"
+        },
+     special: barSeriesDefault {
+       "data" = Just $ simpleData <$> [2.0, 4.9, 7.0, 23.2, 25.6,
+                                       76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
+       }
+     },
+  BarSeries {
+    common: universalSeriesDefault {
+       "name" = Just "second"
+       },
+    special: barSeriesDefault {
+      "data" = Just $ simpleData <$> [2.6, 5.9, 9.0, 
+                                      26.4, 28.7, 70.7, 175.6, 182.2, 48.7,
+                                      18.8, 6.0, 2.3]
+      }
+    }
+  ]
+
+
+
+options i = Option $ optionDefault {
+  tooltip = Just $ Tooltip tooltipDefault {trigger = Just TriggerAxis},
+  toolbox = Just $ Toolbox $ toolboxDefault {
+    "show" = Just true,
+    "feature" = Just $ Feature $ featureDefault {
+      "mark" = Just $ MarkFeature $ markFeatureDefault {show = Just true},
+      "dataView" = Just $ DataViewFeature $ dataViewFeatureDefault {
+        "show" = Just true,
+        "readOnly" = Just false
+        },
+      "magicType" = Just $ MagicTypeFeature $ magicTypeFeatureDefault {
+        "show" = Just true,
+        "type" = Just [MagicLine, MagicBar]
+        },
+      "restore" = Just $ RestoreFeature $ restoreFeatureDefault {
+        "show" = Just true
+        },
+      "saveAsImage" = Just $ SaveAsImageFeature $ saveAsImageFeatureDefault {
+        "show" = Just true
+         }
+      }
+    },
+  legend = Just $ Legend legendDefault {
+    "data" = Just $ legendItemDefault <$> ["first","second"]
+    },
+  xAxis = Just $ OneAxis $ Axis axisDefault {
+    "type" = Just CategoryAxis,
+    "data" = Just $ CommonAxisData <$>
+             ["1","2","3","4",
+              "5","6","7","8","9","10","11","12"]
+    },
+  yAxis = Just $ OneAxis $ Axis axisDefault {
+    "type" = Just ValueAxis
+    },
+  series = Just $ Just <$> (series (i % 2 == 0))
   }
 
-
-data ChartSignal a = StartLoading LoadingOption | StopLoading a
+data ChartSignal a = StartLoading L.LoadingOption | StopLoading a
 
 
 dataStream :: Signal (Eff _ (ChartSignal _))
@@ -91,7 +144,7 @@ dataStream =
               case effAndI of
                 Tuple eff i ->
                   return $ StartLoading (effect eff))
-  (return $ StartLoading (effect Spin))
+  (return $ StartLoading (effect L.Spin))
   (every 2000)
 
   
@@ -102,8 +155,8 @@ loading id = do
   runSignal $ dataStream ~> \effContent -> do
       content <- effContent
       case content of
-        StartLoading loadOptions -> showLoading loadOptions chart
+        StartLoading loadOptions -> L.showLoading loadOptions chart
                                     >>= \_ -> return unit
         StopLoading options -> 
-          setOptionUnsafe options true chart >>= hideLoading
+          setOption options true chart >>= L.hideLoading
           >>= \_ -> return unit

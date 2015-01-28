@@ -22,12 +22,102 @@ import ECharts.Formatter
 import ECharts.Style.Item
 
 
+simpleData = Value <<< Simple
+series :: [Series]
+series = [
+  BarSeries {
+     common: universalSeriesDefault {"name" = Just "direct access"},
+     special: barSeriesDefault {
+       "data" = Just $ simpleData <$> [320, 332, 301, 334, 390, 330, 320],
+       "stack" = Just "total"
+       }
+     },
+  BarSeries {
+    common: universalSeriesDefault {
+       "name" = Just "email marketing",
+       "tooltip" = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem}
+       },
+    special: barSeriesDefault {
+      "data" = Just $ simpleData <$> [120, 132, 101, 134, 90, 230, 210],
+      "stack" = Just "total"
+      }
+    },
+  BarSeries {
+    common: universalSeriesDefault {
+       "name" = Just "affiliate advertising",
+       "tooltip" = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem}
+       },
+    special: barSeriesDefault {
+      "data" = Just $ simpleData <$> [220, 182, 191, 234, 290, 330, 310]
+      }
+    },
+  BarSeries {
+    common: universalSeriesDefault {
+       "name" = Just "video ads",
+       "tooltip" = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem}
+       },
+    special: barSeriesDefault {
+      "data" = Just $ simpleData <$> [150, 232, 201, 154, 190, 330, 410]
+      }
+    },
+  LineSeries {
+    common: universalSeriesDefault{
+       "name" = Just "must be"
+       },
+    special: lineSeriesDefault {
+      "data" = Just $ simpleData <$>
+               [862, 1018, 964, 1026, 1679, 1600, 1570]
+      }
+    },
+  PieSeries {
+    common: universalSeriesDefault {
+       "name" = Just "search engine",
+       "itemStyle" = Just $ ItemStyle {
+         "emphasis": Nothing,
+         "normal": Just $ IStyle $ istyleDefault {
+           "labelLine" = Just $ ItemLabelLine {
+              "show": Just true,
+              "length": Just 20,
+              "lineStyle": Nothing
+              }
+           }
+         },
+       "tooltip" = Just $ Tooltip $ tooltipDefault {
+         trigger = Just TriggerItem,
+         formatter = Just $ Template "{a} <br/> {b}: {c} ({d}%)"
+         }
+       },
+    special: pieSeriesDefault {
+      "radius" = Just $ Rs {inner: (Pixel 0), outer: (Pixel 50)},
+      "center" = Just $ Tuple (Percent 160) (Percent 130),
+      "data" = Just $ Dat <$> [
+         (dataDefault (Simple 1047)) {
+            "name" = Just "Baidu"
+            },
+         (dataDefault (Simple 264)) {
+           "name" = Just "Google"
+           },
+         (dataDefault (Simple 145)) {
+           "name" = Just "Bing"
+           },
+         (dataDefault (Simple 102)) {
+           "name" = Just "other"
+           }
+         ]
+
+
+      }
+    }
+  
+  ]
+         
+         
 options :: Option
 options = Option $ optionDefault {
   tooltip = Just $ Tooltip tooltipDefault {trigger = Just TriggerAxis},
   toolbox = Just $ Toolbox toolboxDefault {
     show = Just true,
-    y = Just YBottom ,
+    y = Just YBottom,
     feature = Just $ Feature {
       mark: Just $ MarkFeature {
          show: Just true,
@@ -61,91 +151,42 @@ options = Option $ optionDefault {
     },
   calculable = Just true,
   legend = Just $ Legend $ legendDefault {
-    "data" = Just $ (LegendString <$> ["直接访问","邮件营销","联盟广告","视频广告",
-                                         "搜索引擎","百度","谷歌","必应","其他"])
-    
+    "data" = Just $ legendItemDefault <$>
+             ["direct access",
+              "email marketing",
+              "affiliate advertising",
+              "video ads",
+              "search engine",
+              "Baidu",
+              "Google",
+              "must be",
+              "other"]
+             
     },
   xAxis = Just $ OneAxis $ Axis $ axisDefault {
     "type" = Just CategoryAxis,
-    "splitLine" = Just $ AxisSplitLine  $ axisSplitLineDefault {
+    "splitLine" = Just $ AxisSplitLine $ axisSplitLineDefault {
       "show" = Just false
       },
-    "data" = Just $ (CommonAxisData <$>
-                     ["周一","周二","周三","周四","周五","周六","周日"])
-    },
-  yAxis = Just $ OneAxis $ Axis $ axisDefault {
-    "type" = Just ValueAxis,
-    "position" = Just RightAxis
-    },
-  series = Just $ [
-    Series $ (seriesDefault Bar){
-       "name" = Just "直接访问",
-       "data" = Just $ ((Value <<< Simple) <$> [320, 332, 301, 334, 390, 330, 320])
-       },
-    Series $ (seriesDefault Bar) {
-      "name" = Just "邮件营销",
-      "tooltip" = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem},
-      "stack" = Just "广告",
-      "data" = Just $ ((Value <<< Simple) <$> [120, 132, 101, 134, 90, 230, 210])
-      },
-    Series $ (seriesDefault Bar) {
-      "name" = Just "联盟广告",
-      "tooltip" = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem},
-      "stack" = Just "广告",
-      "data" = Just $ ((Value <<< Simple) <$> [220, 182, 191, 234, 290, 330, 310])
-      },
-    Series $ (seriesDefault Bar) {
-      "name" = Just "视频广告",
-      "tooltip" = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem},
-      "stack" = Just "广告",
-      "data" = Just $ ((Value <<< Simple) <$> [150, 232, 201, 154, 190, 330, 410])
-      },
-    Series $ (seriesDefault Line) {
-      "data" = Just $ ((Value <<< Simple) <$>
-                       [862, 1018, 964, 1026, 1679, 1600, 1570])
-      },
-    Series $ (seriesDefault Pie) {
-      "name" = Just "搜索引擎细分",
-      "center" = Just (Tuple 160 130),
-      "radius" = Just $ Rs {inner: 0, outer: 50},
-      "itemStyle" = Just $ ItemStyle {
-        "emphasis": Nothing,
-        "normal": Just $ IStyle $ istyleDefault {
-          "labelLine" = Just $ ItemLabelLine {
-             "show": Just true,
-             "length" : Just 20,
-             "lineStyle": Nothing
-             }
-          }
-        },
-      "tooltip" = Just $ Tooltip $ tooltipDefault {
-        trigger = Just TriggerItem,
-        formatter = Just $ Template "{a} <br/>{b} : {c} ({d}%)"
-        },
-      "data" = Just $ [
-        Dat $ (dataDefault (Simple 1047)){
-           "name" = Just "百度"
-           },
-        Dat $ (dataDefault (Simple 264)){
-          "name" = Just "谷歌"
-          },
-        Dat $ (dataDefault (Simple 145)){
-          "name" = Just "必应"
-          },
-        Dat $ (dataDefault (Simple 102)){
-          "name" = Just "其他"
-          }
-        ]
-      }
-    
-    ]
+    "data" = Just $ CommonAxisData <$>
+             ["Monday", "Tuesday", "Wednesday",
+              "Thursday", "Friday", "Saturday", "Sunday"]
+     },
+   yAxis = Just $ OneAxis $ Axis $ axisDefault {
+     "type" = Just ValueAxis,
+     "position" = Just RightAxis
+     },
+   series = Just $ Just <$> series
   
-  }
+   }
 
 
 mix2safe id = do
-  chart <- getElementById id
-           >>= init Nothing
+   chart <- getElementById id
+            >>= init Nothing
 
-  setOption options true chart
-  return unit
+   setOption options true chart
+   return unit
+
+
+

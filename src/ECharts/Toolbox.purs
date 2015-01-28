@@ -271,7 +271,7 @@ newtype MagicTypeFeature =
     "type" :: Maybe [MagicType]
     }
 
-magicTypeFeature = {
+magicTypeFeatureDefault = {
   show: Nothing,
   title: Nothing,
   option: Nothing,

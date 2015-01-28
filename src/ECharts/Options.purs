@@ -28,6 +28,15 @@ import ECharts.Axis
 import ECharts.Utils
 import ECharts.Effects
 
+{- To set second series tooltip
+     Option{series = Just [Nothing,
+        Just $ SomeSeries
+                 universalSeriesDefault{tooltip = Just myTooltip}
+                 someSeriesDefault 
+       }
+   It will erase all series data if we use [] as zero in updating
+   i.e. legend.
+-}
 
 newtype Option =
   Option {
@@ -49,8 +58,8 @@ newtype Option =
     "xAxis" :: Maybe Axises,
     "yAxis" :: Maybe Axises,
     "polar" :: Maybe [Polar],
-    
-    "series" :: Maybe [Series]
+
+    "series" :: Maybe [Maybe Series]
     }
 
 instance optionsEncodeJson :: EncodeJson Option where
@@ -103,6 +112,8 @@ optionDefault = {
 foreign import setOptionImpl """
 function setOptionImpl(option, notMerge, chart) {
   return function() {
+if (!window.options) window.options = [];
+window.options.push(option);
     return chart.setOption(option, notMerge);
   };
 }

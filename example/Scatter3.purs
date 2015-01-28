@@ -10,7 +10,11 @@ import Data.Traversable
 
 
 import ECharts.Chart
-import ECharts.Options.Unsafe
+import ECharts.Options
+import ECharts.Series
+import ECharts.Item.Value
+import ECharts.Item.Data
+import ECharts.Axis
 import Data.Maybe
 import qualified Utils as U
 showIt = {show: true}
@@ -33,58 +37,39 @@ cosData = do
         Tuple i (U.precise 3 $ cos i - i * (if i % 2 > 0 then 0.1 else -0.1) * rnd)
   return $ mapfn <$> randoms
 
+simpleData (Tuple a b) = Value $ XYR {
+  x: a,
+  y: b,
+  r: Nothing
+  }
+
 options :: Eff _ _ 
 options = do
-
   sines <- sinData
   coses <- cosData
-  return
-    {
-      tooltip:
-      {
-        trigger: "axis",
-        showDelay: 0,
-        axisPointer:
-        {
-          "type": "cross",
-          lineStyle:
-          {
-            "type": "dashed",
-            width: 1
-          }
-        }
-      },
-      legend: {"data": ["sin", "cos"]},
-    
-      toolbox:
-      {
-        show: true,
-        feature:
-        {
-          mark: showIt,
-          dataZoom: showIt,
-          dataView: {show: true, readOnly: true},
-          restore: showIt,
-          saveAsImage: showIt
-        }
-      },
-      xAxis: [{"type": "value", scale: true}],
-      yAxis: [{"type": "value", scale: true}],
-      series:
-      (
-         {
-           name: "sin",
-           "type": "scatter",
-           large: true,
-           "data": sines
-         } /\
-         {
-           name: "cos",
-           "type": "scatter",
-           large: true,
-           "data": coses
+  return $ Option $ optionDefault {
+    xAxis = Just $ OneAxis $ Axis axisDefault {"type" = Just ValueAxis},
+    yAxis = Just $ OneAxis $ Axis axisDefault {"type" = Just ValueAxis},
+    series = Just $ Just <$> [
+       ScatterSeries {
+          common: universalSeriesDefault{
+             "name" = Just "sin"
+             },
+          "special": scatterSeriesDefault {
+            "large" =  Just true,
+            "data" = Just $ simpleData <$> sines
+            }
+          },
+       ScatterSeries {
+         common: universalSeriesDefault{
+            "name" = Just "cos"
+            },
+         "special": scatterSeriesDefault {
+           "large" = Just true,
+           "data" = Just $ simpleData <$> coses
+           }
          }
-      )
+       ]
     }
     
 
@@ -92,7 +77,7 @@ scatter3 id = do
   opts <- options
   chart <- U.getElementById id
            >>= init Nothing
-           >>= setOptionUnsafe opts true
+           >>= setOption opts true
 
   return unit
 

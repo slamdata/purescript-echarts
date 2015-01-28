@@ -11,7 +11,7 @@ instance chartTypeEncodeJson :: EncodeJson ChartType where
     Line -> "line"
     Bar -> "bar"
     Scatter -> "scatter"
-    Candlestick -> "candlestick"
+    Candlestick -> "k"
     Pie -> "pie"
     Radar -> "radar"
     Chord -> "chord"

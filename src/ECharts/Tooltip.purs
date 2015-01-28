@@ -78,7 +78,8 @@ newtype Tooltip =
     "borderWidth" :: Maybe Number,
     "padding" :: Maybe (Corner Number),
     "axisPointer" :: Maybe TooltipAxisPointer,
-    "textStyle" :: Maybe TextStyle
+    "textStyle" :: Maybe TextStyle,
+    "enterable" :: Maybe Boolean
     }
 
 
@@ -101,7 +102,8 @@ instance tooltipEncodeJson :: EncodeJson Tooltip where
       "borderWidth" := obj.borderWidth,
       "padding" := obj.padding,
       "axisPointer" := obj.axisPointer,
-      "textStyle" := obj.textStyle
+      "textStyle" := obj.textStyle,
+      "enterable" := obj.enterable
     ]
 
 tooltipDefault = {
@@ -120,5 +122,6 @@ tooltipDefault = {
   "borderWidth": Nothing,
   "padding": Nothing,
   "axisPointer": Nothing,
-  "textStyle": Nothing
+  "textStyle": Nothing,
+  "enterable" : Nothing
   }

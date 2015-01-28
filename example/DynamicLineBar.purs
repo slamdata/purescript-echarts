@@ -11,12 +11,28 @@ import Data.Traversable
 import Data.Foldable
 import Utils (precise, getElementById)
 import Math (round)
+import Data.Tuple hiding (zip)
+
 
 import ECharts.Chart
-import ECharts.Options.Unsafe
-import ECharts.AddData
+import ECharts.Events
+import ECharts.Options
+import ECharts.Tooltip
+import ECharts.Toolbox
+import ECharts.Coords
+import ECharts.Legend
+import ECharts.Axis
+import ECharts.Series
+import ECharts.Type
 import ECharts.Item.Data
 import ECharts.Item.Value
+import ECharts.Common
+import ECharts.Formatter
+import ECharts.Style.Item
+import ECharts.AddData
+import ECharts.Title
+import qualified ECharts.DataZoom as Zoom
+
 
 import Signal
 import Signal.Time (every)
@@ -29,7 +45,6 @@ onlyDigRgx = regex "^\\D*"  {global: false, ignoreCase: false,
 
 foreign import toLocaleTimeString """
 function toLocaleTimeString(date) {
-console.log(date);
   return date.toLocaleTimeString();
 }
 """ :: JSDate -> String
@@ -56,75 +71,89 @@ data1 = do
         rnd <- random
         return $ round (rnd * 1000)
   sequence $ mapfn <$> (1..10)
-  
-options_ xAxis d1 d2 = 
-  {
-    title : {
-        text: "动态数据",
-        subtext: "纯属虚构"
-    },
-    tooltip : {
-        trigger: "axis"
-    },
-    legend: {
-        data:["最新成交价", "预购队列"]
-    },
-    toolbox: {
-        show : true,
-        feature : {
-            mark : {show: true},
-            dataView : {show: true, readOnly: false},
-            magicType : {show: true, type: ["line", "bar"]},
-            restore : {show: true},
-            saveAsImage : {show: true}
+
+simpleData = Value <<< Simple
+
+
+options_ xAxis d1 d2 = Option $ optionDefault {
+   tooltip = Just $ Tooltip tooltipDefault {trigger = Just TriggerAxis},
+   legend = Just $ Legend legendDefault {
+     "data" = Just $ legendItemDefault <$> ["new price", "pre-order queue"]
+     },
+   title = Just $ Title titleDefault {
+     text = Just "dynamic data",
+     subtext = Just "fictitious"
+     },
+    toolbox = Just $ Toolbox $ toolboxDefault {
+     "show" = Just true,
+     "feature" = Just $ Feature $ featureDefault {
+       "mark" = Just $ MarkFeature $ markFeatureDefault {show = Just true},
+       "dataView" = Just $ DataViewFeature $ dataViewFeatureDefault {
+         "show" = Just true,
+         "readOnly" = Just false
+         },
+       "magicType" = Just $ MagicTypeFeature $ magicTypeFeatureDefault {
+         "show" = Just true,
+         "type" = Just [MagicLine, MagicBar]
+         },
+       "restore" = Just $ RestoreFeature $ restoreFeatureDefault {
+         "show" = Just true
+         },
+       "saveAsImage" = Just $ SaveAsImageFeature $ saveAsImageFeatureDefault {
+         "show" = Just true
+         }
+       }
+     },
+    "dataZoom" = Just $ Zoom.DataZoom $ Zoom.dataZoomDefault {
+      "show" = Just true,
+      "start" = Just 0,
+      "end" = Just 100
+      },
+    "xAxis" = Just $ TwoAxises
+              (Axis axisDefault {
+                  "type" = Just $ CategoryAxis,
+                  "boundaryGap" = Just $ CatBoundaryGap true,
+                  "data" = Just $ CommonAxisData <$> xAxis
+                  })
+              (Axis axisDefault {
+                  "type" = Just $ CategoryAxis,
+                  "boundaryGap" = Just $ CatBoundaryGap true,
+                  "data" = Just $ CommonAxisData <$> show <$> (1..10)
+                  }),
+    "yAxis" = Just $ TwoAxises
+              (Axis axisDefault {
+                  "type" = Just ValueAxis,
+                  "scale" = Just true,
+                  "boundaryGap" = Just $ ValueBoundaryGap 0.2 0.2,
+                  "name" = Just "price"
+                  })
+              (Axis axisDefault {
+                  "type" = Just ValueAxis,
+                  "scale" = Just true,
+                  "name" = Just "pre-order quantity",
+                  "boundaryGap" = Just $ ValueBoundaryGap 0.2 0.2
+                  }),
+    "series" = Just $ Just <$> [
+      BarSeries {
+         common: universalSeriesDefault {
+            "name" = Just "pre-order queue"
+            },
+         special: barSeriesDefault {
+           "xAxisIndex" = Just 1,
+           "yAxisIndex" = Just 1,
+           "data" = Just $ simpleData <$> d1
+           }
+         },
+      LineSeries {
+        common: universalSeriesDefault {
+           "name" = Just "new price"
+           },
+        special: lineSeriesDefault {
+          "data" = Just $ simpleData <$> d2
+          }
         }
-    },
-    dataZoom : {
-        show : false,
-        start : 0,
-        end : 100
-    },
-    xAxis : (
-        {
-            type : "category",
-            boundaryGap : true,
-            data: xAxis
-        } /\
-        {
-            type : "category",
-            boundaryGap : true,
-            data: (1..10)
-        }
-    ),
-    yAxis : (
-        {
-            type : "value",
-            scale: true,
-            name : "价格",
-            boundaryGap: [0.2, 0.2]
-        } /\
-        {
-            type : "value",
-            scale: true,
-            name : "预购量",
-            boundaryGap: [0.2, 0.2]
-        }
-    ),
-    series : (
-        {
-            name:"预购队列",
-            type:"bar",
-            xAxisIndex: 1,
-            yAxisIndex: 1,
-            data: d1
-        } /\
-        {
-            name:"最新成交价",
-            type:"line",
-            data: d2
-        }
-    )
-  }
+      ]
+   }
 
 
 options :: Eff _ _
@@ -170,7 +199,7 @@ dynamicLineBar id = do
   opts <- options
   chart <- getElementById id
            >>= init Nothing
-           >>= setOptionUnsafe opts true
+           >>= setOption opts true
   runSignal $ dataStream ~> \effContent -> do
     content <- effContent
     sequence_ $ (flip addData) chart <$> content

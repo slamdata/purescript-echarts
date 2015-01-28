@@ -1,97 +1,125 @@
 module Line4 where
 
 import Data.Tuple.Nested
-import ECharts.Chart
-import ECharts.Options.Unsafe
-import ECharts.Options
 import Data.Maybe
 import Utils
 
-options = 
-  {
-    tooltip:
-          {
-            trigger: "axis"
-          },
-    legend:
-          {
-            x: "left",
-            "data": ["邮件营销", "联盟广告", "视频广告", "直接访问", "搜索引擎"]
-          },
-    toolbox:
-            {
-              show: true,
-              x: "right",
-              feature:
-              {
-                mark: {show: true},
-                dataView: {show: true, readOnly: false},
-                magicType: {show: true, "type": ["line", "bar", "stack", "tiled"]},
-                restore: {show: true},
-                saveAsImage: {show: true}
-              }
-            },
-        calculable: true,
-        xAxis:
-        [
-          {
-            "type": "category",
-            boundaryGap: false,
-            "data": ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
-          }
-        ],
-        yAxis:
-        [
-          {
-            "type": "value"
-          }
-        ],
-        series:
-        (
-          {
-            name: "邮件营销",
-            "type": "line",
-            stack: "总量",
-            itemStyle: {normal: {areaStyle: {type: "default"}}},
-            "data": [120, 132, 101, 134, 90, 230, 210]
-          } /\
-          {
-            
-            name: "联盟广告",
-            "type": "line",
-            stack: "总量",
-            itemStyle: {normal: {areaStyle: {type: "default"}}},
-            "data": [220, 182, 191, 234, 290, 330, 310]
-          } /\
-          {
-            name:"视频广告",
-            "type": "line",
-            stack: "总量",
-            itemStyle: {normal: {areaStyle: {type: "default"}}},
-            "data": [150, 232, 201, 154, 190, 330, 410]
-          } /\
-          {
-            name: "直接访问",
-            "type": "line",
-            stack: "总量",
-            itemStyle: {normal: {areaStyle: {type: "default"}}},
-            "data": [320, 332, 301, 334, 390, 330, 320]
-          } /\
-          {
-            name: "搜索引擎",
-            "type": "line",
-            stack: "总量",
-            itemStyle: {normal: {areaStyle: {type: "default"}}},
-            "data": [820, 932, 901, 934, 1290, 1330, 1320]
-          }
-        )
+import ECharts.Chart
+import ECharts.Options
+import ECharts.Tooltip
+import ECharts.Toolbox
+import ECharts.Coords
+import ECharts.Legend
+import ECharts.Axis
+import ECharts.Series
+import ECharts.Type
+import ECharts.Item.Data
+import ECharts.Item.Value
+import ECharts.Common
+import ECharts.Formatter
+import ECharts.Style.Item
+
+simpleData = Value <<< Simple
+
+options :: Option
+options = Option $ optionDefault {
+  tooltip = Just $ Tooltip tooltipDefault {trigger = Just TriggerAxis},
+  legend = Just $ Legend legendDefault {
+    "x" = Just XLeft,
+    "data" = Just $ legendItemDefault <$>
+             ["email marketing", "affiliate advertising",
+              "video ads", "direct access", "search engine"]
+    },
+  toolbox = Just $ Toolbox $ toolboxDefault {
+    "show" = Just true,
+    "x" = Just XRight,
+    "feature" = Just $ Feature $ featureDefault {
+      "mark" = Just $ MarkFeature $ markFeatureDefault {show = Just true},
+      "dataView" = Just $ DataViewFeature $ dataViewFeatureDefault {
+        "show" = Just true,
+        "readOnly" = Just false
+        },
+      "magicType" = Just $ MagicTypeFeature $ magicTypeFeatureDefault {
+        "show" = Just true,
+        "type" = Just [MagicLine, MagicBar, MagicStack, MagicTiled]
+        },
+      "restore" = Just $ RestoreFeature $ restoreFeatureDefault {
+        "show" = Just true
+        },
+      "saveAsImage" = Just $ SaveAsImageFeature $ saveAsImageFeatureDefault {
+        "show" = Just true
+        }
       }
+    },
+  calculable = Just true,
+  xAxis = Just $ OneAxis $ Axis $ axisDefault {
+    "type" = Just CategoryAxis,
+    "boundaryGap" = Just $ CatBoundaryGap false,
+    "data" = Just $ CommonAxisData <$>
+             ["Monday", "Tuesday", "Wednesday",
+              "Thursday", "Friday", "Saturday", "Sunday"]
+    },
+  yAxis = Just $ OneAxis $ Axis $ axisDefault {
+    "type" = Just ValueAxis
+    },
+
+  series = Just $ Just <$> [
+    LineSeries {
+       common: universalSeriesDefault {
+          "name" = Just "email marketing"
+          },
+       special: lineSeriesDefault {
+         "stack" = Just "total",
+         "data" = Just $ simpleData <$> [120, 132, 101, 134, 90, 230, 210]
+         }
+       },
+
+    LineSeries {
+      common: universalSeriesDefault {
+         "name" = Just "affiliate advertising"
+         },
+      special: lineSeriesDefault {
+        "data" = Just $ simpleData <$> [220, 182, 191, 234, 290, 330, 310]
+        }
+      },
+
+    LineSeries {
+      common: universalSeriesDefault {
+         "name" = Just "video ads"
+         },
+      special: lineSeriesDefault {
+        "stack" = Just "total",
+        "data" = Just $ simpleData <$> [150, 232, 201, 154, 190, 330, 410]
+        }
+      },
+
+    LineSeries {
+      common: universalSeriesDefault {
+         "name" = Just "direct access"
+         },
+      special: lineSeriesDefault {
+        "data" = Just $ simpleData <$> [320, 332, 301, 334, 390, 330, 320]
+        }
+      },
+
+    LineSeries {
+      common: universalSeriesDefault {
+         "name" = Just "search engine"
+         },
+      special: lineSeriesDefault {
+        "stack" = Just "total",
+        "data" = Just $ simpleData <$> [820, 932, 901, 934, 1290, 1330, 1320]
+        }
+      }
+    ]
+
+  }
 
 
 line4 id = do
-  chart <- getElementById id
-           >>= init Nothing
-           >>= setOptionUnsafe options true
+   chart <- getElementById id
+            >>= init Nothing
+            >>= setOption options true
 
 
-  return unit
+   return unit
