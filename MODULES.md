@@ -23,7 +23,11 @@
 ### Types
 
     newtype Axis where
-      Axis :: { "data" :: Maybe [AxisData], splitArea :: Maybe AxisSplitArea, splitLine :: Maybe AxisSplitLine, axisLabel :: Maybe AxisLabel, axisTick :: Maybe AxisTick, axisLine :: Maybe AxisLine, splitNumber :: Maybe Number, scale :: Maybe Boolean, max :: Maybe Number, min :: Maybe Number, boundaryGap :: Maybe (Tuple Number Number), nameTextStyle :: Maybe TextStyle, nameLocation :: Maybe AxisNameLocation, name :: Maybe String, position :: Maybe AxisPosition, show :: Maybe Boolean, "type" :: Maybe AxisType } -> Axis
+      Axis :: { "data" :: Maybe [AxisData], splitArea :: Maybe AxisSplitArea, splitLine :: Maybe AxisSplitLine, axisLabel :: Maybe AxisLabel, axisTick :: Maybe AxisTick, axisLine :: Maybe AxisLine, splitNumber :: Maybe Number, scale :: Maybe Boolean, max :: Maybe Number, min :: Maybe Number, boundaryGap :: Maybe AxisBoundaryGap, nameTextStyle :: Maybe TextStyle, nameLocation :: Maybe AxisNameLocation, name :: Maybe String, position :: Maybe AxisPosition, show :: Maybe Boolean, "type" :: Maybe AxisType } -> Axis
+
+    data AxisBoundaryGap where
+      CatBoundaryGap :: Boolean -> AxisBoundaryGap
+      ValueBoundaryGap :: Number -> Number -> AxisBoundaryGap
 
     data AxisData where
       CommonAxisData :: String -> AxisData
@@ -81,6 +85,8 @@
 
 
 ### Type Class Instances
+
+    instance axisBoundaryGapEncodeJson :: EncodeJson AxisBoundaryGap
 
     instance axisDataEncodeJson :: EncodeJson AxisData
 
@@ -173,6 +179,8 @@
 
 ### Types
 
+    type Center = Tuple PercentOrPixel PercentOrPixel
+
     data Corner a where
       AllCorners :: a -> Corner a
       Corners :: a -> a -> a -> a -> Corner a
@@ -195,8 +203,8 @@
       Pixel :: Number -> PercentOrPixel
 
     data Radius where
-      R :: Number -> Radius
-      Rs :: { outer :: Number, inner :: Number } -> Radius
+      R :: PercentOrPixel -> Radius
+      Rs :: { outer :: PercentOrPixel, inner :: PercentOrPixel } -> Radius
 
     data Roam where
       Enable :: Roam
@@ -581,26 +589,6 @@
     setSeries :: forall e. [Series] -> Boolean -> EChart -> Eff e EChart
 
 
-## Module ECharts.SeriesAll
-
-### Types
-
-    newtype SeriesAll where
-      SeriesAll :: { eventList :: Maybe [OneEvent], weight :: Maybe Number, gap :: Maybe Number, maxSize :: Maybe PercentOrPixel, minSize :: Maybe PercentOrPixel, funnelAlign :: Maybe HorizontalAlign, height :: Maybe PercentOrPixel, width :: Maybe PercentOrPixel, y2 :: Maybe PercentOrPixel, y :: Maybe PercentOrPixel, x2 :: Maybe PercentOrPixel, x :: Maybe PercentOrPixel, detail :: Maybe GaugeDetail, title :: Maybe Title, splitLine :: Maybe SplitLine, axisLabel :: Maybe AxisLabel, axisTick :: Maybe AxisTick, axisLine :: Maybe AxisLine, splitNumber :: Maybe Number, precision :: Maybe Number, max :: Maybe Number, min :: Maybe Number, endAngle :: Maybe Number, sortSub :: Maybe Sort, sort :: Maybe Sort, padding :: Maybe Number, showScaleText :: Maybe Boolean, showScale :: Maybe Boolean, ribbonType :: Maybe Boolean, steps :: Maybe Number, useWorker :: Maybe Boolean, draggable :: Maybe Number, gravity :: Maybe Number, scaling :: Maybe Number, linkSymbolSize :: Maybe Symbol, linkSymbol :: Maybe Symbol, maxRadius :: Maybe Number, minRadius :: Maybe Number, size :: Maybe Number, matrix :: Maybe Matrix, links :: Maybe [Link], nodes :: Maybe [Node], categories :: Maybe [ForceCategory], geoCoord :: Maybe (StrMap (Tuple Number Number)), textFixed :: Maybe (StrMap (Tuple Number Number)), nameMap :: Maybe (StrMap String), scaleLimit :: Maybe MinMax, roam :: Maybe Roam, showLegendSymbol :: Maybe Boolean, mapValuePrecision :: Maybe Number, mapValueCalculation :: Maybe MapValueCalculation, mapLocation :: Maybe Location, dataRangeHoverLink :: Maybe Boolean, hoverable :: Maybe Boolean, mapType :: Maybe String, polarIndex :: Maybe Number, selectedMode :: Maybe SelectedMode, selectedOffset :: Maybe Number, roseType :: Maybe RoseType, clockWise :: Maybe Boolean, minAngle :: Maybe Number, startAngle :: Maybe Number, radius :: Maybe Radius, center :: Maybe (Tuple Number Number), legendHoverLink :: Maybe Boolean, largeThreshold :: Maybe Number, large :: Maybe Boolean, smooth :: Maybe Boolean, showAllSymbol :: Maybe Boolean, symbolSize :: Maybe SymbolSize, symbolRotate :: Maybe Boolean, symbol :: Maybe Symbol, barHeight :: Maybe Number, barWidth :: Maybe Number, barMinHeight :: Maybe Number, barMinWidth :: Maybe Number, barCategoryGap :: Maybe PercentOrPixel, barGap :: Maybe PercentOrPixel, yAxisIndex :: Maybe Number, xAxisIndex :: Maybe Number, stack :: Maybe String, "data" :: Maybe [ItemData], markLine :: Maybe [MarkLine], markPoint :: Maybe [MarkPoint], itemStyle :: Maybe ItemStyle, clickable :: Maybe Boolean, tooltip :: Maybe Tooltip, name :: Maybe String, "type" :: ChartType } -> SeriesAll
-
-
-### Type Class Instances
-
-    instance seriesEncodeJson :: EncodeJson SeriesAll
-
-
-### Values
-
-    seriesAllDefault :: ChartType -> _
-
-    setSeriesAll :: forall e. [SeriesAll] -> Boolean -> EChart -> Eff e EChart
-
-
 ## Module ECharts.Symbol
 
 ### Types
@@ -753,7 +741,7 @@
 ### Types
 
     newtype Tooltip where
-      Tooltip :: { textStyle :: Maybe TextStyle, axisPointer :: Maybe TooltipAxisPointer, padding :: Maybe (Corner Number), borderWidth :: Maybe Number, borderRadius :: Maybe Number, borderColor :: Maybe Color, backgroundColor :: Maybe Color, transitionDuration :: Maybe Number, hideDelay :: Maybe Number, showDelay :: Maybe Number, islandFormatter :: Maybe Formatter, formatter :: Maybe Formatter, position :: Maybe TooltipPosition, trigger :: Maybe TooltipTrigger, showContent :: Maybe Boolean, show :: Maybe Boolean } -> Tooltip
+      Tooltip :: { enterable :: Maybe Boolean, textStyle :: Maybe TextStyle, axisPointer :: Maybe TooltipAxisPointer, padding :: Maybe (Corner Number), borderWidth :: Maybe Number, borderRadius :: Maybe Number, borderColor :: Maybe Color, backgroundColor :: Maybe Color, transitionDuration :: Maybe Number, hideDelay :: Maybe Number, showDelay :: Maybe Number, islandFormatter :: Maybe Formatter, formatter :: Maybe Formatter, position :: Maybe TooltipPosition, trigger :: Maybe TooltipTrigger, showContent :: Maybe Boolean, show :: Maybe Boolean } -> Tooltip
 
     newtype TooltipAxisPointer where
       TooltipAxisPointer :: { shadowStyle :: Maybe AreaStyle, crossStyle :: Maybe LineStyle, lineStyle :: Maybe LineStyle, "type" :: Maybe TooltipAxisPointerType } -> TooltipAxisPointer
@@ -826,6 +814,7 @@
     data ItemData where
       Value :: ItemValue -> ItemData
       Dat :: { selected :: Maybe Boolean, itemStyle :: Maybe ItemStyle, tooltip :: Maybe Tooltip, name :: Maybe String, value :: ItemValue } -> ItemData
+      Label :: String -> ItemData
 
 
 ### Type Class Instances
@@ -845,7 +834,8 @@
     data ItemValue where
       None :: ItemValue
       Simple :: Number -> ItemValue
-      XYR :: { r :: Number, y :: Number, x :: Number } -> ItemValue
+      Many :: [Number] -> ItemValue
+      XYR :: { r :: Maybe Number, y :: Number, x :: Number } -> ItemValue
       HLOC :: { c :: Number, o :: Number, l :: Number, h :: Number } -> ItemValue
 
 
@@ -905,7 +895,7 @@
 ### Types
 
     newtype MarkPoint where
-      MarkPoint :: { geoCoord :: Maybe [GeoCoord], "data" :: Maybe [MarkPointData], effect :: Maybe MarkPointEffect, large :: Maybe Boolean, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol } -> MarkPoint
+      MarkPoint :: { geoCoord :: Maybe (StrMap (Tuple Number Number)), "data" :: Maybe [MarkPointData], effect :: Maybe MarkPointEffect, large :: Maybe Boolean, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol } -> MarkPoint
 
 
 ### Type Class Instances
@@ -918,19 +908,6 @@
     addMarkPoint :: forall e. MarkPoint -> EChart -> Eff (addMarkPointECharts :: AddMarkPoint | e) EChart
 
     delMarkPoint :: forall e. Number -> String -> EChart -> Eff (removeMarkPointECharts :: RemoveMarkPoint | e) EChart
-
-
-## Module ECharts.Options.Unsafe
-
-### Types
-
-    data Merge a where
-      Merge :: [a] -> Merge a
-
-
-### Values
-
-    setOptionUnsafe :: forall options e. options -> Boolean -> EChart -> Eff e EChart
 
 
 ## Module ECharts.Series.EventRiver
@@ -964,7 +941,7 @@
       ForceCategory :: { itemStyle :: Maybe ItemStyle, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol, name :: Maybe String } -> ForceCategory
 
     newtype Link where
-      Link :: { itemStyle :: ItemStyle, weight :: Number, target :: LinkEnd, source :: LinkEnd } -> Link
+      Link :: { itemStyle :: Maybe ItemStyle, weight :: Number, target :: LinkEnd, source :: LinkEnd } -> Link
 
     data LinkEnd where
       Name :: String -> LinkEnd
@@ -973,7 +950,7 @@
     type Matrix = [[Number]]
 
     newtype Node where
-      Node :: { category :: Maybe ForceCategory, draggable :: Maybe Boolean, fixY :: Maybe Boolean, fixX :: Maybe Boolean, initial :: Maybe [Number], itemStyle :: Maybe ItemStyle, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol, ignore :: Maybe Boolean, value :: Number, label :: Maybe String, name :: Maybe String } -> Node
+      Node :: { category :: Maybe Number, draggable :: Maybe Boolean, fixY :: Maybe Boolean, fixX :: Maybe Boolean, initial :: Maybe (Tuple Number Number), itemStyle :: Maybe ItemStyle, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol, ignore :: Maybe Boolean, value :: Number, label :: Maybe String, name :: Maybe String } -> Node
 
 
 ### Type Class Instances
@@ -1175,18 +1152,6 @@
     instance textBaselineEncodeJson :: EncodeJson TextBaseline
 
     instance textStyleEncodeJson :: EncodeJson TextStyle
-
-
-## Module Data.Argonaut.Extension.Date
-
-### Type Class Instances
-
-    instance dateEncodeJson :: EncodeJson Date
-
-
-### Values
-
-    jsDateToJson :: JSDate -> Json
 
 
 
