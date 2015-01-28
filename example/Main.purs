@@ -2,10 +2,8 @@ module Main where
 
 import Utils
 import Line4 (line4)
-import Bar13 (bar13)
 import Scatter3 (scatter3)
 import K (k)
-import Lasagna (lasagna)
 import Radar3 (radar3)
 import Chord2 (chord2)
 import Force4 (force4)
