@@ -258,7 +258,7 @@
 
     data Radius where
       R :: PercentOrPixel -> Radius
-      Rs :: { outer :: PercentOrPixel, inner :: PercentOrPixel } -> Radius
+      Rs :: RsRec -> Radius
 
     data Roam where
       Enable :: Roam
@@ -269,6 +269,8 @@
     data RoseType where
       RTRadius :: RoseType
       RTArea :: RoseType
+
+    type RsRec = { outer :: PercentOrPixel, inner :: PercentOrPixel }
 
     data SelectedMode where
       SelModeSingle :: SelectedMode
