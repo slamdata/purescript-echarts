@@ -47,7 +47,7 @@ instance lineStyleEncodeJson :: EncodeJson LineStyle where
 lineStyleDefault :: LineStyleRec
 lineStyleDefault = {
   color: Nothing,
-  type: Nothing,
+  "type": Nothing,
   width: Nothing,
   shadowColor: Nothing,
   shadowOffsetX: Nothing,

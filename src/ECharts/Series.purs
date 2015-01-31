@@ -120,21 +120,21 @@ typeForSeries series =
 
 
 type UniversalSeriesRec = {
-  "name" :: Maybe String,
-  "tooltip" :: Maybe Tooltip,
-  "clickable" :: Maybe Boolean,
-  "itemStyle" :: Maybe ItemStyle,
-  "markPoint" :: Maybe MarkPoint,
-  "markLine" :: Maybe MarkLine
+  name :: Maybe String,
+  tooltip :: Maybe Tooltip,
+  clickable :: Maybe Boolean,
+  itemStyle :: Maybe ItemStyle,
+  markPoint :: Maybe MarkPoint,
+  markLine :: Maybe MarkLine
   }
 universalSeriesDefault :: UniversalSeriesRec
 universalSeriesDefault = {
-  "name": Nothing,
-  "tooltip": Nothing,
-  "clickable": Nothing,
-  "itemStyle": Nothing,
-  "markPoint": Nothing,
-  "markLine": Nothing
+  name: Nothing,
+  tooltip: Nothing,
+  clickable: Nothing,
+  itemStyle: Nothing,
+  markPoint: Nothing,
+  markLine: Nothing
   }
 universalRecEncode :: UniversalSeriesRec -> [JAssoc]
 universalRecEncode r =
@@ -165,29 +165,29 @@ universalForSeries series =
 
 
 type LineSeriesRec = {
-  "data" :: Maybe [ItemData],
-  "stack" :: Maybe String,
-  "xAxisIndex" :: Maybe Number,
-  "yAxisIndex" :: Maybe Number,
-  "symbol" :: Maybe Symbol,
-  "symbolSize" :: Maybe SymbolSize,
-  "symbolRotate" :: Maybe Boolean,
-  "showAllSymbol" :: Maybe Boolean,
-  "smooth" :: Maybe Boolean,
-  "legendHoverLink" :: Maybe Boolean
+  "data" ::Maybe [ItemData],
+  stack :: Maybe String,
+  xAxisIndex :: Maybe Number,
+  yAxisIndex :: Maybe Number,
+  symbol :: Maybe Symbol,
+  symbolSize :: Maybe SymbolSize,
+  symbolRotate :: Maybe Boolean,
+  showAllSymbol :: Maybe Boolean,
+  smooth :: Maybe Boolean,
+  legendHoverLink :: Maybe Boolean
   }
 lineSeriesDefault :: LineSeriesRec
 lineSeriesDefault  = {
   "data": Nothing,
-  "stack": Nothing,
-  "xAxisIndex": Nothing,
-  "yAxisIndex": Nothing,
-  "symbol": Nothing,
-  "symbolSize": Nothing,
-  "symbolRotate": Nothing,
-  "showAllSymbol": Nothing,
-  "smooth": Nothing,
-  "legendHoverLink": Nothing
+  stack: Nothing,
+  xAxisIndex: Nothing,
+  yAxisIndex: Nothing,
+  symbol: Nothing,
+  symbolSize: Nothing,
+  symbolRotate: Nothing,
+  showAllSymbol: Nothing,
+  smooth: Nothing,
+  legendHoverLink: Nothing
   }
 lineRecEncode :: LineSeriesRec -> [JAssoc]
 lineRecEncode r = [
@@ -205,29 +205,29 @@ lineRecEncode r = [
 
 
 type BarSeriesRec = {
-  "data" :: Maybe [ItemData],
-  "stack" :: Maybe String,
-  "xAxisIndex" :: Maybe Number,
-  "yAxisIndex" :: Maybe Number,
-  "barGap" :: Maybe PercentOrPixel,
-  "barCategoryGap" :: Maybe PercentOrPixel,
-  "barMinHeight" :: Maybe Number,
-  "barWidth" :: Maybe Number,
-  "barMaxWidth" :: Maybe Number,
-  "legendHoverLink" :: Maybe Boolean
+  "data" ::Maybe [ItemData],
+  stack :: Maybe String,
+  xAxisIndex :: Maybe Number,
+  yAxisIndex :: Maybe Number,
+  barGap :: Maybe PercentOrPixel,
+  barCategoryGap :: Maybe PercentOrPixel,
+  barMinHeight :: Maybe Number,
+  barWidth :: Maybe Number,
+  barMaxWidth :: Maybe Number,
+  legendHoverLink :: Maybe Boolean
   }
 barSeriesDefault :: BarSeriesRec
 barSeriesDefault = {
   "data": Nothing,
-  "stack": Nothing,
-  "xAxisIndex": Nothing,
-  "yAxisIndex": Nothing,
-  "barGap": Nothing,
-  "barCategoryGap": Nothing,
-  "barMinHeight": Nothing,
-  "barWidth": Nothing,
-  "barMaxWidth": Nothing,
-  "legendHoverLink": Nothing
+  stack: Nothing,
+  xAxisIndex: Nothing,
+  yAxisIndex: Nothing,
+  barGap: Nothing,
+  barCategoryGap: Nothing,
+  barMinHeight: Nothing,
+  barWidth: Nothing,
+  barMaxWidth: Nothing,
+  legendHoverLink: Nothing
   }
 barRecEncode :: BarSeriesRec -> [JAssoc]
 barRecEncode r = [
@@ -245,27 +245,27 @@ barRecEncode r = [
 
 
 type ScatterSeriesRec = {
-  "data" :: Maybe [ItemData],
-  "xAxisIndex" :: Maybe Number,
-  "yAxisIndex" :: Maybe Number,
-  "symbol" :: Maybe Symbol,
-  "symbolSize" :: Maybe SymbolSize,
-  "symbolRotate" :: Maybe Boolean,
-  "large" :: Maybe Boolean,
-  "largeThreshold" :: Maybe Number,
-  "legendHoverLink" :: Maybe Boolean
+  "data" ::Maybe [ItemData],
+  xAxisIndex :: Maybe Number,
+  yAxisIndex :: Maybe Number,
+  symbol :: Maybe Symbol,
+  symbolSize :: Maybe SymbolSize,
+  symbolRotate :: Maybe Boolean,
+  large :: Maybe Boolean,
+  largeThreshold :: Maybe Number,
+  legendHoverLink :: Maybe Boolean
   }
 scatterSeriesDefault :: ScatterSeriesRec
 scatterSeriesDefault = {
   "data": Nothing,
-  "xAxisIndex": Nothing,
-  "yAxisIndex": Nothing,
-  "symbol": Nothing,
-  "symbolSize": Nothing,
-  "symbolRotate": Nothing,
-  "large": Nothing,
-  "largeThreshold": Nothing,
-  "legendHoverLink": Nothing
+  xAxisIndex: Nothing,
+  yAxisIndex: Nothing,
+  symbol: Nothing,
+  symbolSize: Nothing,
+  symbolRotate: Nothing,
+  large: Nothing,
+  largeThreshold: Nothing,
+  legendHoverLink: Nothing
   }
 
 scatterRecEncode :: ScatterSeriesRec -> [JAssoc]
@@ -282,21 +282,21 @@ scatterRecEncode r = [
   ]
 
 type CandlestickSeriesRec = {
-  "data" :: Maybe [ItemData],
-  "xAxisIndex" :: Maybe Number,
-  "yAxisIndex" :: Maybe Number,
-  "barMinHeight" :: Maybe Number,
-  "barWidth" :: Maybe Number,
-  "barMaxWidth" :: Maybe Number
+  "data" ::Maybe [ItemData],
+  xAxisIndex :: Maybe Number,
+  yAxisIndex :: Maybe Number,
+  barMinHeight :: Maybe Number,
+  barWidth :: Maybe Number,
+  barMaxWidth :: Maybe Number
   }
 candlestickSeriesDefault :: CandlestickSeriesRec
 candlestickSeriesDefault = {
   "data": Nothing,
-  "xAxisIndex": Nothing,
-  "yAxisIndex": Nothing,
-  "barMinHeight": Nothing,
-  "barWidth": Nothing,
-  "barMaxWidth": Nothing
+  xAxisIndex: Nothing,
+  yAxisIndex: Nothing,
+  barMinHeight: Nothing,
+  barWidth: Nothing,
+  barMaxWidth: Nothing
   }
 candlestickRecEncode :: CandlestickSeriesRec -> [JAssoc]
 candlestickRecEncode r = [
@@ -309,29 +309,29 @@ candlestickRecEncode r = [
   ]
                                  
 type PieSeriesRec = {
-  "data" :: Maybe [ItemData],
-  "center" :: Maybe Center,
-  "radius" :: Maybe Radius,
-  "startAngle" :: Maybe Number,
-  "minAngle" :: Maybe Number,
-  "clockWise" :: Maybe Boolean,
-  "roseType" :: Maybe RoseType,
-  "selectedOffset" :: Maybe Number,
-  "selectedMode" :: Maybe SelectedMode,
-  "legendHoverLink" :: Maybe Boolean
+  "data" ::Maybe [ItemData],
+  center :: Maybe Center,
+  radius :: Maybe Radius,
+  startAngle :: Maybe Number,
+  minAngle :: Maybe Number,
+  clockWise :: Maybe Boolean,
+  roseType :: Maybe RoseType,
+  selectedOffset :: Maybe Number,
+  selectedMode :: Maybe SelectedMode,
+  legendHoverLink :: Maybe Boolean
   }
 pieSeriesDefault :: PieSeriesRec
 pieSeriesDefault = {
   "data": Nothing,
-  "center": Nothing,
-  "radius": Nothing,
-  "startAngle": Nothing,
-  "minAngle": Nothing,
-  "clockWise": Nothing,
-  "roseType": Nothing,
-  "selectedOffset": Nothing,
-  "selectedMode": Nothing,
-  "legendHoverLink": Nothing
+  center: Nothing,
+  radius: Nothing,
+  startAngle: Nothing,
+  minAngle: Nothing,
+  clockWise: Nothing,
+  roseType: Nothing,
+  selectedOffset: Nothing,
+  selectedMode: Nothing,
+  legendHoverLink: Nothing
   }
 
 pieRecEncode :: PieSeriesRec -> [JAssoc]
@@ -350,23 +350,23 @@ pieRecEncode r = [
 
                  
 type RadarSeriesRec = {
-  "data" :: Maybe [ItemData],
+  "data" ::Maybe [ItemData],
 
-  "polarIndex" :: Maybe Number,
-  "symbol" :: Maybe Symbol,
-  "symbolSize" :: Maybe SymbolSize,
-  "symbolRotate" :: Maybe Boolean,
-  "legendHoverLink" :: Maybe Boolean
+  polarIndex :: Maybe Number,
+  symbol :: Maybe Symbol,
+  symbolSize :: Maybe SymbolSize,
+  symbolRotate :: Maybe Boolean,
+  legendHoverLink :: Maybe Boolean
   }
 
 radarSeriesDefault :: RadarSeriesRec
 radarSeriesDefault = {
   "data": Nothing,
-  "polarIndex": Nothing,
-  "symbol": Nothing,
-  "symbolSize": Nothing,
-  "symbolRotate": Nothing,
-  "legendHoverLink": Nothing
+  polarIndex: Nothing,
+  symbol: Nothing,
+  symbolSize: Nothing,
+  symbolRotate: Nothing,
+  legendHoverLink: Nothing
   }
 radarRecEncode :: RadarSeriesRec -> [JAssoc]
 radarRecEncode r = [
@@ -379,42 +379,42 @@ radarRecEncode r = [
   ]
 
 type ChordSeriesRec = {
-  "nodes" :: Maybe [Node],
-  "categories" :: Maybe [ForceCategory],
-  "links" :: Maybe [Link],
-  "matrix" :: Maybe Matrix,
+  nodes :: Maybe [Node],
+  categories :: Maybe [ForceCategory],
+  links :: Maybe [Link],
+  matrix :: Maybe Matrix,
 
-  "data" :: Maybe [ItemData],
-  "ribbonType" :: Maybe Boolean,
-  "symbol" :: Maybe Symbol,
-  "symbolSize" :: Maybe SymbolSize,
-  "minRadius" :: Maybe Number,
-  "maxRadius" :: Maybe Number,
-  "showScale" :: Maybe Boolean,
-  "showScaleText" :: Maybe Boolean,
-  "padding" :: Maybe Number,
-  "sort" :: Maybe Sort,
-  "sortSub" :: Maybe Sort,
-  "clockWise" :: Maybe Boolean
+  "data" ::Maybe [ItemData],
+  ribbonType :: Maybe Boolean,
+  symbol :: Maybe Symbol,
+  symbolSize :: Maybe SymbolSize,
+  minRadius :: Maybe Number,
+  maxRadius :: Maybe Number,
+  showScale :: Maybe Boolean,
+  showScaleText :: Maybe Boolean,
+  padding :: Maybe Number,
+  sort :: Maybe Sort,
+  sortSub :: Maybe Sort,
+  clockWise :: Maybe Boolean
   }
 chordSeriesDefault :: ChordSeriesRec
 chordSeriesDefault = {
-  "nodes": Nothing,
-  "categories": Nothing,
-  "links": Nothing,
-  "matrix": Nothing,
+  nodes: Nothing,
+  categories: Nothing,
+  links: Nothing,
+  matrix: Nothing,
   "data": Nothing,
-  "ribbonType": Nothing,
-  "symbol": Nothing,
-  "symbolSize": Nothing,
-  "minRadius": Nothing,
-  "maxRadius": Nothing,
-  "showScale": Nothing,
-  "showScaleText": Nothing,
-  "padding": Nothing,
-  "sort": Nothing,
-  "sortSub": Nothing,
-  "clockWise": Nothing
+  ribbonType: Nothing,
+  symbol: Nothing,
+  symbolSize: Nothing,
+  minRadius: Nothing,
+  maxRadius: Nothing,
+  showScale: Nothing,
+  showScaleText: Nothing,
+  padding: Nothing,
+  sort: Nothing,
+  sortSub: Nothing,
+  clockWise: Nothing
   }
 chordRecEncode :: ChordSeriesRec -> [JAssoc]
 chordRecEncode r = [
@@ -437,48 +437,48 @@ chordRecEncode r = [
   ]
 
 type ForceSeriesRec = {
-  "categories" :: Maybe [ForceCategory],
-  "nodes" :: Maybe [Node],
-  "links" :: Maybe [Link],
-  "matrix" :: Maybe Matrix,
+  categories :: Maybe [ForceCategory],
+  nodes :: Maybe [Node],
+  links :: Maybe [Link],
+  matrix :: Maybe Matrix,
 
-  "center" :: Maybe Center,
-  "size" :: Maybe Number,
-  "minRadius" :: Maybe Number,
-  "maxRadius" :: Maybe Number,
-  "symbol" :: Maybe Symbol,
-  "symbolSize" :: Maybe SymbolSize,
-  "linkSymbol" :: Maybe Symbol,
-  "linkSymbolSize" :: Maybe Symbol,
-  "scaling" :: Maybe Number,
-  "gravity" :: Maybe Number,
-  "draggable" :: Maybe Number,
-  "large" :: Maybe Boolean,
-  "useWorker" :: Maybe Boolean,
-  "steps" :: Maybe Number,
-  "ribbonType" :: Maybe Boolean
+  center :: Maybe Center,
+  size :: Maybe Number,
+  minRadius :: Maybe Number,
+  maxRadius :: Maybe Number,
+  symbol :: Maybe Symbol,
+  symbolSize :: Maybe SymbolSize,
+  linkSymbol :: Maybe Symbol,
+  linkSymbolSize :: Maybe Symbol,
+  scaling :: Maybe Number,
+  gravity :: Maybe Number,
+  draggable :: Maybe Number,
+  large :: Maybe Boolean,
+  useWorker :: Maybe Boolean,
+  steps :: Maybe Number,
+  ribbonType :: Maybe Boolean
   }
 forceSeriesDefault :: ForceSeriesRec
 forceSeriesDefault = {
-  "categories": Nothing,
-  "nodes": Nothing,
-  "links": Nothing,
-  "matrix": Nothing,
-  "center": Nothing,
-  "size": Nothing,
-  "minRadius": Nothing,
-  "maxRadius": Nothing,
-  "symbol": Nothing,
-  "symbolSize": Nothing,
-  "linkSymbol": Nothing,
-  "linkSymbolSize": Nothing,
-  "scaling": Nothing,
-  "gravity": Nothing,
-  "draggable": Nothing,
-  "large": Nothing,
-  "useWorker": Nothing,
-  "steps": Nothing,
-  "ribbonType": Nothing
+  categories: Nothing,
+  nodes: Nothing,
+  links: Nothing,
+  matrix: Nothing,
+  center: Nothing,
+  size: Nothing,
+  minRadius: Nothing,
+  maxRadius: Nothing,
+  symbol: Nothing,
+  symbolSize: Nothing,
+  linkSymbol: Nothing,
+  linkSymbolSize: Nothing,
+  scaling: Nothing,
+  gravity: Nothing,
+  draggable: Nothing,
+  large: Nothing,
+  useWorker: Nothing,
+  steps: Nothing,
+  ribbonType: Nothing
   }
 forceRecEncode :: ForceSeriesRec -> [JAssoc]
 forceRecEncode r = [
@@ -504,38 +504,38 @@ forceRecEncode r = [
   ]
                       
 type MapSeriesRec = {
-  "data" :: Maybe [ItemData],
+  "data" ::Maybe [ItemData],
   
-  "selectedMode" :: Maybe SelectedMode,
-  "mapType" :: Maybe String,
-  "hoverable" :: Maybe Boolean,
-  "dataRangeHoverLink" :: Maybe Boolean,
-  "mapLocation" :: Maybe Location,
-  "mapValueCalculation" :: Maybe MapValueCalculation,
-  "mapValuePrecision" :: Maybe Number,
-  "showLegendSymbol" :: Maybe Boolean,
-  "roam" :: Maybe Roam,
-  "scaleLimit" :: Maybe MinMax,
-  "nameMap" :: Maybe (StrMap String),
-  "textFixed" ::  Maybe (StrMap (Tuple Number Number)),
-  "geoCoord" :: Maybe (StrMap (Tuple Number Number))
+  selectedMode :: Maybe SelectedMode,
+  mapType :: Maybe String,
+  hoverable :: Maybe Boolean,
+  dataRangeHoverLink :: Maybe Boolean,
+  mapLocation :: Maybe Location,
+  mapValueCalculation :: Maybe MapValueCalculation,
+  mapValuePrecision :: Maybe Number,
+  showLegendSymbol :: Maybe Boolean,
+  roam :: Maybe Roam,
+  scaleLimit :: Maybe MinMax,
+  nameMap :: Maybe (StrMap String),
+  textFixed ::  Maybe (StrMap (Tuple Number Number)),
+  geoCoord :: Maybe (StrMap (Tuple Number Number))
   }
 mapSeriesDefault :: MapSeriesRec
 mapSeriesDefault = {
   "data": Nothing,
-  "selectedMode": Nothing,
-  "mapType": Nothing,
-  "hoverable": Nothing,
-  "dataRangeHoverLink": Nothing,
-  "mapLocation": Nothing,
-  "mapValueCalculation": Nothing,
-  "mapValuePrecision": Nothing,
-  "showLegendSymbol": Nothing,
-  "roam": Nothing,
-  "scaleLimit": Nothing,
-  "nameMap": Nothing,
-  "textFixed": Nothing,
-  "geoCoord": Nothing
+  selectedMode: Nothing,
+  mapType: Nothing,
+  hoverable: Nothing,
+  dataRangeHoverLink: Nothing,
+  mapLocation: Nothing,
+  mapValueCalculation: Nothing,
+  mapValuePrecision: Nothing,
+  showLegendSymbol: Nothing,
+  roam: Nothing,
+  scaleLimit: Nothing,
+  nameMap: Nothing,
+  textFixed: Nothing,
+  geoCoord: Nothing
   }
 mapRecEncode :: MapSeriesRec -> [JAssoc]
 mapRecEncode r = [
@@ -556,44 +556,44 @@ mapRecEncode r = [
   ]
 
 type GaugeSeriesRec = {
-  "data" :: Maybe [ItemData],
+  "data" ::Maybe [ItemData],
 
-  "center" :: Maybe (Tuple Number Number),
-  "radius" :: Maybe Radius,
-  "startAngle" :: Maybe Number,
-  "endAngle" :: Maybe Number,
-  "min" :: Maybe Number,
-  "max" :: Maybe Number,
-  "precision" :: Maybe Number,
-  "splitNumber" :: Maybe Number,
-  "axisLine" :: Maybe AxisLine,
-  "axisTick" :: Maybe AxisTick,
-  "axisLabel" :: Maybe AxisLabel,
-  "splitLine" :: Maybe SplitLine,
-  "title" :: Maybe Title,
-  "detail" :: Maybe GaugeDetail,
-  "pointer" :: Maybe Pointer,
-  "legendHoverLink" :: Maybe Boolean
+  center :: Maybe (Tuple Number Number),
+  radius :: Maybe Radius,
+  startAngle :: Maybe Number,
+  endAngle :: Maybe Number,
+  min :: Maybe Number,
+  max :: Maybe Number,
+  precision :: Maybe Number,
+  splitNumber :: Maybe Number,
+  axisLine :: Maybe AxisLine,
+  axisTick :: Maybe AxisTick,
+  axisLabel :: Maybe AxisLabel,
+  splitLine :: Maybe SplitLine,
+  title :: Maybe Title,
+  detail :: Maybe GaugeDetail,
+  pointer :: Maybe Pointer,
+  legendHoverLink :: Maybe Boolean
   }
 gaugeSeriesDefault :: GaugeSeriesRec
 gaugeSeriesDefault = {
   "data": Nothing,
-  "center": Nothing,
-  "radius": Nothing,
-  "startAngle": Nothing,
-  "endAngle": Nothing,
-  "min": Nothing,
-  "max": Nothing,
-  "precision": Nothing,
-  "splitNumber": Nothing,
-  "axisLine": Nothing,
-  "axisTick": Nothing,
-  "splitLine": Nothing,
-  "title": Nothing,
-  "detail": Nothing,
-  "pointer": Nothing,
-  "legendHoverLink": Nothing,
-  "axisLabel": Nothing
+  center: Nothing,
+  radius: Nothing,
+  startAngle: Nothing,
+  endAngle: Nothing,
+  min: Nothing,
+  max: Nothing,
+  precision: Nothing,
+  splitNumber: Nothing,
+  axisLine: Nothing,
+  axisTick: Nothing,
+  splitLine: Nothing,
+  title: Nothing,
+  detail: Nothing,
+  pointer: Nothing,
+  legendHoverLink: Nothing,
+  axisLabel: Nothing
   }
 gaugeRecEncode :: GaugeSeriesRec -> [JAssoc]
 gaugeRecEncode r = [
@@ -617,40 +617,40 @@ gaugeRecEncode r = [
   ]
                       
 type FunnelSeriesRec = {
-  "data" :: Maybe [ItemData],
+  "data" ::Maybe [ItemData],
 
-  "x" :: Maybe PercentOrPixel,
-  "x2" :: Maybe PercentOrPixel,
-  "y" :: Maybe PercentOrPixel,
-  "y2" :: Maybe PercentOrPixel,
-  "width" :: Maybe PercentOrPixel,
-  "height" :: Maybe PercentOrPixel,
-  "funnelAlign" :: Maybe HorizontalAlign,
-  "min" :: Maybe Number,
-  "max" :: Maybe Number,
-  "minSize" :: Maybe PercentOrPixel,
-  "maxSize" :: Maybe PercentOrPixel,
-  "gap" :: Maybe Number,
-  "sort" :: Maybe Sort,
-  "legendHoverLink" :: Maybe Boolean
+  x :: Maybe PercentOrPixel,
+  x2 :: Maybe PercentOrPixel,
+  y :: Maybe PercentOrPixel,
+  y2 :: Maybe PercentOrPixel,
+  width :: Maybe PercentOrPixel,
+  height :: Maybe PercentOrPixel,
+  funnelAlign :: Maybe HorizontalAlign,
+  min :: Maybe Number,
+  max :: Maybe Number,
+  minSize :: Maybe PercentOrPixel,
+  maxSize :: Maybe PercentOrPixel,
+  gap :: Maybe Number,
+  sort :: Maybe Sort,
+  legendHoverLink :: Maybe Boolean
   }
 funnelSeriesDefault :: FunnelSeriesRec 
 funnelSeriesDefault = {
   "data": Nothing,
-  "x": Nothing,
-  "x2": Nothing,
-  "y": Nothing,
-  "y2": Nothing,
-  "width": Nothing,
-  "height": Nothing,
-  "funnelAlign": Nothing,
-  "min": Nothing,
-  "max": Nothing,
-  "minSize": Nothing,
-  "maxSize": Nothing,
-  "gap": Nothing,
-  "sort": Nothing,
-  "legendHoverLink": Nothing
+  x: Nothing,
+  x2: Nothing,
+  y: Nothing,
+  y2: Nothing,
+  width: Nothing,
+  height: Nothing,
+  funnelAlign: Nothing,
+  min: Nothing,
+  max: Nothing,
+  minSize: Nothing,
+  maxSize: Nothing,
+  gap: Nothing,
+  sort: Nothing,
+  legendHoverLink: Nothing
   }
 funnelRecEncode :: FunnelSeriesRec -> [JAssoc]
 funnelRecEncode r = [
@@ -672,18 +672,18 @@ funnelRecEncode r = [
   ]
                        
 type EventRiverSeriesRec = {
-  "eventList" :: Maybe [OneEvent],
+  eventList :: Maybe [OneEvent],
 
-  "xAxisIndex" :: Maybe Number,
-  "weight" :: Maybe Number,
-  "legendHoverLink" :: Maybe Boolean
+  xAxisIndex :: Maybe Number,
+  weight :: Maybe Number,
+  legendHoverLink :: Maybe Boolean
   }
 eventRiverSeriesDefault :: EventRiverSeriesRec
 eventRiverSeriesDefault = {
-  "eventList": Nothing,
-  "xAxisIndex": Nothing,
-  "weight": Nothing,
-  "legendHoverLink": Nothing
+  eventList: Nothing,
+  xAxisIndex: Nothing,
+  weight: Nothing,
+  legendHoverLink: Nothing
   }
 eventRiverRecEncode :: EventRiverSeriesRec -> [JAssoc]
 eventRiverRecEncode r = [

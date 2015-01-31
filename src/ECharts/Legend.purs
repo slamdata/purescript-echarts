@@ -13,8 +13,8 @@ import ECharts.Style.Text
 import ECharts.Formatter
 
 type LegendItemRec = {
-  "icon" :: Maybe String,
-  "textStyle" :: Maybe TextStyle
+  icon :: Maybe String,
+  textStyle :: Maybe TextStyle
   }
 
 data LegendItem = LegendItem String LegendItemRec
@@ -32,21 +32,21 @@ legendItemDefault :: String -> LegendItem
 legendItemDefault name = LegendItem name {icon: Nothing, textStyle: Nothing}
 
 type LegendRec = {
-    "show" :: Maybe Boolean,
-    "orient" :: Maybe Orient,
-    "x" :: Maybe XPos,
-    "y" :: Maybe YPos,
-    "backgroundColor" :: Maybe Color,
-    "borderColor" :: Maybe Color,
-    "borderWidth" :: Maybe Number,
-    "padding" :: Maybe (Corner Number),
-    "itemGap" :: Maybe Number,
-    "itemHeight" :: Maybe Number,
-    "itemWidth" :: Maybe Number,
-    "textStyle" :: Maybe TextStyle,
-    "formatter" :: Maybe Formatter,
-    "selectedMode" :: Maybe SelectedMode,
-    "selected" :: Maybe (StrMap Boolean),
+    show :: Maybe Boolean,
+    orient :: Maybe Orient,
+    x :: Maybe XPos,
+    y :: Maybe YPos,
+    backgroundColor :: Maybe Color,
+    borderColor :: Maybe Color,
+    borderWidth :: Maybe Number,
+    padding :: Maybe (Corner Number),
+    itemGap :: Maybe Number,
+    itemHeight :: Maybe Number,
+    itemWidth :: Maybe Number,
+    textStyle :: Maybe TextStyle,
+    formatter :: Maybe Formatter,
+    selectedMode :: Maybe SelectedMode,
+    selected :: Maybe (StrMap Boolean),
     "data" :: Maybe [LegendItem]
     }
 
@@ -69,7 +69,7 @@ legendDefault = {
   formatter: Nothing,
   selectedMode: Nothing,
   selected: Nothing,
-  data: Nothing
+  "data": Nothing
   }
 
 instance legendEncodeJson :: EncodeJson Legend where

@@ -47,7 +47,7 @@ effect eff = L.LoadingOption $
 series true = [
   LineSeries {
      common: universalSeriesDefault {
-        "name" = Just "first"
+        name = Just "first"
         },
      lineSeries: lineSeriesDefault {
        "data" = Just $ simpleData <$> [2.0, 4.9, 7.0, 23.2, 25.6,
@@ -56,7 +56,7 @@ series true = [
      },
   LineSeries {
     common: universalSeriesDefault {
-       "name" = Just "second"
+       name = Just "second"
        },
     lineSeries: lineSeriesDefault {
       "data" = Just $ simpleData <$> [2.6, 5.9, 9.0, 
@@ -68,7 +68,7 @@ series true = [
 series false = [
     BarSeries {
      common: universalSeriesDefault {
-        "name" = Just "first"
+        name = Just "first"
         },
      barSeries: barSeriesDefault {
        "data" = Just $ simpleData <$> [2.0, 4.9, 7.0, 23.2, 25.6,
@@ -77,7 +77,7 @@ series false = [
      },
   BarSeries {
     common: universalSeriesDefault {
-       "name" = Just "second"
+       name = Just "second"
        },
     barSeries: barSeriesDefault {
       "data" = Just $ simpleData <$> [2.6, 5.9, 9.0, 
@@ -92,22 +92,22 @@ series false = [
 options i = Option $ optionDefault {
   tooltip = Just $ Tooltip tooltipDefault {trigger = Just TriggerAxis},
   toolbox = Just $ Toolbox $ toolboxDefault {
-    "show" = Just true,
-    "feature" = Just $ Feature $ featureDefault {
-      "mark" = Just $ MarkFeature $ markFeatureDefault {show = Just true},
-      "dataView" = Just $ DataViewFeature $ dataViewFeatureDefault {
-        "show" = Just true,
-        "readOnly" = Just false
+    show = Just true,
+    feature = Just $ Feature $ featureDefault {
+      mark = Just $ MarkFeature $ markFeatureDefault {show = Just true},
+      dataView = Just $ DataViewFeature $ dataViewFeatureDefault {
+        show = Just true,
+        readOnly = Just false
         },
-      "magicType" = Just $ MagicTypeFeature $ magicTypeFeatureDefault {
-        "show" = Just true,
+      magicType = Just $ MagicTypeFeature $ magicTypeFeatureDefault {
+        show = Just true,
         "type" = Just [MagicLine, MagicBar]
         },
-      "restore" = Just $ RestoreFeature $ restoreFeatureDefault {
-        "show" = Just true
+      restore = Just $ RestoreFeature $ restoreFeatureDefault {
+        show = Just true
         },
-      "saveAsImage" = Just $ SaveAsImageFeature $ saveAsImageFeatureDefault {
-        "show" = Just true
+      saveAsImage = Just $ SaveAsImageFeature $ saveAsImageFeatureDefault {
+        show = Just true
          }
       }
     },

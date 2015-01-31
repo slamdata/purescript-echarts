@@ -23,79 +23,79 @@ import ECharts.Series.EventRiver
 
 
 options dateDefault = Option $ optionDefault {
-  "tooltip" = Just $ Tooltip tooltipDefault {
-     "trigger" = Just TriggerItem,
-     "enterable" = Just true
+  tooltip = Just $ Tooltip tooltipDefault {
+     trigger = Just TriggerItem,
+     enterable = Just true
      },
-  "title" = Just $ Title titleDefault {
-    "text" = Just "event river",
-    "subtext" = Just "subtext"
+  title = Just $ Title titleDefault {
+    text = Just "event river",
+    subtext = Just "subtext"
     },
-  "legend" = Just $ Legend legendDefault {
+  legend = Just $ Legend legendDefault {
     "data" = Just $ legendItemDefault <$> ["first", "second"]
     },
-  "toolbox" = Just $ Toolbox toolboxDefault {
-    "feature" = Just $ Feature featureDefault {
-       "mark" = Just $ MarkFeature $ markFeatureDefault {show = Just true},
-       "restore" = Just $ RestoreFeature $ restoreFeatureDefault {
-         "show" = Just true
+  toolbox = Just $ Toolbox toolboxDefault {
+    feature = Just $ Feature featureDefault {
+       mark = Just $ MarkFeature $ markFeatureDefault {show = Just true},
+       restore = Just $ RestoreFeature $ restoreFeatureDefault {
+         show = Just true
          },
-       "saveAsImage" = Just $ SaveAsImageFeature $ saveAsImageFeatureDefault {
-         "show" = Just true
+       saveAsImage = Just $ SaveAsImageFeature $ saveAsImageFeatureDefault {
+         show = Just true
          }
        }
     },
-  "xAxis" = Just $ OneAxis $ Axis axisDefault {
+  xAxis = Just $ OneAxis $ Axis axisDefault {
     "type" = Just TimeAxis,
-    "boundaryGap" = Just $ ValueBoundaryGap 0.05 0.1
+    boundaryGap = Just $ ValueBoundaryGap 0.05 0.1
     },
-  "series" = Just $ Just <$> [
+  series = Just $ Just <$> [
     EventRiverSeries {
-       "common": universalSeriesDefault {
-          "name" = Just "first"
+       common: universalSeriesDefault {
+          name = Just "first"
           },
        eventRiverSeries: eventRiverSeriesDefault {
-         "weight" = Just 123,
-         "eventList" = Just [
+         weight = Just 123,
+         eventList = Just [
            OneEvent {
-              "name": Just "river1",
-              "weight": Just 123,
-              "evolution": Just [
+              name: Just "river1",
+              weight: Just 123,
+              evolution: Just [
                 Evolution {
-                   "time": fromMaybe dateDefault $ D.fromString "2014-05-01",
-                   "value": 14,
-                   "detail": Nothing
+                   time: fromMaybe dateDefault $ D.fromString "2014-05-01",
+                   value: 14,
+                   detail: Nothing
                    },
                 Evolution {
-                  "time": fromMaybe dateDefault $ D.fromString "2014-05-02",
-                  "value": 34,
-                  "detail": Nothing
+                  time: fromMaybe dateDefault $ D.fromString "2014-05-02",
+                  value: 34,
+                  detail: Nothing
                   },
                 Evolution {
-                  "time": fromMaybe dateDefault $ D.fromString "2014-05-03",
-                  "value": 60,
-                  "detail": Nothing
+                  time: fromMaybe dateDefault $ D.fromString "2014-05-03",
+                  value: 60,
+                  detail: Nothing
                   }
                 ]
               },
            OneEvent {
-             "name": Just "river2",
-             "weight": Just 123,
-             "evolution": Just [
+             name: Just "river2",
+             weight: Just 123,
+             evolution: Just [
                Evolution {
-                  "time": fromMaybe dateDefault $ D.fromString "2014-05-02",
-                  "value": 10,
-                  "detail": Nothing
+                  time: fromMaybe dateDefault $ D.fromString "2014-05-02",
+                  value: 10,
+                  detail: Nothing
                   },
                Evolution {
-                 "time": fromMaybe dateDefault $ D.fromString "2014-05-03",
-                 "value":  34,
-                 "detail": Nothing
+                 time: fromMaybe dateDefault $ D.fromString "2014-05-03",
+                 value:  34,
+                 detail: Nothing
                  },
                Evolution {
-                 "time": fromMaybe dateDefault $ D.fromString "2014-05-05",
-                 "value":  40,
-                 "detail": Nothing
+                 time: fromMaybe dateDefault $ D.fromString "2014-05-05",
+                 value:  40,
+                 detail: Nothing
                  }
                ]
              }
@@ -104,30 +104,30 @@ options dateDefault = Option $ optionDefault {
        },
 
     EventRiverSeries {
-      "common": universalSeriesDefault {
-         "name" = Just "second"
+      common: universalSeriesDefault {
+         name = Just "second"
          },
       eventRiverSeries: eventRiverSeriesDefault {
-        "weight" = Just 123,
-        "eventList" = Just [
+        weight = Just 123,
+        eventList = Just [
           OneEvent {
-             "name": Just "Apec",
-             "weight": Just 123,
-             "evolution": Just [
+             name: Just "Apec",
+             weight: Just 123,
+             evolution: Just [
                Evolution {
-                  "time": fromMaybe dateDefault $ D.fromString "2014-05-06",
-                  "value": 14,
-                  "detail": Nothing
+                  time: fromMaybe dateDefault $ D.fromString "2014-05-06",
+                  value: 14,
+                  detail: Nothing
                   },
                Evolution {
-                 "time": fromMaybe dateDefault $ D.fromString "2014-05-08",
-                 "value":  12,
-                 "detail": Nothing
+                 time: fromMaybe dateDefault $ D.fromString "2014-05-08",
+                 value:  12,
+                 detail: Nothing
                  },
                Evolution {
-                 "time": fromMaybe dateDefault $ D.fromString "2014-05-10",
-                 "value":  14,
-                 "detail": Nothing
+                 time: fromMaybe dateDefault $ D.fromString "2014-05-10",
+                 value:  14,
+                 detail: Nothing
                  }
                ]
              }

@@ -38,7 +38,7 @@ instance linkStyleEncodeJson :: EncodeJson LinkStyle where
 
 linkStyleDefault :: LinkStyleRec
 linkStyleDefault = {
-  type: Nothing,
+  "type": Nothing,
   color: Nothing,
   width: Nothing
   }

@@ -138,11 +138,11 @@ links = return []
 
 nodeNormalize :: EFNode -> Node
 nodeNormalize node = Node $ (nodeDefault node.value) {
-  "name" = Just node.name,
-  "initial" = Just node.initial,
-  "fixX" = Just  node.fixX,
-  "fixY" = Just node.fixY,
-  "category" = Just $ node.category
+  name = Just node.name,
+  initial = Just node.initial,
+  fixX = Just  node.fixX,
+  fixY = Just node.fixY,
+  category = Just $ node.category
   }
 
 
@@ -154,37 +154,37 @@ linkNormalize link = Link {
   }
 
 itemColor color = Just $ ItemStyle itemStyleDefault {
-  "normal" = Just $ IStyle istyleDefault {
-     "color" = Just $ SimpleColor color
+  normal = Just $ IStyle istyleDefault {
+     color = Just $ SimpleColor color
      }
   }
 
 mkOptions nodes links = Option $ optionDefault {
-  "series" = Just $ Just <$> [
+  series = Just $ Just <$> [
      ForceSeries {
-        "common": universalSeriesDefault{
-           "name" = Just "Force tree"
+        common: universalSeriesDefault{
+           name = Just "Force tree"
            },
         forceSeries: forceSeriesDefault {
-          "ribbonType" = Just true,
-          "categories" = Just [
+          ribbonType = Just true,
+          categories = Just [
             ForceCategory $ forceCategoryDefault {
-               "name" = Just "first",
-               "itemStyle" = itemColor "#ff7f50"
+               name = Just "first",
+               itemStyle = itemColor "#ff7f50"
                },
             ForceCategory $ forceCategoryDefault {
-              "name" = Just "second",
-              "itemStyle" = itemColor "#6f57bc"
+              name = Just "second",
+              itemStyle = itemColor "#6f57bc"
               },
             ForceCategory $ forceCategoryDefault {
-              "name" = Just "third",
-              "itemStyle" = itemColor "#af0000"
+              name = Just "third",
+              itemStyle = itemColor "#af0000"
               }
             ],
-          "nodes" = Just $ nodeNormalize <$> nodes,
-          "links" = Just $ linkNormalize <$> links,
-          "minRadius" = Just constMinRadius,
-          "maxRadius" = Just constMaxRadius
+          nodes = Just $ nodeNormalize <$> nodes,
+          links = Just $ linkNormalize <$> links,
+          minRadius = Just constMinRadius,
+          maxRadius = Just constMaxRadius
           }
         
         }

@@ -57,9 +57,9 @@ instance tooltipAxisPointerTypeEncodeJson :: EncodeJson TooltipAxisPointerType w
 
 type TooltipAxisPointerRec = {
     "type" :: Maybe TooltipAxisPointerType,
-    "lineStyle" :: Maybe LineStyle,
-    "crossStyle" :: Maybe LineStyle,
-    "shadowStyle" :: Maybe AreaStyle
+    lineStyle :: Maybe LineStyle,
+    crossStyle :: Maybe LineStyle,
+    shadowStyle :: Maybe AreaStyle
     }
 
 newtype TooltipAxisPointer = TooltipAxisPointer TooltipAxisPointerRec
@@ -75,30 +75,30 @@ instance tooltipAxisPointerEncodeJson :: EncodeJson TooltipAxisPointer where
     ]
 tooltipAxisPointerDefault :: TooltipAxisPointerRec
 tooltipAxisPointerDefault = {
-  type: Nothing,
+  "type": Nothing,
   lineStyle: Nothing,
   crossStyle: Nothing,
   shadowStyle: Nothing
   }
 
 type TooltipRec = {
-    "show" :: Maybe Boolean,
-    "showContent" :: Maybe Boolean,
-    "trigger" :: Maybe TooltipTrigger,
-    "position" :: Maybe TooltipPosition,
-    "formatter" :: Maybe Formatter,
-    "islandFormatter" :: Maybe Formatter,
-    "showDelay" :: Maybe Number,
-    "hideDelay" :: Maybe Number,
-    "transitionDuration" :: Maybe Number,
-    "backgroundColor" :: Maybe Color,
-    "borderColor" :: Maybe Color,
-    "borderRadius" :: Maybe Number,
-    "borderWidth" :: Maybe Number,
-    "padding" :: Maybe (Corner Number),
-    "axisPointer" :: Maybe TooltipAxisPointer,
-    "textStyle" :: Maybe TextStyle,
-    "enterable" :: Maybe Boolean
+    show :: Maybe Boolean,
+    showContent :: Maybe Boolean,
+    trigger :: Maybe TooltipTrigger,
+    position :: Maybe TooltipPosition,
+    formatter :: Maybe Formatter,
+    islandFormatter :: Maybe Formatter,
+    showDelay :: Maybe Number,
+    hideDelay :: Maybe Number,
+    transitionDuration :: Maybe Number,
+    backgroundColor :: Maybe Color,
+    borderColor :: Maybe Color,
+    borderRadius :: Maybe Number,
+    borderWidth :: Maybe Number,
+    padding :: Maybe (Corner Number),
+    axisPointer :: Maybe TooltipAxisPointer,
+    textStyle :: Maybe TextStyle,
+    enterable :: Maybe Boolean
     }
 
 
@@ -130,21 +130,21 @@ instance tooltipEncodeJson :: EncodeJson Tooltip where
 
 tooltipDefault :: TooltipRec
 tooltipDefault = {
-  "show": Nothing,
-  "showContent": Nothing,
-  "trigger": Nothing,
-  "position": Nothing,
-  "formatter": Nothing,
-  "islandFormatter": Nothing,
-  "showDelay": Nothing,
-  "hideDelay": Nothing,
-  "transitionDuration": Nothing,
-  "backgroundColor": Nothing,
-  "borderColor": Nothing,
-  "borderRadius": Nothing,
-  "borderWidth": Nothing,
-  "padding": Nothing,
-  "axisPointer": Nothing,
-  "textStyle": Nothing,
-  "enterable" : Nothing
+  show: Nothing,
+  showContent: Nothing,
+  trigger: Nothing,
+  position: Nothing,
+  formatter: Nothing,
+  islandFormatter: Nothing,
+  showDelay: Nothing,
+  hideDelay: Nothing,
+  transitionDuration: Nothing,
+  backgroundColor: Nothing,
+  borderColor: Nothing,
+  borderRadius: Nothing,
+  borderWidth: Nothing,
+  padding: Nothing,
+  axisPointer: Nothing,
+  textStyle: Nothing,
+  enterable: Nothing
   }

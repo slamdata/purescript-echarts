@@ -40,26 +40,26 @@ import ECharts.Effects
 -}
 
 type OptionRec = {
-    "backgroundColor" :: Maybe Color,
-    "color" :: Maybe [Color],
-    "renderAsImage" :: Maybe Boolean,
-    "calculable" :: Maybe Boolean,
-    "animation" :: Maybe Boolean,
+    backgroundColor :: Maybe Color,
+    color :: Maybe [Color],
+    renderAsImage :: Maybe Boolean,
+    calculable :: Maybe Boolean,
+    animation :: Maybe Boolean,
 
-    "timeline" :: Maybe Timeline,
-    "tooltip" :: Maybe Tooltip,
-    "toolbox" :: Maybe Toolbox,
-    "title" :: Maybe Title,
-    "legend" :: Maybe Legend,
-    "dataRange" :: Maybe DataRange,
-    "dataZoom" :: Maybe DataZoom,
-    "roamController" :: Maybe RoamController,
-    "grid" :: Maybe Grid,
-    "xAxis" :: Maybe Axises,
-    "yAxis" :: Maybe Axises,
-    "polar" :: Maybe [Polar],
+    timeline :: Maybe Timeline,
+    tooltip :: Maybe Tooltip,
+    toolbox :: Maybe Toolbox,
+    title :: Maybe Title,
+    legend :: Maybe Legend,
+    dataRange :: Maybe DataRange,
+    dataZoom :: Maybe DataZoom,
+    roamController :: Maybe RoamController,
+    grid :: Maybe Grid,
+    xAxis :: Maybe Axises,
+    yAxis :: Maybe Axises,
+    polar :: Maybe [Polar],
 
-    "series" :: Maybe [Maybe Series]
+    series :: Maybe [Maybe Series]
     }
 
 newtype Option = Option OptionRec
@@ -93,24 +93,24 @@ instance optionsEncodeJson :: EncodeJson Option where
 
 optionDefault :: OptionRec
 optionDefault = {
-  "backgroundColor": Nothing,
-  "color": Nothing,
-  "renderAsImage": Nothing,
-  "calculable": Nothing,
-  "animation": Nothing,
-  "series": Nothing,
-  "timeline": Nothing,
-  "tooltip": Nothing,
-  "toolbox": Nothing,
-  "title": Nothing,
-  "legend": Nothing,
-  "dataRange": Nothing,
-  "dataZoom": Nothing,
-  "roamController": Nothing,
-  "grid": Nothing,
-  "xAxis": Nothing,
-  "yAxis": Nothing,
-  "polar": Nothing
+  backgroundColor: Nothing,
+  color: Nothing,
+  renderAsImage: Nothing,
+  calculable: Nothing,
+  animation: Nothing,
+  series: Nothing,
+  timeline: Nothing,
+  tooltip: Nothing,
+  toolbox: Nothing,
+  title: Nothing,
+  legend: Nothing,
+  dataRange: Nothing,
+  dataZoom: Nothing,
+  roamController: Nothing,
+  grid: Nothing,
+  xAxis: Nothing,
+  yAxis: Nothing,
+  polar: Nothing
   }
 
 foreign import setOptionImpl """

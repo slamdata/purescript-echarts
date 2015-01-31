@@ -18,8 +18,8 @@ import ECharts.Formatter
 
 
 type AxisLineStyleRec = {
-    "color" :: Maybe [Tuple Number Color],
-    "width" :: Maybe Number
+    color :: Maybe [Tuple Number Color],
+    width :: Maybe Number
     }
 
 newtype AxisLineStyle = AxisLineStyle AxisLineStyleRec
@@ -38,9 +38,9 @@ axisLineStyleDefault = {
 
 
 type AxisLineRec = {
-    "show" :: Maybe Boolean,
-    "onZero" :: Maybe Boolean,
-    "lineStyle" :: Maybe AxisLineStyle
+    show :: Maybe Boolean,
+    onZero :: Maybe Boolean,
+    lineStyle :: Maybe AxisLineStyle
     }
 
 newtype AxisLine = AxisLine AxisLineRec
@@ -61,13 +61,13 @@ axisLineDefault = {
 
 
 type AxisTickRec = {
-    "show" :: Maybe Boolean,
-    "splitNumber" :: Maybe Number,
-    "length" :: Maybe Number,
-    "lineStyle" :: Maybe LineStyle,
-    "interval" :: Maybe Interval,
-    "onGap" :: Maybe Boolean,
-    "inside" :: Maybe Boolean
+    show :: Maybe Boolean,
+    splitNumber :: Maybe Number,
+    length :: Maybe Number,
+    lineStyle :: Maybe LineStyle,
+    interval :: Maybe Interval,
+    onGap :: Maybe Boolean,
+    inside :: Maybe Boolean
     }
 
 newtype AxisTick = AxisTick AxisTickRec
@@ -95,13 +95,13 @@ axisTickDefault = {
   }
 
 type AxisLabelRec =  {
-    "show" :: Maybe Boolean,
-    "interval" :: Maybe Interval,
-    "formatter" :: Maybe Formatter,
-    "textStyle" :: Maybe TextStyle,
-    "rotate" :: Maybe Number,
-    "margin" :: Maybe Number,
-    "clickable" :: Maybe Boolean
+    show :: Maybe Boolean,
+    interval :: Maybe Interval,
+    formatter :: Maybe Formatter,
+    textStyle :: Maybe TextStyle,
+    rotate :: Maybe Number,
+    margin :: Maybe Number,
+    clickable :: Maybe Boolean
     }
 
 newtype AxisLabel = AxisLabel AxisLabelRec
@@ -135,9 +135,9 @@ instance axisesEncodeJson :: EncodeJson Axises where
   encodeJson (TwoAxises axis axis2) = encodeJson [axis, axis2]
 
 type AxisSplitLineRec = {
-    "show" :: Maybe Boolean,
-    "onGap" :: Maybe Boolean,
-    "lineStyle" :: Maybe LineStyle
+    show :: Maybe Boolean,
+    onGap :: Maybe Boolean,
+    lineStyle :: Maybe LineStyle
     }
 
 newtype AxisSplitLine = AxisSplitLine AxisSplitLineRec
@@ -160,9 +160,9 @@ axisSplitLineDefault = {
 
 
 type AxisSplitAreaRec =  {
-    "show" :: Maybe Boolean,
-    "onGap" :: Maybe Boolean,
-    "areaStyle" :: Maybe AreaStyle
+    show :: Maybe Boolean,
+    onGap :: Maybe Boolean,
+    areaStyle :: Maybe AreaStyle
     }
 
 
@@ -235,21 +235,21 @@ instance axisBoundaryGapEncodeJson :: EncodeJson AxisBoundaryGap where
 
 type AxisRec = {
     "type" :: Maybe AxisType,
-    "show" :: Maybe Boolean,
-    "position" :: Maybe AxisPosition,
-    "name" :: Maybe String,
-    "nameLocation" :: Maybe AxisNameLocation,
-    "nameTextStyle" :: Maybe TextStyle,
-    "boundaryGap" :: Maybe AxisBoundaryGap,
-    "min" :: Maybe Number,
-    "max" :: Maybe Number,
-    "scale" :: Maybe Boolean,
-    "splitNumber" :: Maybe Number,
-    "axisLine" :: Maybe AxisLine,
-    "axisTick" :: Maybe AxisTick,
-    "axisLabel" :: Maybe AxisLabel,
-    "splitLine" :: Maybe AxisSplitLine,
-    "splitArea" :: Maybe AxisSplitArea,
+    show :: Maybe Boolean,
+    position :: Maybe AxisPosition,
+    name :: Maybe String,
+    nameLocation :: Maybe AxisNameLocation,
+    nameTextStyle :: Maybe TextStyle,
+    boundaryGap :: Maybe AxisBoundaryGap,
+    min :: Maybe Number,
+    max :: Maybe Number,
+    scale :: Maybe Boolean,
+    splitNumber :: Maybe Number,
+    axisLine :: Maybe AxisLine,
+    axisTick :: Maybe AxisTick,
+    axisLabel :: Maybe AxisLabel,
+    splitLine :: Maybe AxisSplitLine,
+    splitArea :: Maybe AxisSplitArea,
     "data" :: Maybe [AxisData]
     }
 
@@ -273,7 +273,7 @@ axisDefault = {
   axisLabel: Nothing,
   splitLine: Nothing,
   splitArea: Nothing,
-  data: Nothing
+  "data": Nothing
   }
 instance axisEncJson :: EncodeJson Axis where
   encodeJson (Axis obj) =
@@ -300,9 +300,9 @@ instance axisEncJson :: EncodeJson Axis where
 
 
 type PolarNameRec = {
-    "show" :: Maybe Boolean,
-    "formatter" :: Maybe Formatter,
-    "textStyle" :: Maybe TextStyle
+    show :: Maybe Boolean,
+    formatter :: Maybe Formatter,
+    textStyle :: Maybe TextStyle
     }
 
 newtype PolarName = PolarName PolarNameRec
@@ -332,10 +332,10 @@ instance polarTypeEncode :: EncodeJson PolarType where
 
 
 type IndicatorRec = {
-    "text" :: Maybe String,
-    "min" :: Maybe Number,
-    "max" :: Maybe Number,
-    "axisLabel" :: Maybe AxisLabel
+    text :: Maybe String,
+    min :: Maybe Number,
+    max :: Maybe Number,
+    axisLabel :: Maybe AxisLabel
     }
 
 newtype Indicator = Indicator IndicatorRec
@@ -358,19 +358,19 @@ indicatorDefault = {
   }
 
 type PolarRec =  {
-    "center" :: Maybe (Tuple PercentOrPixel PercentOrPixel),
-    "radius" :: Maybe PercentOrPixel,
-    "startAngle" :: Maybe Number,
-    "splitNumber" :: Maybe Number,
-    "name" :: Maybe PolarName,
-    "boundaryGap" :: Maybe (Tuple Number Number),
-    "scale" :: Maybe Boolean,
-    "axisLine" :: Maybe AxisLine,
-    "axisLabel" :: Maybe AxisLabel,
-    "splitLine" :: Maybe AxisSplitLine,
-    "splitArea" :: Maybe AxisSplitArea,
+    center :: Maybe (Tuple PercentOrPixel PercentOrPixel),
+    radius :: Maybe PercentOrPixel,
+    startAngle :: Maybe Number,
+    splitNumber :: Maybe Number,
+    name :: Maybe PolarName,
+    boundaryGap :: Maybe (Tuple Number Number),
+    scale :: Maybe Boolean,
+    axisLine :: Maybe AxisLine,
+    axisLabel :: Maybe AxisLabel,
+    splitLine :: Maybe AxisSplitLine,
+    splitArea :: Maybe AxisSplitArea,
     "type" :: Maybe PolarType,
-    "indicator" :: Maybe [Indicator]
+    indicator :: Maybe [Indicator]
     }
 
 newtype Polar = Polar PolarRec
@@ -407,6 +407,6 @@ polarDefault = {
   axisLabel: Nothing,
   splitLine: Nothing,
   splitArea: Nothing,
-  type: Nothing,
+  "type": Nothing,
   indicator: Nothing
   }

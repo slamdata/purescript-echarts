@@ -20,10 +20,10 @@ import ECharts.Symbol
 import ECharts.Series.Force
 
 type ForceCategoryRec = {
-    "name" :: Maybe String,
-    "symbol" :: Maybe Symbol,
-    "symbolSize" :: Maybe SymbolSize,
-    "itemStyle" :: Maybe ItemStyle
+    name :: Maybe String,
+    symbol :: Maybe Symbol,
+    symbolSize :: Maybe SymbolSize,
+    itemStyle :: Maybe ItemStyle
     }
 
 newtype ForceCategory = ForceCategory ForceCategoryRec
@@ -45,19 +45,19 @@ instance forceCategoryEncodeJson :: EncodeJson ForceCategory where
      ]
 
 type NodeRec = {
-    "name" :: Maybe String,
-    "label" :: Maybe String,
-    "value" :: Number,
-    "ignore" :: Maybe Boolean,
-    "symbol" :: Maybe Symbol,
-    "symbolSize" :: Maybe SymbolSize,
-    "itemStyle" :: Maybe ItemStyle,
+    name :: Maybe String,
+    label :: Maybe String,
+    value :: Number,
+    ignore :: Maybe Boolean,
+    symbol :: Maybe Symbol,
+    symbolSize :: Maybe SymbolSize,
+    itemStyle :: Maybe ItemStyle,
 
-    "initial" :: Maybe (Tuple Number Number),
-    "fixX" :: Maybe Boolean,
-    "fixY" :: Maybe Boolean,
-    "draggable" :: Maybe Boolean,
-    "category" :: Maybe Number
+    initial :: Maybe (Tuple Number Number),
+    fixX :: Maybe Boolean,
+    fixY :: Maybe Boolean,
+    draggable :: Maybe Boolean,
+    category :: Maybe Number
     }
 
 

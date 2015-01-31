@@ -11,11 +11,11 @@ import ECharts.Tooltip
 import ECharts.Style.Item
 
 type ItemDataDatRec =  {
-  "value" :: ItemValue,
-  "name" :: Maybe String,
-  "tooltip" :: Maybe Tooltip,
-  "itemStyle" :: Maybe ItemStyle,
-  "selected" :: Maybe Boolean
+  value :: ItemValue,
+  name :: Maybe String,
+  tooltip :: Maybe Tooltip,
+  itemStyle :: Maybe ItemStyle,
+  selected :: Maybe Boolean
   }
 
 data ItemData = Value ItemValue
@@ -42,9 +42,9 @@ instance itemDataEncodeJson :: EncodeJson ItemData where
 dataDefault :: ItemValue -> ItemDataDatRec
 dataDefault value =
   {
-    "value": value,
-    "name": Nothing,
-    "tooltip": Nothing,
-    "itemStyle": Nothing,
-    "selected": Nothing
+    value: value,
+    name: Nothing,
+    tooltip: Nothing,
+    itemStyle: Nothing,
+    selected: Nothing
   }

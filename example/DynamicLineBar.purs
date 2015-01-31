@@ -85,68 +85,68 @@ options_ xAxis d1 d2 = Option $ optionDefault {
      subtext = Just "fictitious"
      },
     toolbox = Just $ Toolbox $ toolboxDefault {
-     "show" = Just true,
-     "feature" = Just $ Feature $ featureDefault {
-       "mark" = Just $ MarkFeature $ markFeatureDefault {show = Just true},
-       "dataView" = Just $ DataViewFeature $ dataViewFeatureDefault {
-         "show" = Just true,
-         "readOnly" = Just false
+     show = Just true,
+     feature = Just $ Feature $ featureDefault {
+       mark = Just $ MarkFeature $ markFeatureDefault {show = Just true},
+       dataView = Just $ DataViewFeature $ dataViewFeatureDefault {
+         show = Just true,
+         readOnly = Just false
          },
-       "magicType" = Just $ MagicTypeFeature $ magicTypeFeatureDefault {
-         "show" = Just true,
+       magicType = Just $ MagicTypeFeature $ magicTypeFeatureDefault {
+         show = Just true,
          "type" = Just [MagicLine, MagicBar]
          },
-       "restore" = Just $ RestoreFeature $ restoreFeatureDefault {
-         "show" = Just true
+       restore = Just $ RestoreFeature $ restoreFeatureDefault {
+         show = Just true
          },
-       "saveAsImage" = Just $ SaveAsImageFeature $ saveAsImageFeatureDefault {
-         "show" = Just true
+       saveAsImage = Just $ SaveAsImageFeature $ saveAsImageFeatureDefault {
+         show = Just true
          }
        }
      },
-    "dataZoom" = Just $ Zoom.DataZoom $ Zoom.dataZoomDefault {
-      "show" = Just true,
-      "start" = Just 0,
-      "end" = Just 100
+    dataZoom = Just $ Zoom.DataZoom $ Zoom.dataZoomDefault {
+      show = Just true,
+      start = Just 0,
+      end = Just 100
       },
-    "xAxis" = Just $ TwoAxises
+    xAxis = Just $ TwoAxises
               (Axis axisDefault {
                   "type" = Just $ CategoryAxis,
-                  "boundaryGap" = Just $ CatBoundaryGap true,
+                  boundaryGap = Just $ CatBoundaryGap true,
                   "data" = Just $ CommonAxisData <$> xAxis
                   })
               (Axis axisDefault {
                   "type" = Just $ CategoryAxis,
-                  "boundaryGap" = Just $ CatBoundaryGap true,
+                  boundaryGap = Just $ CatBoundaryGap true,
                   "data" = Just $ CommonAxisData <$> show <$> (1..10)
                   }),
-    "yAxis" = Just $ TwoAxises
+    yAxis = Just $ TwoAxises
               (Axis axisDefault {
                   "type" = Just ValueAxis,
-                  "scale" = Just true,
-                  "boundaryGap" = Just $ ValueBoundaryGap 0.2 0.2,
-                  "name" = Just "price"
+                  scale = Just true,
+                  boundaryGap = Just $ ValueBoundaryGap 0.2 0.2,
+                  name = Just "price"
                   })
               (Axis axisDefault {
                   "type" = Just ValueAxis,
-                  "scale" = Just true,
-                  "name" = Just "pre-order quantity",
-                  "boundaryGap" = Just $ ValueBoundaryGap 0.2 0.2
+                  scale = Just true,
+                  name = Just "pre-order quantity",
+                  boundaryGap = Just $ ValueBoundaryGap 0.2 0.2
                   }),
-    "series" = Just $ Just <$> [
+    series = Just $ Just <$> [
       BarSeries {
          common: universalSeriesDefault {
-            "name" = Just "pre-order queue"
+            name = Just "pre-order queue"
             },
          barSeries: barSeriesDefault {
-           "xAxisIndex" = Just 1,
-           "yAxisIndex" = Just 1,
+           xAxisIndex = Just 1,
+           yAxisIndex = Just 1,
            "data" = Just $ simpleData <$> d1
            }
          },
       LineSeries {
         common: universalSeriesDefault {
-           "name" = Just "new price"
+           name = Just "new price"
            },
         lineSeries: lineSeriesDefault {
           "data" = Just $ simpleData <$> d2

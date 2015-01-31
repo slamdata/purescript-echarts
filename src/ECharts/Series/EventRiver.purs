@@ -33,9 +33,9 @@ import ECharts.Axis
 import ECharts.Title
 
 type EvolutionDetailRec = {
-    "link" :: Maybe String,
-    "text" :: Maybe String,
-    "img" :: Maybe String
+    link :: Maybe String,
+    text :: Maybe String,
+    img :: Maybe String
     }
 
 newtype EvolutionDetail = EvolutionDetail EvolutionDetailRec
@@ -55,9 +55,9 @@ evolutionDetailDefault = {
   }
 
 type EvolutionRec = {
-    "time" :: Date,
-    "value" :: Number,
-    "detail" :: Maybe EvolutionDetail
+    time :: Date,
+    value :: Number,
+    detail :: Maybe EvolutionDetail
     }
 
 newtype Evolution = Evolution EvolutionRec
@@ -71,9 +71,9 @@ instance evoEncodeJson :: EncodeJson Evolution where
     ]
 
 type OneEventRec = {
-    "name" :: Maybe String,
-    "weight" :: Maybe Number,
-    "evolution" :: Maybe [Evolution]
+    name :: Maybe String,
+    weight :: Maybe Number,
+    evolution :: Maybe [Evolution]
     }
 
 newtype OneEvent = OneEvent OneEventRec

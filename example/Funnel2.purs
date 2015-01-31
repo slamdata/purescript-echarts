@@ -25,7 +25,7 @@ options = Option $ optionDefault {
              simpleDat 12 "baz",
              simpleDat 123 "quux"
              ],
-          "sort" = Just Asc
+          sort = Just Asc
           }
         }
      ]

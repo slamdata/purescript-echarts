@@ -19,22 +19,22 @@ instance linkTargetEncodeJson :: EncodeJson LinkTarget where
     Blank -> "blank"
 
 type TitleRec = {
-    "text" :: Maybe String,
-    "link" :: Maybe String,
-    "target" :: Maybe LinkTarget,
-    "subtext" :: Maybe String,
-    "sublink" :: Maybe String,
-    "subtarget" :: Maybe LinkTarget,
-    "x" :: Maybe XPos,
-    "y" :: Maybe YPos,
-    "textAlign" :: Maybe HorizontalAlign,
-    "backgroundColor" :: Maybe Color,
-    "borderColor" :: Maybe Color,
-    "borderWidth" :: Maybe Number,
-    "padding" :: Maybe (Corner Number),
-    "itemGap" :: Maybe Number,
-    "textStyle" :: Maybe TextStyle,
-    "subtextStyle" :: Maybe TextStyle
+    text :: Maybe String,
+    link :: Maybe String,
+    target :: Maybe LinkTarget,
+    subtext :: Maybe String,
+    sublink :: Maybe String,
+    subtarget :: Maybe LinkTarget,
+    x :: Maybe XPos,
+    y :: Maybe YPos,
+    textAlign :: Maybe HorizontalAlign,
+    backgroundColor :: Maybe Color,
+    borderColor :: Maybe Color,
+    borderWidth :: Maybe Number,
+    padding :: Maybe (Corner Number),
+    itemGap :: Maybe Number,
+    textStyle :: Maybe TextStyle,
+    subtextStyle :: Maybe TextStyle
     }
 
 newtype Title = Title TitleRec

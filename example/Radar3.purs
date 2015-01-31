@@ -13,14 +13,14 @@ import Data.Maybe
 import Utils
 
 indicator text max =
-  Indicator $ indicatorDefault{"text" = Just text, "max" = Just max}
+  Indicator $ indicatorDefault{text = Just text, max = Just max}
 
 datPair val name =
   Dat $ (dataDefault $ Many val) {name = Just name}
 
 option = Option $ optionDefault {
-  "polar" = Just $ [Polar polarDefault {
-     "indicator" = Just [
+  polar = Just $ [Polar polarDefault {
+     indicator = Just [
         indicator "sales" 6000,
         indicator "Administration" 16000,
         indicator "IT" 30000,
@@ -29,9 +29,9 @@ option = Option $ optionDefault {
         indicator "Marketing" 25000
         ]
      }],
-  "series" = Just $ Just <$> [
+  series = Just $ Just <$> [
     RadarSeries {
-       "common": universalSeriesDefault{"name" = Just "budget vs spending"},
+       common: universalSeriesDefault{name = Just "budget vs spending"},
        radarSeries: radarSeriesDefault{
          "data" = Just [
             datPair [4300, 10000, 28000, 35000, 50000, 19000] "Allocated",

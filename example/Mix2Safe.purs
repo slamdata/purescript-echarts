@@ -25,26 +25,26 @@ simpleData = Value <<< Simple
 series :: [Series]
 series = [
   BarSeries {
-     common: universalSeriesDefault {"name" = Just "direct access"},
+     common: universalSeriesDefault {name = Just "direct access"},
      barSeries: barSeriesDefault {
        "data" = Just $ simpleData <$> [320, 332, 301, 334, 390, 330, 320],
-       "stack" = Just "total"
+       stack = Just "total"
        }
      },
   BarSeries {
     common: universalSeriesDefault {
-       "name" = Just "email marketing",
-       "tooltip" = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem}
+       name = Just "email marketing",
+       tooltip = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem}
        },
     barSeries: barSeriesDefault {
       "data" = Just $ simpleData <$> [120, 132, 101, 134, 90, 230, 210],
-      "stack" = Just "total"
+      stack = Just "total"
       }
     },
   BarSeries {
     common: universalSeriesDefault {
-       "name" = Just "affiliate advertising",
-       "tooltip" = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem}
+       name = Just "affiliate advertising",
+       tooltip = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem}
        },
     barSeries: barSeriesDefault {
       "data" = Just $ simpleData <$> [220, 182, 191, 234, 290, 330, 310]
@@ -52,8 +52,8 @@ series = [
     },
   BarSeries {
     common: universalSeriesDefault {
-       "name" = Just "video ads",
-       "tooltip" = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem}
+       name = Just "video ads",
+       tooltip = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem}
        },
     barSeries: barSeriesDefault {
       "data" = Just $ simpleData <$> [150, 232, 201, 154, 190, 330, 410]
@@ -61,7 +61,7 @@ series = [
     },
   LineSeries {
     common: universalSeriesDefault{
-       "name" = Just "must be"
+       name = Just "must be"
        },
     lineSeries: lineSeriesDefault {
       "data" = Just $ simpleData <$>
@@ -70,37 +70,37 @@ series = [
     },
   PieSeries {
     common: universalSeriesDefault {
-       "name" = Just "search engine",
-       "itemStyle" = Just $ ItemStyle {
-         "emphasis": Nothing,
-         "normal": Just $ IStyle $ istyleDefault {
-           "labelLine" = Just $ ItemLabelLine {
-              "show": Just true,
-              "length": Just 20,
-              "lineStyle": Nothing
+       name = Just "search engine",
+       itemStyle = Just $ ItemStyle {
+         emphasis: Nothing,
+         normal: Just $ IStyle $ istyleDefault {
+           labelLine = Just $ ItemLabelLine {
+              show: Just true,
+              length: Just 20,
+              lineStyle: Nothing
               }
            }
          },
-       "tooltip" = Just $ Tooltip $ tooltipDefault {
+       tooltip = Just $ Tooltip $ tooltipDefault {
          trigger = Just TriggerItem,
          formatter = Just $ Template "{a} <br/> {b}: {c} ({d}%)"
          }
        },
     pieSeries: pieSeriesDefault {
-      "radius" = Just $ Rs {inner: (Pixel 0), outer: (Pixel 50)},
-      "center" = Just $ Tuple (Percent 160) (Percent 130),
+      radius = Just $ Rs {inner: (Pixel 0), outer: (Pixel 50)},
+      center = Just $ Tuple (Percent 160) (Percent 130),
       "data" = Just $ Dat <$> [
          (dataDefault (Simple 1047)) {
-            "name" = Just "Baidu"
+            name = Just "Baidu"
             },
          (dataDefault (Simple 264)) {
-           "name" = Just "Google"
+           name = Just "Google"
            },
          (dataDefault (Simple 145)) {
-           "name" = Just "Bing"
+           name = Just "Bing"
            },
          (dataDefault (Simple 102)) {
-           "name" = Just "other"
+           name = Just "other"
            }
          ]
 
@@ -143,7 +143,7 @@ options = Option $ optionDefault {
         show: Just true,
         title: Nothing,
         "type": Nothing,
-        "lang": Nothing
+        lang: Nothing
         },
       dataZoom: Nothing
       }
@@ -164,8 +164,8 @@ options = Option $ optionDefault {
     },
   xAxis = Just $ OneAxis $ Axis $ axisDefault {
     "type" = Just CategoryAxis,
-    "splitLine" = Just $ AxisSplitLine $ axisSplitLineDefault {
-      "show" = Just false
+    splitLine = Just $ AxisSplitLine $ axisSplitLineDefault {
+      show = Just false
       },
     "data" = Just $ CommonAxisData <$>
              ["Monday", "Tuesday", "Wednesday",
@@ -173,7 +173,7 @@ options = Option $ optionDefault {
      },
    yAxis = Just $ OneAxis $ Axis $ axisDefault {
      "type" = Just ValueAxis,
-     "position" = Just RightAxis
+     position = Just RightAxis
      },
    series = Just $ Just <$> series
   

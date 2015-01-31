@@ -10,11 +10,11 @@ import ECharts.Color
 import ECharts.Axis
 
 type CheckpointStyleRec = {
-    "symbol" :: Maybe Symbol,
-    "symbolSize" :: Maybe SymbolSize,
-    "color" :: Maybe Color,
-    "borderColor" :: Maybe Color,
-    "label" :: Maybe AxisLabel
+    symbol :: Maybe Symbol,
+    symbolSize :: Maybe SymbolSize,
+    color :: Maybe Color,
+    borderColor :: Maybe Color,
+    label :: Maybe AxisLabel
     }
 
 newtype CheckpointStyle = CheckpointStyle CheckpointStyleRec

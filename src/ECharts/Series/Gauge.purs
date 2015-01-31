@@ -18,9 +18,9 @@ import ECharts.Symbol
 import ECharts.Formatter
 
 type PointerRec = {
-    "length" :: Maybe Number,
-    "width" :: Maybe Number,
-    "color" :: Maybe Color
+    length :: Maybe Number,
+    width :: Maybe Number,
+    color :: Maybe Color
     }
   
 newtype Pointer = Pointer PointerRec
@@ -40,9 +40,9 @@ instance pointerEncodeJson :: EncodeJson Pointer where
     ]
 
 type SplitLineRec = {
-    "show" :: Maybe Boolean,
-    "length" :: Maybe Number,
-    "lineStyle" :: Maybe LineStyle
+    show :: Maybe Boolean,
+    length :: Maybe Number,
+    lineStyle :: Maybe LineStyle
     }
 
 newtype SplitLine = SplitLine SplitLineRec
@@ -62,15 +62,15 @@ instance splitLineEncodeJson :: EncodeJson SplitLine where
     ]
 
 type GaugeDetailRec = {
-    "show" :: Maybe Boolean,
-    "backgroundColor" :: Maybe Color,
-    "borderWidth" :: Maybe Number,
-    "borderColor" :: Maybe Color,
-    "width" :: Maybe Number,
-    "height" :: Maybe Number,
-    "offsetCenter" :: Maybe (Tuple PercentOrPixel PercentOrPixel),
-    "formatter" :: Maybe Formatter,
-    "textStyle" :: Maybe TextStyle
+    show :: Maybe Boolean,
+    backgroundColor :: Maybe Color,
+    borderWidth :: Maybe Number,
+    borderColor :: Maybe Color,
+    width :: Maybe Number,
+    height :: Maybe Number,
+    offsetCenter :: Maybe (Tuple PercentOrPixel PercentOrPixel),
+    formatter :: Maybe Formatter,
+    textStyle :: Maybe TextStyle
     }
 
 newtype GaugeDetail = GaugeDetail GaugeDetailRec

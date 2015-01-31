@@ -23,23 +23,23 @@ import Utils
 
 
 options = Option $ optionDefault {
-  "series" = Just $ Just <$> [
+  series = Just $ Just <$> [
      ChordSeries {
         common: universalSeriesDefault {
-           "name" = Just "chord"
+           name = Just "chord"
            },
         chordSeries: chordSeriesDefault {
           sort = Just Asc,
-          "sortSub" = Just Desc,
-          "showScale" = Just true,
-          "showScaleText" = Just true,
+          sortSub = Just Desc,
+          showScale = Just true,
+          showScaleText = Just true,
           "data" = Just [
             Label "group1",
             Label "group2",
             Label "group3",
             Label "group4"
             ],
-          "matrix" = Just $  [
+          matrix = Just $  [
             [11975,  5871, 8916, 2868],
             [ 1951, 10048, 2060, 6171],
             [ 8010, 16145, 8090, 8045],

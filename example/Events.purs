@@ -45,46 +45,46 @@ options_ line bar = Option $ optionDefault {
     "data" = Just $ legendItemDefault <$> ["fst","snd"]
     },
   toolbox = Just $ Toolbox $ toolboxDefault {
-    "show" = Just true,
-    "x" = Just XRight,
-    "feature" = Just $ Feature $ featureDefault {
-      "mark" = Just $ MarkFeature $ markFeatureDefault {show = Just true},
-      "dataView" = Just $ DataViewFeature $ dataViewFeatureDefault {
-        "show" = Just true,
-        "readOnly" = Just false
+    show = Just true,
+    x = Just XRight,
+    feature = Just $ Feature $ featureDefault {
+      mark = Just $ MarkFeature $ markFeatureDefault {show = Just true},
+      dataView = Just $ DataViewFeature $ dataViewFeatureDefault {
+        show = Just true,
+        readOnly = Just false
         },
-      "magicType" = Just $ MagicTypeFeature $ magicTypeFeatureDefault {
-        "show" = Just true,
+      magicType = Just $ MagicTypeFeature $ magicTypeFeatureDefault {
+        show = Just true,
         "type" = Just [MagicLine, MagicBar, MagicStack, MagicTiled]
         },
-      "restore" = Just $ RestoreFeature $ restoreFeatureDefault {
-        "show" = Just true
+      restore = Just $ RestoreFeature $ restoreFeatureDefault {
+        show = Just true
         },
-      "saveAsImage" = Just $ SaveAsImageFeature $ saveAsImageFeatureDefault {
-        "show" = Just true
+      saveAsImage = Just $ SaveAsImageFeature $ saveAsImageFeatureDefault {
+        show = Just true
         }
       }
     },
-  "calculable" = Just true,
-  "dataZoom" = Just $ Zoom.DataZoom $ Zoom.dataZoomDefault {
-    "show" = Just true,
-    "realtime" = Just true,
-    "start" = Just 40,
-    "end" = Just 60
+  calculable = Just true,
+  dataZoom = Just $ Zoom.DataZoom $ Zoom.dataZoomDefault {
+    show = Just true,
+    realtime = Just true,
+    start = Just 40,
+    end = Just 60
     },
-  "xAxis" = Just $ OneAxis $ Axis $ axisDefault {
+  xAxis = Just $ OneAxis $ Axis $ axisDefault {
     "type" = Just CategoryAxis,
-    "boundaryGap" = Just $ CatBoundaryGap true,
+    boundaryGap = Just $ CatBoundaryGap true,
     "data" = Just $ (\i -> CommonAxisData $ "2013-03-" <> show i) <$> (1..30) 
     },
-  "yAxis" = Just $ OneAxis $ Axis $ axisDefault {"type" = Just ValueAxis},
-  "series" = Just $ Just <$> [
+  yAxis = Just $ OneAxis $ Axis $ axisDefault {"type" = Just ValueAxis},
+  series = Just $ Just <$> [
     LineSeries {
-       "common": universalSeriesDefault{"name" = Just "fst"},
+       common: universalSeriesDefault{name = Just "fst"},
        lineSeries: lineSeriesDefault{"data" = Just $ simpleData <$> line}
        },
     BarSeries {
-      "common": universalSeriesDefault{"name" = Just "snd"},
+      common: universalSeriesDefault{name = Just "snd"},
       barSeries: barSeriesDefault{"data" = Just $ simpleData <$> bar}
       }
     ]

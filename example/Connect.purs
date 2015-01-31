@@ -76,21 +76,21 @@ options2 = Option $ optionDefault {
            ["direct access", "email marketing",
             "affiliate advertising", "video ads", "search engine"]
     },
-  "toolbox" = Just $ Toolbox $ toolboxDefault {
-    "feature" = Just $ Feature $ featureDefault {
-       "mark" = Just $ MarkFeature $ markFeatureDefault {show = Just true},
-       "magicType" = Just $ MagicTypeFeature $ magicTypeFeatureDefault {
-         "show" = Just true,
+  toolbox = Just $ Toolbox $ toolboxDefault {
+    feature = Just $ Feature $ featureDefault {
+       mark = Just $ MarkFeature $ markFeatureDefault {show = Just true},
+       magicType = Just $ MagicTypeFeature $ magicTypeFeatureDefault {
+         show = Just true,
          "type" = Just [MagicLine, MagicBar, MagicStack, MagicTiled]
          },
-       "restore" = Just $ RestoreFeature $ restoreFeatureDefault {
-         "show" = Just true
+       restore = Just $ RestoreFeature $ restoreFeatureDefault {
+         show = Just true
          },
-       "saveAsImage" = Just $ SaveAsImageFeature $ saveAsImageFeatureDefault {
-         "show" = Just true
+       saveAsImage = Just $ SaveAsImageFeature $ saveAsImageFeatureDefault {
+         show = Just true
          }
        },
-    "show" = Just true
+    show = Just true
   },
   calculable = Just true,
   xAxis = Just $ OneAxis $ Axis axisDefault {
@@ -101,54 +101,54 @@ options2 = Option $ optionDefault {
      },
   yAxis = Just $ OneAxis $ Axis axisDefault {
     "type" = Just ValueAxis,
-    "splitArea" = Just $ AxisSplitArea axisSplitAreaDefault {
-      "show" = Just true
+    splitArea = Just $ AxisSplitArea axisSplitAreaDefault {
+      show = Just true
       }
     },
-  grid = Just $ Grid gridDefault {"x2" = Just $ Pixel 40},
+  grid = Just $ Grid gridDefault {x2 = Just $ Pixel 40},
   series = Just $ Just <$> [
     BarSeries {
        common: universalSeriesDefault {
-          "name" = Just "direct access"
+          name = Just "direct access"
           },
        barSeries: barSeriesDefault {
-         "stack" = Just "total",
+         stack = Just "total",
          "data" = Just $ simpleData <$> [320, 332, 301, 334, 390, 330, 320]
          }
        },
     BarSeries {
       common: universalSeriesDefault {
-         "name" = Just "email marketing"
+         name = Just "email marketing"
          },
       barSeries: barSeriesDefault {
-        "stack" = Just "email marketing",
+        stack = Just "email marketing",
         "data" = Just $ simpleData <$> [120, 132, 101, 134, 90, 230, 210]
         }
       },
     BarSeries {
       common: universalSeriesDefault {
-         "name" = Just "affiliate advertising"
+         name = Just "affiliate advertising"
          },
       barSeries: barSeriesDefault {
-        "stack" = Just "total",
+        stack = Just "total",
         "data" = Just $ simpleData <$> [220, 182, 191, 234, 290, 330, 310]
         }
       },
     BarSeries {
       common: universalSeriesDefault {
-         "name" = Just "video Ads"
+         name = Just "video Ads"
          },
       barSeries: barSeriesDefault {
-        "stack" = Just "total",
+        stack = Just "total",
         "data" = Just $ simpleData <$> [150, 232, 201, 154, 190, 330, 410]
         }
       },
     BarSeries {
       common: universalSeriesDefault {
-         "name" = Just "search engine"
+         name = Just "search engine"
          },
       barSeries: barSeriesDefault {
-        "stack" = Just "total",
+        stack = Just "total",
         "data" = Just $ simpleData <$> [820, 932, 901, 934, 1290, 1330, 1320]
         }
       }

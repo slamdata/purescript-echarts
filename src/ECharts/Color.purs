@@ -21,9 +21,9 @@ function func2json(fn) {
 """ :: forall a. a -> Json
 
 type ColorFuncParamRec = {
-    "seriesIndex" :: Number,
-    "series" :: String,
-    "dataIndex" :: Number,
+    seriesIndex :: Number,
+    series :: String,
+    dataIndex :: Number,
     "data" :: {
       value :: ItemValue,
       name :: String

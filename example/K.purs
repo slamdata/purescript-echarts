@@ -20,15 +20,15 @@ simpleDat o c l h = Value $ HLOC {
   }
 
 options = Option $ optionDefault {
-  "xAxis" = Just $ OneAxis $ Axis axisDefault {
+  xAxis = Just $ OneAxis $ Axis axisDefault {
      "type" = Just CategoryAxis,
      "data" = Just $ CommonAxisData <$>
               ["2013/1/24", "2013/1/25", "2013/1/28", "2013/1/29", "2013/1/30"]
      },
-  "yAxis" = Just $ OneAxis $ Axis axisDefault {
+  yAxis = Just $ OneAxis $ Axis axisDefault {
     "type" = Just ValueAxis
     },
-  "series" = Just $ Just <$> [
+  series = Just $ Just <$> [
     CandlestickSeries {
        common: universalSeriesDefault,
        candlestickSeries: candlestickSeriesDefault{

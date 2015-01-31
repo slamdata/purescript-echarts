@@ -13,22 +13,22 @@ import ECharts.Style.Line
 import ECharts.Image
 
 type ToolboxRec = {
-    "show" :: Maybe Boolean,
-    "orient" :: Maybe Orient,
-    "x" :: Maybe XPos,
-    "y" :: Maybe YPos,
-    "backgroundColor" :: Maybe Color,
-    "borderColor" :: Maybe Color,
-    "borderWidth" :: Maybe Number,
-    "padding" :: Maybe (Corner Number),
-    "itemGap" :: Maybe Number,
-    "itemSize" :: Maybe Number,
-    "color" :: Maybe [Color],
-    "disableColor" :: Maybe Color,
-    "effectiveColor" :: Maybe Color,
-    "showTitle" :: Maybe Boolean,
-    "textStyle" :: Maybe TextStyle,
-    "feature" :: Maybe Feature
+    show :: Maybe Boolean,
+    orient :: Maybe Orient,
+    x :: Maybe XPos,
+    y :: Maybe YPos,
+    backgroundColor :: Maybe Color,
+    borderColor :: Maybe Color,
+    borderWidth :: Maybe Number,
+    padding :: Maybe (Corner Number),
+    itemGap :: Maybe Number,
+    itemSize :: Maybe Number,
+    color :: Maybe [Color],
+    disableColor :: Maybe Color,
+    effectiveColor :: Maybe Color,
+    showTitle :: Maybe Boolean,
+    textStyle :: Maybe TextStyle,
+    feature :: Maybe Feature
     }
 
 
@@ -36,22 +36,22 @@ newtype Toolbox = Toolbox ToolboxRec
 toolboxDefault :: ToolboxRec
 toolboxDefault =
   {
-    "show": Nothing,
-    "orient": Nothing,
-    "x": Nothing,
-    "y": Nothing,
-    "backgroundColor": Nothing,
-    "borderColor": Nothing,
-    "borderWidth": Nothing,
-    "padding": Nothing,
-    "itemGap": Nothing,
-    "itemSize": Nothing,
-    "color": Nothing,
-    "disableColor": Nothing,
-    "effectiveColor": Nothing,
-    "showTitle": Nothing,
-    "textStyle": Nothing,
-    "feature": Nothing
+    show: Nothing,
+    orient: Nothing,
+    x: Nothing,
+    y: Nothing,
+    backgroundColor: Nothing,
+    borderColor: Nothing,
+    borderWidth: Nothing,
+    padding: Nothing,
+    itemGap: Nothing,
+    itemSize: Nothing,
+    color: Nothing,
+    disableColor: Nothing,
+    effectiveColor: Nothing,
+    showTitle: Nothing,
+    textStyle: Nothing,
+    feature: Nothing
   }
   
 
@@ -79,12 +79,12 @@ instance toolboxEncodeJson :: EncodeJson Toolbox where
 
 
 type FeatureRec = {
-    "mark" :: Maybe MarkFeature,
-    "dataZoom" :: Maybe DataZoomFeature,
-    "dataView" :: Maybe DataViewFeature,
-    "magicType" :: Maybe MagicTypeFeature,
-    "restore" :: Maybe RestoreFeature,
-    "saveAsImage" :: Maybe SaveAsImageFeature
+    mark :: Maybe MarkFeature,
+    dataZoom :: Maybe DataZoomFeature,
+    dataView :: Maybe DataViewFeature,
+    magicType :: Maybe MagicTypeFeature,
+    restore :: Maybe RestoreFeature,
+    saveAsImage :: Maybe SaveAsImageFeature
     }
 
 newtype Feature = Feature FeatureRec
@@ -111,10 +111,10 @@ featureDefault = {
   }
 
 type SaveAsImageFeatureRec = {
-    "show" :: Maybe Boolean,
-    "title" :: Maybe String,
+    show :: Maybe Boolean,
+    title :: Maybe String,
     "type" :: Maybe ImgType,
-    "lang" :: Maybe [String]
+    lang :: Maybe [String]
     }
 
 newtype SaveAsImageFeature = SaveAsImageFeature SaveAsImageFeatureRec
@@ -134,13 +134,13 @@ saveAsImageFeatureDefault :: SaveAsImageFeatureRec
 saveAsImageFeatureDefault = {
   show: Nothing,
   title: Nothing,
-  type: Nothing,
+  "type": Nothing,
   lang: Nothing
   }
 
 type RestoreFeatureRec = {
-    "show" :: Maybe Boolean,
-    "title" :: Maybe String
+    show :: Maybe Boolean,
+    title :: Maybe String
     }
 
 newtype RestoreFeature = RestoreFeature RestoreFeatureRec
@@ -176,8 +176,8 @@ instance datazoomTitleEncodeJson :: EncodeJson DataZoomFeatureTitle where
     ]
 
 type DataZoomFeatureRec = {
-    "show" :: Maybe Boolean,
-    "title" :: Maybe DataZoomFeatureTitle
+    show :: Maybe Boolean,
+    title :: Maybe DataZoomFeatureTitle
     }
 
 newtype DataZoomFeature = DataZoomFeature DataZoomFeatureRec
@@ -197,10 +197,10 @@ instance dataviewFeatureEncodeJson :: EncodeJson DataZoomFeature where
     ]
 
 type DataViewFeatureRec = {
-    "show" :: Maybe Boolean,
-    "title" :: Maybe String,
-    "readOnly" :: Maybe Boolean,
-    "lang" :: Maybe [String]
+    show :: Maybe Boolean,
+    title :: Maybe String,
+    readOnly :: Maybe Boolean,
+    lang :: Maybe [String]
     }
 newtype DataViewFeature = DataViewFeature DataViewFeatureRec
 
@@ -223,9 +223,9 @@ instance dataViewFeatureEncodeJson :: EncodeJson DataViewFeature where
     ]
 
 type MarkFeatureTitleRec = {
-    "mark" :: Maybe String,
-    "markUndo" :: String,
-    "markClear" :: String
+    mark :: Maybe String,
+    markUndo :: String,
+    markClear :: String
     }
 
 newtype MarkFeatureTitle = MarkFeatureTitle MarkFeatureTitleRec
@@ -241,9 +241,9 @@ instance mftitleEncodeJson :: EncodeJson MarkFeatureTitle where
     ]
 
 type MarkFeatureRec = {
-    "show" :: Maybe Boolean,
-    "title" :: Maybe MarkFeatureTitle,
-    "lineStyle" :: Maybe LineStyle
+    show :: Maybe Boolean,
+    title :: Maybe MarkFeatureTitle,
+    lineStyle :: Maybe LineStyle
     }
 
 newtype MarkFeature = MarkFeature MarkFeatureRec
@@ -279,9 +279,9 @@ instance magicTypeEncodeJson :: EncodeJson MagicType where
     MagicFunnel -> "funnel"
 
 type MagicTypeFeatureRec = {
-    "show" :: Maybe Boolean,
-    "title" :: Maybe (StrMap String),
-    "option" :: Maybe Json,
+    show :: Maybe Boolean,
+    title :: Maybe (StrMap String),
+    option :: Maybe Json,
     "type" :: Maybe [MagicType]
     }
 
@@ -292,7 +292,7 @@ magicTypeFeatureDefault = {
   show: Nothing,
   title: Nothing,
   option: Nothing,
-  type: Nothing
+  "type": Nothing
   }
 
 instance magicTypeFeatureEncodeJson :: EncodeJson MagicTypeFeature where

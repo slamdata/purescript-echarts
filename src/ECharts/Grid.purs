@@ -10,15 +10,15 @@ import ECharts.Common
 import ECharts.Color
 
 type GridRec = {
-    "x" :: Maybe PercentOrPixel,
-    "x2" :: Maybe PercentOrPixel,
-    "y" :: Maybe PercentOrPixel,
-    "y2" :: Maybe PercentOrPixel,
-    "width" :: Maybe PercentOrPixel,
-    "height" :: Maybe PercentOrPixel,
-    "backgroundColor" :: Maybe Color,
-    "borderWidth" :: Maybe Number,
-    "borderColor" :: Maybe Number
+    x :: Maybe PercentOrPixel,
+    x2 :: Maybe PercentOrPixel,
+    y :: Maybe PercentOrPixel,
+    y2 :: Maybe PercentOrPixel,
+    width :: Maybe PercentOrPixel,
+    height :: Maybe PercentOrPixel,
+    backgroundColor :: Maybe Color,
+    borderWidth :: Maybe Number,
+    borderColor :: Maybe Number
     }
 
 newtype Grid = Grid GridRec

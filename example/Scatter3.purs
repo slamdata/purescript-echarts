@@ -54,19 +54,19 @@ options = do
     series = Just $ Just <$> [
        ScatterSeries {
           common: universalSeriesDefault{
-             "name" = Just "sin"
+             name = Just "sin"
              },
           scatterSeries: scatterSeriesDefault {
-            "large" =  Just true,
+            large =  Just true,
             "data" = Just $ simpleData <$> sines
             }
           },
        ScatterSeries {
          common: universalSeriesDefault{
-            "name" = Just "cos"
+            name = Just "cos"
             },
          scatterSeries: scatterSeriesDefault {
-           "large" = Just true,
+           large = Just true,
            "data" = Just $ simpleData <$> coses
            }
          }

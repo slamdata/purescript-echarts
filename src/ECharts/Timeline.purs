@@ -30,32 +30,32 @@ instance timelineControlPositionEncodeJson :: EncodeJson TimelineControlPosition
                                       
 
 type TimelineRec = {
-    "show" :: Maybe Boolean,
+    show :: Maybe Boolean,
     "type" :: Maybe TimelineType,
-    "notMerge" :: Maybe Boolean,
-    "realtime" :: Maybe Boolean,
-    "x" :: Maybe PercentOrPixel,
-    "x2" :: Maybe PercentOrPixel,
-    "y" :: Maybe PercentOrPixel,
-    "y2" :: Maybe PercentOrPixel,
-    "width" :: Maybe PercentOrPixel,
-    "height" :: Maybe PercentOrPixel,
-    "backgroundColor" :: Maybe Color,
-    "borderWidth" :: Maybe Number,
-    "borderColor" :: Maybe Color,
-    "padding" :: Maybe (Corner Number) ,
-    "controlPosition" :: Maybe TimelineControlPosition,
-    "autoPlay" :: Maybe Boolean,
-    "loop" :: Maybe Boolean,
-    "playInterval" :: Maybe Number,
-    "lineStyle" :: Maybe LineStyle,
-    "label" :: Maybe AxisLabel,
-    "checkpointStyle" :: Maybe CheckpointStyle ,
-    "controlStyle" :: Maybe ItemStyle,
-    "symbol" :: Maybe Symbol,
-    "symbolSize" :: Maybe SymbolSize,
-    "currentIndex" :: Maybe Number,
-    "data" :: Maybe [String]
+    notMerge :: Maybe Boolean,
+    realtime :: Maybe Boolean,
+    x :: Maybe PercentOrPixel,
+    x2 :: Maybe PercentOrPixel,
+    y :: Maybe PercentOrPixel,
+    y2 :: Maybe PercentOrPixel,
+    width :: Maybe PercentOrPixel,
+    height :: Maybe PercentOrPixel,
+    backgroundColor :: Maybe Color,
+    borderWidth :: Maybe Number,
+    borderColor :: Maybe Color,
+    padding :: Maybe (Corner Number) ,
+    controlPosition :: Maybe TimelineControlPosition,
+    autoPlay :: Maybe Boolean,
+    loop :: Maybe Boolean,
+    playInterval :: Maybe Number,
+    lineStyle :: Maybe LineStyle,
+    label :: Maybe AxisLabel,
+    checkpointStyle :: Maybe CheckpointStyle ,
+    controlStyle :: Maybe ItemStyle,
+    symbol :: Maybe Symbol,
+    symbolSize :: Maybe SymbolSize,
+    currentIndex :: Maybe Number,
+    "data" ::Maybe [String]
     }
 
 newtype Timeline = Timeline TimelineRec
@@ -95,7 +95,7 @@ instance timelineEncodeJson :: EncodeJson Timeline where
 timelineDefault :: TimelineRec
 timelineDefault = {
   show: Nothing,
-  type: Nothing,
+  "type": Nothing,
   notMerge: Nothing,
   realtime: Nothing,
   x: Nothing,
@@ -119,5 +119,5 @@ timelineDefault = {
   symbol: Nothing,
   symbolSize: Nothing,
   currentIndex: Nothing,
-  data: Nothing
+  "data": Nothing
   }

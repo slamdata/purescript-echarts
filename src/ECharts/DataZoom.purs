@@ -9,23 +9,23 @@ import ECharts.Color
 import ECharts.Coords
 
 type DataZoomRec = {
-    "show" :: Maybe Boolean,
-    "orient" :: Maybe Orient,
-    "x" :: Maybe XPos,
-    "y" :: Maybe YPos,
-    "width" :: Maybe Number,
-    "height" :: Maybe Number,
-    "backgroundColor" :: Maybe Color,
-    "dataBackgroundColor" :: Maybe Color,
-    "fillerColor" :: Maybe Color,
-    "handleColor" :: Maybe Color,
-    "xAxisIndex" :: Maybe [Number],
-    "yAxisIndex" :: Maybe [Number],
-    "start" :: Maybe Number,
-    "end" :: Maybe Number,
-    "showDetail" :: Maybe Boolean,
-    "realtime" :: Maybe Boolean,
-    "zoomlock" :: Maybe Boolean
+    show :: Maybe Boolean,
+    orient :: Maybe Orient,
+    x :: Maybe XPos,
+    y :: Maybe YPos,
+    width :: Maybe Number,
+    height :: Maybe Number,
+    backgroundColor :: Maybe Color,
+    dataBackgroundColor :: Maybe Color,
+    fillerColor :: Maybe Color,
+    handleColor :: Maybe Color,
+    xAxisIndex :: Maybe [Number],
+    yAxisIndex :: Maybe [Number],
+    start :: Maybe Number,
+    end :: Maybe Number,
+    showDetail :: Maybe Boolean,
+    realtime :: Maybe Boolean,
+    zoomlock :: Maybe Boolean
     }
 
 newtype DataZoom = DataZoom DataZoomRec

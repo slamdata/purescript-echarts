@@ -27,8 +27,8 @@ import ECharts.Symbol
 
 nameValue {name = name, value = value} =
   MarkPointData $ markPointDataDefault {
-    "name" = Just name,
-    "value" = Just value
+    name = Just name,
+    value = Just value
     }
 
 option = Option $ optionDefault {
@@ -36,7 +36,7 @@ option = Option $ optionDefault {
   series = Just $ Just <$> [
     MapSeries {
        common: universalSeriesDefault{
-          "markPoint" = Just $
+          markPoint = Just $
             MarkPoint $ markPointDefault {
               "data" = Just $ nameValue <$> [
                  {name: "trololo", value: 123}
@@ -48,8 +48,8 @@ option = Option $ optionDefault {
 
        mapSeries: mapSeriesDefault{
          "data" = Just [],
-         "mapType" = Just "china",
-         "geoCoord" = Just $ fromList [
+         mapType = Just "china",
+         geoCoord = Just $ fromList [
            Tuple "trololo" (Tuple 121 43)
            ]
          }
