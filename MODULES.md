@@ -147,7 +147,7 @@
 
     getZRender :: forall e. EChart -> Eff e ZRender
 
-    init :: forall e. Maybe Theme -> Node -> Eff (echartInit :: EChartInit, dom :: DOM | e) EChart
+    init :: forall e. Maybe Theme -> HTMLElement -> Eff (echartInit :: EChartInit, dom :: DOM | e) EChart
 
     refresh :: forall e. EChart -> Eff (echartRefresh :: EChartRefresh, dom :: DOM | e) Unit
 
@@ -173,6 +173,9 @@
 ### Type Class Instances
 
     instance calculableColorEncodeJson :: EncodeJson CalculableColor
+
+
+### Values
 
 
 ## Module ECharts.Common
@@ -416,11 +419,6 @@
     newtype Sub
 
 
-### Type Class Instances
-
-    instance eventTypeShow :: Show EventType
-
-
 ### Values
 
     listen :: forall e. EventType -> (EventParam -> Eff (listen :: Listen | e) Unit) -> EChart -> Eff (listen :: Listen | e) Sub
@@ -470,8 +468,6 @@
 ### Type Class Instances
 
     instance encodeImg :: EncodeJson ImgType
-
-    instance imgTypeShow :: Show ImgType
 
 
 ### Values
@@ -565,21 +561,23 @@
 ### Types
 
     data Series where
-      LineSeries :: { special :: LineSeriesRec, common :: UniversalSeriesRec } -> Series
-      BarSeries :: { special :: BarSeriesRec, common :: UniversalSeriesRec } -> Series
-      ScatterSeries :: { special :: ScatterSeriesRec, common :: UniversalSeriesRec } -> Series
-      CandlestickSeries :: { special :: CandlestickSeriesRec, common :: UniversalSeriesRec } -> Series
-      PieSeries :: { special :: PieSeriesRec, common :: UniversalSeriesRec } -> Series
-      RadarSeries :: { special :: RadarSeriesRec, common :: UniversalSeriesRec } -> Series
-      ChordSeries :: { special :: ChordSeriesRec, common :: UniversalSeriesRec } -> Series
-      ForceSeries :: { special :: ForceSeriesRec, common :: UniversalSeriesRec } -> Series
-      MapSeries :: { special :: MapSeriesRec, common :: UniversalSeriesRec } -> Series
-      GaugeSeries :: { special :: GaugeSeriesRec, common :: UniversalSeriesRec } -> Series
-      FunnelSeries :: { special :: FunnelSeriesRec, common :: UniversalSeriesRec } -> Series
-      EventRiverSeries :: { special :: EventRiverSeriesRec, common :: UniversalSeriesRec } -> Series
+      LineSeries :: { lineSeries :: LineSeriesRec, common :: UniversalSeriesRec } -> Series
+      BarSeries :: { barSeries :: BarSeriesRec, common :: UniversalSeriesRec } -> Series
+      ScatterSeries :: { scatterSeries :: ScatterSeriesRec, common :: UniversalSeriesRec } -> Series
+      CandlestickSeries :: { candlestickSeries :: CandlestickSeriesRec, common :: UniversalSeriesRec } -> Series
+      PieSeries :: { pieSeries :: PieSeriesRec, common :: UniversalSeriesRec } -> Series
+      RadarSeries :: { radarSeries :: RadarSeriesRec, common :: UniversalSeriesRec } -> Series
+      ChordSeries :: { chordSeries :: ChordSeriesRec, common :: UniversalSeriesRec } -> Series
+      ForceSeries :: { forceSeries :: ForceSeriesRec, common :: UniversalSeriesRec } -> Series
+      MapSeries :: { mapSeries :: MapSeriesRec, common :: UniversalSeriesRec } -> Series
+      GaugeSeries :: { gaugeSeries :: GaugeSeriesRec, common :: UniversalSeriesRec } -> Series
+      FunnelSeries :: { funnelSeries :: FunnelSeriesRec, common :: UniversalSeriesRec } -> Series
+      EventRiverSeries :: { eventRiverSeries :: EventRiverSeriesRec, common :: UniversalSeriesRec } -> Series
 
 
 ### Type Class Instances
+
+    instance chartTypeEncodeJson :: EncodeJson ChartType
 
     instance encodeSeries :: EncodeJson Series
 
@@ -619,6 +617,9 @@
     instance encodeJsonSymbol :: EncodeJson Symbol
 
     instance symbolSizeEncodeJson :: EncodeJson SymbolSize
+
+
+### Values
 
 
 ## Module ECharts.Timeline
@@ -774,35 +775,12 @@
     instance tooltipTriggerEncodeJson :: EncodeJson TooltipTrigger
 
 
-## Module ECharts.Type
-
-### Types
-
-    data ChartType where
-      Line :: ChartType
-      Bar :: ChartType
-      Scatter :: ChartType
-      Candlestick :: ChartType
-      Pie :: ChartType
-      Radar :: ChartType
-      Chord :: ChartType
-      Force :: ChartType
-      Map :: ChartType
-      Gauge :: ChartType
-      Funnel :: ChartType
-      EventRiver :: ChartType
-
-
-### Type Class Instances
-
-    instance chartTypeEncodeJson :: EncodeJson ChartType
+### Values
 
 
 ## Module ECharts.Utils
 
 ### Values
-
-    func2json :: forall a. a -> Json
 
     unnull :: Json -> Json
 
