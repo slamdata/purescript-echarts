@@ -11,7 +11,6 @@ import ECharts.Common
 import ECharts.Style.Text
 import ECharts.Style.Line
 import ECharts.Image
-import ECharts.Type
 
 newtype Toolbox =
   Toolbox {

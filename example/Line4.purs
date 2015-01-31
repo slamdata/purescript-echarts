@@ -1,5 +1,6 @@
 module Line4 where
 
+import Debug.Trace (trace)
 import Data.Tuple.Nested
 import Data.Maybe
 import Utils
@@ -12,7 +13,6 @@ import ECharts.Coords
 import ECharts.Legend
 import ECharts.Axis
 import ECharts.Series
-import ECharts.Type
 import ECharts.Item.Data
 import ECharts.Item.Value
 import ECharts.Common
@@ -68,7 +68,7 @@ options = Option $ optionDefault {
        common: universalSeriesDefault {
           "name" = Just "email marketing"
           },
-       special: lineSeriesDefault {
+       lineSeries: lineSeriesDefault {
          "stack" = Just "total",
          "data" = Just $ simpleData <$> [120, 132, 101, 134, 90, 230, 210]
          }
@@ -78,7 +78,7 @@ options = Option $ optionDefault {
       common: universalSeriesDefault {
          "name" = Just "affiliate advertising"
          },
-      special: lineSeriesDefault {
+      lineSeries: lineSeriesDefault {
         "data" = Just $ simpleData <$> [220, 182, 191, 234, 290, 330, 310]
         }
       },
@@ -87,7 +87,7 @@ options = Option $ optionDefault {
       common: universalSeriesDefault {
          "name" = Just "video ads"
          },
-      special: lineSeriesDefault {
+      lineSeries: lineSeriesDefault {
         "stack" = Just "total",
         "data" = Just $ simpleData <$> [150, 232, 201, 154, 190, 330, 410]
         }
@@ -97,7 +97,7 @@ options = Option $ optionDefault {
       common: universalSeriesDefault {
          "name" = Just "direct access"
          },
-      special: lineSeriesDefault {
+      lineSeries: lineSeriesDefault {
         "data" = Just $ simpleData <$> [320, 332, 301, 334, 390, 330, 320]
         }
       },
@@ -106,7 +106,7 @@ options = Option $ optionDefault {
       common: universalSeriesDefault {
          "name" = Just "search engine"
          },
-      special: lineSeriesDefault {
+      lineSeries: lineSeriesDefault {
         "stack" = Just "total",
         "data" = Just $ simpleData <$> [820, 932, 901, 934, 1290, 1330, 1320]
         }
@@ -117,9 +117,8 @@ options = Option $ optionDefault {
 
 
 line4 id = do
-   chart <- getElementById id
-            >>= init Nothing
-            >>= setOption options true
+  mbEl <- getElementById id
+  case mbEl of
+    Nothing -> trace "incorrect id in line4"
+    Just el -> init Nothing el >>= setOption options true >>= \_ -> return unit
 
-
-   return unit

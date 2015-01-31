@@ -1,4 +1,5 @@
 module Funnel2 where
+import Debug.Trace (trace)
 import Data.Tuple.Nested
 import Data.Maybe
 import Utils
@@ -17,7 +18,7 @@ options = Option $ optionDefault {
   series = Just $ Just <$> [
      FunnelSeries {
         common: universalSeriesDefault,
-        special: funnelSeriesDefault {
+        funnelSeries: funnelSeriesDefault {
           "data" = Just $  [
              simpleDat 60 "foo",
              simpleDat 80 "bar",
@@ -32,8 +33,10 @@ options = Option $ optionDefault {
                     
 
 funnel2 id = do
-  chart <- getElementById id
-           >>= init Nothing
-           >>= setOption options true
+  mbEl <- getElementById id
+  case mbEl of
+    Nothing -> trace "incorrect id in funnel2"
+    Just el -> init Nothing el >>= setOption options true >>= \_ -> return unit
 
-  return unit
+
+

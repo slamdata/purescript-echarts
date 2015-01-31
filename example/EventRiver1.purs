@@ -1,6 +1,6 @@
 module EventRiver1 where
 
-
+import Debug.Trace 
 import Data.Maybe
 import qualified Data.Date as D
 import Utils
@@ -54,7 +54,7 @@ options dateDefault = Option $ optionDefault {
        "common": universalSeriesDefault {
           "name" = Just "first"
           },
-       "special": eventRiverSeriesDefault {
+       eventRiverSeries: eventRiverSeriesDefault {
          "weight" = Just 123,
          "eventList" = Just [
            OneEvent {
@@ -107,7 +107,7 @@ options dateDefault = Option $ optionDefault {
       "common": universalSeriesDefault {
          "name" = Just "second"
          },
-      "special": eventRiverSeriesDefault {
+      eventRiverSeries: eventRiverSeriesDefault {
         "weight" = Just 123,
         "eventList" = Just [
           OneEvent {
@@ -141,9 +141,11 @@ options dateDefault = Option $ optionDefault {
 
                     
 eventRiver id = do
-  d <- D.now
-  chart <- getElementById id
-           >>= init Nothing
-           >>= setOption (options d) true
-
-  return unit
+  mbEl <- getElementById id
+  case mbEl of
+    Nothing -> trace "incorrect id in event river"
+    Just el -> do
+      d <- D.now
+      chart <- init Nothing el >>= setOption (options d) true
+  
+      return unit

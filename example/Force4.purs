@@ -1,5 +1,6 @@
 module Force4 where
 
+import Debug.Trace (trace)
 import Control.Monad.Eff
 import Control.Monad.Eff.Random
 
@@ -164,7 +165,7 @@ mkOptions nodes links = Option $ optionDefault {
         "common": universalSeriesDefault{
            "name" = Just "Force tree"
            },
-        "special": forceSeriesDefault {
+        forceSeries: forceSeriesDefault {
           "ribbonType" = Just true,
           "categories" = Just [
             ForceCategory $ forceCategoryDefault {
@@ -198,13 +199,14 @@ options = do
   mockdata <- forceMockThreeData 
   case mockdata of
     MockData nodes links -> do
-      log links
       return $ mkOptions nodes links
 
 force4 id = do
-  opts <- options
-  chart <- getElementById id
-           >>= init Nothing
-           >>= setOption opts true
-
-  return unit
+  mbEl <- getElementById id
+  case mbEl of
+    Nothing -> trace "incorrect id in force4"
+    Just el -> do
+      opts <- options
+      chart <- init Nothing el >>= setOption opts true
+      return unit
+      

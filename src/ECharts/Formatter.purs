@@ -26,6 +26,12 @@ data Formatter =
   | FormatFunc (forall eff . [FormatParams] -> Eff eff String)
 
 
+foreign import func2json """
+function func2json(fn) {
+  return fn;
+}
+""" :: forall a. a -> Json
+
 foreign import effArrToFn """
 function effArrToFn(arr) {
   return function(x) {

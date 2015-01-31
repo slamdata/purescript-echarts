@@ -1,5 +1,6 @@
 module K where
 
+import Debug.Trace (trace)
 import Data.Array hiding (init)
 import Data.Tuple
 import Data.Tuple.Nested
@@ -30,7 +31,7 @@ options = Option $ optionDefault {
   "series" = Just $ Just <$> [
     CandlestickSeries {
        common: universalSeriesDefault,
-       special: candlestickSeriesDefault{
+       candlestickSeries: candlestickSeriesDefault{
          "data" = Just $ [
             simpleDat 2320.26 2302.6 2287.3 2362.94,
             simpleDat 2300 2291.3 2288.26 2308.38,
@@ -45,8 +46,7 @@ options = Option $ optionDefault {
 
 
 k id = do
-  chart <- getElementById id
-           >>= init Nothing
-           >>= setOption options true
-
-  return unit
+  mbEl <- getElementById id
+  case mbEl of
+    Nothing -> trace "incorrect id in k"
+    Just el -> init Nothing el >>= setOption options true >>= \_ -> return unit

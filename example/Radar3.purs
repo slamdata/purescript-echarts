@@ -1,4 +1,5 @@
 module Radar3 where
+import Debug.Trace (trace)
 import Data.Tuple.Nested
 import Data.Array hiding (init)
 
@@ -31,7 +32,7 @@ option = Option $ optionDefault {
   "series" = Just $ Just <$> [
     RadarSeries {
        "common": universalSeriesDefault{"name" = Just "budget vs spending"},
-       "special": radarSeriesDefault{
+       radarSeries: radarSeriesDefault{
          "data" = Just [
             datPair [4300, 10000, 28000, 35000, 50000, 19000] "Allocated",
             datPair [5000, 14000, 28000, 31000, 42000, 21000] "Actual"
@@ -42,8 +43,8 @@ option = Option $ optionDefault {
   }
 
 radar3 id = do
-  chart <- getElementById id
-           >>= init Nothing
-           >>= setOption option true
+  mbEl <- getElementById id
+  case mbEl of
+    Nothing -> trace "incorrect id in radar3"
+    Just el -> init Nothing el >>= setOption option true >>= \_ -> return unit
 
-  return unit

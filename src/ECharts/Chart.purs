@@ -14,6 +14,7 @@ module ECharts.Chart (
 import DOM
 import Data.Maybe 
 import Data.Function
+import Data.DOM.Simple.Types (HTMLElement())
 import Control.Monad.Eff
 
 import Data.Argonaut.Core
@@ -38,9 +39,9 @@ function initImpl(node, theme) {
     return echarts.init(node, theme);
   };
 }
-""" :: forall e. Fn2 Node Json (Eff (dom :: DOM, echartInit :: EChartInit|e) EChart)
+""" :: forall e. Fn2 HTMLElement Json (Eff (dom :: DOM, echartInit :: EChartInit|e) EChart)
 
-init :: forall e.  Maybe Theme -> Node ->
+init :: forall e.  Maybe Theme -> HTMLElement ->
         Eff (dom :: DOM, echartInit :: EChartInit|e) EChart
 init theme dom = 
   runFn2 initImpl dom (encodeJson theme)

@@ -1,9 +1,10 @@
 module Chord2 where
+
+import Debug.Trace (trace)
 import Data.Array hiding (init)
 import Data.String (indexOf, replace)
 import Data.Tuple.Nested
 import Data.Argonaut
-
 import Data.Either
 import Data.Maybe 
 import qualified Data.StrMap as M
@@ -27,7 +28,7 @@ options = Option $ optionDefault {
         common: universalSeriesDefault {
            "name" = Just "chord"
            },
-        "special": chordSeriesDefault {
+        chordSeries: chordSeriesDefault {
           "sort" = Just Asc,
           "sortSub" = Just Desc,
           "showScale" = Just true,
@@ -50,8 +51,7 @@ options = Option $ optionDefault {
   }
 
 chord2 id = do
-  chart <- getElementById id
-           >>= init Nothing
-           >>= setOption options true
-
-  return unit
+  mbEl <- getElementById id
+  case mbEl of
+    Nothing -> trace "Incorrect id in chord 2"
+    Just el -> init Nothing el >>= setOption options true >>= \_ -> return unit

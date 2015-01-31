@@ -1,5 +1,6 @@
 module Scatter3 where
 
+import Debug.Trace (trace)
 import Control.Monad.Eff
 import Control.Monad.Eff.Random
 import Data.Tuple
@@ -55,7 +56,7 @@ options = do
           common: universalSeriesDefault{
              "name" = Just "sin"
              },
-          "special": scatterSeriesDefault {
+          scatterSeries: scatterSeriesDefault {
             "large" =  Just true,
             "data" = Just $ simpleData <$> sines
             }
@@ -64,20 +65,20 @@ options = do
          common: universalSeriesDefault{
             "name" = Just "cos"
             },
-         "special": scatterSeriesDefault {
+         scatterSeries: scatterSeriesDefault {
            "large" = Just true,
            "data" = Just $ simpleData <$> coses
            }
          }
        ]
     }
-    
 
 scatter3 id = do
-  opts <- options
-  chart <- U.getElementById id
-           >>= init Nothing
-           >>= setOption opts true
+  mbEl <- U.getElementById id
+  case mbEl  of
+    Nothing -> trace "incorrect id in scatter3"
+    Just el -> do
+      opts <- options
+      init Nothing el >>= setOption opts true >>= \_ -> return unit
 
-  return unit
 

@@ -14,7 +14,6 @@ module.exports = function(taskName, serverPort, subdirectory) {
         subdirectory = "public";
     }
     var app = express();
-    console.log(__dirname + '/../../bower_components');
     app.use(express.static(__dirname + '/../' + subdirectory));
     app.use("/lib", express.static(__dirname + '/../bower_components'));
 

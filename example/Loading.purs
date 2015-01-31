@@ -1,5 +1,6 @@
 module Loading where
 
+import Debug.Trace (trace)
 import Data.Array hiding (init)
 import Data.Maybe
 import Data.Tuple hiding (zip)
@@ -16,7 +17,6 @@ import ECharts.Coords
 import ECharts.Legend
 import ECharts.Axis
 import ECharts.Series
-import ECharts.Type
 import ECharts.Item.Data
 import ECharts.Item.Value
 import ECharts.Common
@@ -49,7 +49,7 @@ series true = [
      common: universalSeriesDefault {
         "name" = Just "first"
         },
-     special: lineSeriesDefault {
+     lineSeries: lineSeriesDefault {
        "data" = Just $ simpleData <$> [2.0, 4.9, 7.0, 23.2, 25.6,
                                        76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
        }
@@ -58,7 +58,7 @@ series true = [
     common: universalSeriesDefault {
        "name" = Just "second"
        },
-    special: lineSeriesDefault {
+    lineSeries: lineSeriesDefault {
       "data" = Just $ simpleData <$> [2.6, 5.9, 9.0, 
                                       26.4, 28.7, 70.7, 175.6, 182.2, 48.7,
                                       18.8, 6.0, 2.3]
@@ -70,7 +70,7 @@ series false = [
      common: universalSeriesDefault {
         "name" = Just "first"
         },
-     special: barSeriesDefault {
+     barSeries: barSeriesDefault {
        "data" = Just $ simpleData <$> [2.0, 4.9, 7.0, 23.2, 25.6,
                                        76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
        }
@@ -79,7 +79,7 @@ series false = [
     common: universalSeriesDefault {
        "name" = Just "second"
        },
-    special: barSeriesDefault {
+    barSeries: barSeriesDefault {
       "data" = Just $ simpleData <$> [2.6, 5.9, 9.0, 
                                       26.4, 28.7, 70.7, 175.6, 182.2, 48.7,
                                       18.8, 6.0, 2.3]
@@ -149,14 +149,17 @@ dataStream =
 
   
 loading id = do
-  chart <- getElementById id
-           >>= init Nothing
+  mbEl <- getElementById id
+  case mbEl of
+    Nothing -> trace "incorrect id in loading"
+    Just el -> do
+      chart <- init Nothing el
 
-  runSignal $ dataStream ~> \effContent -> do
-      content <- effContent
-      case content of
-        StartLoading loadOptions -> L.showLoading loadOptions chart
-                                    >>= \_ -> return unit
-        StopLoading options -> 
-          setOption options true chart >>= L.hideLoading
-          >>= \_ -> return unit
+      runSignal $ dataStream ~> \effContent -> do
+        content <- effContent
+        case content of
+          StartLoading loadOptions -> L.showLoading loadOptions chart
+                                      >>= \_ -> return unit
+          StopLoading options -> 
+            setOption options true chart >>= L.hideLoading
+            >>= \_ -> return unit

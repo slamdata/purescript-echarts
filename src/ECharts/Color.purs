@@ -1,4 +1,8 @@
-module ECharts.Color where
+module ECharts.Color (
+  Color(..),
+  ColorFuncParam(..),
+  CalculableColor(..)
+  ) where
 
 import Data.Function
 import Data.Argonaut.Core
@@ -8,6 +12,12 @@ import ECharts.Item.Value
 import ECharts.Utils
 
 type Color = String
+
+foreign import func2json """
+function func2json(fn) {
+  return fn;
+}
+""" :: forall a. a -> Json
 
 newtype ColorFuncParam =
   ColorFuncParam {

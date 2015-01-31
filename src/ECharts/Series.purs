@@ -31,7 +31,6 @@ import ECharts.Common
 import ECharts.Coords
 import ECharts.Chart
 import ECharts.Tooltip
-import ECharts.Type
 import ECharts.Style.Item
 import ECharts.Mark.Line
 import ECharts.Mark.Point
@@ -44,30 +43,49 @@ import ECharts.Axis
 import ECharts.Title
 import ECharts.Utils
 
+
+data ChartType = Line | Bar | Scatter | Candlestick | Pie | Radar
+               | Chord | Force | Map | Gauge | Funnel | EventRiver
+
+instance chartTypeEncodeJson :: EncodeJson ChartType where
+  encodeJson a = fromString $ case a of 
+    Line -> "line"
+    Bar -> "bar"
+    Scatter -> "scatter"
+    Candlestick -> "k"
+    Pie -> "pie"
+    Radar -> "radar"
+    Chord -> "chord"
+    Force -> "force"
+    Map -> "map"
+    Gauge -> "gauge"
+    Funnel -> "funnel"
+    EventRiver -> "eventRiver"
+
 data Series = LineSeries
-              {common :: UniversalSeriesRec, special :: LineSeriesRec}
+              {common :: UniversalSeriesRec, lineSeries :: LineSeriesRec}
             | BarSeries
-              {common :: UniversalSeriesRec, special ::  BarSeriesRec}
+              {common :: UniversalSeriesRec, barSeries ::  BarSeriesRec}
             | ScatterSeries
-              {common :: UniversalSeriesRec, special :: ScatterSeriesRec}
+              {common :: UniversalSeriesRec, scatterSeries :: ScatterSeriesRec}
             | CandlestickSeries 
-              {common :: UniversalSeriesRec, special :: CandlestickSeriesRec}
+              {common :: UniversalSeriesRec, candlestickSeries :: CandlestickSeriesRec}
             | PieSeries
-              {common :: UniversalSeriesRec, special ::  PieSeriesRec}
+              {common :: UniversalSeriesRec, pieSeries ::  PieSeriesRec}
             | RadarSeries
-              {common :: UniversalSeriesRec, special :: RadarSeriesRec}
+              {common :: UniversalSeriesRec, radarSeries :: RadarSeriesRec}
             | ChordSeries
-              {common :: UniversalSeriesRec, special :: ChordSeriesRec}
+              {common :: UniversalSeriesRec, chordSeries :: ChordSeriesRec}
             | ForceSeries
-              {common :: UniversalSeriesRec, special :: ForceSeriesRec}
+              {common :: UniversalSeriesRec, forceSeries:: ForceSeriesRec}
             | MapSeries
-              {common :: UniversalSeriesRec, special :: MapSeriesRec}
+              {common :: UniversalSeriesRec, mapSeries :: MapSeriesRec}
             | GaugeSeries
-              {common :: UniversalSeriesRec, special :: GaugeSeriesRec}
+              {common :: UniversalSeriesRec, gaugeSeries :: GaugeSeriesRec}
             | FunnelSeries
-              {common :: UniversalSeriesRec, special :: FunnelSeriesRec}
+              {common :: UniversalSeriesRec, funnelSeries :: FunnelSeriesRec}
             | EventRiverSeries
-              {common :: UniversalSeriesRec, special :: EventRiverSeriesRec}
+              {common :: UniversalSeriesRec, eventRiverSeries :: EventRiverSeriesRec}
 
 typeForSeries :: Series -> [JAssoc]
 typeForSeries series =
@@ -664,18 +682,18 @@ eventRiverRecEncode r = [
 specialForSeries :: Series -> [JAssoc]
 specialForSeries series =
   case series of
-    LineSeries {special = s} -> lineRecEncode s
-    BarSeries {special = s} -> barRecEncode s
-    ScatterSeries {special = s} -> scatterRecEncode s
-    CandlestickSeries {special = s} -> candlestickRecEncode s
-    PieSeries {special = s} -> pieRecEncode s
-    RadarSeries {special = s} -> radarRecEncode s
-    ChordSeries {special = s} -> chordRecEncode s
-    ForceSeries {special = s} -> forceRecEncode s
-    MapSeries {special = s} -> mapRecEncode s
-    GaugeSeries {special = s} -> gaugeRecEncode s
-    FunnelSeries {special = s} -> funnelRecEncode s
-    EventRiverSeries {special = s} -> eventRiverRecEncode s
+    LineSeries {lineSeries = s} -> lineRecEncode s
+    BarSeries {barSeries = s} -> barRecEncode s
+    ScatterSeries {scatterSeries = s} -> scatterRecEncode s
+    CandlestickSeries {candlestickSeries = s} -> candlestickRecEncode s
+    PieSeries {pieSeries = s} -> pieRecEncode s
+    RadarSeries {radarSeries = s} -> radarRecEncode s
+    ChordSeries {chordSeries = s} -> chordRecEncode s
+    ForceSeries {forceSeries = s} -> forceRecEncode s
+    MapSeries {mapSeries = s} -> mapRecEncode s
+    GaugeSeries {gaugeSeries = s} -> gaugeRecEncode s
+    FunnelSeries {funnelSeries = s} -> funnelRecEncode s
+    EventRiverSeries {eventRiverSeries = s} -> eventRiverRecEncode s
 
 instance encodeSeries :: EncodeJson Series where
   encodeJson series =

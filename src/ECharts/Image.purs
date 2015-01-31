@@ -15,13 +15,14 @@ import ECharts.Effects
 
 
 data ImgType = PNG | JPEG
-
-instance imgTypeShow :: Show ImgType where
-  show PNG = "png"
-  show JPEG = "jpeg"
+imgStr :: ImgType -> String
+imgStr img = case img of
+  PNG -> "png"
+  JPEG -> "jpeg"
 
 instance encodeImg :: EncodeJson ImgType where
-  encodeJson = encodeJson <<< show
+  encodeJson = encodeJson <<< imgStr
+
 
 
 
@@ -34,7 +35,7 @@ function getDataURLImpl(imgType, chart) {
 """ :: forall e. Fn2 String EChart (Eff e String)
 
 getDataURL :: forall e. ImgType -> EChart -> Eff (image::ImageMaking|e) String
-getDataURL img chart = runFn2 getDataURLImpl (show img) chart
+getDataURL img chart = runFn2 getDataURLImpl (imgStr img) chart
 
 
 foreign import getImageImpl """
@@ -46,4 +47,4 @@ function getImageImpl(imgType, chart) {
 """ :: forall e. Fn2 String EChart (Eff e Node)
 
 getImage :: forall e. ImgType -> EChart -> Eff (dom::DOM, image::ImageMaking|e) Node
-getImage img chart = runFn2 getImageImpl (show img) chart
+getImage img chart = runFn2 getImageImpl (imgStr img) chart

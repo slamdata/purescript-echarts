@@ -1,5 +1,6 @@
 module Map11 where
 
+import Debug.Trace (trace)
 import Data.Tuple.Nested
 import Data.Maybe
 import Data.StrMap (fromList)
@@ -13,7 +14,6 @@ import ECharts.Options
 import ECharts.Legend
 import ECharts.Axis
 import ECharts.Series
-import ECharts.Type
 import ECharts.Item.Data
 import ECharts.Item.Value
 import ECharts.Common
@@ -31,8 +31,6 @@ nameValue {name = name, value = value} =
     "value" = Just value
     }
 
--- it works, but 
-
 option = Option $ optionDefault {
   tooltip = Just $ Tooltip tooltipDefault {trigger = Just TriggerItem},
   series = Just $ Just <$> [
@@ -48,7 +46,7 @@ option = Option $ optionDefault {
           },
        
 
-       special: mapSeriesDefault{
+       mapSeries: mapSeriesDefault{
          "data" = Just [],
          "mapType" = Just "china",
          "geoCoord" = Just $ fromList [
@@ -59,11 +57,11 @@ option = Option $ optionDefault {
     ]
   }
 map11 id = do
-  chart <- getElementById id
-           >>= init Nothing
-           >>= setOption option true
+  mbEl <- getElementById id
+  case mbEl of
+    Nothing -> trace "incorrect id in map11"
+    Just el -> init Nothing el >>= setOption option true >>= \_ -> return unit
 
-  return unit
 
 
 

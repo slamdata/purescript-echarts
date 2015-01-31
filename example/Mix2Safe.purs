@@ -1,5 +1,5 @@
 module Mix2Safe where
-
+import Debug.Trace (trace)
 import Control.Monad.Eff
 import Utils
 
@@ -14,7 +14,6 @@ import ECharts.Coords
 import ECharts.Legend
 import ECharts.Axis
 import ECharts.Series
-import ECharts.Type
 import ECharts.Item.Data
 import ECharts.Item.Value
 import ECharts.Common
@@ -27,7 +26,7 @@ series :: [Series]
 series = [
   BarSeries {
      common: universalSeriesDefault {"name" = Just "direct access"},
-     special: barSeriesDefault {
+     barSeries: barSeriesDefault {
        "data" = Just $ simpleData <$> [320, 332, 301, 334, 390, 330, 320],
        "stack" = Just "total"
        }
@@ -37,7 +36,7 @@ series = [
        "name" = Just "email marketing",
        "tooltip" = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem}
        },
-    special: barSeriesDefault {
+    barSeries: barSeriesDefault {
       "data" = Just $ simpleData <$> [120, 132, 101, 134, 90, 230, 210],
       "stack" = Just "total"
       }
@@ -47,7 +46,7 @@ series = [
        "name" = Just "affiliate advertising",
        "tooltip" = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem}
        },
-    special: barSeriesDefault {
+    barSeries: barSeriesDefault {
       "data" = Just $ simpleData <$> [220, 182, 191, 234, 290, 330, 310]
       }
     },
@@ -56,7 +55,7 @@ series = [
        "name" = Just "video ads",
        "tooltip" = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem}
        },
-    special: barSeriesDefault {
+    barSeries: barSeriesDefault {
       "data" = Just $ simpleData <$> [150, 232, 201, 154, 190, 330, 410]
       }
     },
@@ -64,7 +63,7 @@ series = [
     common: universalSeriesDefault{
        "name" = Just "must be"
        },
-    special: lineSeriesDefault {
+    lineSeries: lineSeriesDefault {
       "data" = Just $ simpleData <$>
                [862, 1018, 964, 1026, 1679, 1600, 1570]
       }
@@ -87,7 +86,7 @@ series = [
          formatter = Just $ Template "{a} <br/> {b}: {c} ({d}%)"
          }
        },
-    special: pieSeriesDefault {
+    pieSeries: pieSeriesDefault {
       "radius" = Just $ Rs {inner: (Pixel 0), outer: (Pixel 50)},
       "center" = Just $ Tuple (Percent 160) (Percent 130),
       "data" = Just $ Dat <$> [
@@ -182,11 +181,11 @@ options = Option $ optionDefault {
 
 
 mix2safe id = do
-   chart <- getElementById id
-            >>= init Nothing
+  mbEl <- getElementById id
+  case mbEl of
+    Nothing -> trace "incorrect id in mix2safe"
+    Just el -> init Nothing el >>= setOption options true >>= \_ -> return unit
 
-   setOption options true chart
-   return unit
 
 
 

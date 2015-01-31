@@ -1,5 +1,6 @@
 module Events where
 
+import Debug.Trace (trace, Trace())
 import Math hiding (log)
 import Data.Array hiding (init)
 import Data.Maybe 
@@ -18,7 +19,6 @@ import ECharts.Coords
 import ECharts.Legend
 import ECharts.Axis
 import ECharts.Series
-import ECharts.Type
 import ECharts.Item.Data
 import ECharts.Item.Value
 import ECharts.Common
@@ -81,11 +81,11 @@ options_ line bar = Option $ optionDefault {
   "series" = Just $ Just <$> [
     LineSeries {
        "common": universalSeriesDefault{"name" = Just "fst"},
-       "special": lineSeriesDefault{"data" = Just $ simpleData <$> line}
+       lineSeries: lineSeriesDefault{"data" = Just $ simpleData <$> line}
        },
     BarSeries {
       "common": universalSeriesDefault{"name" = Just "snd"},
-      "special": barSeriesDefault{"data" = Just $ simpleData <$> bar}
+      barSeries: barSeriesDefault{"data" = Just $ simpleData <$> bar}
       }
     ]
   }
@@ -96,6 +96,16 @@ options = do
   line <- lineData
   bar <- barData
   return $ options_ line bar
+
+
+foreign import log """
+function log(a) {
+  return function() {
+    console.log(a);
+  };
+}
+
+""" :: forall a e. a -> Eff (trace::Trace|e) Unit
 
 
 subscribe chart = do 
@@ -109,11 +119,15 @@ subscribe chart = do
 
 
 events id = do
-  opts <- options
-  chart <- getElementById id
-           >>= init Nothing
-           >>= setOption opts true
+  mbEl <- getElementById id 
+  case mbEl of
+    Nothing -> trace "incorrect id in events"
+    Just el -> do 
+      opts <- options
+      chart <- init Nothing el
+               >>= setOption opts true
+  
+      subscribe chart
+      return unit
 
-  subscribe chart
-  return unit
 

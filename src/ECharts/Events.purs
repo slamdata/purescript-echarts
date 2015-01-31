@@ -21,8 +21,8 @@ type EventParam = Json
 
 newtype Sub = Sub (forall eff. Eff (unlisten :: Unlisten|eff) Unit)
 
-instance eventTypeShow :: Show EventType where
-  show et = case et of
+eventStr :: EventType -> String
+eventStr event = case event of 
     Refresh -> "refresh"
     Restore -> "restore"
     Resize -> "resize"
@@ -65,4 +65,4 @@ listen :: forall e.
           EventType ->
           (EventParam -> Eff (listen :: Listen|e) Unit) -> 
           EChart -> Eff (listen :: Listen|e) Sub
-listen eventName handler chart = runFn3 listenImpl (show eventName) handler chart
+listen eventName handler chart = runFn3 listenImpl (eventStr eventName) handler chart

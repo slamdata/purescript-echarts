@@ -1,5 +1,6 @@
 module Connect where
 
+import Debug.Trace
 import Data.Tuple
 import Utils
 import Data.Maybe
@@ -13,7 +14,6 @@ import ECharts.Coords
 import ECharts.Legend
 import ECharts.Axis
 import ECharts.Series
-import ECharts.Type
 import ECharts.Item.Data
 import ECharts.Item.Value
 import ECharts.Common
@@ -48,7 +48,7 @@ options1 = Option $ optionDefault {
        common: universalSeriesDefault {
           name = Just "access to the source."
           },
-       special: pieSeriesDefault {
+       pieSeries: pieSeriesDefault {
          radius = Just $ R (Percent 55),
          center = Just $ Tuple (Percent 50) (Pixel 225),
          "data" = Just $ [
@@ -111,7 +111,7 @@ options2 = Option $ optionDefault {
        common: universalSeriesDefault {
           "name" = Just "direct access"
           },
-       special: barSeriesDefault {
+       barSeries: barSeriesDefault {
          "stack" = Just "total",
          "data" = Just $ simpleData <$> [320, 332, 301, 334, 390, 330, 320]
          }
@@ -120,7 +120,7 @@ options2 = Option $ optionDefault {
       common: universalSeriesDefault {
          "name" = Just "email marketing"
          },
-      special: barSeriesDefault {
+      barSeries: barSeriesDefault {
         "stack" = Just "email marketing",
         "data" = Just $ simpleData <$> [120, 132, 101, 134, 90, 230, 210]
         }
@@ -129,7 +129,7 @@ options2 = Option $ optionDefault {
       common: universalSeriesDefault {
          "name" = Just "affiliate advertising"
          },
-      special: barSeriesDefault {
+      barSeries: barSeriesDefault {
         "stack" = Just "total",
         "data" = Just $ simpleData <$> [220, 182, 191, 234, 290, 330, 310]
         }
@@ -138,7 +138,7 @@ options2 = Option $ optionDefault {
       common: universalSeriesDefault {
          "name" = Just "video Ads"
          },
-      special: barSeriesDefault {
+      barSeries: barSeriesDefault {
         "stack" = Just "total",
         "data" = Just $ simpleData <$> [150, 232, 201, 154, 190, 330, 410]
         }
@@ -147,7 +147,7 @@ options2 = Option $ optionDefault {
       common: universalSeriesDefault {
          "name" = Just "search engine"
          },
-      special: barSeriesDefault {
+      barSeries: barSeriesDefault {
         "stack" = Just "total",
         "data" = Just $ simpleData <$> [820, 932, 901, 934, 1290, 1330, 1320]
         }
@@ -161,13 +161,15 @@ bind first second = do
 
 
 connectM firstId secondId = do
-  fst <- getElementById firstId
-         >>= init Nothing
-         >>= setOption options1 true
+  mbElFst <- getElementById firstId
+  mbElSnd <- getElementById secondId
+  
+  case Tuple mbElFst mbElSnd  of
+    Tuple Nothing _ -> trace "incorrect first id in connect"
+    Tuple _ Nothing -> trace "incorrect second id in connect"
+    Tuple (Just first) (Just second) -> do
+      fst <- init Nothing first >>= setOption options1 true
+      snd <- init Nothing second >>= setOption options2 true
+      bind fst snd
+      return unit
 
-  snd <- getElementById secondId
-         >>= init Nothing
-         >>= setOption options2 true
-
-
-  bind fst snd

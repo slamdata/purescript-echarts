@@ -194,9 +194,9 @@ PS.Prelude = (function () {
     var ordNumber = new Ord(function () {
         return eqNumber;
     }, unsafeCompare);
-    var $$const = function (_98) {
-        return function (_99) {
-            return _98;
+    var $$const = function (_110) {
+        return function (_111) {
+            return _110;
         };
     };
     var complement = function (dict) {
@@ -208,8 +208,8 @@ PS.Prelude = (function () {
     var $less = function (__dict_Ord_11) {
         return function (a1) {
             return function (a2) {
-                var _856 = compare(__dict_Ord_11)(a1)(a2);
-                if (_856 instanceof LT) {
+                var _888 = compare(__dict_Ord_11)(a1)(a2);
+                if (_888 instanceof LT) {
                     return true;
                 };
                 return false;
@@ -219,8 +219,8 @@ PS.Prelude = (function () {
     var $greater = function (__dict_Ord_13) {
         return function (a1) {
             return function (a2) {
-                var _857 = compare(__dict_Ord_13)(a1)(a2);
-                if (_857 instanceof GT) {
+                var _889 = compare(__dict_Ord_13)(a1)(a2);
+                if (_889 instanceof GT) {
                     return true;
                 };
                 return false;
@@ -230,8 +230,8 @@ PS.Prelude = (function () {
     var $greater$eq = function (__dict_Ord_14) {
         return function (a1) {
             return function (a2) {
-                var _858 = compare(__dict_Ord_14)(a1)(a2);
-                if (_858 instanceof LT) {
+                var _890 = compare(__dict_Ord_14)(a1)(a2);
+                if (_890 instanceof LT) {
                     return false;
                 };
                 return true;
@@ -335,11 +335,13 @@ PS.Math = (function () {
     var Prelude = PS.Prelude;
     var cos = Math.cos;;
     var floor = Math.floor;;
+    function pow(n){  return function(p) {    return Math.pow(n, p);  }};
     var round = Math.round;;
     var sin = Math.sin;;
     return {
         cos: cos, 
         floor: floor, 
+        pow: pow, 
         round: round, 
         sin: sin
     };
@@ -407,6 +409,354 @@ PS.Control_Monad_Eff_Random = (function () {
     function random() {  return Math.random();};
     return {
         random: random
+    };
+})();
+var PS = PS || {};
+PS.Data_DOM_Simple_Unsafe_Element = (function () {
+    "use strict";
+    var Prelude = PS.Prelude;
+    
+  function unsafeGetElementById(targ_id) {
+    return function (src) {
+      return function () {
+        return src.getElementById(targ_id);
+      };
+    };
+  };
+    
+  function unsafeGetElementsByClassName(targ_id) {
+    return function (src) {
+      return function () {
+        return src.getElementsByClassName(targ_id);
+      };
+    };
+  };
+    
+  function unsafeGetElementsByName(targ_id) {
+    return function (src) {
+      return function () {
+        return src.getElementsByName(targ_id);
+      };
+    };
+  };
+    
+  function unsafeQuerySelector(selector) {
+    return function (src) {
+      return function () {
+        return src.querySelector(selector);
+      };
+    };
+  };
+    
+  function unsafeQuerySelectorAll(selector) {
+    return function (src) {
+      return function () {
+        return src.querySelectorAll(selector);
+      };
+    };
+  };
+    
+  function unsafeGetAttribute(name) {
+    return function (src) {
+      return function () {
+        return src.getAttribute(name);
+      };
+    };
+  };
+    
+  function unsafeSetAttribute(name) {
+    return function (value) {
+      return function (src) {
+        return function () {
+          src.setAttribute(name, value);
+          return {};
+        };
+      };
+    };
+  };
+    
+  function unsafeHasAttribute(name) {
+    return function (src) {
+      return function () {
+        return src.hasAttribute(name);
+      };
+    };
+  };
+    
+  function unsafeRemoveAttribute(name) {
+    return function (src) {
+      return function () {
+        src.removeAttribute(name);
+        return {};
+      };
+    };
+  };
+    
+  function unsafeChildren(src) {
+    return function () {
+      return src.children;
+    };
+  };
+    
+  function unsafeInnerHTML(src) {
+    return function () {
+      return src.innerHTML;
+    };
+  };
+    
+  function unsafeSetInnerHTML(value) {
+    return function (src) {
+      return function () {
+        src.innerHTML = value;
+        return {};
+      };
+    };
+  };
+    
+  function unsafeTextContent(src) {
+    return function () {
+      return src.textContent;
+    };
+  };
+    
+  function unsafeSetTextContent(value) {
+    return function (src) {
+      return function () {
+        src.textContent = value;
+        return {};
+      };
+    };
+  };
+    
+  function unsafeValue(src) {
+    return function () {
+      return src.value;
+    };
+  };
+    
+  function unsafeSetValue(value) {
+    return function (src) {
+      return function () {
+        src.value = value;
+        return {};
+      };
+    };
+  };
+    
+  function unsafeContentWindow(obj) {
+    return function () {
+      return obj.contentWindow;
+    };
+  };
+    
+  function unsafeClassAdd(value) {
+    return function (src) {
+      return function () {
+        src.classList.add(value);
+        return {};
+      };
+    };
+  };
+    
+  function unsafeClassRemove(value) {
+    return function (src) {
+      return function () {
+        src.classList.remove(value);
+        return {};
+      };
+    };
+  };
+    
+  function unsafeClassToggle(value) {
+    return function (src) {
+      return function () {
+        src.classList.toggle(value);
+        return {};
+      };
+    };
+  };
+    
+  function unsafeClassContains(value) {
+    return function (src) {
+      return function () {
+        return src.classList.contains(value);
+      };
+    };
+  };
+    return {
+        unsafeChildren: unsafeChildren, 
+        unsafeClassAdd: unsafeClassAdd, 
+        unsafeClassContains: unsafeClassContains, 
+        unsafeClassRemove: unsafeClassRemove, 
+        unsafeClassToggle: unsafeClassToggle, 
+        unsafeContentWindow: unsafeContentWindow, 
+        unsafeGetAttribute: unsafeGetAttribute, 
+        unsafeGetElementById: unsafeGetElementById, 
+        unsafeGetElementsByClassName: unsafeGetElementsByClassName, 
+        unsafeGetElementsByName: unsafeGetElementsByName, 
+        unsafeHasAttribute: unsafeHasAttribute, 
+        unsafeInnerHTML: unsafeInnerHTML, 
+        unsafeQuerySelector: unsafeQuerySelector, 
+        unsafeQuerySelectorAll: unsafeQuerySelectorAll, 
+        unsafeRemoveAttribute: unsafeRemoveAttribute, 
+        unsafeSetAttribute: unsafeSetAttribute, 
+        unsafeSetInnerHTML: unsafeSetInnerHTML, 
+        unsafeSetTextContent: unsafeSetTextContent, 
+        unsafeSetValue: unsafeSetValue, 
+        unsafeTextContent: unsafeTextContent, 
+        unsafeValue: unsafeValue
+    };
+})();
+var PS = PS || {};
+PS.Data_DOM_Simple_Unsafe_Events = (function () {
+    "use strict";
+    var Prelude = PS.Prelude;
+    
+  function unsafeAddEventListener(targ) {
+    return function (cb) {
+       return function (src) {
+         return function () {
+           src.addEventListener(targ, function(evt) {
+             cb(evt)();
+           });
+         };
+       };
+    };
+  };
+    
+  function unsafeRemoveEventListener(targ) {
+    return function (cb) {
+       return function (src) {
+         return function () {
+           src.removeEventListener(targ, function (evt) {
+             cb(evt)();
+           });
+         };
+       };
+    };
+  };
+    
+  function unsafeEventTarget(event) {
+    return function () {
+      return event.target;
+    };
+  };
+    
+  function unsafeStopPropagation(event) {
+    return function () {
+      event.stopPropagation();
+    };
+  };
+    
+  function unsafePreventDefault(event) {
+    return function () {
+      event.preventDefault();
+    };
+  };
+    
+  function unsafeEventNumberProp(prop) {
+    return function (event) {
+      return function() {
+        return event[prop];
+      };
+    };
+  };
+    
+  function unsafeEventView(event) {
+    return function() {
+      return event.view;
+    };
+  };
+    return {
+        unsafeAddEventListener: unsafeAddEventListener, 
+        unsafeEventNumberProp: unsafeEventNumberProp, 
+        unsafeEventTarget: unsafeEventTarget, 
+        unsafeEventView: unsafeEventView, 
+        unsafePreventDefault: unsafePreventDefault, 
+        unsafeRemoveEventListener: unsafeRemoveEventListener, 
+        unsafeStopPropagation: unsafeStopPropagation
+    };
+})();
+var PS = PS || {};
+PS.Data_DOM_Simple_Unsafe_Window = (function () {
+    "use strict";
+    var Prelude = PS.Prelude;
+    
+  function unsafeDocument(win) {
+    return function () {
+      return win.document;
+    };
+  };
+    
+  function unsafeNavigator(win) {
+    return function () {
+      return win.navigator;
+    };
+  };
+    
+  function unsafeLocation(win) {
+    return function () {
+      return win.location;
+    };
+  };
+    
+  function unsafeSetTimeout(win) {
+    return function(delay) {
+      return function(func) {
+        return function() {
+          return win.setTimeout(func, delay);
+        };
+      };
+    };
+  };
+    
+  function unsafeSetInterval(win) {
+    return function(delay) {
+      return function(func) {
+        return function() {
+          return win.setInterval(func, delay);
+        };
+      };
+    };
+  };
+    
+  function unsafeClearTimeout(win) {
+    return function(timeout) {
+      return function() {
+        win.clearTimeout(timeout);
+      };
+    };
+  };
+    
+  function unsafeInnerWidth(win) {
+    return function() {
+      return win.innerWidth;
+    };
+  };
+    
+  function unsafeInnerHeight(win) {
+    return function() {
+      return win.innerHeight;
+    };
+  };
+    return {
+        unsafeClearTimeout: unsafeClearTimeout, 
+        unsafeDocument: unsafeDocument, 
+        unsafeInnerHeight: unsafeInnerHeight, 
+        unsafeInnerWidth: unsafeInnerWidth, 
+        unsafeLocation: unsafeLocation, 
+        unsafeNavigator: unsafeNavigator, 
+        unsafeSetInterval: unsafeSetInterval, 
+        unsafeSetTimeout: unsafeSetTimeout
+    };
+})();
+var PS = PS || {};
+PS.Debug_Trace = (function () {
+    "use strict";
+    var Prelude = PS.Prelude;
+    function trace(s) {  return function() {    console.log(s);    return {};  };};
+    return {
+        trace: trace
     };
 })();
 var PS = PS || {};
@@ -532,23 +882,23 @@ PS.Data_Maybe = (function () {
     Just.create = function (value0) {
         return new Just(value0);
     };
-    var maybe = function (_171) {
-        return function (_172) {
-            return function (_173) {
-                if (_173 instanceof Nothing) {
-                    return _171;
+    var maybe = function (_183) {
+        return function (_184) {
+            return function (_185) {
+                if (_185 instanceof Nothing) {
+                    return _183;
                 };
-                if (_173 instanceof Just) {
-                    return _172(_173.value0);
+                if (_185 instanceof Just) {
+                    return _184(_185.value0);
                 };
                 throw new Error("Failed pattern match");
             };
         };
     };
-    var functorMaybe = new Prelude.Functor(function (_174) {
-        return function (_175) {
-            if (_175 instanceof Just) {
-                return new Just(_174(_175.value0));
+    var functorMaybe = new Prelude.Functor(function (_186) {
+        return function (_187) {
+            if (_187 instanceof Just) {
+                return new Just(_186(_187.value0));
             };
             return Nothing.value;
         };
@@ -597,6 +947,29 @@ PS.Data_Array = (function () {
     };
 })();
 var PS = PS || {};
+PS.Data_DOM_Simple_Unsafe_Utils = (function () {
+    "use strict";
+    var Prelude = PS.Prelude;
+    var Data_Maybe = PS.Data_Maybe;
+    
+  function ensure3(nothing) {
+    return function(just) {
+      return function(v) {
+        if (v === undefined || v === null) {
+          return nothing;
+        } else {
+          return just(v);
+        }
+      };
+   };
+  };
+    var ensure = ensure3(Data_Maybe.Nothing.value)(Data_Maybe.Just.create);
+    return {
+        ensure: ensure, 
+        ensure3: ensure3
+    };
+})();
+var PS = PS || {};
 PS.Data_Monoid = (function () {
     "use strict";
     var Prelude = PS.Prelude;
@@ -623,8 +996,8 @@ PS.Data_Tuple = (function () {
             return new Tuple(value0, value1);
         };
     };
-    var fst = function (_264) {
-        return _264.value0;
+    var fst = function (_280) {
+        return _280.value0;
     };
     return {
         Tuple: Tuple, 
@@ -740,6 +1113,67 @@ PS.Data_Foldable = (function () {
     };
 })();
 var PS = PS || {};
+PS.Data_DOM_Simple_Element = (function () {
+    "use strict";
+    var Data_DOM_Simple_Unsafe_Element = PS.Data_DOM_Simple_Unsafe_Element;
+    var Data_DOM_Simple_Unsafe_Utils = PS.Data_DOM_Simple_Unsafe_Utils;
+    var Prelude = PS.Prelude;
+    var Data_Foldable = PS.Data_Foldable;
+    var Data_Tuple = PS.Data_Tuple;
+    function Element(children, classAdd, classContains, classRemove, classToggle, contentWindow, getAttribute, getElementById, getElementsByClassName, getElementsByName, hasAttribute, innerHTML, querySelector, querySelectorAll, removeAttribute, setAttribute, setInnerHTML, setTextContent, setValue, textContent, value) {
+        this.children = children;
+        this.classAdd = classAdd;
+        this.classContains = classContains;
+        this.classRemove = classRemove;
+        this.classToggle = classToggle;
+        this.contentWindow = contentWindow;
+        this.getAttribute = getAttribute;
+        this.getElementById = getElementById;
+        this.getElementsByClassName = getElementsByClassName;
+        this.getElementsByName = getElementsByName;
+        this.hasAttribute = hasAttribute;
+        this.innerHTML = innerHTML;
+        this.querySelector = querySelector;
+        this.querySelectorAll = querySelectorAll;
+        this.removeAttribute = removeAttribute;
+        this.setAttribute = setAttribute;
+        this.setInnerHTML = setInnerHTML;
+        this.setTextContent = setTextContent;
+        this.setValue = setValue;
+        this.textContent = textContent;
+        this.value = value;
+    };
+    var getElementById = function (dict) {
+        return dict.getElementById;
+    };
+    return {
+        Element: Element, 
+        getElementById: getElementById
+    };
+})();
+var PS = PS || {};
+PS.Data_DOM_Simple_Document = (function () {
+    "use strict";
+    var Data_DOM_Simple_Unsafe_Element = PS.Data_DOM_Simple_Unsafe_Element;
+    var Prelude = PS.Prelude;
+    var Data_DOM_Simple_Unsafe_Utils = PS.Data_DOM_Simple_Unsafe_Utils;
+    var Data_DOM_Simple_Unsafe_Document = PS.Data_DOM_Simple_Unsafe_Document;
+    var Data_DOM_Simple_Element = PS.Data_DOM_Simple_Element;
+    var Control_Monad_Eff = PS.Control_Monad_Eff;
+    var htmlDocumentElement = new Data_DOM_Simple_Element.Element(Data_DOM_Simple_Unsafe_Element.unsafeChildren, Data_DOM_Simple_Unsafe_Element.unsafeClassAdd, Data_DOM_Simple_Unsafe_Element.unsafeClassContains, Data_DOM_Simple_Unsafe_Element.unsafeClassRemove, Data_DOM_Simple_Unsafe_Element.unsafeClassToggle, Data_DOM_Simple_Unsafe_Element.unsafeContentWindow, Data_DOM_Simple_Unsafe_Element.unsafeGetAttribute, function (id) {
+        return function (el) {
+            return Prelude[">>="](Control_Monad_Eff.bindEff)(Data_DOM_Simple_Unsafe_Element.unsafeGetElementById(id)(el))(Prelude["<<<"](Prelude.semigroupoidArr)(Prelude["return"](Control_Monad_Eff.monadEff))(Data_DOM_Simple_Unsafe_Utils.ensure));
+        };
+    }, Data_DOM_Simple_Unsafe_Element.unsafeGetElementsByClassName, Data_DOM_Simple_Unsafe_Element.unsafeGetElementsByName, Data_DOM_Simple_Unsafe_Element.unsafeHasAttribute, Data_DOM_Simple_Unsafe_Element.unsafeInnerHTML, function (sel) {
+        return function (el) {
+            return Prelude[">>="](Control_Monad_Eff.bindEff)(Data_DOM_Simple_Unsafe_Element.unsafeQuerySelector(sel)(el))(Prelude["<<<"](Prelude.semigroupoidArr)(Prelude["return"](Control_Monad_Eff.monadEff))(Data_DOM_Simple_Unsafe_Utils.ensure));
+        };
+    }, Data_DOM_Simple_Unsafe_Element.unsafeQuerySelectorAll, Data_DOM_Simple_Unsafe_Element.unsafeRemoveAttribute, Data_DOM_Simple_Unsafe_Element.unsafeSetAttribute, Data_DOM_Simple_Unsafe_Element.unsafeSetInnerHTML, Data_DOM_Simple_Unsafe_Element.unsafeSetTextContent, Data_DOM_Simple_Unsafe_Element.unsafeSetValue, Data_DOM_Simple_Unsafe_Element.unsafeTextContent, Data_DOM_Simple_Unsafe_Element.unsafeValue);
+    return {
+        htmlDocumentElement: htmlDocumentElement
+    };
+})();
+var PS = PS || {};
 PS.Data_StrMap_ST = (function () {
     "use strict";
     var Prelude = PS.Prelude;
@@ -764,6 +1198,140 @@ PS.Data_StrMap_ST = (function () {
     return {
         "new": $$new, 
         poke: poke
+    };
+})();
+var PS = PS || {};
+PS.Data_DOM_Simple_Window = (function () {
+    "use strict";
+    var Data_DOM_Simple_Unsafe_Window = PS.Data_DOM_Simple_Unsafe_Window;
+    var Data_String = PS.Data_String;
+    var Data_Array = PS.Data_Array;
+    var Prelude = PS.Prelude;
+    function Window(clearTimeout, document, innerHeight, innerWidth, location, navigator, setInterval, setTimeout) {
+        this.clearTimeout = clearTimeout;
+        this.document = document;
+        this.innerHeight = innerHeight;
+        this.innerWidth = innerWidth;
+        this.location = location;
+        this.navigator = navigator;
+        this.setInterval = setInterval;
+        this.setTimeout = setTimeout;
+    };
+    var globalWindow = window;;
+    var htmlWindow = new Window(Data_DOM_Simple_Unsafe_Window.unsafeClearTimeout, Data_DOM_Simple_Unsafe_Window.unsafeDocument, Data_DOM_Simple_Unsafe_Window.unsafeInnerHeight, Data_DOM_Simple_Unsafe_Window.unsafeInnerWidth, Data_DOM_Simple_Unsafe_Window.unsafeLocation, Data_DOM_Simple_Unsafe_Window.unsafeNavigator, Data_DOM_Simple_Unsafe_Window.unsafeSetInterval, Data_DOM_Simple_Unsafe_Window.unsafeSetTimeout);
+    var document = function (dict) {
+        return dict.document;
+    };
+    return {
+        Window: Window, 
+        document: document, 
+        globalWindow: globalWindow, 
+        htmlWindow: htmlWindow
+    };
+})();
+var PS = PS || {};
+PS.Data_DOM_Simple_Events = (function () {
+    "use strict";
+    var Data_DOM_Simple_Unsafe_Events = PS.Data_DOM_Simple_Unsafe_Events;
+    var Prelude = PS.Prelude;
+    function LoadEvent() {
+
+    };
+    LoadEvent.value = new LoadEvent();
+    function UnloadEvent() {
+
+    };
+    UnloadEvent.value = new UnloadEvent();
+    function AbortEvent() {
+
+    };
+    AbortEvent.value = new AbortEvent();
+    function ErrorEvent() {
+
+    };
+    ErrorEvent.value = new ErrorEvent();
+    function SelectEvent() {
+
+    };
+    SelectEvent.value = new SelectEvent();
+    function ResizeEvent() {
+
+    };
+    ResizeEvent.value = new ResizeEvent();
+    function ScrollEvent() {
+
+    };
+    ScrollEvent.value = new ScrollEvent();
+    function Event(eventTarget, preventDefault, stopPropagation) {
+        this.eventTarget = eventTarget;
+        this.preventDefault = preventDefault;
+        this.stopPropagation = stopPropagation;
+    };
+    function UIEvent(__superclass_Data$dotDOM$dotSimple$dotEvents$dotEvent_0, detail, view) {
+        this["__superclass_Data.DOM.Simple.Events.Event_0"] = __superclass_Data$dotDOM$dotSimple$dotEvents$dotEvent_0;
+        this.detail = detail;
+        this.view = view;
+    };
+    function UIEventTarget(addUIEventListener, removeUIEventListener) {
+        this.addUIEventListener = addUIEventListener;
+        this.removeUIEventListener = removeUIEventListener;
+    };
+    var uiEventTypeShow = new Prelude.Show(function (_428) {
+        if (_428 instanceof LoadEvent) {
+            return "load";
+        };
+        if (_428 instanceof UnloadEvent) {
+            return "unload";
+        };
+        if (_428 instanceof AbortEvent) {
+            return "abort";
+        };
+        if (_428 instanceof ErrorEvent) {
+            return "error";
+        };
+        if (_428 instanceof SelectEvent) {
+            return "select";
+        };
+        if (_428 instanceof ResizeEvent) {
+            return "resize";
+        };
+        if (_428 instanceof ScrollEvent) {
+            return "scroll";
+        };
+        throw new Error("Failed pattern match");
+    });
+    var uiEventTargetHTMLWindow = new UIEventTarget(function (__dict_UIEvent_290) {
+        return function (typ) {
+            return Data_DOM_Simple_Unsafe_Events.unsafeAddEventListener(Prelude.show(uiEventTypeShow)(typ));
+        };
+    }, function (__dict_UIEvent_291) {
+        return function (typ) {
+            return Data_DOM_Simple_Unsafe_Events.unsafeRemoveEventListener(Prelude.show(uiEventTypeShow)(typ));
+        };
+    });
+    var eventDOMEvent = new Event(Data_DOM_Simple_Unsafe_Events.unsafeEventTarget, Data_DOM_Simple_Unsafe_Events.unsafePreventDefault, Data_DOM_Simple_Unsafe_Events.unsafeStopPropagation);
+    var uiEventDOMEvent = new UIEvent(function () {
+        return eventDOMEvent;
+    }, Data_DOM_Simple_Unsafe_Events.unsafeEventNumberProp("detail"), Data_DOM_Simple_Unsafe_Events.unsafeEventView);
+    var addUIEventListener = function (dict) {
+        return dict.addUIEventListener;
+    };
+    return {
+        AbortEvent: AbortEvent, 
+        ErrorEvent: ErrorEvent, 
+        Event: Event, 
+        LoadEvent: LoadEvent, 
+        ResizeEvent: ResizeEvent, 
+        ScrollEvent: ScrollEvent, 
+        SelectEvent: SelectEvent, 
+        UIEvent: UIEvent, 
+        UIEventTarget: UIEventTarget, 
+        UnloadEvent: UnloadEvent, 
+        addUIEventListener: addUIEventListener, 
+        eventDOMEvent: eventDOMEvent, 
+        uiEventDOMEvent: uiEventDOMEvent, 
+        uiEventTargetHTMLWindow: uiEventTargetHTMLWindow, 
+        uiEventTypeShow: uiEventTypeShow
     };
 })();
 var PS = PS || {};
@@ -843,26 +1411,26 @@ PS.Data_Traversable = (function () {
         return Data_Foldable.foldableArray;
     }, function () {
         return Data_Array.functorArray;
-    }, function (__dict_Applicative_293) {
-        return function (_401) {
-            if (_401.length === 0) {
-                return Prelude.pure(__dict_Applicative_293)([  ]);
+    }, function (__dict_Applicative_311) {
+        return function (_434) {
+            if (_434.length === 0) {
+                return Prelude.pure(__dict_Applicative_311)([  ]);
             };
-            if (_401.length >= 1) {
-                var _873 = _401.slice(1);
-                return Prelude["<*>"](__dict_Applicative_293["__superclass_Prelude.Apply_0"]())(Prelude["<$>"]((__dict_Applicative_293["__superclass_Prelude.Apply_0"]())["__superclass_Prelude.Functor_0"]())(Prelude[":"])(_401[0]))(sequence(traversableArray)(__dict_Applicative_293)(_873));
+            if (_434.length >= 1) {
+                var _906 = _434.slice(1);
+                return Prelude["<*>"](__dict_Applicative_311["__superclass_Prelude.Apply_0"]())(Prelude["<$>"]((__dict_Applicative_311["__superclass_Prelude.Apply_0"]())["__superclass_Prelude.Functor_0"]())(Prelude[":"])(_434[0]))(sequence(traversableArray)(__dict_Applicative_311)(_906));
             };
             throw new Error("Failed pattern match");
         };
-    }, function (__dict_Applicative_292) {
-        return function (_399) {
-            return function (_400) {
-                if (_400.length === 0) {
-                    return Prelude.pure(__dict_Applicative_292)([  ]);
+    }, function (__dict_Applicative_310) {
+        return function (_432) {
+            return function (_433) {
+                if (_433.length === 0) {
+                    return Prelude.pure(__dict_Applicative_310)([  ]);
                 };
-                if (_400.length >= 1) {
-                    var _877 = _400.slice(1);
-                    return Prelude["<*>"](__dict_Applicative_292["__superclass_Prelude.Apply_0"]())(Prelude["<$>"]((__dict_Applicative_292["__superclass_Prelude.Apply_0"]())["__superclass_Prelude.Functor_0"]())(Prelude[":"])(_399(_400[0])))(traverse(traversableArray)(__dict_Applicative_292)(_399)(_877));
+                if (_433.length >= 1) {
+                    var _910 = _433.slice(1);
+                    return Prelude["<*>"](__dict_Applicative_310["__superclass_Prelude.Apply_0"]())(Prelude["<$>"]((__dict_Applicative_310["__superclass_Prelude.Apply_0"]())["__superclass_Prelude.Functor_0"]())(Prelude[":"])(_432(_433[0])))(traverse(traversableArray)(__dict_Applicative_310)(_432)(_910));
                 };
                 throw new Error("Failed pattern match");
             };
@@ -911,11 +1479,11 @@ PS.Data_StrMap = (function () {
     });
     var fromList = function (l) {
         return pureST(function __do() {
-            var _28 = Data_StrMap_ST["new"]();
-            Data_Foldable.for_(Control_Monad_Eff.applicativeEff)(Data_Foldable.foldableArray)(l)(function (_637) {
-                return Data_StrMap_ST.poke(_28)(_637.value0)(_637.value1);
+            var _33 = Data_StrMap_ST["new"]();
+            Data_Foldable.for_(Control_Monad_Eff.applicativeEff)(Data_Foldable.foldableArray)(l)(function (_670) {
+                return Data_StrMap_ST.poke(_33)(_670.value0)(_670.value1);
             })();
-            return _28;
+            return _33;
         });
     };
     return {
@@ -948,13 +1516,13 @@ PS.Data_Date = (function () {
     };    
   }
   ;
-    var toJSDate = function (_714) {
-        return _714.value0;
+    var toJSDate = function (_747) {
+        return _747.value0;
     };
     var now = nowImpl(DateTime.create);
-    var liftDate = function (_715) {
-        return function (_716) {
-            return _715(_716.value0);
+    var liftDate = function (_748) {
+        return function (_749) {
+            return _748(_749.value0);
         };
     };
     var showDate = new Prelude.Show(liftDate(jsDateMethod("toString")));
@@ -1018,32 +1586,32 @@ PS.Data_Argonaut_Encode = (function () {
     var encodeJson = function (dict) {
         return dict.encodeJson;
     };
-    var encodeJsonArray = function (__dict_EncodeJson_751) {
+    var encodeJsonArray = function (__dict_EncodeJson_769) {
         return new EncodeJson(function (json) {
-            return Data_Argonaut_Core.fromArray(Prelude["<$>"](Data_Array.functorArray)(encodeJson(__dict_EncodeJson_751))(json));
+            return Data_Argonaut_Core.fromArray(Prelude["<$>"](Data_Array.functorArray)(encodeJson(__dict_EncodeJson_769))(json));
         });
     };
-    var encodeJsonMaybe = function (__dict_EncodeJson_754) {
-        return new EncodeJson(function (_740) {
-            if (_740 instanceof Data_Maybe.Nothing) {
+    var encodeJsonMaybe = function (__dict_EncodeJson_772) {
+        return new EncodeJson(function (_773) {
+            if (_773 instanceof Data_Maybe.Nothing) {
                 return Data_Argonaut_Core.jsonNull;
             };
-            if (_740 instanceof Data_Maybe.Just) {
-                return encodeJson(__dict_EncodeJson_754)(_740.value0);
+            if (_773 instanceof Data_Maybe.Just) {
+                return encodeJson(__dict_EncodeJson_772)(_773.value0);
             };
             throw new Error("Failed pattern match");
         });
     };
-    var encodeJsonTuple = function (__dict_EncodeJson_755) {
-        return function (__dict_EncodeJson_756) {
-            return new EncodeJson(function (_741) {
-                return encodeJson(encodeJsonArray(encodeJsonJson))([ encodeJson(__dict_EncodeJson_755)(_741.value0), encodeJson(__dict_EncodeJson_756)(_741.value1) ]);
+    var encodeJsonTuple = function (__dict_EncodeJson_773) {
+        return function (__dict_EncodeJson_774) {
+            return new EncodeJson(function (_774) {
+                return encodeJson(encodeJsonArray(encodeJsonJson))([ encodeJson(__dict_EncodeJson_773)(_774.value0), encodeJson(__dict_EncodeJson_774)(_774.value1) ]);
             });
         };
     };
-    var encodeStrMap = function (__dict_EncodeJson_760) {
+    var encodeStrMap = function (__dict_EncodeJson_778) {
         return new EncodeJson(function (m) {
-            return Data_Argonaut_Core.fromObject(Prelude["<$>"](Data_StrMap.functorStrMap)(encodeJson(__dict_EncodeJson_760))(m));
+            return Data_Argonaut_Core.fromObject(Prelude["<$>"](Data_StrMap.functorStrMap)(encodeJson(__dict_EncodeJson_778))(m));
         });
     };
     return {
@@ -1202,64 +1770,64 @@ function listenImpl(event, effHandler, chart) {
   };
 }
 ;
-    var eventTypeShow = new Prelude.Show(function (et) {
-        if (et instanceof Refresh) {
+    var eventStr = function (event) {
+        if (event instanceof Refresh) {
             return "refresh";
         };
-        if (et instanceof Restore) {
+        if (event instanceof Restore) {
             return "restore";
         };
-        if (et instanceof Resize) {
+        if (event instanceof Resize) {
             return "resize";
         };
-        if (et instanceof Click) {
+        if (event instanceof Click) {
             return "click";
         };
-        if (et instanceof DoubleClick) {
+        if (event instanceof DoubleClick) {
             return "dblclick";
         };
-        if (et instanceof Hover) {
+        if (event instanceof Hover) {
             return "hover";
         };
-        if (et instanceof DataChanged) {
+        if (event instanceof DataChanged) {
             return "dataChanged";
         };
-        if (et instanceof DataZoom) {
+        if (event instanceof DataZoom) {
             return "dataZoom";
         };
-        if (et instanceof DataRange) {
+        if (event instanceof DataRange) {
             return "dataRange";
         };
-        if (et instanceof DataRangeHoverLink) {
+        if (event instanceof DataRangeHoverLink) {
             return "dataRangeHoverLink";
         };
-        if (et instanceof LegendSelected) {
+        if (event instanceof LegendSelected) {
             return "legendSelected";
         };
-        if (et instanceof LegendHoverLink) {
+        if (event instanceof LegendHoverLink) {
             return "legendHoverLink";
         };
-        if (et instanceof MapSelected) {
+        if (event instanceof MapSelected) {
             return "mapSelected";
         };
-        if (et instanceof PieSelected) {
+        if (event instanceof PieSelected) {
             return "pieSelected";
         };
-        if (et instanceof DataViewChanged) {
+        if (event instanceof DataViewChanged) {
             return "dataViewChanged";
         };
-        if (et instanceof MapRoam) {
+        if (event instanceof MapRoam) {
             return "mapRoam";
         };
-        if (et instanceof MagicTypeChanged) {
+        if (event instanceof MagicTypeChanged) {
             return "magicTypeChanged";
         };
         throw new Error("Failed pattern match");
-    });
+    };
     var listen = function (eventName) {
         return function (handler) {
             return function (chart) {
-                return listenImpl(Prelude.show(eventTypeShow)(eventName), handler, chart);
+                return listenImpl(eventStr(eventName), handler, chart);
             };
         };
     };
@@ -1281,7 +1849,6 @@ function listenImpl(event, effHandler, chart) {
         Refresh: Refresh, 
         Resize: Resize, 
         Restore: Restore, 
-        eventTypeShow: eventTypeShow, 
         listen: listen
     };
 })();
@@ -1289,132 +1856,20 @@ var PS = PS || {};
 PS.ECharts_Image = (function () {
     "use strict";
     var Data_Argonaut_Encode = PS.Data_Argonaut_Encode;
-    var Prelude = PS.Prelude;
     var Data_Function = PS.Data_Function;
-    var imgTypeShow = new Prelude.Show(function (_743) {
-        if (_743 instanceof PNG) {
+    var Prelude = PS.Prelude;
+    var imgStr = function (img) {
+        if (img instanceof PNG) {
             return "png";
         };
-        if (_743 instanceof JPEG) {
+        if (img instanceof JPEG) {
             return "jpeg";
         };
         throw new Error("Failed pattern match");
-    });
-    var encodeImg = new Data_Argonaut_Encode.EncodeJson(Prelude["<<<"](Prelude.semigroupoidArr)(Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJString))(Prelude.show(imgTypeShow)));
+    };
+    var encodeImg = new Data_Argonaut_Encode.EncodeJson(Prelude["<<<"](Prelude.semigroupoidArr)(Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJString))(imgStr));
     return {
-        encodeImg: encodeImg, 
-        imgTypeShow: imgTypeShow
-    };
-})();
-var PS = PS || {};
-PS.ECharts_Type = (function () {
-    "use strict";
-    var Data_Argonaut_Core = PS.Data_Argonaut_Core;
-    var Prelude = PS.Prelude;
-    var Data_Argonaut_Encode = PS.Data_Argonaut_Encode;
-    function Line() {
-
-    };
-    Line.value = new Line();
-    function Bar() {
-
-    };
-    Bar.value = new Bar();
-    function Scatter() {
-
-    };
-    Scatter.value = new Scatter();
-    function Candlestick() {
-
-    };
-    Candlestick.value = new Candlestick();
-    function Pie() {
-
-    };
-    Pie.value = new Pie();
-    function Radar() {
-
-    };
-    Radar.value = new Radar();
-    function Chord() {
-
-    };
-    Chord.value = new Chord();
-    function Force() {
-
-    };
-    Force.value = new Force();
-    function Map() {
-
-    };
-    Map.value = new Map();
-    function Gauge() {
-
-    };
-    Gauge.value = new Gauge();
-    function Funnel() {
-
-    };
-    Funnel.value = new Funnel();
-    function EventRiver() {
-
-    };
-    EventRiver.value = new EventRiver();
-    var chartTypeEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (a) {
-        return Data_Argonaut_Core.fromString((function () {
-            if (a instanceof Line) {
-                return "line";
-            };
-            if (a instanceof Bar) {
-                return "bar";
-            };
-            if (a instanceof Scatter) {
-                return "scatter";
-            };
-            if (a instanceof Candlestick) {
-                return "k";
-            };
-            if (a instanceof Pie) {
-                return "pie";
-            };
-            if (a instanceof Radar) {
-                return "radar";
-            };
-            if (a instanceof Chord) {
-                return "chord";
-            };
-            if (a instanceof Force) {
-                return "force";
-            };
-            if (a instanceof Map) {
-                return "map";
-            };
-            if (a instanceof Gauge) {
-                return "gauge";
-            };
-            if (a instanceof Funnel) {
-                return "funnel";
-            };
-            if (a instanceof EventRiver) {
-                return "eventRiver";
-            };
-            throw new Error("Failed pattern match");
-        })());
-    });
-    return {
-        Bar: Bar, 
-        Candlestick: Candlestick, 
-        Chord: Chord, 
-        EventRiver: EventRiver, 
-        Force: Force, 
-        Funnel: Funnel, 
-        Gauge: Gauge, 
-        Line: Line, 
-        Map: Map, 
-        Pie: Pie, 
-        Radar: Radar, 
-        Scatter: Scatter, 
-        chartTypeEncodeJson: chartTypeEncodeJson
+        encodeImg: encodeImg
     };
 })();
 var PS = PS || {};
@@ -1435,13 +1890,7 @@ function unnull(obj) {
   return temp;
 }
 ;
-    
-function func2json(fn) {
-  return fn;
-}
-;
     return {
-        func2json: func2json, 
         unnull: unnull
     };
 })();
@@ -1455,10 +1904,10 @@ PS.Data_Argonaut_Combinators = (function () {
     var Prelude = PS.Prelude;
     var Data_Argonaut_Decode = PS.Data_Argonaut_Decode;
     var Data_Tuple = PS.Data_Tuple;
-    var $colon$eq = function (__dict_EncodeJson_783) {
+    var $colon$eq = function (__dict_EncodeJson_801) {
         return function (k) {
             return function (v) {
-                return Data_Tuple.Tuple.create(k)(Data_Argonaut_Encode.encodeJson(__dict_EncodeJson_783)(v));
+                return Data_Tuple.Tuple.create(k)(Data_Argonaut_Encode.encodeJson(__dict_EncodeJson_801)(v));
             };
         };
     };
@@ -1547,41 +1996,41 @@ PS.ECharts_Common = (function () {
             throw new Error("Failed pattern match");
         })());
     });
-    var roamEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_751) {
-        if (_751 instanceof Enable) {
+    var roamEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_783) {
+        if (_783 instanceof Enable) {
             return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJBoolean)(true);
         };
-        if (_751 instanceof Disable) {
+        if (_783 instanceof Disable) {
             return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJBoolean)(false);
         };
-        if (_751 instanceof Scale) {
+        if (_783 instanceof Scale) {
             return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJString)("scale");
         };
-        if (_751 instanceof Move) {
+        if (_783 instanceof Move) {
             return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJString)("move");
         };
         throw new Error("Failed pattern match");
     });
-    var percentOrPixelEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_750) {
-        if (_750 instanceof Percent) {
-            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJString)(Prelude.show(Prelude.showNumber)(_750.value0) + "%");
+    var percentOrPixelEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_782) {
+        if (_782 instanceof Percent) {
+            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJString)(Prelude.show(Prelude.showNumber)(_782.value0) + "%");
         };
-        if (_750 instanceof Pixel) {
-            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJNumber)(_750.value0);
-        };
-        throw new Error("Failed pattern match");
-    });
-    var radiusEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_753) {
-        if (_753 instanceof R) {
-            return Data_Argonaut_Encode.encodeJson(percentOrPixelEncodeJson)(_753.value0);
-        };
-        if (_753 instanceof Rs) {
-            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonArray(percentOrPixelEncodeJson))([ _753.value0.inner, _753.value0.outer ]);
+        if (_782 instanceof Pixel) {
+            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJNumber)(_782.value0);
         };
         throw new Error("Failed pattern match");
     });
-    var minMaxEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_752) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJNumber)("min")(_752.min), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJNumber)("max")(_752.max) ]));
+    var radiusEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_785) {
+        if (_785 instanceof R) {
+            return Data_Argonaut_Encode.encodeJson(percentOrPixelEncodeJson)(_785.value0);
+        };
+        if (_785 instanceof Rs) {
+            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonArray(percentOrPixelEncodeJson))([ _785.value0.inner, _785.value0.outer ]);
+        };
+        throw new Error("Failed pattern match");
+    });
+    var minMaxEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_784) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJNumber)("min")(_784.min), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJNumber)("max")(_784.max) ]));
     });
     var mapValueCalculationEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (a) {
         return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJString)((function () {
@@ -1594,22 +2043,22 @@ PS.ECharts_Common = (function () {
             throw new Error("Failed pattern match");
         })());
     });
-    var intervalEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_754) {
-        if (_754 instanceof Auto) {
+    var intervalEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_786) {
+        if (_786 instanceof Auto) {
             return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJString)("auto");
         };
-        if (_754 instanceof Custom) {
-            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJNumber)(_754.value0);
+        if (_786 instanceof Custom) {
+            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJNumber)(_786.value0);
         };
         throw new Error("Failed pattern match");
     });
-    var cornerJsonEncode = function (__dict_EncodeJson_785) {
+    var cornerJsonEncode = function (__dict_EncodeJson_803) {
         return new Data_Argonaut_Encode.EncodeJson(function (corners) {
             if (corners instanceof AllCorners) {
-                return Data_Argonaut_Encode.encodeJson(__dict_EncodeJson_785)(corners.value0);
+                return Data_Argonaut_Encode.encodeJson(__dict_EncodeJson_803)(corners.value0);
             };
             if (corners instanceof Corners) {
-                return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonArray(__dict_EncodeJson_785))([ corners.value0, corners.value1, corners.value2, corners.value3 ]);
+                return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonArray(__dict_EncodeJson_803))([ corners.value0, corners.value1, corners.value2, corners.value3 ]);
             };
             throw new Error("Failed pattern match");
         });
@@ -1701,18 +2150,18 @@ PS.ECharts_Coords = (function () {
         };
         throw new Error("Failed pattern match");
     });
-    var xPosEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_755) {
-        if (_755 instanceof XLeft) {
+    var xPosEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_787) {
+        if (_787 instanceof XLeft) {
             return Data_Argonaut_Core.fromString("left");
         };
-        if (_755 instanceof XRight) {
+        if (_787 instanceof XRight) {
             return Data_Argonaut_Core.fromString("right");
         };
-        if (_755 instanceof XCenter) {
+        if (_787 instanceof XCenter) {
             return Data_Argonaut_Core.fromString("center");
         };
-        if (_755 instanceof X) {
-            return Data_Argonaut_Core.fromNumber(_755.value0);
+        if (_787 instanceof X) {
+            return Data_Argonaut_Core.fromNumber(_787.value0);
         };
         throw new Error("Failed pattern match");
     });
@@ -1741,8 +2190,8 @@ PS.ECharts_Coords = (function () {
             throw new Error("Failed pattern match");
         })());
     });
-    var locationEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_756) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(xPosEncodeJson))("x")(_756.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(yPosEncodeJson))("y")(_756.y) ]));
+    var locationEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_788) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(xPosEncodeJson))("x")(_788.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(yPosEncodeJson))("y")(_788.y) ]));
     });
     var labelPositionEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (a) {
         return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJString)((function () {
@@ -1865,7 +2314,6 @@ var PS = PS || {};
 PS.ECharts_Color = (function () {
     "use strict";
     var Data_Argonaut_Encode = PS.Data_Argonaut_Encode;
-    var ECharts_Utils = PS.ECharts_Utils;
     var Data_Function = PS.Data_Function;
     var Prelude = PS.Prelude;
     function SimpleColor(value0) {
@@ -1880,12 +2328,17 @@ PS.ECharts_Color = (function () {
     ColorFunc.create = function (value0) {
         return new ColorFunc(value0);
     };
+    
+function func2json(fn) {
+  return fn;
+}
+;
     var calculableColorEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (cc) {
         if (cc instanceof SimpleColor) {
             return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJString)(cc.value0);
         };
         if (cc instanceof ColorFunc) {
-            return ECharts_Utils.func2json(Data_Function.mkFn1(cc.value0));
+            return func2json(Data_Function.mkFn1(cc.value0));
         };
         throw new Error("Failed pattern match");
     });
@@ -1910,8 +2363,8 @@ PS.ECharts_DataZoom = (function () {
             return value;
         }
     };
-    var dataZoomEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_757) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_757.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.orientEncodeJson))("orient")(_757.orient), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.xPosEncodeJson))("x")(_757.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.yPosEncodeJson))("y")(_757.y), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("width")(_757.width), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("height")(_757.height), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_757.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("dataBackgroundColor")(_757.dataBackgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("fillerColor")(_757.fillerColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("handleColor")(_757.handleColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJNumber)))("xAxisIndex")(_757.xAxisIndex), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJNumber)))("yAxisIndex")(_757.yAxisIndex), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("start")(_757.start), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("end")(_757.end), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("showDetail")(_757.showDetail), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("realtime")(_757.realtime), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("zoomlock")(_757.zoomlock) ]));
+    var dataZoomEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_789) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_789.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.orientEncodeJson))("orient")(_789.orient), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.xPosEncodeJson))("x")(_789.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.yPosEncodeJson))("y")(_789.y), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("width")(_789.width), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("height")(_789.height), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_789.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("dataBackgroundColor")(_789.dataBackgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("fillerColor")(_789.fillerColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("handleColor")(_789.handleColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJNumber)))("xAxisIndex")(_789.xAxisIndex), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJNumber)))("yAxisIndex")(_789.yAxisIndex), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("start")(_789.start), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("end")(_789.end), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("showDetail")(_789.showDetail), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("realtime")(_789.realtime), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("zoomlock")(_789.zoomlock) ]));
     });
     var dataZoomDefault = {
         show: Data_Maybe.Nothing.value, 
@@ -1953,8 +2406,8 @@ PS.ECharts_Grid = (function () {
             return value;
         }
     };
-    var gridEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_758) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("x")(_758.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("y")(_758.y), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("x2")(_758.x2), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("y2")(_758.y2), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("width")(_758.width), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("height")(_758.height), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_758.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_758.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderColor")(_758.borderColor) ]));
+    var gridEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_790) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("x")(_790.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("y")(_790.y), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("x2")(_790.x2), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("y2")(_790.y2), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("width")(_790.width), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("height")(_790.height), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_790.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_790.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderColor")(_790.borderColor) ]));
     });
     var gridDefault = {
         x: Data_Maybe.Nothing.value, 
@@ -1977,7 +2430,6 @@ var PS = PS || {};
 PS.ECharts_Formatter = (function () {
     "use strict";
     var Data_Argonaut_Encode = PS.Data_Argonaut_Encode;
-    var ECharts_Utils = PS.ECharts_Utils;
     var Prelude = PS.Prelude;
     function Template(value0) {
         this.value0 = value0;
@@ -1992,18 +2444,23 @@ PS.ECharts_Formatter = (function () {
         return new FormatFunc(value0);
     };
     
+function func2json(fn) {
+  return fn;
+}
+;
+    
 function effArrToFn(arr) {
   return function(x) {
     arr(x)();
   };
 }
 ;
-    var formatterEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_759) {
-        if (_759 instanceof Template) {
-            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJString)(_759.value0);
+    var formatterEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_791) {
+        if (_791 instanceof Template) {
+            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJString)(_791.value0);
         };
-        if (_759 instanceof FormatFunc) {
-            return ECharts_Utils.func2json(effArrToFn(_759.value0));
+        if (_791 instanceof FormatFunc) {
+            return func2json(effArrToFn(_791.value0));
         };
         throw new Error("Failed pattern match");
     });
@@ -2027,8 +2484,8 @@ PS.ECharts_Mark_Data = (function () {
             return value;
         }
     };
-    var mpDataEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_760) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("name")(_760.name), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("value")(_760.value), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("x")(_760.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("y")(_760.y), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("xAxis")(_760.xAxis), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("yAxis")(_760.yAxis), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("type")(_760.type) ]));
+    var mpDataEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_792) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("name")(_792.name), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("value")(_792.value), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("x")(_792.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("y")(_792.y), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("xAxis")(_792.xAxis), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("yAxis")(_792.yAxis), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("type")(_792.type) ]));
     });
     var markPointDataDefault = {
         name: Data_Maybe.Nothing.value, 
@@ -2053,8 +2510,8 @@ PS.ECharts_Mark_Effect = (function () {
     var Prelude = PS.Prelude;
     var Data_Argonaut_Encode = PS.Data_Argonaut_Encode;
     var Data_Argonaut_Combinators = PS.Data_Argonaut_Combinators;
-    var mpEffectEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_761) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_761.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("loop")(_761.loop), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("period")(_761.period), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("scaleSize")(_761.scaleSize), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("color")(_761.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("shadowBlur")(_761.shadowBlur) ]));
+    var mpEffectEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_793) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_793.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("loop")(_793.loop), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("period")(_793.period), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("scaleSize")(_793.scaleSize), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("color")(_793.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("shadowBlur")(_793.shadowBlur) ]));
     });
     return {
         mpEffectEncodeJson: mpEffectEncodeJson
@@ -2070,8 +2527,8 @@ PS.ECharts_RoamController = (function () {
     var Data_Argonaut_Combinators = PS.Data_Argonaut_Combinators;
     var ECharts_Coords = PS.ECharts_Coords;
     var ECharts_Common = PS.ECharts_Common;
-    var roamControllerEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_762) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_762.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.xPosEncodeJson))("x")(_762.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.yPosEncodeJson))("y")(_762.y), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("width")(_762.width), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("height")(_762.height), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_762.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_762.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_762.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.cornerJsonEncode(Data_Argonaut_Encode.encodeJsonJNumber)))("padding")(_762.padding), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("fillerColor")(_762.fillerColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("handleColor")(_762.handleColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("step")(_762.step), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeStrMap(Data_Argonaut_Encode.encodeJsonJBoolean))("mapTypeControl")(_762.mapTypeControl) ]));
+    var roamControllerEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_794) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_794.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.xPosEncodeJson))("x")(_794.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.yPosEncodeJson))("y")(_794.y), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("width")(_794.width), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("height")(_794.height), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_794.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_794.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_794.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.cornerJsonEncode(Data_Argonaut_Encode.encodeJsonJNumber)))("padding")(_794.padding), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("fillerColor")(_794.fillerColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("handleColor")(_794.handleColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("step")(_794.step), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeStrMap(Data_Argonaut_Encode.encodeJsonJBoolean))("mapTypeControl")(_794.mapTypeControl) ]));
     });
     return {
         roamControllerEncodeJson: roamControllerEncodeJson
@@ -2085,8 +2542,8 @@ PS.ECharts_Style_Area = (function () {
     var Prelude = PS.Prelude;
     var Data_Argonaut_Encode = PS.Data_Argonaut_Encode;
     var Data_Argonaut_Combinators = PS.Data_Argonaut_Combinators;
-    var areaStyleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_763) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJString)("color")(_763), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJString)("type")("fill") ]));
+    var areaStyleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_795) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJString)("color")(_795), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJString)("type")("fill") ]));
     });
     return {
         areaStyleEncodeJson: areaStyleEncodeJson
@@ -2100,8 +2557,8 @@ PS.ECharts_Style_Chord = (function () {
     var Prelude = PS.Prelude;
     var Data_Argonaut_Encode = PS.Data_Argonaut_Encode;
     var Data_Argonaut_Combinators = PS.Data_Argonaut_Combinators;
-    var chordStyleJson = new Data_Argonaut_Encode.EncodeJson(function (_764) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("width")(_764.width), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("color")(_764.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_764.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_764.borderColor) ]));
+    var chordStyleJson = new Data_Argonaut_Encode.EncodeJson(function (_796) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("width")(_796.width), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("color")(_796.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_796.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_796.borderColor) ]));
     });
     return {
         chordStyleJson: chordStyleJson
@@ -2129,8 +2586,8 @@ PS.ECharts_Style_Line = (function () {
             throw new Error("Failed pattern match");
         })());
     });
-    var lineStyleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_765) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("color")(_765.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(linetypeEncodeJson))("type")(_765.type), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("width")(_765.width), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("shadowColor")(_765.shadowColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("shadowOffsetX")(_765.shadowOffsetX), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("shadowOffsetY")(_765.shadowOffsetY) ]));
+    var lineStyleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_797) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("color")(_797.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(linetypeEncodeJson))("type")(_797.type), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("width")(_797.width), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("shadowColor")(_797.shadowColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("shadowOffsetX")(_797.shadowOffsetX), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("shadowOffsetY")(_797.shadowOffsetY) ]));
     });
     return {
         lineStyleEncodeJson: lineStyleEncodeJson, 
@@ -2156,8 +2613,8 @@ PS.ECharts_Style_Link = (function () {
             throw new Error("Failed pattern match");
         })());
     });
-    var linkStyleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_766) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(linkTypeEncodeJson))("type")(_766.type), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("color")(_766.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("width")(_766.width) ]));
+    var linkStyleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_798) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(linkTypeEncodeJson))("type")(_798.type), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("color")(_798.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("width")(_798.width) ]));
     });
     return {
         linkStyleEncodeJson: linkStyleEncodeJson, 
@@ -2172,8 +2629,8 @@ PS.ECharts_Style_Node = (function () {
     var Prelude = PS.Prelude;
     var Data_Argonaut_Encode = PS.Data_Argonaut_Encode;
     var Data_Argonaut_Combinators = PS.Data_Argonaut_Combinators;
-    var nodeStyleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_767) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("color")(_767.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_767.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_767.borderWidth) ]));
+    var nodeStyleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_799) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("color")(_799.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_799.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_799.borderWidth) ]));
     });
     return {
         nodeStyleEncodeJson: nodeStyleEncodeJson
@@ -2276,8 +2733,8 @@ PS.ECharts_Style_Text = (function () {
             throw new Error("Failed pattern match");
         })());
     });
-    var textStyleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_768) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("color")(_768.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("decoration")(_768.decoration), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.textAlignEncodeJson))("align")(_768.align), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(textBaselineEncodeJson))("baseline")(_768.baseline), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("fontFamily")(_768.fontFamily), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("fontSize")(_768.fontSize), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(fontStyleEncodeJson))("fontStyle")(_768.fontStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(fontWeightEncodeJson))("fontWeight")(_768.fontWeight) ]));
+    var textStyleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_800) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("color")(_800.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("decoration")(_800.decoration), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.textAlignEncodeJson))("align")(_800.align), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(textBaselineEncodeJson))("baseline")(_800.baseline), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("fontFamily")(_800.fontFamily), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("fontSize")(_800.fontSize), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(fontStyleEncodeJson))("fontStyle")(_800.fontStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(fontWeightEncodeJson))("fontWeight")(_800.fontWeight) ]));
     });
     return {
         TextStyle: TextStyle, 
@@ -2300,8 +2757,8 @@ PS.ECharts_DataRange = (function () {
     var ECharts_Common = PS.ECharts_Common;
     var ECharts_Formatter = PS.ECharts_Formatter;
     var ECharts_Style_Text = PS.ECharts_Style_Text;
-    var dataRangeEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_769) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_769.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.orientEncodeJson))("orient")(_769.orient), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.xPosEncodeJson))("x")(_769.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.yPosEncodeJson))("y")(_769.y), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_769.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_769.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_769.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.cornerJsonEncode(Data_Argonaut_Encode.encodeJsonJNumber)))("padding")(_769.padding), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("itemGap")(_769.itemGap), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("itemWidth")(_769.itemWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("itemHeight")(_769.itemHeight), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("min")(_769.min), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("max")(_769.max), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("precision")(_769.precision), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("splitNumber")(_769.splitNumber), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.selModeEncodeJson))("selectedMode")(_769.selectedMode), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("calculable")(_769.calculable), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("hoverLink")(_769.hoverLink), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("realtime")(_769.realtime), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJString)))("color")(_769.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Formatter.formatterEncodeJson))("formatter")(_769.formatter), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonTuple(Data_Argonaut_Encode.encodeJsonJString)(Data_Argonaut_Encode.encodeJsonJString)))("text")(_769.text), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_769.textStyle) ]));
+    var dataRangeEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_801) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_801.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.orientEncodeJson))("orient")(_801.orient), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.xPosEncodeJson))("x")(_801.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.yPosEncodeJson))("y")(_801.y), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_801.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_801.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_801.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.cornerJsonEncode(Data_Argonaut_Encode.encodeJsonJNumber)))("padding")(_801.padding), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("itemGap")(_801.itemGap), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("itemWidth")(_801.itemWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("itemHeight")(_801.itemHeight), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("min")(_801.min), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("max")(_801.max), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("precision")(_801.precision), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("splitNumber")(_801.splitNumber), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.selModeEncodeJson))("selectedMode")(_801.selectedMode), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("calculable")(_801.calculable), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("hoverLink")(_801.hoverLink), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("realtime")(_801.realtime), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJString)))("color")(_801.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Formatter.formatterEncodeJson))("formatter")(_801.formatter), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonTuple(Data_Argonaut_Encode.encodeJsonJString)(Data_Argonaut_Encode.encodeJsonJString)))("text")(_801.text), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_801.textStyle) ]));
     });
     return {
         dataRangeEncodeJson: dataRangeEncodeJson
@@ -2334,8 +2791,8 @@ PS.ECharts_Legend = (function () {
             return value;
         }
     };
-    var legendItemEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_770) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJString)("name")(_770.value0), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("icon")(_770.value1.icon), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_770.value1.textStyle) ]));
+    var legendItemEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_802) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJString)("name")(_802.value0), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("icon")(_802.value1.icon), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_802.value1.textStyle) ]));
     });
     var legendItemDefault = function (name) {
         return new LegendItem(name, {
@@ -2343,8 +2800,8 @@ PS.ECharts_Legend = (function () {
             textStyle: Data_Maybe.Nothing.value
         });
     };
-    var legendEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_771) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_771.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.orientEncodeJson))("orient")(_771.orient), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.xPosEncodeJson))("x")(_771.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.yPosEncodeJson))("y")(_771.y), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_771.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_771.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_771.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.cornerJsonEncode(Data_Argonaut_Encode.encodeJsonJNumber)))("padding")(_771.padding), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("itemGap")(_771.itemGap), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("itemHeight")(_771.itemHeight), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("itemWidth")(_771.itemWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_771.textStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Formatter.formatterEncodeJson))("formatter")(_771.formatter), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.selModeEncodeJson))("selectedMode")(_771.selectedMode), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeStrMap(Data_Argonaut_Encode.encodeJsonJBoolean)))("selected")(_771.selected), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(legendItemEncodeJson)))("data")(_771.data) ]));
+    var legendEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_803) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_803.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.orientEncodeJson))("orient")(_803.orient), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.xPosEncodeJson))("x")(_803.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.yPosEncodeJson))("y")(_803.y), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_803.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_803.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_803.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.cornerJsonEncode(Data_Argonaut_Encode.encodeJsonJNumber)))("padding")(_803.padding), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("itemGap")(_803.itemGap), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("itemHeight")(_803.itemHeight), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("itemWidth")(_803.itemWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_803.textStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Formatter.formatterEncodeJson))("formatter")(_803.formatter), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.selModeEncodeJson))("selectedMode")(_803.selectedMode), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeStrMap(Data_Argonaut_Encode.encodeJsonJBoolean)))("selected")(_803.selected), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(legendItemEncodeJson)))("data")(_803.data) ]));
     });
     var legendDefault = {
         show: Data_Maybe.Nothing.value, 
@@ -2461,8 +2918,8 @@ function hideLoading(chart) {
             throw new Error("Failed pattern match");
         })());
     });
-    var showLoadingOptions = new Data_Argonaut_Encode.EncodeJson(function (_772) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("text")(_772.text), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.xPosEncodeJson))("x")(_772.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.yPosEncodeJson))("y")(_772.y), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_772.textStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(loadingEffectEncodeJson))("effect")(_772.effect), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJson))("effectOption")(_772.effectOption), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("progress")(_772.progress) ]));
+    var showLoadingOptions = new Data_Argonaut_Encode.EncodeJson(function (_804) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("text")(_804.text), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.xPosEncodeJson))("x")(_804.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.yPosEncodeJson))("y")(_804.y), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_804.textStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(loadingEffectEncodeJson))("effect")(_804.effect), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJson))("effectOption")(_804.effectOption), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("progress")(_804.progress) ]));
     });
     var showLoading = function (opts) {
         return function (chart) {
@@ -2522,17 +2979,17 @@ PS.ECharts_Style_Item = (function () {
         normal: Data_Maybe.Nothing.value, 
         emphasis: Data_Maybe.Nothing.value
     };
-    var itemLabelLineEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_774) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_774.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("length")(_774.length), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Line.lineStyleEncodeJson))("lineStyle")(_774.lineStyle) ]));
+    var itemLabelLineEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_806) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_806.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("length")(_806.length), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Line.lineStyleEncodeJson))("lineStyle")(_806.lineStyle) ]));
     });
-    var itemLabelEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_773) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_773.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.labelPositionEncodeJson))("position")(_773.position), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("distance")(_773.distance), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Formatter.formatterEncodeJson))("formatter")(_773.formatter), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_773.textStyle) ]));
+    var itemLabelEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_805) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_805.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.labelPositionEncodeJson))("position")(_805.position), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("distance")(_805.distance), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Formatter.formatterEncodeJson))("formatter")(_805.formatter), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_805.textStyle) ]));
     });
-    var istyleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_775) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Color.calculableColorEncodeJson))("color")(_775.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_775.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_775.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("barBorderColor")(_775.barBorderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("barBorderWidth")(_775.barBorderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.cornerJsonEncode(Data_Argonaut_Encode.encodeJsonJNumber)))("barBorderRadius")(_775.barBorderRadius), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(itemLabelEncodeJson))("label")(_775.label), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(itemLabelLineEncodeJson))("labelLine")(_775.labelLine), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Line.lineStyleEncodeJson))("lineStyle")(_775.lineStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Area.areaStyleEncodeJson))("areaStyle")(_775.areaStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Chord.chordStyleJson))("chordStyle")(_775.chordStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Node.nodeStyleEncodeJson))("nodeStyle")(_775.nodeStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Link.linkStyleEncodeJson))("linkStyle")(_775.linkStyle) ]));
+    var istyleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_807) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Color.calculableColorEncodeJson))("color")(_807.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_807.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_807.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("barBorderColor")(_807.barBorderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("barBorderWidth")(_807.barBorderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.cornerJsonEncode(Data_Argonaut_Encode.encodeJsonJNumber)))("barBorderRadius")(_807.barBorderRadius), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(itemLabelEncodeJson))("label")(_807.label), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(itemLabelLineEncodeJson))("labelLine")(_807.labelLine), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Line.lineStyleEncodeJson))("lineStyle")(_807.lineStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Area.areaStyleEncodeJson))("areaStyle")(_807.areaStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Chord.chordStyleJson))("chordStyle")(_807.chordStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Node.nodeStyleEncodeJson))("nodeStyle")(_807.nodeStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Link.linkStyleEncodeJson))("linkStyle")(_807.linkStyle) ]));
     });
-    var itemStyleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_776) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(istyleEncodeJson))("normal")(_776.normal), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(istyleEncodeJson))("emphasis")(_776.emphasis) ]));
+    var itemStyleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_808) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(istyleEncodeJson))("normal")(_808.normal), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(istyleEncodeJson))("emphasis")(_808.emphasis) ]));
     });
     var istyleDefault = {
         color: Data_Maybe.Nothing.value, 
@@ -2607,8 +3064,8 @@ PS.ECharts_Title = (function () {
             throw new Error("Failed pattern match");
         })());
     });
-    var titleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_777) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("text")(_777.text), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("link")(_777.link), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(linkTargetEncodeJson))("target")(_777.target), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("subtext")(_777.subtext), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("sublink")(_777.sublink), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(linkTargetEncodeJson))("subtarget")(_777.subtarget), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.xPosEncodeJson))("x")(_777.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.yPosEncodeJson))("y")(_777.y), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.textAlignEncodeJson))("textAlign")(_777.textAlign), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_777.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_777.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_777.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.cornerJsonEncode(Data_Argonaut_Encode.encodeJsonJNumber)))("padding")(_777.padding), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("itemGap")(_777.itemGap), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_777.textStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("subtextStyle")(_777.subtextStyle) ]));
+    var titleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_809) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("text")(_809.text), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("link")(_809.link), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(linkTargetEncodeJson))("target")(_809.target), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("subtext")(_809.subtext), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("sublink")(_809.sublink), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(linkTargetEncodeJson))("subtarget")(_809.subtarget), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.xPosEncodeJson))("x")(_809.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.yPosEncodeJson))("y")(_809.y), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.textAlignEncodeJson))("textAlign")(_809.textAlign), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_809.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_809.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_809.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.cornerJsonEncode(Data_Argonaut_Encode.encodeJsonJNumber)))("padding")(_809.padding), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("itemGap")(_809.itemGap), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_809.textStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("subtextStyle")(_809.subtextStyle) ]));
     });
     return {
         Title: Title, 
@@ -2722,21 +3179,21 @@ PS.ECharts_Toolbox = (function () {
         type: Data_Maybe.Nothing.value, 
         lang: Data_Maybe.Nothing.value
     };
-    var saveAsImageEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_780) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_780.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("title")(_780.title), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Image.encodeImg))("type")(_780.type), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJString)))("lang")(_780.lang) ]));
+    var saveAsImageEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_812) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_812.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("title")(_812.title), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Image.encodeImg))("type")(_812.type), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJString)))("lang")(_812.lang) ]));
     });
-    var restoreFeatureEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_781) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_781.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("title")(_781.title) ]));
+    var restoreFeatureEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_813) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_813.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("title")(_813.title) ]));
     });
     var restoreFeatureDefault = {
         show: Data_Maybe.Nothing.value, 
         title: Data_Maybe.Nothing.value
     };
-    var mftitleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_785) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("mark")(_785.mark), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJString)("markUndo")(_785.markUndo), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJString)("markClear")(_785.markUndo) ]));
+    var mftitleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_817) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("mark")(_817.mark), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJString)("markUndo")(_817.markUndo), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJString)("markClear")(_817.markUndo) ]));
     });
-    var markFeatureEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_786) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_786.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(mftitleEncodeJson))("title")(_786.title), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Line.lineStyleEncodeJson))("lineStyle")(_786.lineStyle) ]));
+    var markFeatureEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_818) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_818.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(mftitleEncodeJson))("title")(_818.title), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Line.lineStyleEncodeJson))("lineStyle")(_818.lineStyle) ]));
     });
     var markFeatureDefault = {
         show: Data_Maybe.Nothing.value, 
@@ -2778,8 +3235,8 @@ PS.ECharts_Toolbox = (function () {
             throw new Error("Failed pattern match");
         })());
     });
-    var magicTypeFeatureEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_787) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_787.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeStrMap(Data_Argonaut_Encode.encodeJsonJString)))("title")(_787.title), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJson))("option")(_787.option), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(magicTypeEncodeJson)))("type")(_787.type) ]));
+    var magicTypeFeatureEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_819) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_819.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeStrMap(Data_Argonaut_Encode.encodeJsonJString)))("title")(_819.title), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJson))("option")(_819.option), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(magicTypeEncodeJson)))("type")(_819.type) ]));
     });
     var featureDefault = {
         mark: Data_Maybe.Nothing.value, 
@@ -2789,20 +3246,20 @@ PS.ECharts_Toolbox = (function () {
         restore: Data_Maybe.Nothing.value, 
         saveAsImage: Data_Maybe.Nothing.value
     };
-    var datazoomTitleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_782) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJString)("dataZoom")(_782.dataZoom), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJString)("dataZoomReset")(_782.dataZoomReset) ]));
+    var datazoomTitleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_814) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJString)("dataZoom")(_814.dataZoom), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJString)("dataZoomReset")(_814.dataZoomReset) ]));
     });
-    var dataviewFeatureEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_783) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_783.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(datazoomTitleEncodeJson))("title")(_783.title) ]));
+    var dataviewFeatureEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_815) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_815.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(datazoomTitleEncodeJson))("title")(_815.title) ]));
     });
-    var dataViewFeatureEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_784) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_784.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("title")(_784.title), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("readOnly")(_784.readOnly), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJString)))("lang")(_784.lang) ]));
+    var dataViewFeatureEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_816) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_816.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("title")(_816.title), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("readOnly")(_816.readOnly), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJString)))("lang")(_816.lang) ]));
     });
-    var featureEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_779) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(markFeatureEncodeJson))("mark")(_779.mark), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(dataviewFeatureEncodeJson))("dataZoom")(_779.dataZoom), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(dataViewFeatureEncodeJson))("dataView")(_779.dataView), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(magicTypeFeatureEncodeJson))("magicType")(_779.magicType), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(restoreFeatureEncodeJson))("restore")(_779.restore), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(saveAsImageEncodeJson))("saveAsImage")(_779.saveAsImage) ]));
+    var featureEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_811) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(markFeatureEncodeJson))("mark")(_811.mark), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(dataviewFeatureEncodeJson))("dataZoom")(_811.dataZoom), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(dataViewFeatureEncodeJson))("dataView")(_811.dataView), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(magicTypeFeatureEncodeJson))("magicType")(_811.magicType), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(restoreFeatureEncodeJson))("restore")(_811.restore), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(saveAsImageEncodeJson))("saveAsImage")(_811.saveAsImage) ]));
     });
-    var toolboxEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_778) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_778.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.orientEncodeJson))("orient")(_778.orient), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.xPosEncodeJson))("x")(_778.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.yPosEncodeJson))("y")(_778.y), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_778.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_778.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_778.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.cornerJsonEncode(Data_Argonaut_Encode.encodeJsonJNumber)))("padding")(_778.padding), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("itemGap")(_778.itemGap), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("itemSize")(_778.itemSize), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJString)))("color")(_778.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("disableColor")(_778.disableColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("effectiveColor")(_778.effectiveColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("showTitle")(_778.showTitle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_778.textStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(featureEncodeJson))("feature")(_778.feature) ]));
+    var toolboxEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_810) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_810.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.orientEncodeJson))("orient")(_810.orient), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.xPosEncodeJson))("x")(_810.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Coords.yPosEncodeJson))("y")(_810.y), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_810.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_810.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_810.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.cornerJsonEncode(Data_Argonaut_Encode.encodeJsonJNumber)))("padding")(_810.padding), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("itemGap")(_810.itemGap), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("itemSize")(_810.itemSize), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJString)))("color")(_810.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("disableColor")(_810.disableColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("effectiveColor")(_810.effectiveColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("showTitle")(_810.showTitle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_810.textStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(featureEncodeJson))("feature")(_810.feature) ]));
     });
     var dataViewFeatureDefault = {
         show: Data_Maybe.Nothing.value, 
@@ -2850,7 +3307,6 @@ var PS = PS || {};
 PS.ECharts_Tooltip = (function () {
     "use strict";
     var Data_Argonaut_Encode = PS.Data_Argonaut_Encode;
-    var ECharts_Utils = PS.ECharts_Utils;
     var Data_Function = PS.Data_Function;
     var Data_Argonaut_Core = PS.Data_Argonaut_Core;
     var Data_StrMap = PS.Data_StrMap;
@@ -2896,21 +3352,26 @@ PS.ECharts_Tooltip = (function () {
             return value;
         }
     };
-    var tooltipTriggerEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_788) {
-        if (_788 instanceof TriggerItem) {
+    
+function func2json(fn) {
+  return fn;
+}
+;
+    var tooltipTriggerEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_820) {
+        if (_820 instanceof TriggerItem) {
             return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJString)("item");
         };
-        if (_788 instanceof TriggerAxis) {
+        if (_820 instanceof TriggerAxis) {
             return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJString)("axis");
         };
         throw new Error("Failed pattern match");
     });
-    var tooltipPositionEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_789) {
-        if (_789 instanceof Fixed) {
-            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJNumber))(_789.value0);
+    var tooltipPositionEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_821) {
+        if (_821 instanceof Fixed) {
+            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJNumber))(_821.value0);
         };
-        if (_789 instanceof FuncPos) {
-            return ECharts_Utils.func2json(Data_Function.mkFn1(_789.value0));
+        if (_821 instanceof FuncPos) {
+            return func2json(Data_Function.mkFn1(_821.value0));
         };
         throw new Error("Failed pattern match");
     });
@@ -2950,11 +3411,11 @@ PS.ECharts_Tooltip = (function () {
             throw new Error("Failed pattern match");
         })());
     });
-    var tooltipAxisPointerEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_790) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(tooltipAxisPointerTypeEncodeJson))("type")(_790.type), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Line.lineStyleEncodeJson))("lineStyle")(_790.lineStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Line.lineStyleEncodeJson))("crossStyle")(_790.crossStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Area.areaStyleEncodeJson))("shadowStyle")(_790.shadowStyle) ]));
+    var tooltipAxisPointerEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_822) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(tooltipAxisPointerTypeEncodeJson))("type")(_822.type), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Line.lineStyleEncodeJson))("lineStyle")(_822.lineStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Line.lineStyleEncodeJson))("crossStyle")(_822.crossStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Area.areaStyleEncodeJson))("shadowStyle")(_822.shadowStyle) ]));
     });
-    var tooltipEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_791) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_791.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("showContent")(_791.showContent), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(tooltipTriggerEncodeJson))("trigger")(_791.trigger), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(tooltipPositionEncodeJson))("position")(_791.position), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Formatter.formatterEncodeJson))("formatter")(_791.formatter), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Formatter.formatterEncodeJson))("islandFormatter")(_791.islandFormatter), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("showDelay")(_791.showDelay), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("hideDelay")(_791.hideDelay), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("transitionDuration")(_791.transitionDuration), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_791.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_791.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderRadius")(_791.borderRadius), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_791.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.cornerJsonEncode(Data_Argonaut_Encode.encodeJsonJNumber)))("padding")(_791.padding), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(tooltipAxisPointerEncodeJson))("axisPointer")(_791.axisPointer), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_791.textStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("enterable")(_791.enterable) ]));
+    var tooltipEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_823) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_823.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("showContent")(_823.showContent), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(tooltipTriggerEncodeJson))("trigger")(_823.trigger), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(tooltipPositionEncodeJson))("position")(_823.position), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Formatter.formatterEncodeJson))("formatter")(_823.formatter), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Formatter.formatterEncodeJson))("islandFormatter")(_823.islandFormatter), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("showDelay")(_823.showDelay), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("hideDelay")(_823.hideDelay), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("transitionDuration")(_823.transitionDuration), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_823.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_823.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderRadius")(_823.borderRadius), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_823.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.cornerJsonEncode(Data_Argonaut_Encode.encodeJsonJNumber)))("padding")(_823.padding), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(tooltipAxisPointerEncodeJson))("axisPointer")(_823.axisPointer), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_823.textStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("enterable")(_823.enterable) ]));
     });
     var tooltipAxisPointerDefault = {
         type: Data_Maybe.Nothing.value, 
@@ -3010,15 +3471,15 @@ PS.ECharts_Item_Data = (function () {
     Label.create = function (value0) {
         return new Label(value0);
     };
-    var itemDataEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_792) {
-        if (_792 instanceof Value) {
-            return Data_Argonaut_Encode.encodeJson(ECharts_Item_Value.itemValueEncodeJson)(_792.value0);
+    var itemDataEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_824) {
+        if (_824 instanceof Value) {
+            return Data_Argonaut_Encode.encodeJson(ECharts_Item_Value.itemValueEncodeJson)(_824.value0);
         };
-        if (_792 instanceof Dat) {
-            return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](ECharts_Item_Value.itemValueEncodeJson)("value")(_792.value0.value), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("name")(_792.value0.name), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Tooltip.tooltipEncodeJson))("tooltip")(_792.value0.tooltip), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Item.itemStyleEncodeJson))("itemStyle")(_792.value0.itemStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("selected")(_792.value0.selected) ]));
+        if (_824 instanceof Dat) {
+            return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](ECharts_Item_Value.itemValueEncodeJson)("value")(_824.value0.value), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("name")(_824.value0.name), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Tooltip.tooltipEncodeJson))("tooltip")(_824.value0.tooltip), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Item.itemStyleEncodeJson))("itemStyle")(_824.value0.itemStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("selected")(_824.value0.selected) ]));
         };
-        if (_792 instanceof Label) {
-            return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJString)("name")(_792.value0) ]));
+        if (_824 instanceof Label) {
+            return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJString)("name")(_824.value0) ]));
         };
         throw new Error("Failed pattern match");
     });
@@ -3059,8 +3520,8 @@ function addDataImpl(data, chart) {
   };
 }
 ;
-    var additionalDataEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_793) {
-        return Data_Argonaut_Core.fromArray([ Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJNumber)(_793.idx), Data_Argonaut_Encode.encodeJson(ECharts_Item_Data.itemDataEncodeJson)(_793.datum), Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJBoolean)(_793.isHead), Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJBoolean)(_793.dataGrow), Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))(_793.additionalData) ]);
+    var additionalDataEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_825) {
+        return Data_Argonaut_Core.fromArray([ Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJNumber)(_825.idx), Data_Argonaut_Encode.encodeJson(ECharts_Item_Data.itemDataEncodeJson)(_825.datum), Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJBoolean)(_825.isHead), Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJBoolean)(_825.dataGrow), Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))(_825.additionalData) ]);
     });
     var addData = function (d) {
         return function (chart) {
@@ -3078,15 +3539,19 @@ PS.ECharts_Symbol = (function () {
     "use strict";
     var Data_Argonaut_Core = PS.Data_Argonaut_Core;
     var Data_Argonaut_Encode = PS.Data_Argonaut_Encode;
-    var ECharts_Utils = PS.ECharts_Utils;
     var Data_Function = PS.Data_Function;
     var Prelude = PS.Prelude;
+    
+function func2json(fn) {
+  return fn;
+}
+;
     var symbolSizeEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (ss) {
         if (ss instanceof Size) {
             return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJNumber)(ss.value0);
         };
         if (ss instanceof Func) {
-            return ECharts_Utils.func2json(Data_Function.mkFn1(ss.value0));
+            return func2json(Data_Function.mkFn1(ss.value0));
         };
         throw new Error("Failed pattern match");
     });
@@ -3124,7 +3589,7 @@ PS.ECharts_Symbol = (function () {
             return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonTuple(Data_Argonaut_Encode.encodeJsonJNumber)(Data_Argonaut_Encode.encodeJsonJNumber))(ss.value0);
         };
         if (ss instanceof DblFunc) {
-            return ECharts_Utils.func2json(Data_Function.mkFn1(ss.value0));
+            return func2json(Data_Function.mkFn1(ss.value0));
         };
         throw new Error("Failed pattern match");
     });
@@ -3254,8 +3719,8 @@ PS.ECharts_Axis = (function () {
             throw new Error("Failed pattern match");
         })());
     });
-    var polarNameEncode = new Data_Argonaut_Encode.EncodeJson(function (_804) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_804.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Formatter.formatterEncodeJson))("formatter")(_804.formatter), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_804.textStyle) ]));
+    var polarNameEncode = new Data_Argonaut_Encode.EncodeJson(function (_836) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_836.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Formatter.formatterEncodeJson))("formatter")(_836.formatter), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_836.textStyle) ]));
     });
     var polarDefault = {
         center: Data_Maybe.Nothing.value, 
@@ -3292,19 +3757,19 @@ PS.ECharts_Axis = (function () {
             throw new Error("Failed pattern match");
         })());
     });
-    var axisTickEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_796) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_796.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("splitNumber")(_796.splitNumber), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("length")(_796.length), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Line.lineStyleEncodeJson))("lineStyle")(_796.lineStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.intervalEncodeJson))("interval")(_796.interval), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("onGap")(_796.onGap), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("inside")(_796.inside) ]));
+    var axisTickEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_828) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_828.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("splitNumber")(_828.splitNumber), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("length")(_828.length), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Line.lineStyleEncodeJson))("lineStyle")(_828.lineStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.intervalEncodeJson))("interval")(_828.interval), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("onGap")(_828.onGap), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("inside")(_828.inside) ]));
     });
-    var axisSplitLineEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_799) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_799.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("onGap")(_799.onGap), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Line.lineStyleEncodeJson))("lineStyle")(_799.lineStyle) ]));
+    var axisSplitLineEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_831) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_831.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("onGap")(_831.onGap), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Line.lineStyleEncodeJson))("lineStyle")(_831.lineStyle) ]));
     });
     var axisSplitLineDefault = {
         show: Data_Maybe.Nothing.value, 
         onGap: Data_Maybe.Nothing.value, 
         lineStyle: Data_Maybe.Nothing.value
     };
-    var axisSplitAreaEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_800) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_800.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("onGap")(_800.onGap), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Area.areaStyleEncodeJson))("areaStyle")(_800.areaStyle) ]));
+    var axisSplitAreaEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_832) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_832.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("onGap")(_832.onGap), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Area.areaStyleEncodeJson))("areaStyle")(_832.areaStyle) ]));
     });
     var axisSplitAreaDefault = {
         show: Data_Maybe.Nothing.value, 
@@ -3339,20 +3804,20 @@ PS.ECharts_Axis = (function () {
             throw new Error("Failed pattern match");
         })());
     });
-    var axisLineStyleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_794) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonTuple(Data_Argonaut_Encode.encodeJsonJNumber)(Data_Argonaut_Encode.encodeJsonJString))))("color")(_794.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("width")(_794.width) ]));
+    var axisLineStyleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_826) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonTuple(Data_Argonaut_Encode.encodeJsonJNumber)(Data_Argonaut_Encode.encodeJsonJString))))("color")(_826.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("width")(_826.width) ]));
     });
-    var axisLineEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_795) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_795.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisLineStyleEncodeJson))("lineStyle")(_795.lineStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("onZero")(_795.onZero) ]));
+    var axisLineEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_827) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_827.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisLineStyleEncodeJson))("lineStyle")(_827.lineStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("onZero")(_827.onZero) ]));
     });
-    var axisLabelEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_797) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_797.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Formatter.formatterEncodeJson))("formatter")(_797.formatter), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_797.textStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.intervalEncodeJson))("interval")(_797.interval), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("rotate")(_797.rotate), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("margin")(_797.margin), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("clickable")(_797.clickable) ]));
+    var axisLabelEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_829) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_829.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Formatter.formatterEncodeJson))("formatter")(_829.formatter), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_829.textStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.intervalEncodeJson))("interval")(_829.interval), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("rotate")(_829.rotate), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("margin")(_829.margin), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("clickable")(_829.clickable) ]));
     });
-    var indicatorEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_805) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("text")(_805.text), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("min")(_805.min), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("max")(_805.max), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisLabelEncodeJson))("axisLabel")(_805.axisLabel) ]));
+    var indicatorEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_837) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("text")(_837.text), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("min")(_837.min), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("max")(_837.max), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisLabelEncodeJson))("axisLabel")(_837.axisLabel) ]));
     });
-    var polarEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_806) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonTuple(ECharts_Common.percentOrPixelEncodeJson)(ECharts_Common.percentOrPixelEncodeJson)))("center")(_806.center), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("radius")(_806.radius), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("startAngle")(_806.startAngle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("splitNumber")(_806.splitNumber), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(polarNameEncode))("name")(_806.name), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonTuple(Data_Argonaut_Encode.encodeJsonJNumber)(Data_Argonaut_Encode.encodeJsonJNumber)))("boundaryGap")(_806.boundaryGap), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("scale")(_806.scale), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisLineEncodeJson))("axisLine")(_806.axisLine), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisLabelEncodeJson))("axisLabel")(_806.axisLabel), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisSplitLineEncodeJson))("splitLine")(_806.splitLine), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisSplitAreaEncodeJson))("splitArea")(_806.splitArea), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(polarTypeEncode))("type")(_806.type), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(indicatorEncodeJson)))("indicator")(_806.indicator) ]));
+    var polarEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_838) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonTuple(ECharts_Common.percentOrPixelEncodeJson)(ECharts_Common.percentOrPixelEncodeJson)))("center")(_838.center), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("radius")(_838.radius), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("startAngle")(_838.startAngle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("splitNumber")(_838.splitNumber), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(polarNameEncode))("name")(_838.name), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonTuple(Data_Argonaut_Encode.encodeJsonJNumber)(Data_Argonaut_Encode.encodeJsonJNumber)))("boundaryGap")(_838.boundaryGap), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("scale")(_838.scale), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisLineEncodeJson))("axisLine")(_838.axisLine), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisLabelEncodeJson))("axisLabel")(_838.axisLabel), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisSplitLineEncodeJson))("splitLine")(_838.splitLine), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisSplitAreaEncodeJson))("splitArea")(_838.splitArea), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(polarTypeEncode))("type")(_838.type), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(indicatorEncodeJson)))("indicator")(_838.indicator) ]));
     });
     var axisDefault = {
         type: Data_Maybe.Nothing.value, 
@@ -3373,33 +3838,33 @@ PS.ECharts_Axis = (function () {
         splitArea: Data_Maybe.Nothing.value, 
         data: Data_Maybe.Nothing.value
     };
-    var axisDataEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_801) {
-        if (_801 instanceof CommonAxisData) {
-            return Data_Argonaut_Core.fromString(_801.value0);
+    var axisDataEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_833) {
+        if (_833 instanceof CommonAxisData) {
+            return Data_Argonaut_Core.fromString(_833.value0);
         };
-        if (_801 instanceof CustomAxisData) {
-            return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJString)("value")(_801.value0.value), Data_Argonaut_Combinators[":="](ECharts_Style_Text.textStyleEncodeJson)("textStyle")(_801.value0.textStyle) ]));
-        };
-        throw new Error("Failed pattern match");
-    });
-    var axisBoundaryGapEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_802) {
-        if (_802 instanceof CatBoundaryGap) {
-            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJBoolean)(_802.value0);
-        };
-        if (_802 instanceof ValueBoundaryGap) {
-            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJNumber))([ _802.value0, _802.value1 ]);
+        if (_833 instanceof CustomAxisData) {
+            return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJString)("value")(_833.value0.value), Data_Argonaut_Combinators[":="](ECharts_Style_Text.textStyleEncodeJson)("textStyle")(_833.value0.textStyle) ]));
         };
         throw new Error("Failed pattern match");
     });
-    var axisEncJson = new Data_Argonaut_Encode.EncodeJson(function (_803) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisTypeEncodeJson))("type")(_803.type), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_803.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisPositionEncodeJson))("position")(_803.position), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("name")(_803.name), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisNameLocationEncodeJson))("nameLocation")(_803.nameLocation), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("nameTextStyle")(_803.nameTextStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisBoundaryGapEncodeJson))("boundaryGap")(_803.boundaryGap), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("min")(_803.min), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("max")(_803.max), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("scale")(_803.scale), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("splitNumber")(_803.splitNumber), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisLineEncodeJson))("axisLine")(_803.axisLine), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisTickEncodeJson))("axisTick")(_803.axisTick), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisLabelEncodeJson))("axisLabel")(_803.axisLabel), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisSplitLineEncodeJson))("splitLine")(_803.splitLine), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisSplitAreaEncodeJson))("splitArea")(_803.splitArea), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(axisDataEncodeJson)))("data")(_803.data) ]));
-    });
-    var axisesEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_798) {
-        if (_798 instanceof OneAxis) {
-            return Data_Argonaut_Encode.encodeJson(axisEncJson)(_798.value0);
+    var axisBoundaryGapEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_834) {
+        if (_834 instanceof CatBoundaryGap) {
+            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJBoolean)(_834.value0);
         };
-        if (_798 instanceof TwoAxises) {
-            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonArray(axisEncJson))([ _798.value0, _798.value1 ]);
+        if (_834 instanceof ValueBoundaryGap) {
+            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJNumber))([ _834.value0, _834.value1 ]);
+        };
+        throw new Error("Failed pattern match");
+    });
+    var axisEncJson = new Data_Argonaut_Encode.EncodeJson(function (_835) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisTypeEncodeJson))("type")(_835.type), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_835.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisPositionEncodeJson))("position")(_835.position), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("name")(_835.name), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisNameLocationEncodeJson))("nameLocation")(_835.nameLocation), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("nameTextStyle")(_835.nameTextStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisBoundaryGapEncodeJson))("boundaryGap")(_835.boundaryGap), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("min")(_835.min), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("max")(_835.max), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("scale")(_835.scale), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("splitNumber")(_835.splitNumber), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisLineEncodeJson))("axisLine")(_835.axisLine), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisTickEncodeJson))("axisTick")(_835.axisTick), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisLabelEncodeJson))("axisLabel")(_835.axisLabel), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisSplitLineEncodeJson))("splitLine")(_835.splitLine), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(axisSplitAreaEncodeJson))("splitArea")(_835.splitArea), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(axisDataEncodeJson)))("data")(_835.data) ]));
+    });
+    var axisesEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_830) {
+        if (_830 instanceof OneAxis) {
+            return Data_Argonaut_Encode.encodeJson(axisEncJson)(_830.value0);
+        };
+        if (_830 instanceof TwoAxises) {
+            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonArray(axisEncJson))([ _830.value0, _830.value1 ]);
         };
         throw new Error("Failed pattern match");
     });
@@ -3459,8 +3924,8 @@ PS.ECharts_Mark_Line = (function () {
     var ECharts_Mark_Effect = PS.ECharts_Mark_Effect;
     var ECharts_Mark_Data = PS.ECharts_Mark_Data;
     var ECharts_Style_Item = PS.ECharts_Style_Item;
-    var mlEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_807) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonTuple(ECharts_Symbol.encodeJsonSymbol)(ECharts_Symbol.encodeJsonSymbol)))("symbol")(_807.symbol), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.dblSymbolSizeEncodeJson))("symbolSize")(_807.symbolSize), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonTuple(Data_Argonaut_Encode.encodeJsonJNumber)(Data_Argonaut_Encode.encodeJsonJNumber)))("symbolRotate")(_807.symbolRotate), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Mark_Effect.mpEffectEncodeJson))("effect")(_807.effect), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeStrMap(Data_Argonaut_Encode.encodeJsonTuple(Data_Argonaut_Encode.encodeJsonJNumber)(Data_Argonaut_Encode.encodeJsonJNumber)))))("geoCoord")(_807.geoCoord), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonTuple(ECharts_Mark_Data.mpDataEncodeJson)(ECharts_Mark_Data.mpDataEncodeJson))))("data")(_807.data), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Item.itemStyleEncodeJson))("itemStyle")(_807.itemStyle) ]));
+    var mlEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_839) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonTuple(ECharts_Symbol.encodeJsonSymbol)(ECharts_Symbol.encodeJsonSymbol)))("symbol")(_839.symbol), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.dblSymbolSizeEncodeJson))("symbolSize")(_839.symbolSize), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonTuple(Data_Argonaut_Encode.encodeJsonJNumber)(Data_Argonaut_Encode.encodeJsonJNumber)))("symbolRotate")(_839.symbolRotate), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Mark_Effect.mpEffectEncodeJson))("effect")(_839.effect), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeStrMap(Data_Argonaut_Encode.encodeJsonTuple(Data_Argonaut_Encode.encodeJsonJNumber)(Data_Argonaut_Encode.encodeJsonJNumber)))))("geoCoord")(_839.geoCoord), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonTuple(ECharts_Mark_Data.mpDataEncodeJson)(ECharts_Mark_Data.mpDataEncodeJson))))("data")(_839.data), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Item.itemStyleEncodeJson))("itemStyle")(_839.itemStyle) ]));
     });
     return {
         mlEncodeJson: mlEncodeJson
@@ -3484,8 +3949,8 @@ PS.ECharts_Mark_Point = (function () {
             return value;
         }
     };
-    var markPointEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_808) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.encodeJsonSymbol))("symbol")(_808.symbol), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.symbolSizeEncodeJson))("symbolSize")(_808.symbolSize), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("large")(_808.large), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Mark_Effect.mpEffectEncodeJson))("effect")(_808.effect), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(ECharts_Mark_Data.mpDataEncodeJson)))("data")(_808.data), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeStrMap(Data_Argonaut_Encode.encodeJsonTuple(Data_Argonaut_Encode.encodeJsonJNumber)(Data_Argonaut_Encode.encodeJsonJNumber))))("geoCoord")(_808.geoCoord) ]));
+    var markPointEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_840) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.encodeJsonSymbol))("symbol")(_840.symbol), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.symbolSizeEncodeJson))("symbolSize")(_840.symbolSize), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("large")(_840.large), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Mark_Effect.mpEffectEncodeJson))("effect")(_840.effect), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(ECharts_Mark_Data.mpDataEncodeJson)))("data")(_840.data), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeStrMap(Data_Argonaut_Encode.encodeJsonTuple(Data_Argonaut_Encode.encodeJsonJNumber)(Data_Argonaut_Encode.encodeJsonJNumber))))("geoCoord")(_840.geoCoord) ]));
     });
     var markPointDefault = {
         symbol: Data_Maybe.Nothing.value, 
@@ -3513,14 +3978,14 @@ PS.ECharts_Series_Gauge = (function () {
     var ECharts_Common = PS.ECharts_Common;
     var ECharts_Formatter = PS.ECharts_Formatter;
     var ECharts_Style_Text = PS.ECharts_Style_Text;
-    var splitLineEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_810) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_810.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("length")(_810.length), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Line.lineStyleEncodeJson))("lineStyle")(_810.lineStyle) ]));
+    var splitLineEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_842) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_842.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("length")(_842.length), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Line.lineStyleEncodeJson))("lineStyle")(_842.lineStyle) ]));
     });
-    var pointerEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_809) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("length")(_809.length), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("width")(_809.width), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("color")(_809.color) ]));
+    var pointerEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_841) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("length")(_841.length), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("width")(_841.width), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("color")(_841.color) ]));
     });
-    var gaugeDetailEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_811) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_811.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_811.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_811.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_811.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("width")(_811.width), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("height")(_811.height), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonTuple(ECharts_Common.percentOrPixelEncodeJson)(ECharts_Common.percentOrPixelEncodeJson)))("offsetCenter")(_811.offsetCenter), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Formatter.formatterEncodeJson))("formatter")(_811.formatter), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_811.textStyle) ]));
+    var gaugeDetailEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_843) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_843.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_843.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_843.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_843.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("width")(_843.width), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("height")(_843.height), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonTuple(ECharts_Common.percentOrPixelEncodeJson)(ECharts_Common.percentOrPixelEncodeJson)))("offsetCenter")(_843.offsetCenter), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Formatter.formatterEncodeJson))("formatter")(_843.formatter), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Text.textStyleEncodeJson))("textStyle")(_843.textStyle) ]));
     });
     return {
         gaugeDetailEncodeJson: gaugeDetailEncodeJson, 
@@ -3538,8 +4003,8 @@ PS.ECharts_Style_Checkpoint = (function () {
     var Data_Argonaut_Combinators = PS.Data_Argonaut_Combinators;
     var ECharts_Symbol = PS.ECharts_Symbol;
     var ECharts_Axis = PS.ECharts_Axis;
-    var checkpointStyleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_812) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.encodeJsonSymbol))("symbol")(_812.symbol), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.symbolSizeEncodeJson))("symbolSize")(_812.symbolSize), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("color")(_812.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_812.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Axis.axisLabelEncodeJson))("label")(_812.label) ]));
+    var checkpointStyleEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_844) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.encodeJsonSymbol))("symbol")(_844.symbol), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.symbolSizeEncodeJson))("symbolSize")(_844.symbolSize), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("color")(_844.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_844.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Axis.axisLabelEncodeJson))("label")(_844.label) ]));
     });
     return {
         checkpointStyleEncodeJson: checkpointStyleEncodeJson
@@ -3584,8 +4049,8 @@ PS.ECharts_Timeline = (function () {
             throw new Error("Failed pattern match");
         })());
     });
-    var timelineEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_813) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_813.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(timelineTypeEncodeJson))("type")(_813.type), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("notMerge")(_813.notMerge), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("realtime")(_813.realtime), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("x")(_813.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("x2")(_813.x2), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("y")(_813.y), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("y2")(_813.y2), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("width")(_813.width), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("height")(_813.height), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_813.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_813.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_813.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.cornerJsonEncode(Data_Argonaut_Encode.encodeJsonJNumber)))("padding")(_813.padding), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(timelineControlPositionEncodeJson))("controlPosition")(_813.controlPosition), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("autoPlay")(_813.autoPlay), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("loop")(_813.loop), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("playInterval")(_813.playInterval), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Line.lineStyleEncodeJson))("lineStyle")(_813.lineStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Axis.axisLabelEncodeJson))("label")(_813.label), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Checkpoint.checkpointStyleEncodeJson))("checkpointStyle")(_813.checkpointStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Item.itemStyleEncodeJson))("controlStyle")(_813.controlStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.encodeJsonSymbol))("symbol")(_813.symbol), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.symbolSizeEncodeJson))("symbolSize")(_813.symbolSize), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("currentIndex")(_813.currentIndex), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJString)))("data")(_813.data) ]));
+    var timelineEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_845) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("show")(_845.show), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(timelineTypeEncodeJson))("type")(_845.type), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("notMerge")(_845.notMerge), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("realtime")(_845.realtime), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("x")(_845.x), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("x2")(_845.x2), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("y")(_845.y), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("y2")(_845.y2), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("width")(_845.width), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.percentOrPixelEncodeJson))("height")(_845.height), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_845.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("borderWidth")(_845.borderWidth), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("borderColor")(_845.borderColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.cornerJsonEncode(Data_Argonaut_Encode.encodeJsonJNumber)))("padding")(_845.padding), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(timelineControlPositionEncodeJson))("controlPosition")(_845.controlPosition), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("autoPlay")(_845.autoPlay), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("loop")(_845.loop), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("playInterval")(_845.playInterval), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Line.lineStyleEncodeJson))("lineStyle")(_845.lineStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Axis.axisLabelEncodeJson))("label")(_845.label), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Checkpoint.checkpointStyleEncodeJson))("checkpointStyle")(_845.checkpointStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Item.itemStyleEncodeJson))("controlStyle")(_845.controlStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.encodeJsonSymbol))("symbol")(_845.symbol), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.symbolSizeEncodeJson))("symbolSize")(_845.symbolSize), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("currentIndex")(_845.currentIndex), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJString)))("data")(_845.data) ]));
     });
     return {
         timelineControlPositionEncodeJson: timelineControlPositionEncodeJson, 
@@ -3631,8 +4096,8 @@ PS.ECharts_Series_Force = (function () {
             return value;
         }
     };
-    var nodeEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_815) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("name")(_815.name), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("label")(_815.label), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJNumber)("value")(_815.value), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("ignore")(_815.ignore), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.encodeJsonSymbol))("symbol")(_815.symbol), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.symbolSizeEncodeJson))("symbolSize")(_815.symbolSize), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Item.itemStyleEncodeJson))("itemStyle")(_815.itemStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonTuple(Data_Argonaut_Encode.encodeJsonJNumber)(Data_Argonaut_Encode.encodeJsonJNumber)))("initial")(_815.initial), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("fixX")(_815.fixX), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("fixY")(_815.fixY), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("draggable")(_815.draggable), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("category")(_815.category) ]));
+    var nodeEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_847) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("name")(_847.name), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("label")(_847.label), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJNumber)("value")(_847.value), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("ignore")(_847.ignore), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.encodeJsonSymbol))("symbol")(_847.symbol), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.symbolSizeEncodeJson))("symbolSize")(_847.symbolSize), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Item.itemStyleEncodeJson))("itemStyle")(_847.itemStyle), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonTuple(Data_Argonaut_Encode.encodeJsonJNumber)(Data_Argonaut_Encode.encodeJsonJNumber)))("initial")(_847.initial), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("fixX")(_847.fixX), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("fixY")(_847.fixY), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("draggable")(_847.draggable), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("category")(_847.category) ]));
     });
     var nodeDefault = function (value) {
         return {
@@ -3650,20 +4115,20 @@ PS.ECharts_Series_Force = (function () {
             category: Data_Maybe.Nothing.value
         };
     };
-    var linkEndEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_816) {
-        if (_816 instanceof Name) {
-            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJString)(_816.value0);
+    var linkEndEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_848) {
+        if (_848 instanceof Name) {
+            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJString)(_848.value0);
         };
-        if (_816 instanceof Index) {
-            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJNumber)(_816.value0);
+        if (_848 instanceof Index) {
+            return Data_Argonaut_Encode.encodeJson(Data_Argonaut_Encode.encodeJsonJNumber)(_848.value0);
         };
         throw new Error("Failed pattern match");
     });
-    var linkEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_817) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](linkEndEncodeJson)("source")(_817.source), Data_Argonaut_Combinators[":="](linkEndEncodeJson)("target")(_817.target), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJNumber)("weight")(_817.weight), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Item.itemStyleEncodeJson))("itemStyle")(_817.itemStyle) ]));
+    var linkEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_849) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](linkEndEncodeJson)("source")(_849.source), Data_Argonaut_Combinators[":="](linkEndEncodeJson)("target")(_849.target), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJNumber)("weight")(_849.weight), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Item.itemStyleEncodeJson))("itemStyle")(_849.itemStyle) ]));
     });
-    var forceCategoryEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_814) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("name")(_814.name), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.encodeJsonSymbol))("symbol")(_814.symbol), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.symbolSizeEncodeJson))("symbolSize")(_814.symbolSize), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Item.itemStyleEncodeJson))("itemStyle")(_814.itemStyle) ]));
+    var forceCategoryEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_846) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("name")(_846.name), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.encodeJsonSymbol))("symbol")(_846.symbol), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.symbolSizeEncodeJson))("symbolSize")(_846.symbolSize), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Style_Item.itemStyleEncodeJson))("itemStyle")(_846.itemStyle) ]));
     });
     var forceCategoryDefault = {
         name: Data_Maybe.Nothing.value, 
@@ -3704,14 +4169,14 @@ PS.ECharts_Series_EventRiver = (function () {
             return value;
         }
     };
-    var evoDetailEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_818) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("link")(_818.link), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("text")(_818.text), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("img")(_818.img) ]));
+    var evoDetailEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_850) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("link")(_850.link), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("text")(_850.text), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("img")(_850.img) ]));
     });
-    var evoEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_819) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJString)("time")(Prelude.show(Data_Date.showDate)(_819.time)), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJNumber)("value")(_819.value), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(evoDetailEncodeJson))("detail")(_819.detail) ]));
+    var evoEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_851) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJString)("time")(Prelude.show(Data_Date.showDate)(_851.time)), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonJNumber)("value")(_851.value), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(evoDetailEncodeJson))("detail")(_851.detail) ]));
     });
-    var oneEventEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_820) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("name")(_820.name), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("weight")(_820.weight), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(evoEncodeJson)))("evolution")(_820.evolution) ]));
+    var oneEventEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_852) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("name")(_852.name), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("weight")(_852.weight), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(evoEncodeJson)))("evolution")(_852.evolution) ]));
     });
     return {
         Evolution: Evolution, 
@@ -3737,7 +4202,6 @@ PS.ECharts_Series = (function () {
     var ECharts_Style_Item = PS.ECharts_Style_Item;
     var ECharts_Mark_Point = PS.ECharts_Mark_Point;
     var ECharts_Mark_Line = PS.ECharts_Mark_Line;
-    var ECharts_Type = PS.ECharts_Type;
     var ECharts_Item_Data = PS.ECharts_Item_Data;
     var ECharts_Symbol = PS.ECharts_Symbol;
     var ECharts_Common = PS.ECharts_Common;
@@ -3747,6 +4211,54 @@ PS.ECharts_Series = (function () {
     var ECharts_Title = PS.ECharts_Title;
     var ECharts_Series_Force = PS.ECharts_Series_Force;
     var ECharts_Series_EventRiver = PS.ECharts_Series_EventRiver;
+    function Line() {
+
+    };
+    Line.value = new Line();
+    function Bar() {
+
+    };
+    Bar.value = new Bar();
+    function Scatter() {
+
+    };
+    Scatter.value = new Scatter();
+    function Candlestick() {
+
+    };
+    Candlestick.value = new Candlestick();
+    function Pie() {
+
+    };
+    Pie.value = new Pie();
+    function Radar() {
+
+    };
+    Radar.value = new Radar();
+    function Chord() {
+
+    };
+    Chord.value = new Chord();
+    function Force() {
+
+    };
+    Force.value = new Force();
+    function Map() {
+
+    };
+    Map.value = new Map();
+    function Gauge() {
+
+    };
+    Gauge.value = new Gauge();
+    function Funnel() {
+
+    };
+    Funnel.value = new Funnel();
+    function EventRiver() {
+
+    };
+    EventRiver.value = new EventRiver();
     function LineSeries(value0) {
         this.value0 = value0;
     };
@@ -3870,48 +4382,6 @@ PS.ECharts_Series = (function () {
             };
             throw new Error("Failed pattern match");
         })());
-    };
-    var typeForSeries = function (series) {
-        var getType = function (s) {
-            if (s instanceof LineSeries) {
-                return ECharts_Type.Line.value;
-            };
-            if (s instanceof BarSeries) {
-                return ECharts_Type.Bar.value;
-            };
-            if (s instanceof CandlestickSeries) {
-                return ECharts_Type.Candlestick.value;
-            };
-            if (s instanceof ScatterSeries) {
-                return ECharts_Type.Scatter.value;
-            };
-            if (s instanceof PieSeries) {
-                return ECharts_Type.Pie.value;
-            };
-            if (s instanceof RadarSeries) {
-                return ECharts_Type.Radar.value;
-            };
-            if (s instanceof ChordSeries) {
-                return ECharts_Type.Chord.value;
-            };
-            if (s instanceof ForceSeries) {
-                return ECharts_Type.Force.value;
-            };
-            if (s instanceof MapSeries) {
-                return ECharts_Type.Map.value;
-            };
-            if (s instanceof GaugeSeries) {
-                return ECharts_Type.Gauge.value;
-            };
-            if (s instanceof FunnelSeries) {
-                return ECharts_Type.Funnel.value;
-            };
-            if (s instanceof EventRiverSeries) {
-                return ECharts_Type.EventRiver.value;
-            };
-            throw new Error("Failed pattern match");
-        };
-        return [ Data_Argonaut_Combinators[":="](ECharts_Type.chartTypeEncodeJson)("type")(getType(series)) ];
     };
     var scatterSeriesDefault = {
         data: Data_Maybe.Nothing.value, 
@@ -4083,6 +4553,89 @@ PS.ECharts_Series = (function () {
     var chordRecEncode = function (r) {
         return [ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(ECharts_Series_Force.nodeEncodeJson)))("nodes")(r.nodes), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(ECharts_Series_Force.forceCategoryEncodeJson)))("categories")(r.categories), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(ECharts_Series_Force.linkEncodeJson)))("links")(r.links), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJNumber))))("matrix")(r.matrix), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(ECharts_Item_Data.itemDataEncodeJson)))("data")(r.data), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("ribbonType")(r.ribbonType), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.encodeJsonSymbol))("symbol")(r.symbol), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Symbol.symbolSizeEncodeJson))("symbolSize")(r.symbolSize), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("minRadius")(r.minRadius), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("maxRadius")(r.maxRadius), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("showScale")(r.showScale), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("showScaleText")(r.showScaleText), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJNumber))("padding")(r.padding), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.sortEncodeJson))("sort")(r.sort), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Common.sortEncodeJson))("sortSub")(r.sortSub), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("clockWise")(r.clockWise) ];
     };
+    var chartTypeEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (a) {
+        return Data_Argonaut_Core.fromString((function () {
+            if (a instanceof Line) {
+                return "line";
+            };
+            if (a instanceof Bar) {
+                return "bar";
+            };
+            if (a instanceof Scatter) {
+                return "scatter";
+            };
+            if (a instanceof Candlestick) {
+                return "k";
+            };
+            if (a instanceof Pie) {
+                return "pie";
+            };
+            if (a instanceof Radar) {
+                return "radar";
+            };
+            if (a instanceof Chord) {
+                return "chord";
+            };
+            if (a instanceof Force) {
+                return "force";
+            };
+            if (a instanceof Map) {
+                return "map";
+            };
+            if (a instanceof Gauge) {
+                return "gauge";
+            };
+            if (a instanceof Funnel) {
+                return "funnel";
+            };
+            if (a instanceof EventRiver) {
+                return "eventRiver";
+            };
+            throw new Error("Failed pattern match");
+        })());
+    });
+    var typeForSeries = function (series) {
+        var getType = function (s) {
+            if (s instanceof LineSeries) {
+                return Line.value;
+            };
+            if (s instanceof BarSeries) {
+                return Bar.value;
+            };
+            if (s instanceof CandlestickSeries) {
+                return Candlestick.value;
+            };
+            if (s instanceof ScatterSeries) {
+                return Scatter.value;
+            };
+            if (s instanceof PieSeries) {
+                return Pie.value;
+            };
+            if (s instanceof RadarSeries) {
+                return Radar.value;
+            };
+            if (s instanceof ChordSeries) {
+                return Chord.value;
+            };
+            if (s instanceof ForceSeries) {
+                return Force.value;
+            };
+            if (s instanceof MapSeries) {
+                return Map.value;
+            };
+            if (s instanceof GaugeSeries) {
+                return Gauge.value;
+            };
+            if (s instanceof FunnelSeries) {
+                return Funnel.value;
+            };
+            if (s instanceof EventRiverSeries) {
+                return EventRiver.value;
+            };
+            throw new Error("Failed pattern match");
+        };
+        return [ Data_Argonaut_Combinators[":="](chartTypeEncodeJson)("type")(getType(series)) ];
+    };
     var candlestickSeriesDefault = {
         data: Data_Maybe.Nothing.value, 
         xAxisIndex: Data_Maybe.Nothing.value, 
@@ -4111,40 +4664,40 @@ PS.ECharts_Series = (function () {
     };
     var specialForSeries = function (series) {
         if (series instanceof LineSeries) {
-            return lineRecEncode(series.value0.special);
+            return lineRecEncode(series.value0.lineSeries);
         };
         if (series instanceof BarSeries) {
-            return barRecEncode(series.value0.special);
+            return barRecEncode(series.value0.barSeries);
         };
         if (series instanceof ScatterSeries) {
-            return scatterRecEncode(series.value0.special);
+            return scatterRecEncode(series.value0.scatterSeries);
         };
         if (series instanceof CandlestickSeries) {
-            return candlestickRecEncode(series.value0.special);
+            return candlestickRecEncode(series.value0.candlestickSeries);
         };
         if (series instanceof PieSeries) {
-            return pieRecEncode(series.value0.special);
+            return pieRecEncode(series.value0.pieSeries);
         };
         if (series instanceof RadarSeries) {
-            return radarRecEncode(series.value0.special);
+            return radarRecEncode(series.value0.radarSeries);
         };
         if (series instanceof ChordSeries) {
-            return chordRecEncode(series.value0.special);
+            return chordRecEncode(series.value0.chordSeries);
         };
         if (series instanceof ForceSeries) {
-            return forceRecEncode(series.value0.special);
+            return forceRecEncode(series.value0.forceSeries);
         };
         if (series instanceof MapSeries) {
-            return mapRecEncode(series.value0.special);
+            return mapRecEncode(series.value0.mapSeries);
         };
         if (series instanceof GaugeSeries) {
-            return gaugeRecEncode(series.value0.special);
+            return gaugeRecEncode(series.value0.gaugeSeries);
         };
         if (series instanceof FunnelSeries) {
-            return funnelRecEncode(series.value0.special);
+            return funnelRecEncode(series.value0.funnelSeries);
         };
         if (series instanceof EventRiverSeries) {
-            return eventRiverRecEncode(series.value0.special);
+            return eventRiverRecEncode(series.value0.eventRiverSeries);
         };
         throw new Error("Failed pattern match");
     };
@@ -4216,8 +4769,8 @@ window.options.push(option);
   };
 }
 ;
-    var optionsEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_821) {
-        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_821.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJString)))("color")(_821.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("renderAsImage")(_821.renderAsImage), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("calculable")(_821.calculable), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("animation")(_821.animation), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Series.encodeSeries))))("series")(_821.series), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Timeline.timelineEncodeJson))("timeline")(_821.timeline), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Tooltip.tooltipEncodeJson))("tooltip")(_821.tooltip), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Toolbox.toolboxEncodeJson))("toolbox")(_821.toolbox), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Title.titleEncodeJson))("title")(_821.title), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Legend.legendEncodeJson))("legend")(_821.legend), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_DataRange.dataRangeEncodeJson))("dataRange")(_821.dataRange), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_DataZoom.dataZoomEncodeJson))("dataZoom")(_821.dataZoom), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_RoamController.roamControllerEncodeJson))("roamController")(_821.roamController), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Grid.gridEncodeJson))("grid")(_821.grid), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Axis.axisesEncodeJson))("xAxis")(_821.xAxis), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Axis.axisesEncodeJson))("yAxis")(_821.yAxis), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(ECharts_Axis.polarEncodeJson)))("polar")(_821.polar) ]));
+    var optionsEncodeJson = new Data_Argonaut_Encode.EncodeJson(function (_853) {
+        return Data_Argonaut_Core.fromObject(Data_StrMap.fromList([ Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJString))("backgroundColor")(_853.backgroundColor), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonJString)))("color")(_853.color), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("renderAsImage")(_853.renderAsImage), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("calculable")(_853.calculable), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonJBoolean))("animation")(_853.animation), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Series.encodeSeries))))("series")(_853.series), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Timeline.timelineEncodeJson))("timeline")(_853.timeline), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Tooltip.tooltipEncodeJson))("tooltip")(_853.tooltip), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Toolbox.toolboxEncodeJson))("toolbox")(_853.toolbox), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Title.titleEncodeJson))("title")(_853.title), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Legend.legendEncodeJson))("legend")(_853.legend), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_DataRange.dataRangeEncodeJson))("dataRange")(_853.dataRange), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_DataZoom.dataZoomEncodeJson))("dataZoom")(_853.dataZoom), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_RoamController.roamControllerEncodeJson))("roamController")(_853.roamController), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Grid.gridEncodeJson))("grid")(_853.grid), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Axis.axisesEncodeJson))("xAxis")(_853.xAxis), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(ECharts_Axis.axisesEncodeJson))("yAxis")(_853.yAxis), Data_Argonaut_Combinators[":="](Data_Argonaut_Encode.encodeJsonMaybe(Data_Argonaut_Encode.encodeJsonArray(ECharts_Axis.polarEncodeJson)))("polar")(_853.polar) ]));
     });
     var setOption = function (opts) {
         return function (notMerge) {
@@ -4256,45 +4809,17 @@ window.options.push(option);
 var PS = PS || {};
 PS.Utils = (function () {
     "use strict";
-    var Data_Array = PS.Data_Array;
     var Prelude = PS.Prelude;
-    var Control_Monad_Eff_Random = PS.Control_Monad_Eff_Random;
+    var Data_DOM_Simple_Window = PS.Data_DOM_Simple_Window;
+    var Data_DOM_Simple_Element = PS.Data_DOM_Simple_Element;
+    var Data_DOM_Simple_Events = PS.Data_DOM_Simple_Events;
     var Math = PS.Math;
+    var Data_Array = PS.Data_Array;
+    var Control_Monad_Eff_Random = PS.Control_Monad_Eff_Random;
     var Control_Monad_Eff = PS.Control_Monad_Eff;
     var Data_Maybe = PS.Data_Maybe;
     var Data_Tuple = PS.Data_Tuple;
-    
-function log(a) {
-  return function() {
-    console.log(a);
-  };
-}
-
-;
-    
-function getElementById(id) {
-  return function() {
-    console.log(id);
-    return document.getElementById(id);
-  };
-}
-;
-    
-function onLoad(action) {
-  return function() {
-    window.onload = action;
-  };
-}
-;
-    
-function precise(pre) {
-  return function(num) {
-    var Math = window['Math'];
-    var result = Math.round(Math.pow(10, pre) * num) / Math.pow(10, pre);
-    return result;
-  };
-}
-;
+    var Data_DOM_Simple_Document = PS.Data_DOM_Simple_Document;
     
 function randomLst(count) {
   return function() {
@@ -4310,22 +4835,38 @@ function randomLst(count) {
     var randomInList = function (lst) {
         var l = Data_Array.length(lst);
         return function __do() {
-            var _35 = Control_Monad_Eff_Random.random();
+            var _41 = Control_Monad_Eff_Random.random();
             return (function () {
-                var i = Math.floor(_35 * l);
+                var i = Math.floor(_41 * l);
                 return Prelude["return"](Control_Monad_Eff.monadEff)((function () {
-                    var _1113 = Data_Array["!!"](lst)(i);
-                    if (_1113 instanceof Data_Maybe.Just) {
-                        return new Data_Tuple.Tuple(_1113.value0, i);
+                    var _1146 = Data_Array["!!"](lst)(i);
+                    if (_1146 instanceof Data_Maybe.Just) {
+                        return new Data_Tuple.Tuple(_1146.value0, i);
                     };
                     throw new Error("Failed pattern match");
                 })());
             })()();
         };
     };
+    var precise = function (pre) {
+        return function (num) {
+            return Math.round(Math.pow(10)(pre) * num) / Math.pow(10)(pre);
+        };
+    };
+    var onLoad = function (action) {
+        var actionWrap = function (_875) {
+            return action;
+        };
+        return Data_DOM_Simple_Events.addUIEventListener(Data_DOM_Simple_Events.uiEventTargetHTMLWindow)(Data_DOM_Simple_Events.uiEventDOMEvent)(Data_DOM_Simple_Events.LoadEvent.value)(actionWrap)(Data_DOM_Simple_Window.globalWindow);
+    };
+    var getElementById = function (id) {
+        return function __do() {
+            var _40 = Data_DOM_Simple_Window.document(Data_DOM_Simple_Window.htmlWindow)(Data_DOM_Simple_Window.globalWindow)();
+            return Data_DOM_Simple_Element.getElementById(Data_DOM_Simple_Document.htmlDocumentElement)(id)(_40)();
+        };
+    };
     return {
         getElementById: getElementById, 
-        log: log, 
         onLoad: onLoad, 
         precise: precise, 
         randomInList: randomInList, 
@@ -4352,6 +4893,7 @@ PS.DynamicLineBar = (function () {
     var ECharts_Axis = PS.ECharts_Axis;
     var ECharts_Series = PS.ECharts_Series;
     var Signal_Time = PS.Signal_Time;
+    var Debug_Trace = PS.Debug_Trace;
     var ECharts_Chart = PS.ECharts_Chart;
     var Signal = PS.Signal;
     var Data_Foldable = PS.Data_Foldable;
@@ -4370,220 +4912,220 @@ function toLocaleTimeString(date) {
         return function (d1) {
             return function (d2) {
                 return ECharts_Options.Option.create((function () {
-                    var _1153 = {};
-                    for (var _1154 in ECharts_Options.optionDefault) {
-                        if (ECharts_Options.optionDefault.hasOwnProperty(_1154)) {
-                            _1153[_1154] = ECharts_Options.optionDefault[_1154];
+                    var _1188 = {};
+                    for (var _1189 in ECharts_Options.optionDefault) {
+                        if (ECharts_Options.optionDefault.hasOwnProperty(_1189)) {
+                            _1188[_1189] = ECharts_Options.optionDefault[_1189];
                         };
                     };
-                    _1153.tooltip = Data_Maybe.Just.create((function () {
-                        var _1115 = {};
-                        for (var _1116 in ECharts_Tooltip.tooltipDefault) {
-                            if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1116)) {
-                                _1115[_1116] = ECharts_Tooltip.tooltipDefault[_1116];
+                    _1188.tooltip = Data_Maybe.Just.create((function () {
+                        var _1150 = {};
+                        for (var _1151 in ECharts_Tooltip.tooltipDefault) {
+                            if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1151)) {
+                                _1150[_1151] = ECharts_Tooltip.tooltipDefault[_1151];
                             };
                         };
-                        _1115.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerAxis.value);
-                        return _1115;
+                        _1150.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerAxis.value);
+                        return _1150;
                     })());
-                    _1153.legend = Data_Maybe.Just.create((function () {
-                        var _1117 = {};
-                        for (var _1118 in ECharts_Legend.legendDefault) {
-                            if (ECharts_Legend.legendDefault.hasOwnProperty(_1118)) {
-                                _1117[_1118] = ECharts_Legend.legendDefault[_1118];
+                    _1188.legend = Data_Maybe.Just.create((function () {
+                        var _1152 = {};
+                        for (var _1153 in ECharts_Legend.legendDefault) {
+                            if (ECharts_Legend.legendDefault.hasOwnProperty(_1153)) {
+                                _1152[_1153] = ECharts_Legend.legendDefault[_1153];
                             };
                         };
-                        _1117.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Legend.legendItemDefault)([ "new price", "pre-order queue" ]));
-                        return _1117;
+                        _1152.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Legend.legendItemDefault)([ "new price", "pre-order queue" ]));
+                        return _1152;
                     })());
-                    _1153.title = Data_Maybe.Just.create((function () {
-                        var _1119 = {};
-                        for (var _1120 in ECharts_Title.titleDefault) {
-                            if (ECharts_Title.titleDefault.hasOwnProperty(_1120)) {
-                                _1119[_1120] = ECharts_Title.titleDefault[_1120];
+                    _1188.title = Data_Maybe.Just.create((function () {
+                        var _1154 = {};
+                        for (var _1155 in ECharts_Title.titleDefault) {
+                            if (ECharts_Title.titleDefault.hasOwnProperty(_1155)) {
+                                _1154[_1155] = ECharts_Title.titleDefault[_1155];
                             };
                         };
-                        _1119.text = new Data_Maybe.Just("dynamic data");
-                        _1119.subtext = new Data_Maybe.Just("fictitious");
-                        return _1119;
+                        _1154.text = new Data_Maybe.Just("dynamic data");
+                        _1154.subtext = new Data_Maybe.Just("fictitious");
+                        return _1154;
                     })());
-                    _1153.toolbox = Data_Maybe.Just.create(ECharts_Toolbox.Toolbox.create((function () {
-                        var _1133 = {};
-                        for (var _1134 in ECharts_Toolbox.toolboxDefault) {
-                            if (ECharts_Toolbox.toolboxDefault.hasOwnProperty(_1134)) {
-                                _1133[_1134] = ECharts_Toolbox.toolboxDefault[_1134];
+                    _1188.toolbox = Data_Maybe.Just.create(ECharts_Toolbox.Toolbox.create((function () {
+                        var _1168 = {};
+                        for (var _1169 in ECharts_Toolbox.toolboxDefault) {
+                            if (ECharts_Toolbox.toolboxDefault.hasOwnProperty(_1169)) {
+                                _1168[_1169] = ECharts_Toolbox.toolboxDefault[_1169];
                             };
                         };
-                        _1133.show = new Data_Maybe.Just(true);
-                        _1133.feature = Data_Maybe.Just.create(ECharts_Toolbox.Feature.create((function () {
-                            var _1131 = {};
-                            for (var _1132 in ECharts_Toolbox.featureDefault) {
-                                if (ECharts_Toolbox.featureDefault.hasOwnProperty(_1132)) {
-                                    _1131[_1132] = ECharts_Toolbox.featureDefault[_1132];
+                        _1168.show = new Data_Maybe.Just(true);
+                        _1168.feature = Data_Maybe.Just.create(ECharts_Toolbox.Feature.create((function () {
+                            var _1166 = {};
+                            for (var _1167 in ECharts_Toolbox.featureDefault) {
+                                if (ECharts_Toolbox.featureDefault.hasOwnProperty(_1167)) {
+                                    _1166[_1167] = ECharts_Toolbox.featureDefault[_1167];
                                 };
                             };
-                            _1131.mark = Data_Maybe.Just.create(ECharts_Toolbox.MarkFeature.create((function () {
-                                var _1121 = {};
-                                for (var _1122 in ECharts_Toolbox.markFeatureDefault) {
-                                    if (ECharts_Toolbox.markFeatureDefault.hasOwnProperty(_1122)) {
-                                        _1121[_1122] = ECharts_Toolbox.markFeatureDefault[_1122];
+                            _1166.mark = Data_Maybe.Just.create(ECharts_Toolbox.MarkFeature.create((function () {
+                                var _1156 = {};
+                                for (var _1157 in ECharts_Toolbox.markFeatureDefault) {
+                                    if (ECharts_Toolbox.markFeatureDefault.hasOwnProperty(_1157)) {
+                                        _1156[_1157] = ECharts_Toolbox.markFeatureDefault[_1157];
                                     };
                                 };
-                                _1121.show = new Data_Maybe.Just(true);
-                                return _1121;
+                                _1156.show = new Data_Maybe.Just(true);
+                                return _1156;
                             })()));
-                            _1131.dataView = Data_Maybe.Just.create(ECharts_Toolbox.DataViewFeature.create((function () {
-                                var _1123 = {};
-                                for (var _1124 in ECharts_Toolbox.dataViewFeatureDefault) {
-                                    if (ECharts_Toolbox.dataViewFeatureDefault.hasOwnProperty(_1124)) {
-                                        _1123[_1124] = ECharts_Toolbox.dataViewFeatureDefault[_1124];
+                            _1166.dataView = Data_Maybe.Just.create(ECharts_Toolbox.DataViewFeature.create((function () {
+                                var _1158 = {};
+                                for (var _1159 in ECharts_Toolbox.dataViewFeatureDefault) {
+                                    if (ECharts_Toolbox.dataViewFeatureDefault.hasOwnProperty(_1159)) {
+                                        _1158[_1159] = ECharts_Toolbox.dataViewFeatureDefault[_1159];
                                     };
                                 };
-                                _1123.show = new Data_Maybe.Just(true);
-                                _1123.readOnly = new Data_Maybe.Just(false);
-                                return _1123;
+                                _1158.show = new Data_Maybe.Just(true);
+                                _1158.readOnly = new Data_Maybe.Just(false);
+                                return _1158;
                             })()));
-                            _1131.magicType = Data_Maybe.Just.create(ECharts_Toolbox.MagicTypeFeature.create((function () {
-                                var _1125 = {};
-                                for (var _1126 in ECharts_Toolbox.magicTypeFeatureDefault) {
-                                    if (ECharts_Toolbox.magicTypeFeatureDefault.hasOwnProperty(_1126)) {
-                                        _1125[_1126] = ECharts_Toolbox.magicTypeFeatureDefault[_1126];
+                            _1166.magicType = Data_Maybe.Just.create(ECharts_Toolbox.MagicTypeFeature.create((function () {
+                                var _1160 = {};
+                                for (var _1161 in ECharts_Toolbox.magicTypeFeatureDefault) {
+                                    if (ECharts_Toolbox.magicTypeFeatureDefault.hasOwnProperty(_1161)) {
+                                        _1160[_1161] = ECharts_Toolbox.magicTypeFeatureDefault[_1161];
                                     };
                                 };
-                                _1125.show = new Data_Maybe.Just(true);
-                                _1125.type = new Data_Maybe.Just([ ECharts_Toolbox.MagicLine.value, ECharts_Toolbox.MagicBar.value ]);
-                                return _1125;
+                                _1160.show = new Data_Maybe.Just(true);
+                                _1160.type = new Data_Maybe.Just([ ECharts_Toolbox.MagicLine.value, ECharts_Toolbox.MagicBar.value ]);
+                                return _1160;
                             })()));
-                            _1131.restore = Data_Maybe.Just.create(ECharts_Toolbox.RestoreFeature.create((function () {
-                                var _1127 = {};
-                                for (var _1128 in ECharts_Toolbox.restoreFeatureDefault) {
-                                    if (ECharts_Toolbox.restoreFeatureDefault.hasOwnProperty(_1128)) {
-                                        _1127[_1128] = ECharts_Toolbox.restoreFeatureDefault[_1128];
+                            _1166.restore = Data_Maybe.Just.create(ECharts_Toolbox.RestoreFeature.create((function () {
+                                var _1162 = {};
+                                for (var _1163 in ECharts_Toolbox.restoreFeatureDefault) {
+                                    if (ECharts_Toolbox.restoreFeatureDefault.hasOwnProperty(_1163)) {
+                                        _1162[_1163] = ECharts_Toolbox.restoreFeatureDefault[_1163];
                                     };
                                 };
-                                _1127.show = new Data_Maybe.Just(true);
-                                return _1127;
+                                _1162.show = new Data_Maybe.Just(true);
+                                return _1162;
                             })()));
-                            _1131.saveAsImage = Data_Maybe.Just.create(ECharts_Toolbox.SaveAsImageFeature.create((function () {
-                                var _1129 = {};
-                                for (var _1130 in ECharts_Toolbox.saveAsImageFeatureDefault) {
-                                    if (ECharts_Toolbox.saveAsImageFeatureDefault.hasOwnProperty(_1130)) {
-                                        _1129[_1130] = ECharts_Toolbox.saveAsImageFeatureDefault[_1130];
+                            _1166.saveAsImage = Data_Maybe.Just.create(ECharts_Toolbox.SaveAsImageFeature.create((function () {
+                                var _1164 = {};
+                                for (var _1165 in ECharts_Toolbox.saveAsImageFeatureDefault) {
+                                    if (ECharts_Toolbox.saveAsImageFeatureDefault.hasOwnProperty(_1165)) {
+                                        _1164[_1165] = ECharts_Toolbox.saveAsImageFeatureDefault[_1165];
                                     };
                                 };
-                                _1129.show = new Data_Maybe.Just(true);
-                                return _1129;
+                                _1164.show = new Data_Maybe.Just(true);
+                                return _1164;
                             })()));
-                            return _1131;
+                            return _1166;
                         })()));
-                        return _1133;
+                        return _1168;
                     })()));
-                    _1153.dataZoom = Data_Maybe.Just.create(ECharts_DataZoom.DataZoom.create((function () {
-                        var _1135 = {};
-                        for (var _1136 in ECharts_DataZoom.dataZoomDefault) {
-                            if (ECharts_DataZoom.dataZoomDefault.hasOwnProperty(_1136)) {
-                                _1135[_1136] = ECharts_DataZoom.dataZoomDefault[_1136];
+                    _1188.dataZoom = Data_Maybe.Just.create(ECharts_DataZoom.DataZoom.create((function () {
+                        var _1170 = {};
+                        for (var _1171 in ECharts_DataZoom.dataZoomDefault) {
+                            if (ECharts_DataZoom.dataZoomDefault.hasOwnProperty(_1171)) {
+                                _1170[_1171] = ECharts_DataZoom.dataZoomDefault[_1171];
                             };
                         };
-                        _1135.show = new Data_Maybe.Just(true);
-                        _1135.start = new Data_Maybe.Just(0);
-                        _1135.end = new Data_Maybe.Just(100);
-                        return _1135;
+                        _1170.show = new Data_Maybe.Just(true);
+                        _1170.start = new Data_Maybe.Just(0);
+                        _1170.end = new Data_Maybe.Just(100);
+                        return _1170;
                     })()));
-                    _1153.xAxis = Data_Maybe.Just.create(new ECharts_Axis.TwoAxises((function () {
-                        var _1137 = {};
-                        for (var _1138 in ECharts_Axis.axisDefault) {
-                            if (ECharts_Axis.axisDefault.hasOwnProperty(_1138)) {
-                                _1137[_1138] = ECharts_Axis.axisDefault[_1138];
+                    _1188.xAxis = Data_Maybe.Just.create(new ECharts_Axis.TwoAxises((function () {
+                        var _1172 = {};
+                        for (var _1173 in ECharts_Axis.axisDefault) {
+                            if (ECharts_Axis.axisDefault.hasOwnProperty(_1173)) {
+                                _1172[_1173] = ECharts_Axis.axisDefault[_1173];
                             };
                         };
-                        _1137.type = Data_Maybe.Just.create(ECharts_Axis.CategoryAxis.value);
-                        _1137.boundaryGap = Data_Maybe.Just.create(new ECharts_Axis.CatBoundaryGap(true));
-                        _1137.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Axis.CommonAxisData.create)(xAxis));
-                        return _1137;
+                        _1172.type = Data_Maybe.Just.create(ECharts_Axis.CategoryAxis.value);
+                        _1172.boundaryGap = Data_Maybe.Just.create(new ECharts_Axis.CatBoundaryGap(true));
+                        _1172.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Axis.CommonAxisData.create)(xAxis));
+                        return _1172;
                     })(), (function () {
-                        var _1139 = {};
-                        for (var _1140 in ECharts_Axis.axisDefault) {
-                            if (ECharts_Axis.axisDefault.hasOwnProperty(_1140)) {
-                                _1139[_1140] = ECharts_Axis.axisDefault[_1140];
+                        var _1174 = {};
+                        for (var _1175 in ECharts_Axis.axisDefault) {
+                            if (ECharts_Axis.axisDefault.hasOwnProperty(_1175)) {
+                                _1174[_1175] = ECharts_Axis.axisDefault[_1175];
                             };
                         };
-                        _1139.type = Data_Maybe.Just.create(ECharts_Axis.CategoryAxis.value);
-                        _1139.boundaryGap = Data_Maybe.Just.create(new ECharts_Axis.CatBoundaryGap(true));
-                        _1139.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Prelude["<$>"](Prelude.functorArr)(ECharts_Axis.CommonAxisData.create)(Prelude.show(Prelude.showNumber)))(Data_Array[".."](1)(10)));
-                        return _1139;
+                        _1174.type = Data_Maybe.Just.create(ECharts_Axis.CategoryAxis.value);
+                        _1174.boundaryGap = Data_Maybe.Just.create(new ECharts_Axis.CatBoundaryGap(true));
+                        _1174.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Prelude["<$>"](Prelude.functorArr)(ECharts_Axis.CommonAxisData.create)(Prelude.show(Prelude.showNumber)))(Data_Array[".."](1)(10)));
+                        return _1174;
                     })()));
-                    _1153.yAxis = Data_Maybe.Just.create(new ECharts_Axis.TwoAxises((function () {
-                        var _1141 = {};
-                        for (var _1142 in ECharts_Axis.axisDefault) {
-                            if (ECharts_Axis.axisDefault.hasOwnProperty(_1142)) {
-                                _1141[_1142] = ECharts_Axis.axisDefault[_1142];
+                    _1188.yAxis = Data_Maybe.Just.create(new ECharts_Axis.TwoAxises((function () {
+                        var _1176 = {};
+                        for (var _1177 in ECharts_Axis.axisDefault) {
+                            if (ECharts_Axis.axisDefault.hasOwnProperty(_1177)) {
+                                _1176[_1177] = ECharts_Axis.axisDefault[_1177];
                             };
                         };
-                        _1141.type = new Data_Maybe.Just(ECharts_Axis.ValueAxis.value);
-                        _1141.scale = new Data_Maybe.Just(true);
-                        _1141.boundaryGap = Data_Maybe.Just.create(new ECharts_Axis.ValueBoundaryGap(0.2, 0.2));
-                        _1141.name = new Data_Maybe.Just("price");
-                        return _1141;
+                        _1176.type = new Data_Maybe.Just(ECharts_Axis.ValueAxis.value);
+                        _1176.scale = new Data_Maybe.Just(true);
+                        _1176.boundaryGap = Data_Maybe.Just.create(new ECharts_Axis.ValueBoundaryGap(0.2, 0.2));
+                        _1176.name = new Data_Maybe.Just("price");
+                        return _1176;
                     })(), (function () {
-                        var _1143 = {};
-                        for (var _1144 in ECharts_Axis.axisDefault) {
-                            if (ECharts_Axis.axisDefault.hasOwnProperty(_1144)) {
-                                _1143[_1144] = ECharts_Axis.axisDefault[_1144];
+                        var _1178 = {};
+                        for (var _1179 in ECharts_Axis.axisDefault) {
+                            if (ECharts_Axis.axisDefault.hasOwnProperty(_1179)) {
+                                _1178[_1179] = ECharts_Axis.axisDefault[_1179];
                             };
                         };
-                        _1143.type = new Data_Maybe.Just(ECharts_Axis.ValueAxis.value);
-                        _1143.scale = new Data_Maybe.Just(true);
-                        _1143.name = new Data_Maybe.Just("pre-order quantity");
-                        _1143.boundaryGap = Data_Maybe.Just.create(new ECharts_Axis.ValueBoundaryGap(0.2, 0.2));
-                        return _1143;
+                        _1178.type = new Data_Maybe.Just(ECharts_Axis.ValueAxis.value);
+                        _1178.scale = new Data_Maybe.Just(true);
+                        _1178.name = new Data_Maybe.Just("pre-order quantity");
+                        _1178.boundaryGap = Data_Maybe.Just.create(new ECharts_Axis.ValueBoundaryGap(0.2, 0.2));
+                        return _1178;
                     })()));
-                    _1153.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.BarSeries({
+                    _1188.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.BarSeries({
                         common: (function () {
-                            var _1145 = {};
-                            for (var _1146 in ECharts_Series.universalSeriesDefault) {
-                                if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1146)) {
-                                    _1145[_1146] = ECharts_Series.universalSeriesDefault[_1146];
+                            var _1180 = {};
+                            for (var _1181 in ECharts_Series.universalSeriesDefault) {
+                                if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1181)) {
+                                    _1180[_1181] = ECharts_Series.universalSeriesDefault[_1181];
                                 };
                             };
-                            _1145.name = new Data_Maybe.Just("pre-order queue");
-                            return _1145;
+                            _1180.name = new Data_Maybe.Just("pre-order queue");
+                            return _1180;
                         })(), 
-                        special: (function () {
-                            var _1147 = {};
-                            for (var _1148 in ECharts_Series.barSeriesDefault) {
-                                if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1148)) {
-                                    _1147[_1148] = ECharts_Series.barSeriesDefault[_1148];
+                        barSeries: (function () {
+                            var _1182 = {};
+                            for (var _1183 in ECharts_Series.barSeriesDefault) {
+                                if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1183)) {
+                                    _1182[_1183] = ECharts_Series.barSeriesDefault[_1183];
                                 };
                             };
-                            _1147.xAxisIndex = new Data_Maybe.Just(1);
-                            _1147.yAxisIndex = new Data_Maybe.Just(1);
-                            _1147.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)(d1));
-                            return _1147;
+                            _1182.xAxisIndex = new Data_Maybe.Just(1);
+                            _1182.yAxisIndex = new Data_Maybe.Just(1);
+                            _1182.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)(d1));
+                            return _1182;
                         })()
                     }), new ECharts_Series.LineSeries({
                         common: (function () {
-                            var _1149 = {};
-                            for (var _1150 in ECharts_Series.universalSeriesDefault) {
-                                if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1150)) {
-                                    _1149[_1150] = ECharts_Series.universalSeriesDefault[_1150];
+                            var _1184 = {};
+                            for (var _1185 in ECharts_Series.universalSeriesDefault) {
+                                if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1185)) {
+                                    _1184[_1185] = ECharts_Series.universalSeriesDefault[_1185];
                                 };
                             };
-                            _1149.name = new Data_Maybe.Just("new price");
-                            return _1149;
+                            _1184.name = new Data_Maybe.Just("new price");
+                            return _1184;
                         })(), 
-                        special: (function () {
-                            var _1151 = {};
-                            for (var _1152 in ECharts_Series.lineSeriesDefault) {
-                                if (ECharts_Series.lineSeriesDefault.hasOwnProperty(_1152)) {
-                                    _1151[_1152] = ECharts_Series.lineSeriesDefault[_1152];
+                        lineSeries: (function () {
+                            var _1186 = {};
+                            for (var _1187 in ECharts_Series.lineSeriesDefault) {
+                                if (ECharts_Series.lineSeriesDefault.hasOwnProperty(_1187)) {
+                                    _1186[_1187] = ECharts_Series.lineSeriesDefault[_1187];
                                 };
                             };
-                            _1151.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)(d2));
-                            return _1151;
+                            _1186.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)(d2));
+                            return _1186;
                         })()
                     }) ]));
-                    return _1153;
+                    return _1188;
                 })());
             };
         };
@@ -4596,9 +5138,9 @@ function toLocaleTimeString(date) {
         unicode: false
     });
     var xTimeAxis = function __do() {
-        var _36 = Data_Date.now();
+        var _42 = Data_Date.now();
         return (function () {
-            var start = Data_Date.toEpochMilliseconds(_36);
+            var start = Data_Date.toEpochMilliseconds(_42);
             var mapfn = function (i) {
                 return Data_Maybe.fromMaybe("")(Prelude["<$>"](Data_Maybe.functorMaybe)(Prelude["<$>"](Prelude.functorArr)(Prelude["<$>"](Prelude.functorArr)(Data_String_Regex.replace(onlyDigRgx)(""))(toLocaleTimeString))(Data_Date.toJSDate))(Data_Date.fromEpochMilliseconds(start - i * 2000)));
             };
@@ -4606,18 +5148,18 @@ function toLocaleTimeString(date) {
         })()();
     };
     var dataStream = Signal["~>"](Signal.functorSignal)(Signal_Time.every(2000))(Prelude["const"](function __do() {
-        var _45 = Control_Monad_Eff_Random.random();
-        var _44 = Control_Monad_Eff_Random.random();
-        var _43 = Control_Monad_Eff_Random.random();
+        var _51 = Control_Monad_Eff_Random.random();
+        var _50 = Control_Monad_Eff_Random.random();
+        var _49 = Control_Monad_Eff_Random.random();
         return (function () {
-            var lastData = Utils.precise(1)(_45 * (Math.round(_44 * 10 % 2) === 0 ? 1 : -1));
+            var lastData = Utils.precise(1)(_51 * (Math.round(_50 * 10 % 2) === 0 ? 1 : -1));
             return function __do() {
-                var _42 = Data_Date.now();
+                var _48 = Data_Date.now();
                 return (function () {
-                    var axisData = Data_String_Regex.replace(onlyDigRgx)("")(toLocaleTimeString(Data_Date.toJSDate(_42)));
+                    var axisData = Data_String_Regex.replace(onlyDigRgx)("")(toLocaleTimeString(Data_Date.toJSDate(_48)));
                     var firstData = {
                         idx: 0, 
-                        datum: ECharts_Item_Data.Value.create(ECharts_Item_Value.Simple.create(Math.round(_43 * 1000))), 
+                        datum: ECharts_Item_Data.Value.create(ECharts_Item_Value.Simple.create(Math.round(_49 * 1000))), 
                         isHead: true, 
                         dataGrow: false, 
                         additionalData: Data_Maybe.Nothing.value
@@ -4637,8 +5179,8 @@ function toLocaleTimeString(date) {
     var data2 = (function () {
         var mapfn = function (i) {
             return function __do() {
-                var _37 = Control_Monad_Eff_Random.random();
-                return Utils.precise(1)(_37 * 10 + 5);
+                var _43 = Control_Monad_Eff_Random.random();
+                return Utils.precise(1)(_43 * 10 + 5);
             };
         };
         return Data_Traversable.sequence(Data_Traversable.traversableArray)(Control_Monad_Eff.applicativeEff)(Prelude["<$>"](Data_Array.functorArray)(mapfn)(Data_Array[".."](1)(10)));
@@ -4646,28 +5188,39 @@ function toLocaleTimeString(date) {
     var data1 = (function () {
         var mapfn = function (i) {
             return function __do() {
-                var _38 = Control_Monad_Eff_Random.random();
-                return Math.round(_38 * 1000);
+                var _44 = Control_Monad_Eff_Random.random();
+                return Math.round(_44 * 1000);
             };
         };
         return Data_Traversable.sequence(Data_Traversable.traversableArray)(Control_Monad_Eff.applicativeEff)(Prelude["<$>"](Data_Array.functorArray)(mapfn)(Data_Array[".."](1)(10)));
     })();
     var options = function __do() {
-        var _41 = xTimeAxis();
-        var _40 = data1();
-        var _39 = data2();
-        return options_(_41)(_40)(_39);
+        var _47 = xTimeAxis();
+        var _46 = data1();
+        var _45 = data2();
+        return options_(_47)(_46)(_45);
     };
     var dynamicLineBar = function (id) {
         return function __do() {
-            var _48 = options();
-            var _47 = Prelude[">>="](Control_Monad_Eff.bindEff)(Prelude[">>="](Control_Monad_Eff.bindEff)(Utils.getElementById(id))(ECharts_Chart.init(Data_Maybe.Nothing.value)))(ECharts_Options.setOption(_48)(true))();
-            return Signal.runSignal(Signal["~>"](Signal.functorSignal)(dataStream)(function (effContent) {
-                return function __do() {
-                    var _46 = effContent();
-                    return Data_Foldable.sequence_(Control_Monad_Eff.applicativeEff)(Data_Foldable.foldableArray)(Prelude["<$>"](Data_Array.functorArray)(Prelude.flip(ECharts_AddData.addData)(_47))(_46))();
+            var _55 = Utils.getElementById(id)();
+            return (function () {
+                if (_55 instanceof Data_Maybe.Nothing) {
+                    return Debug_Trace.trace("Inocrrect id in dymaniclinebar");
                 };
-            }))();
+                if (_55 instanceof Data_Maybe.Just) {
+                    return function __do() {
+                        var _54 = options();
+                        var _53 = Prelude[">>="](Control_Monad_Eff.bindEff)(ECharts_Chart.init(Data_Maybe.Nothing.value)(_55.value0))(ECharts_Options.setOption(_54)(true))();
+                        return Signal.runSignal(Signal["~>"](Signal.functorSignal)(dataStream)(function (effContent) {
+                            return function __do() {
+                                var _52 = effContent();
+                                return Data_Foldable.sequence_(Control_Monad_Eff.applicativeEff)(Data_Foldable.foldableArray)(Prelude["<$>"](Data_Array.functorArray)(Prelude.flip(ECharts_AddData.addData)(_53))(_52))();
+                            };
+                        }))();
+                    };
+                };
+                throw new Error("Failed pattern match");
+            })()();
         };
     };
     return {
@@ -4697,129 +5250,130 @@ PS.EventRiver1 = (function () {
     var Data_Date = PS.Data_Date;
     var Prelude = PS.Prelude;
     var Utils = PS.Utils;
+    var Debug_Trace = PS.Debug_Trace;
     var ECharts_Chart = PS.ECharts_Chart;
     var Data_Array = PS.Data_Array;
     var ECharts_Series_EventRiver = PS.ECharts_Series_EventRiver;
     var Control_Monad_Eff = PS.Control_Monad_Eff;
     var options = function (dateDefault) {
         return ECharts_Options.Option.create((function () {
-            var _1194 = {};
-            for (var _1195 in ECharts_Options.optionDefault) {
-                if (ECharts_Options.optionDefault.hasOwnProperty(_1195)) {
-                    _1194[_1195] = ECharts_Options.optionDefault[_1195];
+            var _1232 = {};
+            for (var _1233 in ECharts_Options.optionDefault) {
+                if (ECharts_Options.optionDefault.hasOwnProperty(_1233)) {
+                    _1232[_1233] = ECharts_Options.optionDefault[_1233];
                 };
             };
-            _1194.tooltip = Data_Maybe.Just.create((function () {
-                var _1168 = {};
-                for (var _1169 in ECharts_Tooltip.tooltipDefault) {
-                    if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1169)) {
-                        _1168[_1169] = ECharts_Tooltip.tooltipDefault[_1169];
+            _1232.tooltip = Data_Maybe.Just.create((function () {
+                var _1206 = {};
+                for (var _1207 in ECharts_Tooltip.tooltipDefault) {
+                    if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1207)) {
+                        _1206[_1207] = ECharts_Tooltip.tooltipDefault[_1207];
                     };
                 };
-                _1168.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerItem.value);
-                _1168.enterable = new Data_Maybe.Just(true);
-                return _1168;
+                _1206.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerItem.value);
+                _1206.enterable = new Data_Maybe.Just(true);
+                return _1206;
             })());
-            _1194.title = Data_Maybe.Just.create((function () {
-                var _1170 = {};
-                for (var _1171 in ECharts_Title.titleDefault) {
-                    if (ECharts_Title.titleDefault.hasOwnProperty(_1171)) {
-                        _1170[_1171] = ECharts_Title.titleDefault[_1171];
+            _1232.title = Data_Maybe.Just.create((function () {
+                var _1208 = {};
+                for (var _1209 in ECharts_Title.titleDefault) {
+                    if (ECharts_Title.titleDefault.hasOwnProperty(_1209)) {
+                        _1208[_1209] = ECharts_Title.titleDefault[_1209];
                     };
                 };
-                _1170.text = new Data_Maybe.Just("event river");
-                _1170.subtext = new Data_Maybe.Just("subtext");
-                return _1170;
+                _1208.text = new Data_Maybe.Just("event river");
+                _1208.subtext = new Data_Maybe.Just("subtext");
+                return _1208;
             })());
-            _1194.legend = Data_Maybe.Just.create((function () {
-                var _1172 = {};
-                for (var _1173 in ECharts_Legend.legendDefault) {
-                    if (ECharts_Legend.legendDefault.hasOwnProperty(_1173)) {
-                        _1172[_1173] = ECharts_Legend.legendDefault[_1173];
+            _1232.legend = Data_Maybe.Just.create((function () {
+                var _1210 = {};
+                for (var _1211 in ECharts_Legend.legendDefault) {
+                    if (ECharts_Legend.legendDefault.hasOwnProperty(_1211)) {
+                        _1210[_1211] = ECharts_Legend.legendDefault[_1211];
                     };
                 };
-                _1172.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Legend.legendItemDefault)([ "first", "second" ]));
-                return _1172;
+                _1210.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Legend.legendItemDefault)([ "first", "second" ]));
+                return _1210;
             })());
-            _1194.toolbox = Data_Maybe.Just.create((function () {
-                var _1182 = {};
-                for (var _1183 in ECharts_Toolbox.toolboxDefault) {
-                    if (ECharts_Toolbox.toolboxDefault.hasOwnProperty(_1183)) {
-                        _1182[_1183] = ECharts_Toolbox.toolboxDefault[_1183];
+            _1232.toolbox = Data_Maybe.Just.create((function () {
+                var _1220 = {};
+                for (var _1221 in ECharts_Toolbox.toolboxDefault) {
+                    if (ECharts_Toolbox.toolboxDefault.hasOwnProperty(_1221)) {
+                        _1220[_1221] = ECharts_Toolbox.toolboxDefault[_1221];
                     };
                 };
-                _1182.feature = Data_Maybe.Just.create((function () {
-                    var _1180 = {};
-                    for (var _1181 in ECharts_Toolbox.featureDefault) {
-                        if (ECharts_Toolbox.featureDefault.hasOwnProperty(_1181)) {
-                            _1180[_1181] = ECharts_Toolbox.featureDefault[_1181];
+                _1220.feature = Data_Maybe.Just.create((function () {
+                    var _1218 = {};
+                    for (var _1219 in ECharts_Toolbox.featureDefault) {
+                        if (ECharts_Toolbox.featureDefault.hasOwnProperty(_1219)) {
+                            _1218[_1219] = ECharts_Toolbox.featureDefault[_1219];
                         };
                     };
-                    _1180.mark = Data_Maybe.Just.create(ECharts_Toolbox.MarkFeature.create((function () {
-                        var _1174 = {};
-                        for (var _1175 in ECharts_Toolbox.markFeatureDefault) {
-                            if (ECharts_Toolbox.markFeatureDefault.hasOwnProperty(_1175)) {
-                                _1174[_1175] = ECharts_Toolbox.markFeatureDefault[_1175];
+                    _1218.mark = Data_Maybe.Just.create(ECharts_Toolbox.MarkFeature.create((function () {
+                        var _1212 = {};
+                        for (var _1213 in ECharts_Toolbox.markFeatureDefault) {
+                            if (ECharts_Toolbox.markFeatureDefault.hasOwnProperty(_1213)) {
+                                _1212[_1213] = ECharts_Toolbox.markFeatureDefault[_1213];
                             };
                         };
-                        _1174.show = new Data_Maybe.Just(true);
-                        return _1174;
+                        _1212.show = new Data_Maybe.Just(true);
+                        return _1212;
                     })()));
-                    _1180.restore = Data_Maybe.Just.create(ECharts_Toolbox.RestoreFeature.create((function () {
-                        var _1176 = {};
-                        for (var _1177 in ECharts_Toolbox.restoreFeatureDefault) {
-                            if (ECharts_Toolbox.restoreFeatureDefault.hasOwnProperty(_1177)) {
-                                _1176[_1177] = ECharts_Toolbox.restoreFeatureDefault[_1177];
+                    _1218.restore = Data_Maybe.Just.create(ECharts_Toolbox.RestoreFeature.create((function () {
+                        var _1214 = {};
+                        for (var _1215 in ECharts_Toolbox.restoreFeatureDefault) {
+                            if (ECharts_Toolbox.restoreFeatureDefault.hasOwnProperty(_1215)) {
+                                _1214[_1215] = ECharts_Toolbox.restoreFeatureDefault[_1215];
                             };
                         };
-                        _1176.show = new Data_Maybe.Just(true);
-                        return _1176;
+                        _1214.show = new Data_Maybe.Just(true);
+                        return _1214;
                     })()));
-                    _1180.saveAsImage = Data_Maybe.Just.create(ECharts_Toolbox.SaveAsImageFeature.create((function () {
-                        var _1178 = {};
-                        for (var _1179 in ECharts_Toolbox.saveAsImageFeatureDefault) {
-                            if (ECharts_Toolbox.saveAsImageFeatureDefault.hasOwnProperty(_1179)) {
-                                _1178[_1179] = ECharts_Toolbox.saveAsImageFeatureDefault[_1179];
+                    _1218.saveAsImage = Data_Maybe.Just.create(ECharts_Toolbox.SaveAsImageFeature.create((function () {
+                        var _1216 = {};
+                        for (var _1217 in ECharts_Toolbox.saveAsImageFeatureDefault) {
+                            if (ECharts_Toolbox.saveAsImageFeatureDefault.hasOwnProperty(_1217)) {
+                                _1216[_1217] = ECharts_Toolbox.saveAsImageFeatureDefault[_1217];
                             };
                         };
-                        _1178.show = new Data_Maybe.Just(true);
-                        return _1178;
+                        _1216.show = new Data_Maybe.Just(true);
+                        return _1216;
                     })()));
-                    return _1180;
+                    return _1218;
                 })());
-                return _1182;
+                return _1220;
             })());
-            _1194.xAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create((function () {
-                var _1184 = {};
-                for (var _1185 in ECharts_Axis.axisDefault) {
-                    if (ECharts_Axis.axisDefault.hasOwnProperty(_1185)) {
-                        _1184[_1185] = ECharts_Axis.axisDefault[_1185];
+            _1232.xAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create((function () {
+                var _1222 = {};
+                for (var _1223 in ECharts_Axis.axisDefault) {
+                    if (ECharts_Axis.axisDefault.hasOwnProperty(_1223)) {
+                        _1222[_1223] = ECharts_Axis.axisDefault[_1223];
                     };
                 };
-                _1184.type = new Data_Maybe.Just(ECharts_Axis.TimeAxis.value);
-                _1184.boundaryGap = Data_Maybe.Just.create(new ECharts_Axis.ValueBoundaryGap(5.0e-2, 0.1));
-                return _1184;
+                _1222.type = new Data_Maybe.Just(ECharts_Axis.TimeAxis.value);
+                _1222.boundaryGap = Data_Maybe.Just.create(new ECharts_Axis.ValueBoundaryGap(5.0e-2, 0.1));
+                return _1222;
             })()));
-            _1194.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.EventRiverSeries({
+            _1232.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.EventRiverSeries({
                 common: (function () {
-                    var _1186 = {};
-                    for (var _1187 in ECharts_Series.universalSeriesDefault) {
-                        if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1187)) {
-                            _1186[_1187] = ECharts_Series.universalSeriesDefault[_1187];
+                    var _1224 = {};
+                    for (var _1225 in ECharts_Series.universalSeriesDefault) {
+                        if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1225)) {
+                            _1224[_1225] = ECharts_Series.universalSeriesDefault[_1225];
                         };
                     };
-                    _1186.name = new Data_Maybe.Just("first");
-                    return _1186;
+                    _1224.name = new Data_Maybe.Just("first");
+                    return _1224;
                 })(), 
-                special: (function () {
-                    var _1188 = {};
-                    for (var _1189 in ECharts_Series.eventRiverSeriesDefault) {
-                        if (ECharts_Series.eventRiverSeriesDefault.hasOwnProperty(_1189)) {
-                            _1188[_1189] = ECharts_Series.eventRiverSeriesDefault[_1189];
+                eventRiverSeries: (function () {
+                    var _1226 = {};
+                    for (var _1227 in ECharts_Series.eventRiverSeriesDefault) {
+                        if (ECharts_Series.eventRiverSeriesDefault.hasOwnProperty(_1227)) {
+                            _1226[_1227] = ECharts_Series.eventRiverSeriesDefault[_1227];
                         };
                     };
-                    _1188.weight = new Data_Maybe.Just(123);
-                    _1188.eventList = new Data_Maybe.Just([ {
+                    _1226.weight = new Data_Maybe.Just(123);
+                    _1226.eventList = new Data_Maybe.Just([ {
                         name: new Data_Maybe.Just("river1"), 
                         weight: new Data_Maybe.Just(123), 
                         evolution: new Data_Maybe.Just([ {
@@ -4852,28 +5406,28 @@ PS.EventRiver1 = (function () {
                             detail: Data_Maybe.Nothing.value
                         } ])
                     } ]);
-                    return _1188;
+                    return _1226;
                 })()
             }), new ECharts_Series.EventRiverSeries({
                 common: (function () {
-                    var _1190 = {};
-                    for (var _1191 in ECharts_Series.universalSeriesDefault) {
-                        if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1191)) {
-                            _1190[_1191] = ECharts_Series.universalSeriesDefault[_1191];
+                    var _1228 = {};
+                    for (var _1229 in ECharts_Series.universalSeriesDefault) {
+                        if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1229)) {
+                            _1228[_1229] = ECharts_Series.universalSeriesDefault[_1229];
                         };
                     };
-                    _1190.name = new Data_Maybe.Just("second");
-                    return _1190;
+                    _1228.name = new Data_Maybe.Just("second");
+                    return _1228;
                 })(), 
-                special: (function () {
-                    var _1192 = {};
-                    for (var _1193 in ECharts_Series.eventRiverSeriesDefault) {
-                        if (ECharts_Series.eventRiverSeriesDefault.hasOwnProperty(_1193)) {
-                            _1192[_1193] = ECharts_Series.eventRiverSeriesDefault[_1193];
+                eventRiverSeries: (function () {
+                    var _1230 = {};
+                    for (var _1231 in ECharts_Series.eventRiverSeriesDefault) {
+                        if (ECharts_Series.eventRiverSeriesDefault.hasOwnProperty(_1231)) {
+                            _1230[_1231] = ECharts_Series.eventRiverSeriesDefault[_1231];
                         };
                     };
-                    _1192.weight = new Data_Maybe.Just(123);
-                    _1192.eventList = new Data_Maybe.Just([ {
+                    _1230.weight = new Data_Maybe.Just(123);
+                    _1230.eventList = new Data_Maybe.Just([ {
                         name: new Data_Maybe.Just("Apec"), 
                         weight: new Data_Maybe.Just(123), 
                         evolution: new Data_Maybe.Just([ {
@@ -4890,17 +5444,28 @@ PS.EventRiver1 = (function () {
                             detail: Data_Maybe.Nothing.value
                         } ])
                     } ]);
-                    return _1192;
+                    return _1230;
                 })()
             }) ]));
-            return _1194;
+            return _1232;
         })());
     };
     var eventRiver = function (id) {
         return function __do() {
-            var _50 = Data_Date.now();
-            var _49 = Prelude[">>="](Control_Monad_Eff.bindEff)(Prelude[">>="](Control_Monad_Eff.bindEff)(Utils.getElementById(id))(ECharts_Chart.init(Data_Maybe.Nothing.value)))(ECharts_Options.setOption(options(_50))(true))();
-            return Prelude.unit;
+            var _58 = Utils.getElementById(id)();
+            return (function () {
+                if (_58 instanceof Data_Maybe.Nothing) {
+                    return Debug_Trace.trace("incorrect id in event river");
+                };
+                if (_58 instanceof Data_Maybe.Just) {
+                    return function __do() {
+                        var _57 = Data_Date.now();
+                        var _56 = Prelude[">>="](Control_Monad_Eff.bindEff)(ECharts_Chart.init(Data_Maybe.Nothing.value)(_58.value0))(ECharts_Options.setOption(options(_57))(true))();
+                        return Prelude.unit;
+                    };
+                };
+                throw new Error("Failed pattern match");
+            })()();
         };
     };
     return {
@@ -4922,6 +5487,7 @@ PS.Events = (function () {
     var ECharts_Axis = PS.ECharts_Axis;
     var ECharts_Series = PS.ECharts_Series;
     var ECharts_Events = PS.ECharts_Events;
+    var Debug_Trace = PS.Debug_Trace;
     var ECharts_Chart = PS.ECharts_Chart;
     var Control_Monad_Eff = PS.Control_Monad_Eff;
     var ECharts_Item_Data = PS.ECharts_Item_Data;
@@ -4929,6 +5495,14 @@ PS.Events = (function () {
     var Data_Maybe = PS.Data_Maybe;
     var Data_Array = PS.Data_Array;
     var ECharts_Coords = PS.ECharts_Coords;
+    
+function log(a) {
+  return function() {
+    console.log(a);
+  };
+}
+
+;
     var subscribe = function (chart) {
         var sub = function (et) {
             return function (hndl) {
@@ -4936,230 +5510,242 @@ PS.Events = (function () {
             };
         };
         return function __do() {
-            sub(ECharts_Events.Click.value)(Utils.log)();
-            sub(ECharts_Events.DoubleClick.value)(Utils.log)();
-            sub(ECharts_Events.DataZoom.value)(Utils.log)();
-            sub(ECharts_Events.LegendSelected.value)(Utils.log)();
-            sub(ECharts_Events.MagicTypeChanged.value)(Utils.log)();
-            return sub(ECharts_Events.DataViewChanged.value)(Utils.log)();
+            sub(ECharts_Events.Click.value)(log)();
+            sub(ECharts_Events.DoubleClick.value)(log)();
+            sub(ECharts_Events.DataZoom.value)(log)();
+            sub(ECharts_Events.LegendSelected.value)(log)();
+            sub(ECharts_Events.MagicTypeChanged.value)(log)();
+            return sub(ECharts_Events.DataViewChanged.value)(log)();
         };
     };
     var simpleData = Prelude["<<<"](Prelude.semigroupoidArr)(ECharts_Item_Data.Value.create)(ECharts_Item_Value.Simple.create);
     var options_ = function (line) {
         return function (bar) {
             return ECharts_Options.Option.create((function () {
-                var _1230 = {};
-                for (var _1231 in ECharts_Options.optionDefault) {
-                    if (ECharts_Options.optionDefault.hasOwnProperty(_1231)) {
-                        _1230[_1231] = ECharts_Options.optionDefault[_1231];
+                var _1271 = {};
+                for (var _1272 in ECharts_Options.optionDefault) {
+                    if (ECharts_Options.optionDefault.hasOwnProperty(_1272)) {
+                        _1271[_1272] = ECharts_Options.optionDefault[_1272];
                     };
                 };
-                _1230.tooltip = Data_Maybe.Just.create((function () {
-                    var _1198 = {};
-                    for (var _1199 in ECharts_Tooltip.tooltipDefault) {
-                        if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1199)) {
-                            _1198[_1199] = ECharts_Tooltip.tooltipDefault[_1199];
+                _1271.tooltip = Data_Maybe.Just.create((function () {
+                    var _1239 = {};
+                    for (var _1240 in ECharts_Tooltip.tooltipDefault) {
+                        if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1240)) {
+                            _1239[_1240] = ECharts_Tooltip.tooltipDefault[_1240];
                         };
                     };
-                    _1198.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerAxis.value);
-                    return _1198;
+                    _1239.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerAxis.value);
+                    return _1239;
                 })());
-                _1230.legend = Data_Maybe.Just.create((function () {
-                    var _1200 = {};
-                    for (var _1201 in ECharts_Legend.legendDefault) {
-                        if (ECharts_Legend.legendDefault.hasOwnProperty(_1201)) {
-                            _1200[_1201] = ECharts_Legend.legendDefault[_1201];
+                _1271.legend = Data_Maybe.Just.create((function () {
+                    var _1241 = {};
+                    for (var _1242 in ECharts_Legend.legendDefault) {
+                        if (ECharts_Legend.legendDefault.hasOwnProperty(_1242)) {
+                            _1241[_1242] = ECharts_Legend.legendDefault[_1242];
                         };
                     };
-                    _1200.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Legend.legendItemDefault)([ "fst", "snd" ]));
-                    return _1200;
+                    _1241.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Legend.legendItemDefault)([ "fst", "snd" ]));
+                    return _1241;
                 })());
-                _1230.toolbox = Data_Maybe.Just.create(ECharts_Toolbox.Toolbox.create((function () {
-                    var _1214 = {};
-                    for (var _1215 in ECharts_Toolbox.toolboxDefault) {
-                        if (ECharts_Toolbox.toolboxDefault.hasOwnProperty(_1215)) {
-                            _1214[_1215] = ECharts_Toolbox.toolboxDefault[_1215];
+                _1271.toolbox = Data_Maybe.Just.create(ECharts_Toolbox.Toolbox.create((function () {
+                    var _1255 = {};
+                    for (var _1256 in ECharts_Toolbox.toolboxDefault) {
+                        if (ECharts_Toolbox.toolboxDefault.hasOwnProperty(_1256)) {
+                            _1255[_1256] = ECharts_Toolbox.toolboxDefault[_1256];
                         };
                     };
-                    _1214.show = new Data_Maybe.Just(true);
-                    _1214.x = new Data_Maybe.Just(ECharts_Coords.XRight.value);
-                    _1214.feature = Data_Maybe.Just.create(ECharts_Toolbox.Feature.create((function () {
-                        var _1212 = {};
-                        for (var _1213 in ECharts_Toolbox.featureDefault) {
-                            if (ECharts_Toolbox.featureDefault.hasOwnProperty(_1213)) {
-                                _1212[_1213] = ECharts_Toolbox.featureDefault[_1213];
+                    _1255.show = new Data_Maybe.Just(true);
+                    _1255.x = new Data_Maybe.Just(ECharts_Coords.XRight.value);
+                    _1255.feature = Data_Maybe.Just.create(ECharts_Toolbox.Feature.create((function () {
+                        var _1253 = {};
+                        for (var _1254 in ECharts_Toolbox.featureDefault) {
+                            if (ECharts_Toolbox.featureDefault.hasOwnProperty(_1254)) {
+                                _1253[_1254] = ECharts_Toolbox.featureDefault[_1254];
                             };
                         };
-                        _1212.mark = Data_Maybe.Just.create(ECharts_Toolbox.MarkFeature.create((function () {
-                            var _1202 = {};
-                            for (var _1203 in ECharts_Toolbox.markFeatureDefault) {
-                                if (ECharts_Toolbox.markFeatureDefault.hasOwnProperty(_1203)) {
-                                    _1202[_1203] = ECharts_Toolbox.markFeatureDefault[_1203];
+                        _1253.mark = Data_Maybe.Just.create(ECharts_Toolbox.MarkFeature.create((function () {
+                            var _1243 = {};
+                            for (var _1244 in ECharts_Toolbox.markFeatureDefault) {
+                                if (ECharts_Toolbox.markFeatureDefault.hasOwnProperty(_1244)) {
+                                    _1243[_1244] = ECharts_Toolbox.markFeatureDefault[_1244];
                                 };
                             };
-                            _1202.show = new Data_Maybe.Just(true);
-                            return _1202;
+                            _1243.show = new Data_Maybe.Just(true);
+                            return _1243;
                         })()));
-                        _1212.dataView = Data_Maybe.Just.create(ECharts_Toolbox.DataViewFeature.create((function () {
-                            var _1204 = {};
-                            for (var _1205 in ECharts_Toolbox.dataViewFeatureDefault) {
-                                if (ECharts_Toolbox.dataViewFeatureDefault.hasOwnProperty(_1205)) {
-                                    _1204[_1205] = ECharts_Toolbox.dataViewFeatureDefault[_1205];
+                        _1253.dataView = Data_Maybe.Just.create(ECharts_Toolbox.DataViewFeature.create((function () {
+                            var _1245 = {};
+                            for (var _1246 in ECharts_Toolbox.dataViewFeatureDefault) {
+                                if (ECharts_Toolbox.dataViewFeatureDefault.hasOwnProperty(_1246)) {
+                                    _1245[_1246] = ECharts_Toolbox.dataViewFeatureDefault[_1246];
                                 };
                             };
-                            _1204.show = new Data_Maybe.Just(true);
-                            _1204.readOnly = new Data_Maybe.Just(false);
-                            return _1204;
+                            _1245.show = new Data_Maybe.Just(true);
+                            _1245.readOnly = new Data_Maybe.Just(false);
+                            return _1245;
                         })()));
-                        _1212.magicType = Data_Maybe.Just.create(ECharts_Toolbox.MagicTypeFeature.create((function () {
-                            var _1206 = {};
-                            for (var _1207 in ECharts_Toolbox.magicTypeFeatureDefault) {
-                                if (ECharts_Toolbox.magicTypeFeatureDefault.hasOwnProperty(_1207)) {
-                                    _1206[_1207] = ECharts_Toolbox.magicTypeFeatureDefault[_1207];
+                        _1253.magicType = Data_Maybe.Just.create(ECharts_Toolbox.MagicTypeFeature.create((function () {
+                            var _1247 = {};
+                            for (var _1248 in ECharts_Toolbox.magicTypeFeatureDefault) {
+                                if (ECharts_Toolbox.magicTypeFeatureDefault.hasOwnProperty(_1248)) {
+                                    _1247[_1248] = ECharts_Toolbox.magicTypeFeatureDefault[_1248];
                                 };
                             };
-                            _1206.show = new Data_Maybe.Just(true);
-                            _1206.type = new Data_Maybe.Just([ ECharts_Toolbox.MagicLine.value, ECharts_Toolbox.MagicBar.value, ECharts_Toolbox.MagicStack.value, ECharts_Toolbox.MagicTiled.value ]);
-                            return _1206;
+                            _1247.show = new Data_Maybe.Just(true);
+                            _1247.type = new Data_Maybe.Just([ ECharts_Toolbox.MagicLine.value, ECharts_Toolbox.MagicBar.value, ECharts_Toolbox.MagicStack.value, ECharts_Toolbox.MagicTiled.value ]);
+                            return _1247;
                         })()));
-                        _1212.restore = Data_Maybe.Just.create(ECharts_Toolbox.RestoreFeature.create((function () {
-                            var _1208 = {};
-                            for (var _1209 in ECharts_Toolbox.restoreFeatureDefault) {
-                                if (ECharts_Toolbox.restoreFeatureDefault.hasOwnProperty(_1209)) {
-                                    _1208[_1209] = ECharts_Toolbox.restoreFeatureDefault[_1209];
+                        _1253.restore = Data_Maybe.Just.create(ECharts_Toolbox.RestoreFeature.create((function () {
+                            var _1249 = {};
+                            for (var _1250 in ECharts_Toolbox.restoreFeatureDefault) {
+                                if (ECharts_Toolbox.restoreFeatureDefault.hasOwnProperty(_1250)) {
+                                    _1249[_1250] = ECharts_Toolbox.restoreFeatureDefault[_1250];
                                 };
                             };
-                            _1208.show = new Data_Maybe.Just(true);
-                            return _1208;
+                            _1249.show = new Data_Maybe.Just(true);
+                            return _1249;
                         })()));
-                        _1212.saveAsImage = Data_Maybe.Just.create(ECharts_Toolbox.SaveAsImageFeature.create((function () {
-                            var _1210 = {};
-                            for (var _1211 in ECharts_Toolbox.saveAsImageFeatureDefault) {
-                                if (ECharts_Toolbox.saveAsImageFeatureDefault.hasOwnProperty(_1211)) {
-                                    _1210[_1211] = ECharts_Toolbox.saveAsImageFeatureDefault[_1211];
+                        _1253.saveAsImage = Data_Maybe.Just.create(ECharts_Toolbox.SaveAsImageFeature.create((function () {
+                            var _1251 = {};
+                            for (var _1252 in ECharts_Toolbox.saveAsImageFeatureDefault) {
+                                if (ECharts_Toolbox.saveAsImageFeatureDefault.hasOwnProperty(_1252)) {
+                                    _1251[_1252] = ECharts_Toolbox.saveAsImageFeatureDefault[_1252];
                                 };
                             };
-                            _1210.show = new Data_Maybe.Just(true);
-                            return _1210;
+                            _1251.show = new Data_Maybe.Just(true);
+                            return _1251;
                         })()));
-                        return _1212;
+                        return _1253;
                     })()));
-                    return _1214;
+                    return _1255;
                 })()));
-                _1230.calculable = new Data_Maybe.Just(true);
-                _1230.dataZoom = Data_Maybe.Just.create(ECharts_DataZoom.DataZoom.create((function () {
-                    var _1216 = {};
-                    for (var _1217 in ECharts_DataZoom.dataZoomDefault) {
-                        if (ECharts_DataZoom.dataZoomDefault.hasOwnProperty(_1217)) {
-                            _1216[_1217] = ECharts_DataZoom.dataZoomDefault[_1217];
+                _1271.calculable = new Data_Maybe.Just(true);
+                _1271.dataZoom = Data_Maybe.Just.create(ECharts_DataZoom.DataZoom.create((function () {
+                    var _1257 = {};
+                    for (var _1258 in ECharts_DataZoom.dataZoomDefault) {
+                        if (ECharts_DataZoom.dataZoomDefault.hasOwnProperty(_1258)) {
+                            _1257[_1258] = ECharts_DataZoom.dataZoomDefault[_1258];
                         };
                     };
-                    _1216.show = new Data_Maybe.Just(true);
-                    _1216.realtime = new Data_Maybe.Just(true);
-                    _1216.start = new Data_Maybe.Just(40);
-                    _1216.end = new Data_Maybe.Just(60);
-                    return _1216;
+                    _1257.show = new Data_Maybe.Just(true);
+                    _1257.realtime = new Data_Maybe.Just(true);
+                    _1257.start = new Data_Maybe.Just(40);
+                    _1257.end = new Data_Maybe.Just(60);
+                    return _1257;
                 })()));
-                _1230.xAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create(ECharts_Axis.Axis.create((function () {
-                    var _1218 = {};
-                    for (var _1219 in ECharts_Axis.axisDefault) {
-                        if (ECharts_Axis.axisDefault.hasOwnProperty(_1219)) {
-                            _1218[_1219] = ECharts_Axis.axisDefault[_1219];
+                _1271.xAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create(ECharts_Axis.Axis.create((function () {
+                    var _1259 = {};
+                    for (var _1260 in ECharts_Axis.axisDefault) {
+                        if (ECharts_Axis.axisDefault.hasOwnProperty(_1260)) {
+                            _1259[_1260] = ECharts_Axis.axisDefault[_1260];
                         };
                     };
-                    _1218.type = new Data_Maybe.Just(ECharts_Axis.CategoryAxis.value);
-                    _1218.boundaryGap = Data_Maybe.Just.create(new ECharts_Axis.CatBoundaryGap(true));
-                    _1218.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(function (i) {
+                    _1259.type = new Data_Maybe.Just(ECharts_Axis.CategoryAxis.value);
+                    _1259.boundaryGap = Data_Maybe.Just.create(new ECharts_Axis.CatBoundaryGap(true));
+                    _1259.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(function (i) {
                         return ECharts_Axis.CommonAxisData.create("2013-03-" + Prelude.show(Prelude.showNumber)(i));
                     })(Data_Array[".."](1)(30)));
-                    return _1218;
+                    return _1259;
                 })())));
-                _1230.yAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create(ECharts_Axis.Axis.create((function () {
-                    var _1220 = {};
-                    for (var _1221 in ECharts_Axis.axisDefault) {
-                        if (ECharts_Axis.axisDefault.hasOwnProperty(_1221)) {
-                            _1220[_1221] = ECharts_Axis.axisDefault[_1221];
+                _1271.yAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create(ECharts_Axis.Axis.create((function () {
+                    var _1261 = {};
+                    for (var _1262 in ECharts_Axis.axisDefault) {
+                        if (ECharts_Axis.axisDefault.hasOwnProperty(_1262)) {
+                            _1261[_1262] = ECharts_Axis.axisDefault[_1262];
                         };
                     };
-                    _1220.type = new Data_Maybe.Just(ECharts_Axis.ValueAxis.value);
-                    return _1220;
+                    _1261.type = new Data_Maybe.Just(ECharts_Axis.ValueAxis.value);
+                    return _1261;
                 })())));
-                _1230.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.LineSeries({
+                _1271.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.LineSeries({
                     common: (function () {
-                        var _1222 = {};
-                        for (var _1223 in ECharts_Series.universalSeriesDefault) {
-                            if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1223)) {
-                                _1222[_1223] = ECharts_Series.universalSeriesDefault[_1223];
+                        var _1263 = {};
+                        for (var _1264 in ECharts_Series.universalSeriesDefault) {
+                            if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1264)) {
+                                _1263[_1264] = ECharts_Series.universalSeriesDefault[_1264];
                             };
                         };
-                        _1222.name = new Data_Maybe.Just("fst");
-                        return _1222;
+                        _1263.name = new Data_Maybe.Just("fst");
+                        return _1263;
                     })(), 
-                    special: (function () {
-                        var _1224 = {};
-                        for (var _1225 in ECharts_Series.lineSeriesDefault) {
-                            if (ECharts_Series.lineSeriesDefault.hasOwnProperty(_1225)) {
-                                _1224[_1225] = ECharts_Series.lineSeriesDefault[_1225];
+                    lineSeries: (function () {
+                        var _1265 = {};
+                        for (var _1266 in ECharts_Series.lineSeriesDefault) {
+                            if (ECharts_Series.lineSeriesDefault.hasOwnProperty(_1266)) {
+                                _1265[_1266] = ECharts_Series.lineSeriesDefault[_1266];
                             };
                         };
-                        _1224.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)(line));
-                        return _1224;
+                        _1265.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)(line));
+                        return _1265;
                     })()
                 }), new ECharts_Series.BarSeries({
                     common: (function () {
-                        var _1226 = {};
-                        for (var _1227 in ECharts_Series.universalSeriesDefault) {
-                            if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1227)) {
-                                _1226[_1227] = ECharts_Series.universalSeriesDefault[_1227];
+                        var _1267 = {};
+                        for (var _1268 in ECharts_Series.universalSeriesDefault) {
+                            if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1268)) {
+                                _1267[_1268] = ECharts_Series.universalSeriesDefault[_1268];
                             };
                         };
-                        _1226.name = new Data_Maybe.Just("snd");
-                        return _1226;
+                        _1267.name = new Data_Maybe.Just("snd");
+                        return _1267;
                     })(), 
-                    special: (function () {
-                        var _1228 = {};
-                        for (var _1229 in ECharts_Series.barSeriesDefault) {
-                            if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1229)) {
-                                _1228[_1229] = ECharts_Series.barSeriesDefault[_1229];
+                    barSeries: (function () {
+                        var _1269 = {};
+                        for (var _1270 in ECharts_Series.barSeriesDefault) {
+                            if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1270)) {
+                                _1269[_1270] = ECharts_Series.barSeriesDefault[_1270];
                             };
                         };
-                        _1228.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)(bar));
-                        return _1228;
+                        _1269.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)(bar));
+                        return _1269;
                     })()
                 }) ]));
-                return _1230;
+                return _1271;
             })());
         };
     };
     var lineData = function __do() {
-        var _51 = Utils.randomLst(30)();
+        var _59 = Utils.randomLst(30)();
         return Prelude["<$>"](Data_Array.functorArray)(function (x) {
             return Math.round(x * 30 + 30);
-        })(_51);
+        })(_59);
     };
     var barData = function __do() {
-        var _52 = Utils.randomLst(30)();
+        var _60 = Utils.randomLst(30)();
         return Prelude["<$>"](Data_Array.functorArray)(function (x) {
             return Math.round(x * 10);
-        })(_52);
+        })(_60);
     };
     var options = function __do() {
-        var _54 = lineData();
-        var _53 = barData();
-        return options_(_54)(_53);
+        var _62 = lineData();
+        var _61 = barData();
+        return options_(_62)(_61);
     };
     var events = function (id) {
         return function __do() {
-            var _56 = options();
-            var _55 = Prelude[">>="](Control_Monad_Eff.bindEff)(Prelude[">>="](Control_Monad_Eff.bindEff)(Utils.getElementById(id))(ECharts_Chart.init(Data_Maybe.Nothing.value)))(ECharts_Options.setOption(_56)(true))();
-            subscribe(_55)();
-            return Prelude.unit;
+            var _65 = Utils.getElementById(id)();
+            return (function () {
+                if (_65 instanceof Data_Maybe.Nothing) {
+                    return Debug_Trace.trace("incorrect id in events");
+                };
+                if (_65 instanceof Data_Maybe.Just) {
+                    return function __do() {
+                        var _64 = options();
+                        var _63 = Prelude[">>="](Control_Monad_Eff.bindEff)(ECharts_Chart.init(Data_Maybe.Nothing.value)(_65.value0))(ECharts_Options.setOption(_64)(true))();
+                        subscribe(_63)();
+                        return Prelude.unit;
+                    };
+                };
+                throw new Error("Failed pattern match");
+            })()();
         };
     };
     return {
         barData: barData, 
         events: events, 
         lineData: lineData, 
+        log: log, 
         options: options, 
         options_: options_, 
         simpleData: simpleData, 
@@ -5180,6 +5766,7 @@ PS.Force4 = (function () {
     var ECharts_Options = PS.ECharts_Options;
     var ECharts_Series = PS.ECharts_Series;
     var Utils = PS.Utils;
+    var Debug_Trace = PS.Debug_Trace;
     var ECharts_Chart = PS.ECharts_Chart;
     var Control_Monad_Eff = PS.Control_Monad_Eff;
     var Data_Maybe = PS.Data_Maybe;
@@ -5218,18 +5805,18 @@ function clientHeight(id) {
     var nodes = Prelude["return"](Control_Monad_Eff.monadEff)([  ]);
     var nodeNormalize = function (node) {
         return ECharts_Series_Force.Node.create((function () {
-            var _1238 = {};
-            for (var _1239 in ECharts_Series_Force.nodeDefault(node.value)) {
-                if ((ECharts_Series_Force.nodeDefault(node.value)).hasOwnProperty(_1239)) {
-                    _1238[_1239] = (ECharts_Series_Force.nodeDefault(node.value))[_1239];
+            var _1282 = {};
+            for (var _1283 in ECharts_Series_Force.nodeDefault(node.value)) {
+                if ((ECharts_Series_Force.nodeDefault(node.value)).hasOwnProperty(_1283)) {
+                    _1282[_1283] = (ECharts_Series_Force.nodeDefault(node.value))[_1283];
                 };
             };
-            _1238.name = new Data_Maybe.Just(node.name);
-            _1238.initial = new Data_Maybe.Just(node.initial);
-            _1238.fixX = new Data_Maybe.Just(node.fixX);
-            _1238.fixY = new Data_Maybe.Just(node.fixY);
-            _1238.category = Data_Maybe.Just.create(node.category);
-            return _1238;
+            _1282.name = new Data_Maybe.Just(node.name);
+            _1282.initial = new Data_Maybe.Just(node.initial);
+            _1282.fixX = new Data_Maybe.Just(node.fixX);
+            _1282.fixY = new Data_Maybe.Just(node.fixY);
+            _1282.category = Data_Maybe.Just.create(node.category);
+            return _1282;
         })());
     };
     var links = Prelude["return"](Control_Monad_Eff.monadEff)([  ]);
@@ -5243,23 +5830,23 @@ function clientHeight(id) {
     };
     var itemColor = function (color) {
         return Data_Maybe.Just.create((function () {
-            var _1242 = {};
-            for (var _1243 in ECharts_Style_Item.itemStyleDefault) {
-                if (ECharts_Style_Item.itemStyleDefault.hasOwnProperty(_1243)) {
-                    _1242[_1243] = ECharts_Style_Item.itemStyleDefault[_1243];
+            var _1286 = {};
+            for (var _1287 in ECharts_Style_Item.itemStyleDefault) {
+                if (ECharts_Style_Item.itemStyleDefault.hasOwnProperty(_1287)) {
+                    _1286[_1287] = ECharts_Style_Item.itemStyleDefault[_1287];
                 };
             };
-            _1242.normal = Data_Maybe.Just.create((function () {
-                var _1240 = {};
-                for (var _1241 in ECharts_Style_Item.istyleDefault) {
-                    if (ECharts_Style_Item.istyleDefault.hasOwnProperty(_1241)) {
-                        _1240[_1241] = ECharts_Style_Item.istyleDefault[_1241];
+            _1286.normal = Data_Maybe.Just.create((function () {
+                var _1284 = {};
+                for (var _1285 in ECharts_Style_Item.istyleDefault) {
+                    if (ECharts_Style_Item.istyleDefault.hasOwnProperty(_1285)) {
+                        _1284[_1285] = ECharts_Style_Item.istyleDefault[_1285];
                     };
                 };
-                _1240.color = Data_Maybe.Just.create(new ECharts_Color.SimpleColor(color));
-                return _1240;
+                _1284.color = Data_Maybe.Just.create(new ECharts_Color.SimpleColor(color));
+                return _1284;
             })());
-            return _1242;
+            return _1286;
         })());
     };
     var constMinRadius = 2;
@@ -5268,86 +5855,86 @@ function clientHeight(id) {
     var mkOptions = function (nodes_1) {
         return function (links_1) {
             return ECharts_Options.Option.create((function () {
-                var _1254 = {};
-                for (var _1255 in ECharts_Options.optionDefault) {
-                    if (ECharts_Options.optionDefault.hasOwnProperty(_1255)) {
-                        _1254[_1255] = ECharts_Options.optionDefault[_1255];
+                var _1298 = {};
+                for (var _1299 in ECharts_Options.optionDefault) {
+                    if (ECharts_Options.optionDefault.hasOwnProperty(_1299)) {
+                        _1298[_1299] = ECharts_Options.optionDefault[_1299];
                     };
                 };
-                _1254.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.ForceSeries({
+                _1298.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.ForceSeries({
                     common: (function () {
-                        var _1244 = {};
-                        for (var _1245 in ECharts_Series.universalSeriesDefault) {
-                            if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1245)) {
-                                _1244[_1245] = ECharts_Series.universalSeriesDefault[_1245];
+                        var _1288 = {};
+                        for (var _1289 in ECharts_Series.universalSeriesDefault) {
+                            if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1289)) {
+                                _1288[_1289] = ECharts_Series.universalSeriesDefault[_1289];
                             };
                         };
-                        _1244.name = new Data_Maybe.Just("Force tree");
-                        return _1244;
+                        _1288.name = new Data_Maybe.Just("Force tree");
+                        return _1288;
                     })(), 
-                    special: (function () {
-                        var _1252 = {};
-                        for (var _1253 in ECharts_Series.forceSeriesDefault) {
-                            if (ECharts_Series.forceSeriesDefault.hasOwnProperty(_1253)) {
-                                _1252[_1253] = ECharts_Series.forceSeriesDefault[_1253];
+                    forceSeries: (function () {
+                        var _1296 = {};
+                        for (var _1297 in ECharts_Series.forceSeriesDefault) {
+                            if (ECharts_Series.forceSeriesDefault.hasOwnProperty(_1297)) {
+                                _1296[_1297] = ECharts_Series.forceSeriesDefault[_1297];
                             };
                         };
-                        _1252.ribbonType = new Data_Maybe.Just(true);
-                        _1252.categories = new Data_Maybe.Just([ ECharts_Series_Force.ForceCategory.create((function () {
-                            var _1246 = {};
-                            for (var _1247 in ECharts_Series_Force.forceCategoryDefault) {
-                                if (ECharts_Series_Force.forceCategoryDefault.hasOwnProperty(_1247)) {
-                                    _1246[_1247] = ECharts_Series_Force.forceCategoryDefault[_1247];
+                        _1296.ribbonType = new Data_Maybe.Just(true);
+                        _1296.categories = new Data_Maybe.Just([ ECharts_Series_Force.ForceCategory.create((function () {
+                            var _1290 = {};
+                            for (var _1291 in ECharts_Series_Force.forceCategoryDefault) {
+                                if (ECharts_Series_Force.forceCategoryDefault.hasOwnProperty(_1291)) {
+                                    _1290[_1291] = ECharts_Series_Force.forceCategoryDefault[_1291];
                                 };
                             };
-                            _1246.name = new Data_Maybe.Just("first");
-                            _1246.itemStyle = itemColor("#ff7f50");
-                            return _1246;
+                            _1290.name = new Data_Maybe.Just("first");
+                            _1290.itemStyle = itemColor("#ff7f50");
+                            return _1290;
                         })()), ECharts_Series_Force.ForceCategory.create((function () {
-                            var _1248 = {};
-                            for (var _1249 in ECharts_Series_Force.forceCategoryDefault) {
-                                if (ECharts_Series_Force.forceCategoryDefault.hasOwnProperty(_1249)) {
-                                    _1248[_1249] = ECharts_Series_Force.forceCategoryDefault[_1249];
+                            var _1292 = {};
+                            for (var _1293 in ECharts_Series_Force.forceCategoryDefault) {
+                                if (ECharts_Series_Force.forceCategoryDefault.hasOwnProperty(_1293)) {
+                                    _1292[_1293] = ECharts_Series_Force.forceCategoryDefault[_1293];
                                 };
                             };
-                            _1248.name = new Data_Maybe.Just("second");
-                            _1248.itemStyle = itemColor("#6f57bc");
-                            return _1248;
+                            _1292.name = new Data_Maybe.Just("second");
+                            _1292.itemStyle = itemColor("#6f57bc");
+                            return _1292;
                         })()), ECharts_Series_Force.ForceCategory.create((function () {
-                            var _1250 = {};
-                            for (var _1251 in ECharts_Series_Force.forceCategoryDefault) {
-                                if (ECharts_Series_Force.forceCategoryDefault.hasOwnProperty(_1251)) {
-                                    _1250[_1251] = ECharts_Series_Force.forceCategoryDefault[_1251];
+                            var _1294 = {};
+                            for (var _1295 in ECharts_Series_Force.forceCategoryDefault) {
+                                if (ECharts_Series_Force.forceCategoryDefault.hasOwnProperty(_1295)) {
+                                    _1294[_1295] = ECharts_Series_Force.forceCategoryDefault[_1295];
                                 };
                             };
-                            _1250.name = new Data_Maybe.Just("third");
-                            _1250.itemStyle = itemColor("#af0000");
-                            return _1250;
+                            _1294.name = new Data_Maybe.Just("third");
+                            _1294.itemStyle = itemColor("#af0000");
+                            return _1294;
                         })()) ]);
-                        _1252.nodes = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(nodeNormalize)(nodes_1));
-                        _1252.links = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(linkNormalize)(links_1));
-                        _1252.minRadius = new Data_Maybe.Just(constMinRadius);
-                        _1252.maxRadius = new Data_Maybe.Just(constMaxRadius);
-                        return _1252;
+                        _1296.nodes = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(nodeNormalize)(nodes_1));
+                        _1296.links = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(linkNormalize)(links_1));
+                        _1296.minRadius = new Data_Maybe.Just(constMinRadius);
+                        _1296.maxRadius = new Data_Maybe.Just(constMaxRadius);
+                        return _1296;
                     })()
                 }) ]));
-                return _1254;
+                return _1298;
             })());
         };
     };
     var constMaxDepth = 4;
     var createRootNode = function (depth) {
         return function __do() {
-            var _60 = clientWidth("force4")();
-            var _59 = clientHeight("force4")();
-            var _58 = Control_Monad_Eff_Random.random();
-            var _57 = randomInRange(constMinRadius)(constMaxRadius)();
+            var _69 = clientWidth("force4")();
+            var _68 = clientHeight("force4")();
+            var _67 = Control_Monad_Eff_Random.random();
+            var _66 = randomInRange(constMinRadius)(constMaxRadius)();
             return (function () {
-                var x = _60 / 2 + (0.5 - _58) * 200;
-                var y = (_59 - 20) * depth / (constMaxDepth + 1) + 20;
+                var x = _69 / 2 + (0.5 - _67) * 200;
+                var y = (_68 - 20) * depth / (constMaxDepth + 1) + 20;
                 return Prelude["return"](Control_Monad_Eff.monadEff)({
                     name: "ROOT_NODE", 
-                    value: _57, 
+                    value: _66, 
                     id: "root", 
                     depth: depth, 
                     initial: Data_Tuple_Nested["/\\"](x)(y), 
@@ -5361,31 +5948,31 @@ function clientHeight(id) {
     var createNodeWithIndex = function (idx) {
         return function (depth) {
             return function __do() {
-                var _61 = createRootNode(depth)();
-                var _1261 = {};
-                for (var _1262 in _61) {
-                    if (_61.hasOwnProperty(_1262)) {
-                        _1261[_1262] = _61[_1262];
+                var _70 = createRootNode(depth)();
+                var _1305 = {};
+                for (var _1306 in _70) {
+                    if (_70.hasOwnProperty(_1306)) {
+                        _1305[_1306] = _70[_1306];
                     };
                 };
-                _1261.id = idx;
-                _1261.name = "NODE_" + idx;
-                _1261.category = depth === constMaxDepth ? 0 : 1;
-                return _1261;
+                _1305.id = idx;
+                _1305.name = "NODE_" + idx;
+                _1305.category = depth === constMaxDepth ? 0 : 1;
+                return _1305;
             };
         };
     };
     var mkChild = function (node) {
         return function (idx) {
             return function __do() {
-                var _62 = createNodeWithIndex(idx)(node.depth + 1)();
+                var _71 = createNodeWithIndex(idx)(node.depth + 1)();
                 return (function () {
                     var link = {
                         source: node.name, 
-                        target: _62.name, 
+                        target: _71.name, 
                         weight: 1
                     };
-                    return Prelude["return"](Control_Monad_Eff.monadEff)(new Data_Tuple.Tuple(_62, link));
+                    return Prelude["return"](Control_Monad_Eff.monadEff)(new Data_Tuple.Tuple(_71, link));
                 })()();
             };
         };
@@ -5393,48 +5980,58 @@ function clientHeight(id) {
     var constMaxChildren = 3;
     var mkChildren = function (node) {
         return function __do() {
-            var _63 = randomInRange(constMinChildren)(constMaxChildren)();
+            var _72 = randomInRange(constMinChildren)(constMaxChildren)();
             return (function () {
                 var ids = Prelude["<$>"](Data_Array.functorArray)(function (x) {
                     return node.id + (":" + Prelude.show(Prelude.showNumber)(x));
-                })(Data_Array[".."](1)(_63));
+                })(Data_Array[".."](1)(_72));
                 return Data_Traversable.sequence(Data_Traversable.traversableArray)(Control_Monad_Eff.applicativeEff)(Prelude["<$>"](Data_Array.functorArray)(mkChild(node))(ids));
             })()();
         };
     };
-    var forceMockThreeDataI = function (_846) {
-        return function (_847) {
-            return function (_848) {
-                if (_848 === 0) {
-                    return Prelude["return"](Control_Monad_Eff.monadEff)(_847);
+    var forceMockThreeDataI = function (_878) {
+        return function (_879) {
+            return function (_880) {
+                if (_880 === 0) {
+                    return Prelude["return"](Control_Monad_Eff.monadEff)(_879);
                 };
-                var nextAccum = Data_Foldable.foldl(Data_Foldable.foldableArray)(function (_845) {
-                    return function (_844) {
-                        return new MockData(Prelude[":"](_844.value0)(_845.value0), Prelude[":"](_844.value1)(_845.value1));
+                var nextAccum = Data_Foldable.foldl(Data_Foldable.foldableArray)(function (_877) {
+                    return function (_876) {
+                        return new MockData(Prelude[":"](_876.value0)(_877.value0), Prelude[":"](_876.value1)(_877.value1));
                     };
-                })(_847)(_846);
+                })(_879)(_878);
                 return function __do() {
-                    var _64 = Data_Traversable.sequence(Data_Traversable.traversableArray)(Control_Monad_Eff.applicativeEff)(Prelude["<$>"](Data_Array.functorArray)(Prelude["<<<"](Prelude.semigroupoidArr)(mkChildren)(Data_Tuple.fst))(_846))();
-                    return forceMockThreeDataI(Data_Array.concat(_64))(nextAccum)(_848 - 1)();
+                    var _73 = Data_Traversable.sequence(Data_Traversable.traversableArray)(Control_Monad_Eff.applicativeEff)(Prelude["<$>"](Data_Array.functorArray)(Prelude["<<<"](Prelude.semigroupoidArr)(mkChildren)(Data_Tuple.fst))(_878))();
+                    return forceMockThreeDataI(Data_Array.concat(_73))(nextAccum)(_880 - 1)();
                 };
             };
         };
     };
     var forceMockThreeData = function __do() {
-        var _66 = createRootNode(0)();
-        var _65 = mkChildren(_66)();
-        return forceMockThreeDataI(_65)(new MockData([ _66 ], [  ]))(constMaxDepth)();
+        var _75 = createRootNode(0)();
+        var _74 = mkChildren(_75)();
+        return forceMockThreeDataI(_74)(new MockData([ _75 ], [  ]))(constMaxDepth)();
     };
     var options = function __do() {
-        var _67 = forceMockThreeData();
-        Utils.log(_67.value1)();
-        return mkOptions(_67.value0)(_67.value1);
+        var _76 = forceMockThreeData();
+        return mkOptions(_76.value0)(_76.value1);
     };
     var force4 = function (id) {
         return function __do() {
-            var _69 = options();
-            var _68 = Prelude[">>="](Control_Monad_Eff.bindEff)(Prelude[">>="](Control_Monad_Eff.bindEff)(Utils.getElementById(id))(ECharts_Chart.init(Data_Maybe.Nothing.value)))(ECharts_Options.setOption(_69)(true))();
-            return Prelude.unit;
+            var _79 = Utils.getElementById(id)();
+            return (function () {
+                if (_79 instanceof Data_Maybe.Nothing) {
+                    return Debug_Trace.trace("incorrect id in force4");
+                };
+                if (_79 instanceof Data_Maybe.Just) {
+                    return function __do() {
+                        var _78 = options();
+                        var _77 = Prelude[">>="](Control_Monad_Eff.bindEff)(ECharts_Chart.init(Data_Maybe.Nothing.value)(_79.value0))(ECharts_Options.setOption(_78)(true))();
+                        return Prelude.unit;
+                    };
+                };
+                throw new Error("Failed pattern match");
+            })()();
         };
     };
     return {
@@ -5471,6 +6068,7 @@ PS.Funnel2 = (function () {
     var ECharts_Series = PS.ECharts_Series;
     var Prelude = PS.Prelude;
     var Utils = PS.Utils;
+    var Debug_Trace = PS.Debug_Trace;
     var ECharts_Chart = PS.ECharts_Chart;
     var ECharts_Item_Value = PS.ECharts_Item_Value;
     var Data_Maybe = PS.Data_Maybe;
@@ -5480,44 +6078,55 @@ PS.Funnel2 = (function () {
     var simpleDat = function (val) {
         return function (nam) {
             return ECharts_Item_Data.Dat.create((function () {
-                var _1283 = {};
-                for (var _1284 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(val))) {
-                    if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(val))).hasOwnProperty(_1284)) {
-                        _1283[_1284] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(val)))[_1284];
+                var _1330 = {};
+                for (var _1331 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(val))) {
+                    if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(val))).hasOwnProperty(_1331)) {
+                        _1330[_1331] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(val)))[_1331];
                     };
                 };
-                _1283.name = new Data_Maybe.Just(nam);
-                return _1283;
+                _1330.name = new Data_Maybe.Just(nam);
+                return _1330;
             })());
         };
     };
     var options = ECharts_Options.Option.create((function () {
-        var _1287 = {};
-        for (var _1288 in ECharts_Options.optionDefault) {
-            if (ECharts_Options.optionDefault.hasOwnProperty(_1288)) {
-                _1287[_1288] = ECharts_Options.optionDefault[_1288];
+        var _1334 = {};
+        for (var _1335 in ECharts_Options.optionDefault) {
+            if (ECharts_Options.optionDefault.hasOwnProperty(_1335)) {
+                _1334[_1335] = ECharts_Options.optionDefault[_1335];
             };
         };
-        _1287.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.FunnelSeries({
+        _1334.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.FunnelSeries({
             common: ECharts_Series.universalSeriesDefault, 
-            special: (function () {
-                var _1285 = {};
-                for (var _1286 in ECharts_Series.funnelSeriesDefault) {
-                    if (ECharts_Series.funnelSeriesDefault.hasOwnProperty(_1286)) {
-                        _1285[_1286] = ECharts_Series.funnelSeriesDefault[_1286];
+            funnelSeries: (function () {
+                var _1332 = {};
+                for (var _1333 in ECharts_Series.funnelSeriesDefault) {
+                    if (ECharts_Series.funnelSeriesDefault.hasOwnProperty(_1333)) {
+                        _1332[_1333] = ECharts_Series.funnelSeriesDefault[_1333];
                     };
                 };
-                _1285.data = Data_Maybe.Just.create([ simpleDat(60)("foo"), simpleDat(80)("bar"), simpleDat(12)("baz"), simpleDat(123)("quux") ]);
-                _1285.sort = new Data_Maybe.Just(ECharts_Common.Asc.value);
-                return _1285;
+                _1332.data = Data_Maybe.Just.create([ simpleDat(60)("foo"), simpleDat(80)("bar"), simpleDat(12)("baz"), simpleDat(123)("quux") ]);
+                _1332.sort = new Data_Maybe.Just(ECharts_Common.Asc.value);
+                return _1332;
             })()
         }) ]));
-        return _1287;
+        return _1334;
     })());
     var funnel2 = function (id) {
         return function __do() {
-            var _70 = Prelude[">>="](Control_Monad_Eff.bindEff)(Prelude[">>="](Control_Monad_Eff.bindEff)(Utils.getElementById(id))(ECharts_Chart.init(Data_Maybe.Nothing.value)))(ECharts_Options.setOption(options)(true))();
-            return Prelude.unit;
+            var _80 = Utils.getElementById(id)();
+            return (function () {
+                if (_80 instanceof Data_Maybe.Nothing) {
+                    return Debug_Trace.trace("incorrect id in funnel2");
+                };
+                if (_80 instanceof Data_Maybe.Just) {
+                    return function __do() {
+                        var _ = Prelude[">>="](Control_Monad_Eff.bindEff)(ECharts_Chart.init(Data_Maybe.Nothing.value)(_80.value0))(ECharts_Options.setOption(options)(true))();
+                        return Prelude.unit;
+                    };
+                };
+                throw new Error("Failed pattern match");
+            })()();
         };
     };
     return {
@@ -5535,6 +6144,7 @@ PS.Gauge4 = (function () {
     var ECharts_Options = PS.ECharts_Options;
     var ECharts_Series = PS.ECharts_Series;
     var Utils = PS.Utils;
+    var Debug_Trace = PS.Debug_Trace;
     var ECharts_Chart = PS.ECharts_Chart;
     var Signal = PS.Signal;
     var Data_Maybe = PS.Data_Maybe;
@@ -5544,48 +6154,59 @@ PS.Gauge4 = (function () {
     var Control_Monad_Eff = PS.Control_Monad_Eff;
     var options_ = function (val) {
         return ECharts_Options.Option.create((function () {
-            var _1292 = {};
-            for (var _1293 in ECharts_Options.optionDefault) {
-                if (ECharts_Options.optionDefault.hasOwnProperty(_1293)) {
-                    _1292[_1293] = ECharts_Options.optionDefault[_1293];
+            var _1341 = {};
+            for (var _1342 in ECharts_Options.optionDefault) {
+                if (ECharts_Options.optionDefault.hasOwnProperty(_1342)) {
+                    _1341[_1342] = ECharts_Options.optionDefault[_1342];
                 };
             };
-            _1292.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.GaugeSeries({
+            _1341.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.GaugeSeries({
                 common: ECharts_Series.universalSeriesDefault, 
-                special: (function () {
-                    var _1290 = {};
-                    for (var _1291 in ECharts_Series.gaugeSeriesDefault) {
-                        if (ECharts_Series.gaugeSeriesDefault.hasOwnProperty(_1291)) {
-                            _1290[_1291] = ECharts_Series.gaugeSeriesDefault[_1291];
+                gaugeSeries: (function () {
+                    var _1339 = {};
+                    for (var _1340 in ECharts_Series.gaugeSeriesDefault) {
+                        if (ECharts_Series.gaugeSeriesDefault.hasOwnProperty(_1340)) {
+                            _1339[_1340] = ECharts_Series.gaugeSeriesDefault[_1340];
                         };
                     };
-                    _1290.data = new Data_Maybe.Just([ ECharts_Item_Data.Value.create(new ECharts_Item_Value.Simple(val)) ]);
-                    return _1290;
+                    _1339.data = new Data_Maybe.Just([ ECharts_Item_Data.Value.create(new ECharts_Item_Value.Simple(val)) ]);
+                    return _1339;
                 })()
             }) ]));
-            return _1292;
+            return _1341;
         })());
     };
     var gaugeValueSignal = Signal["~>"](Signal.functorSignal)(Signal_Time.every(2000))(Prelude["const"](function __do() {
-        var _71 = Control_Monad_Eff_Random.random();
-        return _71 * 100;
+        var _81 = Control_Monad_Eff_Random.random();
+        return _81 * 100;
     }));
     var options = Signal["~>"](Signal.functorSignal)(gaugeValueSignal)(function (g) {
         return function __do() {
-            var _72 = g();
-            return options_(_72);
+            var _82 = g();
+            return options_(_82);
         };
     });
     var gauge4 = function (id) {
         return function __do() {
-            var _74 = Prelude[">>="](Control_Monad_Eff.bindEff)(Utils.getElementById(id))(ECharts_Chart.init(Data_Maybe.Nothing.value))();
-            return Signal.runSignal(Signal["~>"](Signal.functorSignal)(options)(function (opts) {
-                return function __do() {
-                    var _73 = opts();
-                    ECharts_Options.setOption(_73)(true)(_74)();
-                    return Prelude.unit;
+            var _85 = Utils.getElementById(id)();
+            return (function () {
+                if (_85 instanceof Data_Maybe.Nothing) {
+                    return Debug_Trace.trace("incorrect id in gauge4");
                 };
-            }))();
+                if (_85 instanceof Data_Maybe.Just) {
+                    return function __do() {
+                        var _84 = ECharts_Chart.init(Data_Maybe.Nothing.value)(_85.value0)();
+                        return Signal.runSignal(Signal["~>"](Signal.functorSignal)(options)(function (opts) {
+                            return function __do() {
+                                var _83 = opts();
+                                ECharts_Options.setOption(_83)(true)(_84)();
+                                return Prelude.unit;
+                            };
+                        }))();
+                    };
+                };
+                throw new Error("Failed pattern match");
+            })()();
         };
     };
     return {
@@ -5603,6 +6224,7 @@ PS.K = (function () {
     var ECharts_Series = PS.ECharts_Series;
     var Prelude = PS.Prelude;
     var Utils = PS.Utils;
+    var Debug_Trace = PS.Debug_Trace;
     var ECharts_Chart = PS.ECharts_Chart;
     var ECharts_Item_Data = PS.ECharts_Item_Data;
     var ECharts_Item_Value = PS.ECharts_Item_Value;
@@ -5624,52 +6246,63 @@ PS.K = (function () {
         };
     };
     var options = ECharts_Options.Option.create((function () {
-        var _1304 = {};
-        for (var _1305 in ECharts_Options.optionDefault) {
-            if (ECharts_Options.optionDefault.hasOwnProperty(_1305)) {
-                _1304[_1305] = ECharts_Options.optionDefault[_1305];
+        var _1356 = {};
+        for (var _1357 in ECharts_Options.optionDefault) {
+            if (ECharts_Options.optionDefault.hasOwnProperty(_1357)) {
+                _1356[_1357] = ECharts_Options.optionDefault[_1357];
             };
         };
-        _1304.xAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create((function () {
-            var _1298 = {};
-            for (var _1299 in ECharts_Axis.axisDefault) {
-                if (ECharts_Axis.axisDefault.hasOwnProperty(_1299)) {
-                    _1298[_1299] = ECharts_Axis.axisDefault[_1299];
+        _1356.xAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create((function () {
+            var _1350 = {};
+            for (var _1351 in ECharts_Axis.axisDefault) {
+                if (ECharts_Axis.axisDefault.hasOwnProperty(_1351)) {
+                    _1350[_1351] = ECharts_Axis.axisDefault[_1351];
                 };
             };
-            _1298.type = new Data_Maybe.Just(ECharts_Axis.CategoryAxis.value);
-            _1298.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Axis.CommonAxisData.create)([ "2013/1/24", "2013/1/25", "2013/1/28", "2013/1/29", "2013/1/30" ]));
-            return _1298;
+            _1350.type = new Data_Maybe.Just(ECharts_Axis.CategoryAxis.value);
+            _1350.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Axis.CommonAxisData.create)([ "2013/1/24", "2013/1/25", "2013/1/28", "2013/1/29", "2013/1/30" ]));
+            return _1350;
         })()));
-        _1304.yAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create((function () {
-            var _1300 = {};
-            for (var _1301 in ECharts_Axis.axisDefault) {
-                if (ECharts_Axis.axisDefault.hasOwnProperty(_1301)) {
-                    _1300[_1301] = ECharts_Axis.axisDefault[_1301];
+        _1356.yAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create((function () {
+            var _1352 = {};
+            for (var _1353 in ECharts_Axis.axisDefault) {
+                if (ECharts_Axis.axisDefault.hasOwnProperty(_1353)) {
+                    _1352[_1353] = ECharts_Axis.axisDefault[_1353];
                 };
             };
-            _1300.type = new Data_Maybe.Just(ECharts_Axis.ValueAxis.value);
-            return _1300;
+            _1352.type = new Data_Maybe.Just(ECharts_Axis.ValueAxis.value);
+            return _1352;
         })()));
-        _1304.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.CandlestickSeries({
+        _1356.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.CandlestickSeries({
             common: ECharts_Series.universalSeriesDefault, 
-            special: (function () {
-                var _1302 = {};
-                for (var _1303 in ECharts_Series.candlestickSeriesDefault) {
-                    if (ECharts_Series.candlestickSeriesDefault.hasOwnProperty(_1303)) {
-                        _1302[_1303] = ECharts_Series.candlestickSeriesDefault[_1303];
+            candlestickSeries: (function () {
+                var _1354 = {};
+                for (var _1355 in ECharts_Series.candlestickSeriesDefault) {
+                    if (ECharts_Series.candlestickSeriesDefault.hasOwnProperty(_1355)) {
+                        _1354[_1355] = ECharts_Series.candlestickSeriesDefault[_1355];
                     };
                 };
-                _1302.data = Data_Maybe.Just.create([ simpleDat(2320.26)(2302.6)(2287.3)(2362.94), simpleDat(2300)(2291.3)(2288.26)(2308.38), simpleDat(2295.35)(2346.5)(2295.35)(2346.92), simpleDat(2347.22)(2358.98)(2337.35)(2363.8), simpleDat(2360.75)(2382.48)(2347.89)(2383.76) ]);
-                return _1302;
+                _1354.data = Data_Maybe.Just.create([ simpleDat(2320.26)(2302.6)(2287.3)(2362.94), simpleDat(2300)(2291.3)(2288.26)(2308.38), simpleDat(2295.35)(2346.5)(2295.35)(2346.92), simpleDat(2347.22)(2358.98)(2337.35)(2363.8), simpleDat(2360.75)(2382.48)(2347.89)(2383.76) ]);
+                return _1354;
             })()
         }) ]));
-        return _1304;
+        return _1356;
     })());
     var k = function (id) {
         return function __do() {
-            var _75 = Prelude[">>="](Control_Monad_Eff.bindEff)(Prelude[">>="](Control_Monad_Eff.bindEff)(Utils.getElementById(id))(ECharts_Chart.init(Data_Maybe.Nothing.value)))(ECharts_Options.setOption(options)(true))();
-            return Prelude.unit;
+            var _86 = Utils.getElementById(id)();
+            return (function () {
+                if (_86 instanceof Data_Maybe.Nothing) {
+                    return Debug_Trace.trace("incorrect id in k");
+                };
+                if (_86 instanceof Data_Maybe.Just) {
+                    return function __do() {
+                        var _ = Prelude[">>="](Control_Monad_Eff.bindEff)(ECharts_Chart.init(Data_Maybe.Nothing.value)(_86.value0))(ECharts_Options.setOption(options)(true))();
+                        return Prelude.unit;
+                    };
+                };
+                throw new Error("Failed pattern match");
+            })()();
         };
     };
     return {
@@ -5689,6 +6322,7 @@ PS.Line4 = (function () {
     var ECharts_Series = PS.ECharts_Series;
     var Prelude = PS.Prelude;
     var Utils = PS.Utils;
+    var Debug_Trace = PS.Debug_Trace;
     var ECharts_Chart = PS.ECharts_Chart;
     var ECharts_Item_Data = PS.ECharts_Item_Data;
     var ECharts_Item_Value = PS.ECharts_Item_Value;
@@ -5698,243 +6332,254 @@ PS.Line4 = (function () {
     var Control_Monad_Eff = PS.Control_Monad_Eff;
     var simpleData = Prelude["<<<"](Prelude.semigroupoidArr)(ECharts_Item_Data.Value.create)(ECharts_Item_Value.Simple.create);
     var options = ECharts_Options.Option.create((function () {
-        var _1349 = {};
-        for (var _1350 in ECharts_Options.optionDefault) {
-            if (ECharts_Options.optionDefault.hasOwnProperty(_1350)) {
-                _1349[_1350] = ECharts_Options.optionDefault[_1350];
+        var _1403 = {};
+        for (var _1404 in ECharts_Options.optionDefault) {
+            if (ECharts_Options.optionDefault.hasOwnProperty(_1404)) {
+                _1403[_1404] = ECharts_Options.optionDefault[_1404];
             };
         };
-        _1349.tooltip = Data_Maybe.Just.create((function () {
-            var _1307 = {};
-            for (var _1308 in ECharts_Tooltip.tooltipDefault) {
-                if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1308)) {
-                    _1307[_1308] = ECharts_Tooltip.tooltipDefault[_1308];
+        _1403.tooltip = Data_Maybe.Just.create((function () {
+            var _1361 = {};
+            for (var _1362 in ECharts_Tooltip.tooltipDefault) {
+                if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1362)) {
+                    _1361[_1362] = ECharts_Tooltip.tooltipDefault[_1362];
                 };
             };
-            _1307.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerAxis.value);
-            return _1307;
+            _1361.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerAxis.value);
+            return _1361;
         })());
-        _1349.legend = Data_Maybe.Just.create((function () {
-            var _1309 = {};
-            for (var _1310 in ECharts_Legend.legendDefault) {
-                if (ECharts_Legend.legendDefault.hasOwnProperty(_1310)) {
-                    _1309[_1310] = ECharts_Legend.legendDefault[_1310];
+        _1403.legend = Data_Maybe.Just.create((function () {
+            var _1363 = {};
+            for (var _1364 in ECharts_Legend.legendDefault) {
+                if (ECharts_Legend.legendDefault.hasOwnProperty(_1364)) {
+                    _1363[_1364] = ECharts_Legend.legendDefault[_1364];
                 };
             };
-            _1309.x = new Data_Maybe.Just(ECharts_Coords.XLeft.value);
-            _1309.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Legend.legendItemDefault)([ "email marketing", "affiliate advertising", "video ads", "direct access", "search engine" ]));
-            return _1309;
+            _1363.x = new Data_Maybe.Just(ECharts_Coords.XLeft.value);
+            _1363.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Legend.legendItemDefault)([ "email marketing", "affiliate advertising", "video ads", "direct access", "search engine" ]));
+            return _1363;
         })());
-        _1349.toolbox = Data_Maybe.Just.create(ECharts_Toolbox.Toolbox.create((function () {
-            var _1323 = {};
-            for (var _1324 in ECharts_Toolbox.toolboxDefault) {
-                if (ECharts_Toolbox.toolboxDefault.hasOwnProperty(_1324)) {
-                    _1323[_1324] = ECharts_Toolbox.toolboxDefault[_1324];
+        _1403.toolbox = Data_Maybe.Just.create(ECharts_Toolbox.Toolbox.create((function () {
+            var _1377 = {};
+            for (var _1378 in ECharts_Toolbox.toolboxDefault) {
+                if (ECharts_Toolbox.toolboxDefault.hasOwnProperty(_1378)) {
+                    _1377[_1378] = ECharts_Toolbox.toolboxDefault[_1378];
                 };
             };
-            _1323.show = new Data_Maybe.Just(true);
-            _1323.x = new Data_Maybe.Just(ECharts_Coords.XRight.value);
-            _1323.feature = Data_Maybe.Just.create(ECharts_Toolbox.Feature.create((function () {
-                var _1321 = {};
-                for (var _1322 in ECharts_Toolbox.featureDefault) {
-                    if (ECharts_Toolbox.featureDefault.hasOwnProperty(_1322)) {
-                        _1321[_1322] = ECharts_Toolbox.featureDefault[_1322];
+            _1377.show = new Data_Maybe.Just(true);
+            _1377.x = new Data_Maybe.Just(ECharts_Coords.XRight.value);
+            _1377.feature = Data_Maybe.Just.create(ECharts_Toolbox.Feature.create((function () {
+                var _1375 = {};
+                for (var _1376 in ECharts_Toolbox.featureDefault) {
+                    if (ECharts_Toolbox.featureDefault.hasOwnProperty(_1376)) {
+                        _1375[_1376] = ECharts_Toolbox.featureDefault[_1376];
                     };
                 };
-                _1321.mark = Data_Maybe.Just.create(ECharts_Toolbox.MarkFeature.create((function () {
-                    var _1311 = {};
-                    for (var _1312 in ECharts_Toolbox.markFeatureDefault) {
-                        if (ECharts_Toolbox.markFeatureDefault.hasOwnProperty(_1312)) {
-                            _1311[_1312] = ECharts_Toolbox.markFeatureDefault[_1312];
+                _1375.mark = Data_Maybe.Just.create(ECharts_Toolbox.MarkFeature.create((function () {
+                    var _1365 = {};
+                    for (var _1366 in ECharts_Toolbox.markFeatureDefault) {
+                        if (ECharts_Toolbox.markFeatureDefault.hasOwnProperty(_1366)) {
+                            _1365[_1366] = ECharts_Toolbox.markFeatureDefault[_1366];
                         };
                     };
-                    _1311.show = new Data_Maybe.Just(true);
-                    return _1311;
+                    _1365.show = new Data_Maybe.Just(true);
+                    return _1365;
                 })()));
-                _1321.dataView = Data_Maybe.Just.create(ECharts_Toolbox.DataViewFeature.create((function () {
-                    var _1313 = {};
-                    for (var _1314 in ECharts_Toolbox.dataViewFeatureDefault) {
-                        if (ECharts_Toolbox.dataViewFeatureDefault.hasOwnProperty(_1314)) {
-                            _1313[_1314] = ECharts_Toolbox.dataViewFeatureDefault[_1314];
+                _1375.dataView = Data_Maybe.Just.create(ECharts_Toolbox.DataViewFeature.create((function () {
+                    var _1367 = {};
+                    for (var _1368 in ECharts_Toolbox.dataViewFeatureDefault) {
+                        if (ECharts_Toolbox.dataViewFeatureDefault.hasOwnProperty(_1368)) {
+                            _1367[_1368] = ECharts_Toolbox.dataViewFeatureDefault[_1368];
                         };
                     };
-                    _1313.show = new Data_Maybe.Just(true);
-                    _1313.readOnly = new Data_Maybe.Just(false);
-                    return _1313;
+                    _1367.show = new Data_Maybe.Just(true);
+                    _1367.readOnly = new Data_Maybe.Just(false);
+                    return _1367;
                 })()));
-                _1321.magicType = Data_Maybe.Just.create(ECharts_Toolbox.MagicTypeFeature.create((function () {
-                    var _1315 = {};
-                    for (var _1316 in ECharts_Toolbox.magicTypeFeatureDefault) {
-                        if (ECharts_Toolbox.magicTypeFeatureDefault.hasOwnProperty(_1316)) {
-                            _1315[_1316] = ECharts_Toolbox.magicTypeFeatureDefault[_1316];
+                _1375.magicType = Data_Maybe.Just.create(ECharts_Toolbox.MagicTypeFeature.create((function () {
+                    var _1369 = {};
+                    for (var _1370 in ECharts_Toolbox.magicTypeFeatureDefault) {
+                        if (ECharts_Toolbox.magicTypeFeatureDefault.hasOwnProperty(_1370)) {
+                            _1369[_1370] = ECharts_Toolbox.magicTypeFeatureDefault[_1370];
                         };
                     };
-                    _1315.show = new Data_Maybe.Just(true);
-                    _1315.type = new Data_Maybe.Just([ ECharts_Toolbox.MagicLine.value, ECharts_Toolbox.MagicBar.value, ECharts_Toolbox.MagicStack.value, ECharts_Toolbox.MagicTiled.value ]);
-                    return _1315;
+                    _1369.show = new Data_Maybe.Just(true);
+                    _1369.type = new Data_Maybe.Just([ ECharts_Toolbox.MagicLine.value, ECharts_Toolbox.MagicBar.value, ECharts_Toolbox.MagicStack.value, ECharts_Toolbox.MagicTiled.value ]);
+                    return _1369;
                 })()));
-                _1321.restore = Data_Maybe.Just.create(ECharts_Toolbox.RestoreFeature.create((function () {
-                    var _1317 = {};
-                    for (var _1318 in ECharts_Toolbox.restoreFeatureDefault) {
-                        if (ECharts_Toolbox.restoreFeatureDefault.hasOwnProperty(_1318)) {
-                            _1317[_1318] = ECharts_Toolbox.restoreFeatureDefault[_1318];
+                _1375.restore = Data_Maybe.Just.create(ECharts_Toolbox.RestoreFeature.create((function () {
+                    var _1371 = {};
+                    for (var _1372 in ECharts_Toolbox.restoreFeatureDefault) {
+                        if (ECharts_Toolbox.restoreFeatureDefault.hasOwnProperty(_1372)) {
+                            _1371[_1372] = ECharts_Toolbox.restoreFeatureDefault[_1372];
                         };
                     };
-                    _1317.show = new Data_Maybe.Just(true);
-                    return _1317;
+                    _1371.show = new Data_Maybe.Just(true);
+                    return _1371;
                 })()));
-                _1321.saveAsImage = Data_Maybe.Just.create(ECharts_Toolbox.SaveAsImageFeature.create((function () {
-                    var _1319 = {};
-                    for (var _1320 in ECharts_Toolbox.saveAsImageFeatureDefault) {
-                        if (ECharts_Toolbox.saveAsImageFeatureDefault.hasOwnProperty(_1320)) {
-                            _1319[_1320] = ECharts_Toolbox.saveAsImageFeatureDefault[_1320];
+                _1375.saveAsImage = Data_Maybe.Just.create(ECharts_Toolbox.SaveAsImageFeature.create((function () {
+                    var _1373 = {};
+                    for (var _1374 in ECharts_Toolbox.saveAsImageFeatureDefault) {
+                        if (ECharts_Toolbox.saveAsImageFeatureDefault.hasOwnProperty(_1374)) {
+                            _1373[_1374] = ECharts_Toolbox.saveAsImageFeatureDefault[_1374];
                         };
                     };
-                    _1319.show = new Data_Maybe.Just(true);
-                    return _1319;
+                    _1373.show = new Data_Maybe.Just(true);
+                    return _1373;
                 })()));
-                return _1321;
+                return _1375;
             })()));
-            return _1323;
+            return _1377;
         })()));
-        _1349.calculable = new Data_Maybe.Just(true);
-        _1349.xAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create(ECharts_Axis.Axis.create((function () {
-            var _1325 = {};
-            for (var _1326 in ECharts_Axis.axisDefault) {
-                if (ECharts_Axis.axisDefault.hasOwnProperty(_1326)) {
-                    _1325[_1326] = ECharts_Axis.axisDefault[_1326];
+        _1403.calculable = new Data_Maybe.Just(true);
+        _1403.xAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create(ECharts_Axis.Axis.create((function () {
+            var _1379 = {};
+            for (var _1380 in ECharts_Axis.axisDefault) {
+                if (ECharts_Axis.axisDefault.hasOwnProperty(_1380)) {
+                    _1379[_1380] = ECharts_Axis.axisDefault[_1380];
                 };
             };
-            _1325.type = new Data_Maybe.Just(ECharts_Axis.CategoryAxis.value);
-            _1325.boundaryGap = Data_Maybe.Just.create(new ECharts_Axis.CatBoundaryGap(false));
-            _1325.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Axis.CommonAxisData.create)([ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ]));
-            return _1325;
+            _1379.type = new Data_Maybe.Just(ECharts_Axis.CategoryAxis.value);
+            _1379.boundaryGap = Data_Maybe.Just.create(new ECharts_Axis.CatBoundaryGap(false));
+            _1379.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Axis.CommonAxisData.create)([ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ]));
+            return _1379;
         })())));
-        _1349.yAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create(ECharts_Axis.Axis.create((function () {
-            var _1327 = {};
-            for (var _1328 in ECharts_Axis.axisDefault) {
-                if (ECharts_Axis.axisDefault.hasOwnProperty(_1328)) {
-                    _1327[_1328] = ECharts_Axis.axisDefault[_1328];
+        _1403.yAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create(ECharts_Axis.Axis.create((function () {
+            var _1381 = {};
+            for (var _1382 in ECharts_Axis.axisDefault) {
+                if (ECharts_Axis.axisDefault.hasOwnProperty(_1382)) {
+                    _1381[_1382] = ECharts_Axis.axisDefault[_1382];
                 };
             };
-            _1327.type = new Data_Maybe.Just(ECharts_Axis.ValueAxis.value);
-            return _1327;
+            _1381.type = new Data_Maybe.Just(ECharts_Axis.ValueAxis.value);
+            return _1381;
         })())));
-        _1349.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.LineSeries({
+        _1403.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.LineSeries({
             common: (function () {
-                var _1329 = {};
-                for (var _1330 in ECharts_Series.universalSeriesDefault) {
-                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1330)) {
-                        _1329[_1330] = ECharts_Series.universalSeriesDefault[_1330];
+                var _1383 = {};
+                for (var _1384 in ECharts_Series.universalSeriesDefault) {
+                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1384)) {
+                        _1383[_1384] = ECharts_Series.universalSeriesDefault[_1384];
                     };
                 };
-                _1329.name = new Data_Maybe.Just("email marketing");
-                return _1329;
+                _1383.name = new Data_Maybe.Just("email marketing");
+                return _1383;
             })(), 
-            special: (function () {
-                var _1331 = {};
-                for (var _1332 in ECharts_Series.lineSeriesDefault) {
-                    if (ECharts_Series.lineSeriesDefault.hasOwnProperty(_1332)) {
-                        _1331[_1332] = ECharts_Series.lineSeriesDefault[_1332];
+            lineSeries: (function () {
+                var _1385 = {};
+                for (var _1386 in ECharts_Series.lineSeriesDefault) {
+                    if (ECharts_Series.lineSeriesDefault.hasOwnProperty(_1386)) {
+                        _1385[_1386] = ECharts_Series.lineSeriesDefault[_1386];
                     };
                 };
-                _1331.stack = new Data_Maybe.Just("total");
-                _1331.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 120, 132, 101, 134, 90, 230, 210 ]));
-                return _1331;
+                _1385.stack = new Data_Maybe.Just("total");
+                _1385.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 120, 132, 101, 134, 90, 230, 210 ]));
+                return _1385;
             })()
         }), new ECharts_Series.LineSeries({
             common: (function () {
-                var _1333 = {};
-                for (var _1334 in ECharts_Series.universalSeriesDefault) {
-                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1334)) {
-                        _1333[_1334] = ECharts_Series.universalSeriesDefault[_1334];
+                var _1387 = {};
+                for (var _1388 in ECharts_Series.universalSeriesDefault) {
+                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1388)) {
+                        _1387[_1388] = ECharts_Series.universalSeriesDefault[_1388];
                     };
                 };
-                _1333.name = new Data_Maybe.Just("affiliate advertising");
-                return _1333;
+                _1387.name = new Data_Maybe.Just("affiliate advertising");
+                return _1387;
             })(), 
-            special: (function () {
-                var _1335 = {};
-                for (var _1336 in ECharts_Series.lineSeriesDefault) {
-                    if (ECharts_Series.lineSeriesDefault.hasOwnProperty(_1336)) {
-                        _1335[_1336] = ECharts_Series.lineSeriesDefault[_1336];
+            lineSeries: (function () {
+                var _1389 = {};
+                for (var _1390 in ECharts_Series.lineSeriesDefault) {
+                    if (ECharts_Series.lineSeriesDefault.hasOwnProperty(_1390)) {
+                        _1389[_1390] = ECharts_Series.lineSeriesDefault[_1390];
                     };
                 };
-                _1335.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 220, 182, 191, 234, 290, 330, 310 ]));
-                return _1335;
+                _1389.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 220, 182, 191, 234, 290, 330, 310 ]));
+                return _1389;
             })()
         }), new ECharts_Series.LineSeries({
             common: (function () {
-                var _1337 = {};
-                for (var _1338 in ECharts_Series.universalSeriesDefault) {
-                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1338)) {
-                        _1337[_1338] = ECharts_Series.universalSeriesDefault[_1338];
+                var _1391 = {};
+                for (var _1392 in ECharts_Series.universalSeriesDefault) {
+                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1392)) {
+                        _1391[_1392] = ECharts_Series.universalSeriesDefault[_1392];
                     };
                 };
-                _1337.name = new Data_Maybe.Just("video ads");
-                return _1337;
+                _1391.name = new Data_Maybe.Just("video ads");
+                return _1391;
             })(), 
-            special: (function () {
-                var _1339 = {};
-                for (var _1340 in ECharts_Series.lineSeriesDefault) {
-                    if (ECharts_Series.lineSeriesDefault.hasOwnProperty(_1340)) {
-                        _1339[_1340] = ECharts_Series.lineSeriesDefault[_1340];
+            lineSeries: (function () {
+                var _1393 = {};
+                for (var _1394 in ECharts_Series.lineSeriesDefault) {
+                    if (ECharts_Series.lineSeriesDefault.hasOwnProperty(_1394)) {
+                        _1393[_1394] = ECharts_Series.lineSeriesDefault[_1394];
                     };
                 };
-                _1339.stack = new Data_Maybe.Just("total");
-                _1339.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 150, 232, 201, 154, 190, 330, 410 ]));
-                return _1339;
+                _1393.stack = new Data_Maybe.Just("total");
+                _1393.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 150, 232, 201, 154, 190, 330, 410 ]));
+                return _1393;
             })()
         }), new ECharts_Series.LineSeries({
             common: (function () {
-                var _1341 = {};
-                for (var _1342 in ECharts_Series.universalSeriesDefault) {
-                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1342)) {
-                        _1341[_1342] = ECharts_Series.universalSeriesDefault[_1342];
+                var _1395 = {};
+                for (var _1396 in ECharts_Series.universalSeriesDefault) {
+                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1396)) {
+                        _1395[_1396] = ECharts_Series.universalSeriesDefault[_1396];
                     };
                 };
-                _1341.name = new Data_Maybe.Just("direct access");
-                return _1341;
+                _1395.name = new Data_Maybe.Just("direct access");
+                return _1395;
             })(), 
-            special: (function () {
-                var _1343 = {};
-                for (var _1344 in ECharts_Series.lineSeriesDefault) {
-                    if (ECharts_Series.lineSeriesDefault.hasOwnProperty(_1344)) {
-                        _1343[_1344] = ECharts_Series.lineSeriesDefault[_1344];
+            lineSeries: (function () {
+                var _1397 = {};
+                for (var _1398 in ECharts_Series.lineSeriesDefault) {
+                    if (ECharts_Series.lineSeriesDefault.hasOwnProperty(_1398)) {
+                        _1397[_1398] = ECharts_Series.lineSeriesDefault[_1398];
                     };
                 };
-                _1343.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 320, 332, 301, 334, 390, 330, 320 ]));
-                return _1343;
+                _1397.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 320, 332, 301, 334, 390, 330, 320 ]));
+                return _1397;
             })()
         }), new ECharts_Series.LineSeries({
             common: (function () {
-                var _1345 = {};
-                for (var _1346 in ECharts_Series.universalSeriesDefault) {
-                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1346)) {
-                        _1345[_1346] = ECharts_Series.universalSeriesDefault[_1346];
+                var _1399 = {};
+                for (var _1400 in ECharts_Series.universalSeriesDefault) {
+                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1400)) {
+                        _1399[_1400] = ECharts_Series.universalSeriesDefault[_1400];
                     };
                 };
-                _1345.name = new Data_Maybe.Just("search engine");
-                return _1345;
+                _1399.name = new Data_Maybe.Just("search engine");
+                return _1399;
             })(), 
-            special: (function () {
-                var _1347 = {};
-                for (var _1348 in ECharts_Series.lineSeriesDefault) {
-                    if (ECharts_Series.lineSeriesDefault.hasOwnProperty(_1348)) {
-                        _1347[_1348] = ECharts_Series.lineSeriesDefault[_1348];
+            lineSeries: (function () {
+                var _1401 = {};
+                for (var _1402 in ECharts_Series.lineSeriesDefault) {
+                    if (ECharts_Series.lineSeriesDefault.hasOwnProperty(_1402)) {
+                        _1401[_1402] = ECharts_Series.lineSeriesDefault[_1402];
                     };
                 };
-                _1347.stack = new Data_Maybe.Just("total");
-                _1347.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 820, 932, 901, 934, 1290, 1330, 1320 ]));
-                return _1347;
+                _1401.stack = new Data_Maybe.Just("total");
+                _1401.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 820, 932, 901, 934, 1290, 1330, 1320 ]));
+                return _1401;
             })()
         }) ]));
-        return _1349;
+        return _1403;
     })());
     var line4 = function (id) {
         return function __do() {
-            var _77 = Prelude[">>="](Control_Monad_Eff.bindEff)(Prelude[">>="](Control_Monad_Eff.bindEff)(Utils.getElementById(id))(ECharts_Chart.init(Data_Maybe.Nothing.value)))(ECharts_Options.setOption(options)(true))();
-            return Prelude.unit;
+            var _87 = Utils.getElementById(id)();
+            return (function () {
+                if (_87 instanceof Data_Maybe.Nothing) {
+                    return Debug_Trace.trace("incorrect id in line4");
+                };
+                if (_87 instanceof Data_Maybe.Just) {
+                    return function __do() {
+                        var _ = Prelude[">>="](Control_Monad_Eff.bindEff)(ECharts_Chart.init(Data_Maybe.Nothing.value)(_87.value0))(ECharts_Options.setOption(options)(true))();
+                        return Prelude.unit;
+                    };
+                };
+                throw new Error("Failed pattern match");
+            })()();
         };
     };
     return {
@@ -5958,6 +6603,7 @@ PS.Loading = (function () {
     var Prelude = PS.Prelude;
     var Utils = PS.Utils;
     var Signal_Time = PS.Signal_Time;
+    var Debug_Trace = PS.Debug_Trace;
     var ECharts_Chart = PS.ECharts_Chart;
     var ECharts_Item_Data = PS.ECharts_Item_Data;
     var ECharts_Item_Value = PS.ECharts_Item_Value;
@@ -5978,94 +6624,94 @@ PS.Loading = (function () {
         return new StopLoading(value0);
     };
     var simpleData = Prelude["<<<"](Prelude.semigroupoidArr)(ECharts_Item_Data.Value.create)(ECharts_Item_Value.Simple.create);
-    var series = function (_849) {
-        if (_849) {
+    var series = function (_881) {
+        if (_881) {
             return [ new ECharts_Series.LineSeries({
                 common: (function () {
-                    var _1353 = {};
-                    for (var _1354 in ECharts_Series.universalSeriesDefault) {
-                        if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1354)) {
-                            _1353[_1354] = ECharts_Series.universalSeriesDefault[_1354];
+                    var _1409 = {};
+                    for (var _1410 in ECharts_Series.universalSeriesDefault) {
+                        if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1410)) {
+                            _1409[_1410] = ECharts_Series.universalSeriesDefault[_1410];
                         };
                     };
-                    _1353.name = new Data_Maybe.Just("first");
-                    return _1353;
+                    _1409.name = new Data_Maybe.Just("first");
+                    return _1409;
                 })(), 
-                special: (function () {
-                    var _1355 = {};
-                    for (var _1356 in ECharts_Series.lineSeriesDefault) {
-                        if (ECharts_Series.lineSeriesDefault.hasOwnProperty(_1356)) {
-                            _1355[_1356] = ECharts_Series.lineSeriesDefault[_1356];
+                lineSeries: (function () {
+                    var _1411 = {};
+                    for (var _1412 in ECharts_Series.lineSeriesDefault) {
+                        if (ECharts_Series.lineSeriesDefault.hasOwnProperty(_1412)) {
+                            _1411[_1412] = ECharts_Series.lineSeriesDefault[_1412];
                         };
                     };
-                    _1355.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3 ]));
-                    return _1355;
+                    _1411.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3 ]));
+                    return _1411;
                 })()
             }), new ECharts_Series.LineSeries({
                 common: (function () {
-                    var _1357 = {};
-                    for (var _1358 in ECharts_Series.universalSeriesDefault) {
-                        if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1358)) {
-                            _1357[_1358] = ECharts_Series.universalSeriesDefault[_1358];
+                    var _1413 = {};
+                    for (var _1414 in ECharts_Series.universalSeriesDefault) {
+                        if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1414)) {
+                            _1413[_1414] = ECharts_Series.universalSeriesDefault[_1414];
                         };
                     };
-                    _1357.name = new Data_Maybe.Just("second");
-                    return _1357;
+                    _1413.name = new Data_Maybe.Just("second");
+                    return _1413;
                 })(), 
-                special: (function () {
-                    var _1359 = {};
-                    for (var _1360 in ECharts_Series.lineSeriesDefault) {
-                        if (ECharts_Series.lineSeriesDefault.hasOwnProperty(_1360)) {
-                            _1359[_1360] = ECharts_Series.lineSeriesDefault[_1360];
+                lineSeries: (function () {
+                    var _1415 = {};
+                    for (var _1416 in ECharts_Series.lineSeriesDefault) {
+                        if (ECharts_Series.lineSeriesDefault.hasOwnProperty(_1416)) {
+                            _1415[_1416] = ECharts_Series.lineSeriesDefault[_1416];
                         };
                     };
-                    _1359.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3 ]));
-                    return _1359;
+                    _1415.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3 ]));
+                    return _1415;
                 })()
             }) ];
         };
-        if (!_849) {
+        if (!_881) {
             return [ new ECharts_Series.BarSeries({
                 common: (function () {
-                    var _1361 = {};
-                    for (var _1362 in ECharts_Series.universalSeriesDefault) {
-                        if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1362)) {
-                            _1361[_1362] = ECharts_Series.universalSeriesDefault[_1362];
+                    var _1417 = {};
+                    for (var _1418 in ECharts_Series.universalSeriesDefault) {
+                        if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1418)) {
+                            _1417[_1418] = ECharts_Series.universalSeriesDefault[_1418];
                         };
                     };
-                    _1361.name = new Data_Maybe.Just("first");
-                    return _1361;
+                    _1417.name = new Data_Maybe.Just("first");
+                    return _1417;
                 })(), 
-                special: (function () {
-                    var _1363 = {};
-                    for (var _1364 in ECharts_Series.barSeriesDefault) {
-                        if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1364)) {
-                            _1363[_1364] = ECharts_Series.barSeriesDefault[_1364];
+                barSeries: (function () {
+                    var _1419 = {};
+                    for (var _1420 in ECharts_Series.barSeriesDefault) {
+                        if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1420)) {
+                            _1419[_1420] = ECharts_Series.barSeriesDefault[_1420];
                         };
                     };
-                    _1363.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3 ]));
-                    return _1363;
+                    _1419.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3 ]));
+                    return _1419;
                 })()
             }), new ECharts_Series.BarSeries({
                 common: (function () {
-                    var _1365 = {};
-                    for (var _1366 in ECharts_Series.universalSeriesDefault) {
-                        if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1366)) {
-                            _1365[_1366] = ECharts_Series.universalSeriesDefault[_1366];
+                    var _1421 = {};
+                    for (var _1422 in ECharts_Series.universalSeriesDefault) {
+                        if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1422)) {
+                            _1421[_1422] = ECharts_Series.universalSeriesDefault[_1422];
                         };
                     };
-                    _1365.name = new Data_Maybe.Just("second");
-                    return _1365;
+                    _1421.name = new Data_Maybe.Just("second");
+                    return _1421;
                 })(), 
-                special: (function () {
-                    var _1367 = {};
-                    for (var _1368 in ECharts_Series.barSeriesDefault) {
-                        if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1368)) {
-                            _1367[_1368] = ECharts_Series.barSeriesDefault[_1368];
+                barSeries: (function () {
+                    var _1423 = {};
+                    for (var _1424 in ECharts_Series.barSeriesDefault) {
+                        if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1424)) {
+                            _1423[_1424] = ECharts_Series.barSeriesDefault[_1424];
                         };
                     };
-                    _1367.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3 ]));
-                    return _1367;
+                    _1423.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3 ]));
+                    return _1423;
                 })()
             }) ];
         };
@@ -6073,167 +6719,167 @@ PS.Loading = (function () {
     };
     var options = function (i) {
         return ECharts_Options.Option.create((function () {
-            var _1391 = {};
-            for (var _1392 in ECharts_Options.optionDefault) {
-                if (ECharts_Options.optionDefault.hasOwnProperty(_1392)) {
-                    _1391[_1392] = ECharts_Options.optionDefault[_1392];
+            var _1447 = {};
+            for (var _1448 in ECharts_Options.optionDefault) {
+                if (ECharts_Options.optionDefault.hasOwnProperty(_1448)) {
+                    _1447[_1448] = ECharts_Options.optionDefault[_1448];
                 };
             };
-            _1391.tooltip = Data_Maybe.Just.create((function () {
-                var _1369 = {};
-                for (var _1370 in ECharts_Tooltip.tooltipDefault) {
-                    if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1370)) {
-                        _1369[_1370] = ECharts_Tooltip.tooltipDefault[_1370];
+            _1447.tooltip = Data_Maybe.Just.create((function () {
+                var _1425 = {};
+                for (var _1426 in ECharts_Tooltip.tooltipDefault) {
+                    if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1426)) {
+                        _1425[_1426] = ECharts_Tooltip.tooltipDefault[_1426];
                     };
                 };
-                _1369.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerAxis.value);
-                return _1369;
+                _1425.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerAxis.value);
+                return _1425;
             })());
-            _1391.toolbox = Data_Maybe.Just.create(ECharts_Toolbox.Toolbox.create((function () {
-                var _1383 = {};
-                for (var _1384 in ECharts_Toolbox.toolboxDefault) {
-                    if (ECharts_Toolbox.toolboxDefault.hasOwnProperty(_1384)) {
-                        _1383[_1384] = ECharts_Toolbox.toolboxDefault[_1384];
+            _1447.toolbox = Data_Maybe.Just.create(ECharts_Toolbox.Toolbox.create((function () {
+                var _1439 = {};
+                for (var _1440 in ECharts_Toolbox.toolboxDefault) {
+                    if (ECharts_Toolbox.toolboxDefault.hasOwnProperty(_1440)) {
+                        _1439[_1440] = ECharts_Toolbox.toolboxDefault[_1440];
                     };
                 };
-                _1383.show = new Data_Maybe.Just(true);
-                _1383.feature = Data_Maybe.Just.create(ECharts_Toolbox.Feature.create((function () {
-                    var _1381 = {};
-                    for (var _1382 in ECharts_Toolbox.featureDefault) {
-                        if (ECharts_Toolbox.featureDefault.hasOwnProperty(_1382)) {
-                            _1381[_1382] = ECharts_Toolbox.featureDefault[_1382];
+                _1439.show = new Data_Maybe.Just(true);
+                _1439.feature = Data_Maybe.Just.create(ECharts_Toolbox.Feature.create((function () {
+                    var _1437 = {};
+                    for (var _1438 in ECharts_Toolbox.featureDefault) {
+                        if (ECharts_Toolbox.featureDefault.hasOwnProperty(_1438)) {
+                            _1437[_1438] = ECharts_Toolbox.featureDefault[_1438];
                         };
                     };
-                    _1381.mark = Data_Maybe.Just.create(ECharts_Toolbox.MarkFeature.create((function () {
-                        var _1371 = {};
-                        for (var _1372 in ECharts_Toolbox.markFeatureDefault) {
-                            if (ECharts_Toolbox.markFeatureDefault.hasOwnProperty(_1372)) {
-                                _1371[_1372] = ECharts_Toolbox.markFeatureDefault[_1372];
+                    _1437.mark = Data_Maybe.Just.create(ECharts_Toolbox.MarkFeature.create((function () {
+                        var _1427 = {};
+                        for (var _1428 in ECharts_Toolbox.markFeatureDefault) {
+                            if (ECharts_Toolbox.markFeatureDefault.hasOwnProperty(_1428)) {
+                                _1427[_1428] = ECharts_Toolbox.markFeatureDefault[_1428];
                             };
                         };
-                        _1371.show = new Data_Maybe.Just(true);
-                        return _1371;
+                        _1427.show = new Data_Maybe.Just(true);
+                        return _1427;
                     })()));
-                    _1381.dataView = Data_Maybe.Just.create(ECharts_Toolbox.DataViewFeature.create((function () {
-                        var _1373 = {};
-                        for (var _1374 in ECharts_Toolbox.dataViewFeatureDefault) {
-                            if (ECharts_Toolbox.dataViewFeatureDefault.hasOwnProperty(_1374)) {
-                                _1373[_1374] = ECharts_Toolbox.dataViewFeatureDefault[_1374];
+                    _1437.dataView = Data_Maybe.Just.create(ECharts_Toolbox.DataViewFeature.create((function () {
+                        var _1429 = {};
+                        for (var _1430 in ECharts_Toolbox.dataViewFeatureDefault) {
+                            if (ECharts_Toolbox.dataViewFeatureDefault.hasOwnProperty(_1430)) {
+                                _1429[_1430] = ECharts_Toolbox.dataViewFeatureDefault[_1430];
                             };
                         };
-                        _1373.show = new Data_Maybe.Just(true);
-                        _1373.readOnly = new Data_Maybe.Just(false);
-                        return _1373;
+                        _1429.show = new Data_Maybe.Just(true);
+                        _1429.readOnly = new Data_Maybe.Just(false);
+                        return _1429;
                     })()));
-                    _1381.magicType = Data_Maybe.Just.create(ECharts_Toolbox.MagicTypeFeature.create((function () {
-                        var _1375 = {};
-                        for (var _1376 in ECharts_Toolbox.magicTypeFeatureDefault) {
-                            if (ECharts_Toolbox.magicTypeFeatureDefault.hasOwnProperty(_1376)) {
-                                _1375[_1376] = ECharts_Toolbox.magicTypeFeatureDefault[_1376];
+                    _1437.magicType = Data_Maybe.Just.create(ECharts_Toolbox.MagicTypeFeature.create((function () {
+                        var _1431 = {};
+                        for (var _1432 in ECharts_Toolbox.magicTypeFeatureDefault) {
+                            if (ECharts_Toolbox.magicTypeFeatureDefault.hasOwnProperty(_1432)) {
+                                _1431[_1432] = ECharts_Toolbox.magicTypeFeatureDefault[_1432];
                             };
                         };
-                        _1375.show = new Data_Maybe.Just(true);
-                        _1375.type = new Data_Maybe.Just([ ECharts_Toolbox.MagicLine.value, ECharts_Toolbox.MagicBar.value ]);
-                        return _1375;
+                        _1431.show = new Data_Maybe.Just(true);
+                        _1431.type = new Data_Maybe.Just([ ECharts_Toolbox.MagicLine.value, ECharts_Toolbox.MagicBar.value ]);
+                        return _1431;
                     })()));
-                    _1381.restore = Data_Maybe.Just.create(ECharts_Toolbox.RestoreFeature.create((function () {
-                        var _1377 = {};
-                        for (var _1378 in ECharts_Toolbox.restoreFeatureDefault) {
-                            if (ECharts_Toolbox.restoreFeatureDefault.hasOwnProperty(_1378)) {
-                                _1377[_1378] = ECharts_Toolbox.restoreFeatureDefault[_1378];
+                    _1437.restore = Data_Maybe.Just.create(ECharts_Toolbox.RestoreFeature.create((function () {
+                        var _1433 = {};
+                        for (var _1434 in ECharts_Toolbox.restoreFeatureDefault) {
+                            if (ECharts_Toolbox.restoreFeatureDefault.hasOwnProperty(_1434)) {
+                                _1433[_1434] = ECharts_Toolbox.restoreFeatureDefault[_1434];
                             };
                         };
-                        _1377.show = new Data_Maybe.Just(true);
-                        return _1377;
+                        _1433.show = new Data_Maybe.Just(true);
+                        return _1433;
                     })()));
-                    _1381.saveAsImage = Data_Maybe.Just.create(ECharts_Toolbox.SaveAsImageFeature.create((function () {
-                        var _1379 = {};
-                        for (var _1380 in ECharts_Toolbox.saveAsImageFeatureDefault) {
-                            if (ECharts_Toolbox.saveAsImageFeatureDefault.hasOwnProperty(_1380)) {
-                                _1379[_1380] = ECharts_Toolbox.saveAsImageFeatureDefault[_1380];
+                    _1437.saveAsImage = Data_Maybe.Just.create(ECharts_Toolbox.SaveAsImageFeature.create((function () {
+                        var _1435 = {};
+                        for (var _1436 in ECharts_Toolbox.saveAsImageFeatureDefault) {
+                            if (ECharts_Toolbox.saveAsImageFeatureDefault.hasOwnProperty(_1436)) {
+                                _1435[_1436] = ECharts_Toolbox.saveAsImageFeatureDefault[_1436];
                             };
                         };
-                        _1379.show = new Data_Maybe.Just(true);
-                        return _1379;
+                        _1435.show = new Data_Maybe.Just(true);
+                        return _1435;
                     })()));
-                    return _1381;
+                    return _1437;
                 })()));
-                return _1383;
+                return _1439;
             })()));
-            _1391.legend = Data_Maybe.Just.create((function () {
-                var _1385 = {};
-                for (var _1386 in ECharts_Legend.legendDefault) {
-                    if (ECharts_Legend.legendDefault.hasOwnProperty(_1386)) {
-                        _1385[_1386] = ECharts_Legend.legendDefault[_1386];
+            _1447.legend = Data_Maybe.Just.create((function () {
+                var _1441 = {};
+                for (var _1442 in ECharts_Legend.legendDefault) {
+                    if (ECharts_Legend.legendDefault.hasOwnProperty(_1442)) {
+                        _1441[_1442] = ECharts_Legend.legendDefault[_1442];
                     };
                 };
-                _1385.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Legend.legendItemDefault)([ "first", "second" ]));
-                return _1385;
+                _1441.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Legend.legendItemDefault)([ "first", "second" ]));
+                return _1441;
             })());
-            _1391.xAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create((function () {
-                var _1387 = {};
-                for (var _1388 in ECharts_Axis.axisDefault) {
-                    if (ECharts_Axis.axisDefault.hasOwnProperty(_1388)) {
-                        _1387[_1388] = ECharts_Axis.axisDefault[_1388];
+            _1447.xAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create((function () {
+                var _1443 = {};
+                for (var _1444 in ECharts_Axis.axisDefault) {
+                    if (ECharts_Axis.axisDefault.hasOwnProperty(_1444)) {
+                        _1443[_1444] = ECharts_Axis.axisDefault[_1444];
                     };
                 };
-                _1387.type = new Data_Maybe.Just(ECharts_Axis.CategoryAxis.value);
-                _1387.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Axis.CommonAxisData.create)([ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" ]));
-                return _1387;
+                _1443.type = new Data_Maybe.Just(ECharts_Axis.CategoryAxis.value);
+                _1443.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Axis.CommonAxisData.create)([ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" ]));
+                return _1443;
             })()));
-            _1391.yAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create((function () {
-                var _1389 = {};
-                for (var _1390 in ECharts_Axis.axisDefault) {
-                    if (ECharts_Axis.axisDefault.hasOwnProperty(_1390)) {
-                        _1389[_1390] = ECharts_Axis.axisDefault[_1390];
+            _1447.yAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create((function () {
+                var _1445 = {};
+                for (var _1446 in ECharts_Axis.axisDefault) {
+                    if (ECharts_Axis.axisDefault.hasOwnProperty(_1446)) {
+                        _1445[_1446] = ECharts_Axis.axisDefault[_1446];
                     };
                 };
-                _1389.type = new Data_Maybe.Just(ECharts_Axis.ValueAxis.value);
-                return _1389;
+                _1445.type = new Data_Maybe.Just(ECharts_Axis.ValueAxis.value);
+                return _1445;
             })()));
-            _1391.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)(series(i % 2 === 0)));
-            return _1391;
+            _1447.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)(series(i % 2 === 0)));
+            return _1447;
         })());
     };
     var effect = function (eff) {
         return ECharts_Loading.LoadingOption.create((function () {
-            var _1395 = {};
-            for (var _1396 in ECharts_Loading.loadingOptionDefault) {
-                if (ECharts_Loading.loadingOptionDefault.hasOwnProperty(_1396)) {
-                    _1395[_1396] = ECharts_Loading.loadingOptionDefault[_1396];
+            var _1451 = {};
+            for (var _1452 in ECharts_Loading.loadingOptionDefault) {
+                if (ECharts_Loading.loadingOptionDefault.hasOwnProperty(_1452)) {
+                    _1451[_1452] = ECharts_Loading.loadingOptionDefault[_1452];
                 };
             };
-            _1395.text = Data_Maybe.Just.create("effect");
-            _1395.effect = new Data_Maybe.Just(eff);
-            _1395.textStyle = Data_Maybe.Just.create(ECharts_Style_Text.TextStyle.create((function () {
-                var _1393 = {};
-                for (var _1394 in ECharts_Style_Text.textStyleDefault) {
-                    if (ECharts_Style_Text.textStyleDefault.hasOwnProperty(_1394)) {
-                        _1393[_1394] = ECharts_Style_Text.textStyleDefault[_1394];
+            _1451.text = Data_Maybe.Just.create("effect");
+            _1451.effect = new Data_Maybe.Just(eff);
+            _1451.textStyle = Data_Maybe.Just.create(ECharts_Style_Text.TextStyle.create((function () {
+                var _1449 = {};
+                for (var _1450 in ECharts_Style_Text.textStyleDefault) {
+                    if (ECharts_Style_Text.textStyleDefault.hasOwnProperty(_1450)) {
+                        _1449[_1450] = ECharts_Style_Text.textStyleDefault[_1450];
                     };
                 };
-                _1393.fontSize = new Data_Maybe.Just(20);
-                return _1393;
+                _1449.fontSize = new Data_Maybe.Just(20);
+                return _1449;
             })()));
-            return _1395;
+            return _1451;
         })());
     };
     var allEffects = [ ECharts_Loading.Spin.value, ECharts_Loading.Bar.value, ECharts_Loading.Ring.value, ECharts_Loading.Whirling.value, ECharts_Loading.DynamicLine.value, ECharts_Loading.Bubble.value ];
     var dataStream = Signal.foldp(function (_) {
         return function (curstateE) {
             return function __do() {
-                var _80 = curstateE();
+                var _90 = curstateE();
                 return (function () {
-                    if (_80 instanceof StartLoading) {
+                    if (_90 instanceof StartLoading) {
                         return function __do() {
-                            var _78 = Utils.randomInList(allEffects)();
-                            return StopLoading.create(options(_78.value1));
+                            var _88 = Utils.randomInList(allEffects)();
+                            return StopLoading.create(options(_88.value1));
                         };
                     };
-                    if (_80 instanceof StopLoading) {
+                    if (_90 instanceof StopLoading) {
                         return function __do() {
-                            var _79 = Utils.randomInList(allEffects)();
-                            return new StartLoading(effect(_79.value0));
+                            var _89 = Utils.randomInList(allEffects)();
+                            return new StartLoading(effect(_89.value0));
                         };
                     };
                     throw new Error("Failed pattern match");
@@ -6243,27 +6889,38 @@ PS.Loading = (function () {
     })(Prelude["return"](Control_Monad_Eff.monadEff)(new StartLoading(effect(ECharts_Loading.Spin.value))))(Signal_Time.every(2000));
     var loading = function (id) {
         return function __do() {
-            var _82 = Prelude[">>="](Control_Monad_Eff.bindEff)(Utils.getElementById(id))(ECharts_Chart.init(Data_Maybe.Nothing.value))();
-            return Signal.runSignal(Signal["~>"](Signal.functorSignal)(dataStream)(function (effContent) {
-                return function __do() {
-                    var _81 = effContent();
-                    return (function () {
-                        if (_81 instanceof StartLoading) {
-                            return function __do() {
-                                var _ = ECharts_Loading.showLoading(_81.value0)(_82)();
-                                return Prelude.unit;
-                            };
-                        };
-                        if (_81 instanceof StopLoading) {
-                            return function __do() {
-                                var _ = Prelude[">>="](Control_Monad_Eff.bindEff)(ECharts_Options.setOption(_81.value0)(true)(_82))(ECharts_Loading.hideLoading)();
-                                return Prelude.unit;
-                            };
-                        };
-                        throw new Error("Failed pattern match");
-                    })()();
+            var _93 = Utils.getElementById(id)();
+            return (function () {
+                if (_93 instanceof Data_Maybe.Nothing) {
+                    return Debug_Trace.trace("incorrect id in loading");
                 };
-            }))();
+                if (_93 instanceof Data_Maybe.Just) {
+                    return function __do() {
+                        var _92 = ECharts_Chart.init(Data_Maybe.Nothing.value)(_93.value0)();
+                        return Signal.runSignal(Signal["~>"](Signal.functorSignal)(dataStream)(function (effContent) {
+                            return function __do() {
+                                var _91 = effContent();
+                                return (function () {
+                                    if (_91 instanceof StartLoading) {
+                                        return function __do() {
+                                            var _ = ECharts_Loading.showLoading(_91.value0)(_92)();
+                                            return Prelude.unit;
+                                        };
+                                    };
+                                    if (_91 instanceof StopLoading) {
+                                        return function __do() {
+                                            var _ = Prelude[">>="](Control_Monad_Eff.bindEff)(ECharts_Options.setOption(_91.value0)(true)(_92))(ECharts_Loading.hideLoading)();
+                                            return Prelude.unit;
+                                        };
+                                    };
+                                    throw new Error("Failed pattern match");
+                                })()();
+                            };
+                        }))();
+                    };
+                };
+                throw new Error("Failed pattern match");
+            })()();
         };
     };
     return {
@@ -6289,83 +6946,95 @@ PS.Map11 = (function () {
     var Data_StrMap = PS.Data_StrMap;
     var Prelude = PS.Prelude;
     var Utils = PS.Utils;
+    var Debug_Trace = PS.Debug_Trace;
     var ECharts_Chart = PS.ECharts_Chart;
     var Data_Maybe = PS.Data_Maybe;
     var Data_Array = PS.Data_Array;
     var Data_Tuple = PS.Data_Tuple;
     var Control_Monad_Eff = PS.Control_Monad_Eff;
-    var nameValue = function (_850) {
+    var nameValue = function (_882) {
         return ECharts_Mark_Data.MarkPointData.create((function () {
-            var _1415 = {};
-            for (var _1416 in ECharts_Mark_Data.markPointDataDefault) {
-                if (ECharts_Mark_Data.markPointDataDefault.hasOwnProperty(_1416)) {
-                    _1415[_1416] = ECharts_Mark_Data.markPointDataDefault[_1416];
+            var _1474 = {};
+            for (var _1475 in ECharts_Mark_Data.markPointDataDefault) {
+                if (ECharts_Mark_Data.markPointDataDefault.hasOwnProperty(_1475)) {
+                    _1474[_1475] = ECharts_Mark_Data.markPointDataDefault[_1475];
                 };
             };
-            _1415.name = new Data_Maybe.Just(_850.name);
-            _1415.value = new Data_Maybe.Just(_850.value);
-            return _1415;
+            _1474.name = new Data_Maybe.Just(_882.name);
+            _1474.value = new Data_Maybe.Just(_882.value);
+            return _1474;
         })());
     };
     var option = ECharts_Options.Option.create((function () {
-        var _1427 = {};
-        for (var _1428 in ECharts_Options.optionDefault) {
-            if (ECharts_Options.optionDefault.hasOwnProperty(_1428)) {
-                _1427[_1428] = ECharts_Options.optionDefault[_1428];
+        var _1486 = {};
+        for (var _1487 in ECharts_Options.optionDefault) {
+            if (ECharts_Options.optionDefault.hasOwnProperty(_1487)) {
+                _1486[_1487] = ECharts_Options.optionDefault[_1487];
             };
         };
-        _1427.tooltip = Data_Maybe.Just.create((function () {
-            var _1419 = {};
-            for (var _1420 in ECharts_Tooltip.tooltipDefault) {
-                if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1420)) {
-                    _1419[_1420] = ECharts_Tooltip.tooltipDefault[_1420];
+        _1486.tooltip = Data_Maybe.Just.create((function () {
+            var _1478 = {};
+            for (var _1479 in ECharts_Tooltip.tooltipDefault) {
+                if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1479)) {
+                    _1478[_1479] = ECharts_Tooltip.tooltipDefault[_1479];
                 };
             };
-            _1419.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerItem.value);
-            return _1419;
+            _1478.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerItem.value);
+            return _1478;
         })());
-        _1427.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.MapSeries({
+        _1486.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.MapSeries({
             common: (function () {
-                var _1423 = {};
-                for (var _1424 in ECharts_Series.universalSeriesDefault) {
-                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1424)) {
-                        _1423[_1424] = ECharts_Series.universalSeriesDefault[_1424];
+                var _1482 = {};
+                for (var _1483 in ECharts_Series.universalSeriesDefault) {
+                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1483)) {
+                        _1482[_1483] = ECharts_Series.universalSeriesDefault[_1483];
                     };
                 };
-                _1423.markPoint = Data_Maybe.Just.create(ECharts_Mark_Point.MarkPoint.create((function () {
-                    var _1421 = {};
-                    for (var _1422 in ECharts_Mark_Point.markPointDefault) {
-                        if (ECharts_Mark_Point.markPointDefault.hasOwnProperty(_1422)) {
-                            _1421[_1422] = ECharts_Mark_Point.markPointDefault[_1422];
+                _1482.markPoint = Data_Maybe.Just.create(ECharts_Mark_Point.MarkPoint.create((function () {
+                    var _1480 = {};
+                    for (var _1481 in ECharts_Mark_Point.markPointDefault) {
+                        if (ECharts_Mark_Point.markPointDefault.hasOwnProperty(_1481)) {
+                            _1480[_1481] = ECharts_Mark_Point.markPointDefault[_1481];
                         };
                     };
-                    _1421.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(nameValue)([ {
+                    _1480.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(nameValue)([ {
                         name: "trololo", 
                         value: 123
                     } ]));
-                    return _1421;
+                    return _1480;
                 })()));
-                return _1423;
+                return _1482;
             })(), 
-            special: (function () {
-                var _1425 = {};
-                for (var _1426 in ECharts_Series.mapSeriesDefault) {
-                    if (ECharts_Series.mapSeriesDefault.hasOwnProperty(_1426)) {
-                        _1425[_1426] = ECharts_Series.mapSeriesDefault[_1426];
+            mapSeries: (function () {
+                var _1484 = {};
+                for (var _1485 in ECharts_Series.mapSeriesDefault) {
+                    if (ECharts_Series.mapSeriesDefault.hasOwnProperty(_1485)) {
+                        _1484[_1485] = ECharts_Series.mapSeriesDefault[_1485];
                     };
                 };
-                _1425.data = new Data_Maybe.Just([  ]);
-                _1425.mapType = new Data_Maybe.Just("china");
-                _1425.geoCoord = Data_Maybe.Just.create(Data_StrMap.fromList([ new Data_Tuple.Tuple("trololo", new Data_Tuple.Tuple(121, 43)) ]));
-                return _1425;
+                _1484.data = new Data_Maybe.Just([  ]);
+                _1484.mapType = new Data_Maybe.Just("china");
+                _1484.geoCoord = Data_Maybe.Just.create(Data_StrMap.fromList([ new Data_Tuple.Tuple("trololo", new Data_Tuple.Tuple(121, 43)) ]));
+                return _1484;
             })()
         }) ]));
-        return _1427;
+        return _1486;
     })());
     var map11 = function (id) {
         return function __do() {
-            var _83 = Prelude[">>="](Control_Monad_Eff.bindEff)(Prelude[">>="](Control_Monad_Eff.bindEff)(Utils.getElementById(id))(ECharts_Chart.init(Data_Maybe.Nothing.value)))(ECharts_Options.setOption(option)(true))();
-            return Prelude.unit;
+            var _94 = Utils.getElementById(id)();
+            return (function () {
+                if (_94 instanceof Data_Maybe.Nothing) {
+                    return Debug_Trace.trace("incorrect id in map11");
+                };
+                if (_94 instanceof Data_Maybe.Just) {
+                    return function __do() {
+                        var _ = Prelude[">>="](Control_Monad_Eff.bindEff)(ECharts_Chart.init(Data_Maybe.Nothing.value)(_94.value0))(ECharts_Options.setOption(option)(true))();
+                        return Prelude.unit;
+                    };
+                };
+                throw new Error("Failed pattern match");
+            })()();
         };
     };
     return {
@@ -6387,6 +7056,7 @@ PS.Mix2Safe = (function () {
     var ECharts_Axis = PS.ECharts_Axis;
     var Prelude = PS.Prelude;
     var Utils = PS.Utils;
+    var Debug_Trace = PS.Debug_Trace;
     var ECharts_Chart = PS.ECharts_Chart;
     var ECharts_Item_Value = PS.ECharts_Item_Value;
     var Data_Maybe = PS.Data_Maybe;
@@ -6399,259 +7069,259 @@ PS.Mix2Safe = (function () {
     var simpleData = Prelude["<<<"](Prelude.semigroupoidArr)(ECharts_Item_Data.Value.create)(ECharts_Item_Value.Simple.create);
     var series = [ new ECharts_Series.BarSeries({
         common: (function () {
-            var _1430 = {};
-            for (var _1431 in ECharts_Series.universalSeriesDefault) {
-                if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1431)) {
-                    _1430[_1431] = ECharts_Series.universalSeriesDefault[_1431];
+            var _1491 = {};
+            for (var _1492 in ECharts_Series.universalSeriesDefault) {
+                if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1492)) {
+                    _1491[_1492] = ECharts_Series.universalSeriesDefault[_1492];
                 };
             };
-            _1430.name = new Data_Maybe.Just("direct access");
-            return _1430;
+            _1491.name = new Data_Maybe.Just("direct access");
+            return _1491;
         })(), 
-        special: (function () {
-            var _1432 = {};
-            for (var _1433 in ECharts_Series.barSeriesDefault) {
-                if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1433)) {
-                    _1432[_1433] = ECharts_Series.barSeriesDefault[_1433];
+        barSeries: (function () {
+            var _1493 = {};
+            for (var _1494 in ECharts_Series.barSeriesDefault) {
+                if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1494)) {
+                    _1493[_1494] = ECharts_Series.barSeriesDefault[_1494];
                 };
             };
-            _1432.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 320, 332, 301, 334, 390, 330, 320 ]));
-            _1432.stack = new Data_Maybe.Just("total");
-            return _1432;
+            _1493.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 320, 332, 301, 334, 390, 330, 320 ]));
+            _1493.stack = new Data_Maybe.Just("total");
+            return _1493;
         })()
     }), new ECharts_Series.BarSeries({
         common: (function () {
-            var _1436 = {};
-            for (var _1437 in ECharts_Series.universalSeriesDefault) {
-                if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1437)) {
-                    _1436[_1437] = ECharts_Series.universalSeriesDefault[_1437];
+            var _1497 = {};
+            for (var _1498 in ECharts_Series.universalSeriesDefault) {
+                if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1498)) {
+                    _1497[_1498] = ECharts_Series.universalSeriesDefault[_1498];
                 };
             };
-            _1436.name = new Data_Maybe.Just("email marketing");
-            _1436.tooltip = Data_Maybe.Just.create(ECharts_Tooltip.Tooltip.create((function () {
-                var _1434 = {};
-                for (var _1435 in ECharts_Tooltip.tooltipDefault) {
-                    if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1435)) {
-                        _1434[_1435] = ECharts_Tooltip.tooltipDefault[_1435];
+            _1497.name = new Data_Maybe.Just("email marketing");
+            _1497.tooltip = Data_Maybe.Just.create(ECharts_Tooltip.Tooltip.create((function () {
+                var _1495 = {};
+                for (var _1496 in ECharts_Tooltip.tooltipDefault) {
+                    if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1496)) {
+                        _1495[_1496] = ECharts_Tooltip.tooltipDefault[_1496];
                     };
                 };
-                _1434.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerItem.value);
-                return _1434;
+                _1495.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerItem.value);
+                return _1495;
             })()));
-            return _1436;
+            return _1497;
         })(), 
-        special: (function () {
-            var _1438 = {};
-            for (var _1439 in ECharts_Series.barSeriesDefault) {
-                if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1439)) {
-                    _1438[_1439] = ECharts_Series.barSeriesDefault[_1439];
+        barSeries: (function () {
+            var _1499 = {};
+            for (var _1500 in ECharts_Series.barSeriesDefault) {
+                if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1500)) {
+                    _1499[_1500] = ECharts_Series.barSeriesDefault[_1500];
                 };
             };
-            _1438.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 120, 132, 101, 134, 90, 230, 210 ]));
-            _1438.stack = new Data_Maybe.Just("total");
-            return _1438;
+            _1499.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 120, 132, 101, 134, 90, 230, 210 ]));
+            _1499.stack = new Data_Maybe.Just("total");
+            return _1499;
         })()
     }), new ECharts_Series.BarSeries({
         common: (function () {
-            var _1442 = {};
-            for (var _1443 in ECharts_Series.universalSeriesDefault) {
-                if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1443)) {
-                    _1442[_1443] = ECharts_Series.universalSeriesDefault[_1443];
+            var _1503 = {};
+            for (var _1504 in ECharts_Series.universalSeriesDefault) {
+                if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1504)) {
+                    _1503[_1504] = ECharts_Series.universalSeriesDefault[_1504];
                 };
             };
-            _1442.name = new Data_Maybe.Just("affiliate advertising");
-            _1442.tooltip = Data_Maybe.Just.create(ECharts_Tooltip.Tooltip.create((function () {
-                var _1440 = {};
-                for (var _1441 in ECharts_Tooltip.tooltipDefault) {
-                    if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1441)) {
-                        _1440[_1441] = ECharts_Tooltip.tooltipDefault[_1441];
+            _1503.name = new Data_Maybe.Just("affiliate advertising");
+            _1503.tooltip = Data_Maybe.Just.create(ECharts_Tooltip.Tooltip.create((function () {
+                var _1501 = {};
+                for (var _1502 in ECharts_Tooltip.tooltipDefault) {
+                    if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1502)) {
+                        _1501[_1502] = ECharts_Tooltip.tooltipDefault[_1502];
                     };
                 };
-                _1440.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerItem.value);
-                return _1440;
+                _1501.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerItem.value);
+                return _1501;
             })()));
-            return _1442;
+            return _1503;
         })(), 
-        special: (function () {
-            var _1444 = {};
-            for (var _1445 in ECharts_Series.barSeriesDefault) {
-                if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1445)) {
-                    _1444[_1445] = ECharts_Series.barSeriesDefault[_1445];
+        barSeries: (function () {
+            var _1505 = {};
+            for (var _1506 in ECharts_Series.barSeriesDefault) {
+                if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1506)) {
+                    _1505[_1506] = ECharts_Series.barSeriesDefault[_1506];
                 };
             };
-            _1444.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 220, 182, 191, 234, 290, 330, 310 ]));
-            return _1444;
+            _1505.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 220, 182, 191, 234, 290, 330, 310 ]));
+            return _1505;
         })()
     }), new ECharts_Series.BarSeries({
         common: (function () {
-            var _1448 = {};
-            for (var _1449 in ECharts_Series.universalSeriesDefault) {
-                if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1449)) {
-                    _1448[_1449] = ECharts_Series.universalSeriesDefault[_1449];
+            var _1509 = {};
+            for (var _1510 in ECharts_Series.universalSeriesDefault) {
+                if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1510)) {
+                    _1509[_1510] = ECharts_Series.universalSeriesDefault[_1510];
                 };
             };
-            _1448.name = new Data_Maybe.Just("video ads");
-            _1448.tooltip = Data_Maybe.Just.create(ECharts_Tooltip.Tooltip.create((function () {
-                var _1446 = {};
-                for (var _1447 in ECharts_Tooltip.tooltipDefault) {
-                    if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1447)) {
-                        _1446[_1447] = ECharts_Tooltip.tooltipDefault[_1447];
+            _1509.name = new Data_Maybe.Just("video ads");
+            _1509.tooltip = Data_Maybe.Just.create(ECharts_Tooltip.Tooltip.create((function () {
+                var _1507 = {};
+                for (var _1508 in ECharts_Tooltip.tooltipDefault) {
+                    if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1508)) {
+                        _1507[_1508] = ECharts_Tooltip.tooltipDefault[_1508];
                     };
                 };
-                _1446.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerItem.value);
-                return _1446;
+                _1507.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerItem.value);
+                return _1507;
             })()));
-            return _1448;
+            return _1509;
         })(), 
-        special: (function () {
-            var _1450 = {};
-            for (var _1451 in ECharts_Series.barSeriesDefault) {
-                if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1451)) {
-                    _1450[_1451] = ECharts_Series.barSeriesDefault[_1451];
+        barSeries: (function () {
+            var _1511 = {};
+            for (var _1512 in ECharts_Series.barSeriesDefault) {
+                if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1512)) {
+                    _1511[_1512] = ECharts_Series.barSeriesDefault[_1512];
                 };
             };
-            _1450.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 150, 232, 201, 154, 190, 330, 410 ]));
-            return _1450;
+            _1511.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 150, 232, 201, 154, 190, 330, 410 ]));
+            return _1511;
         })()
     }), new ECharts_Series.LineSeries({
         common: (function () {
-            var _1452 = {};
-            for (var _1453 in ECharts_Series.universalSeriesDefault) {
-                if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1453)) {
-                    _1452[_1453] = ECharts_Series.universalSeriesDefault[_1453];
+            var _1513 = {};
+            for (var _1514 in ECharts_Series.universalSeriesDefault) {
+                if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1514)) {
+                    _1513[_1514] = ECharts_Series.universalSeriesDefault[_1514];
                 };
             };
-            _1452.name = new Data_Maybe.Just("must be");
-            return _1452;
+            _1513.name = new Data_Maybe.Just("must be");
+            return _1513;
         })(), 
-        special: (function () {
-            var _1454 = {};
-            for (var _1455 in ECharts_Series.lineSeriesDefault) {
-                if (ECharts_Series.lineSeriesDefault.hasOwnProperty(_1455)) {
-                    _1454[_1455] = ECharts_Series.lineSeriesDefault[_1455];
+        lineSeries: (function () {
+            var _1515 = {};
+            for (var _1516 in ECharts_Series.lineSeriesDefault) {
+                if (ECharts_Series.lineSeriesDefault.hasOwnProperty(_1516)) {
+                    _1515[_1516] = ECharts_Series.lineSeriesDefault[_1516];
                 };
             };
-            _1454.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 862, 1018, 964, 1026, 1679, 1600, 1570 ]));
-            return _1454;
+            _1515.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 862, 1018, 964, 1026, 1679, 1600, 1570 ]));
+            return _1515;
         })()
     }), new ECharts_Series.PieSeries({
         common: (function () {
-            var _1460 = {};
-            for (var _1461 in ECharts_Series.universalSeriesDefault) {
-                if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1461)) {
-                    _1460[_1461] = ECharts_Series.universalSeriesDefault[_1461];
+            var _1521 = {};
+            for (var _1522 in ECharts_Series.universalSeriesDefault) {
+                if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1522)) {
+                    _1521[_1522] = ECharts_Series.universalSeriesDefault[_1522];
                 };
             };
-            _1460.name = new Data_Maybe.Just("search engine");
-            _1460.itemStyle = Data_Maybe.Just.create({
+            _1521.name = new Data_Maybe.Just("search engine");
+            _1521.itemStyle = Data_Maybe.Just.create({
                 emphasis: Data_Maybe.Nothing.value, 
                 normal: Data_Maybe.Just.create(ECharts_Style_Item.IStyle.create((function () {
-                    var _1456 = {};
-                    for (var _1457 in ECharts_Style_Item.istyleDefault) {
-                        if (ECharts_Style_Item.istyleDefault.hasOwnProperty(_1457)) {
-                            _1456[_1457] = ECharts_Style_Item.istyleDefault[_1457];
+                    var _1517 = {};
+                    for (var _1518 in ECharts_Style_Item.istyleDefault) {
+                        if (ECharts_Style_Item.istyleDefault.hasOwnProperty(_1518)) {
+                            _1517[_1518] = ECharts_Style_Item.istyleDefault[_1518];
                         };
                     };
-                    _1456.labelLine = Data_Maybe.Just.create({
+                    _1517.labelLine = Data_Maybe.Just.create({
                         show: new Data_Maybe.Just(true), 
                         length: new Data_Maybe.Just(20), 
                         lineStyle: Data_Maybe.Nothing.value
                     });
-                    return _1456;
+                    return _1517;
                 })()))
             });
-            _1460.tooltip = Data_Maybe.Just.create(ECharts_Tooltip.Tooltip.create((function () {
-                var _1458 = {};
-                for (var _1459 in ECharts_Tooltip.tooltipDefault) {
-                    if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1459)) {
-                        _1458[_1459] = ECharts_Tooltip.tooltipDefault[_1459];
+            _1521.tooltip = Data_Maybe.Just.create(ECharts_Tooltip.Tooltip.create((function () {
+                var _1519 = {};
+                for (var _1520 in ECharts_Tooltip.tooltipDefault) {
+                    if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1520)) {
+                        _1519[_1520] = ECharts_Tooltip.tooltipDefault[_1520];
                     };
                 };
-                _1458.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerItem.value);
-                _1458.formatter = Data_Maybe.Just.create(new ECharts_Formatter.Template("{a} <br/> {b}: {c} ({d}%)"));
-                return _1458;
+                _1519.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerItem.value);
+                _1519.formatter = Data_Maybe.Just.create(new ECharts_Formatter.Template("{a} <br/> {b}: {c} ({d}%)"));
+                return _1519;
             })()));
-            return _1460;
+            return _1521;
         })(), 
-        special: (function () {
-            var _1470 = {};
-            for (var _1471 in ECharts_Series.pieSeriesDefault) {
-                if (ECharts_Series.pieSeriesDefault.hasOwnProperty(_1471)) {
-                    _1470[_1471] = ECharts_Series.pieSeriesDefault[_1471];
+        pieSeries: (function () {
+            var _1531 = {};
+            for (var _1532 in ECharts_Series.pieSeriesDefault) {
+                if (ECharts_Series.pieSeriesDefault.hasOwnProperty(_1532)) {
+                    _1531[_1532] = ECharts_Series.pieSeriesDefault[_1532];
                 };
             };
-            _1470.radius = Data_Maybe.Just.create(new ECharts_Common.Rs({
+            _1531.radius = Data_Maybe.Just.create(new ECharts_Common.Rs({
                 inner: new ECharts_Common.Pixel(0), 
                 outer: new ECharts_Common.Pixel(50)
             }));
-            _1470.center = Data_Maybe.Just.create(new Data_Tuple.Tuple(new ECharts_Common.Percent(160), new ECharts_Common.Percent(130)));
-            _1470.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Item_Data.Dat.create)([ (function () {
-                var _1462 = {};
-                for (var _1463 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(1047))) {
-                    if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(1047))).hasOwnProperty(_1463)) {
-                        _1462[_1463] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(1047)))[_1463];
+            _1531.center = Data_Maybe.Just.create(new Data_Tuple.Tuple(new ECharts_Common.Percent(160), new ECharts_Common.Percent(130)));
+            _1531.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Item_Data.Dat.create)([ (function () {
+                var _1523 = {};
+                for (var _1524 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(1047))) {
+                    if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(1047))).hasOwnProperty(_1524)) {
+                        _1523[_1524] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(1047)))[_1524];
                     };
                 };
-                _1462.name = new Data_Maybe.Just("Baidu");
-                return _1462;
+                _1523.name = new Data_Maybe.Just("Baidu");
+                return _1523;
             })(), (function () {
-                var _1464 = {};
-                for (var _1465 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(264))) {
-                    if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(264))).hasOwnProperty(_1465)) {
-                        _1464[_1465] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(264)))[_1465];
+                var _1525 = {};
+                for (var _1526 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(264))) {
+                    if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(264))).hasOwnProperty(_1526)) {
+                        _1525[_1526] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(264)))[_1526];
                     };
                 };
-                _1464.name = new Data_Maybe.Just("Google");
-                return _1464;
+                _1525.name = new Data_Maybe.Just("Google");
+                return _1525;
             })(), (function () {
-                var _1466 = {};
-                for (var _1467 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(145))) {
-                    if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(145))).hasOwnProperty(_1467)) {
-                        _1466[_1467] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(145)))[_1467];
+                var _1527 = {};
+                for (var _1528 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(145))) {
+                    if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(145))).hasOwnProperty(_1528)) {
+                        _1527[_1528] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(145)))[_1528];
                     };
                 };
-                _1466.name = new Data_Maybe.Just("Bing");
-                return _1466;
+                _1527.name = new Data_Maybe.Just("Bing");
+                return _1527;
             })(), (function () {
-                var _1468 = {};
-                for (var _1469 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(102))) {
-                    if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(102))).hasOwnProperty(_1469)) {
-                        _1468[_1469] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(102)))[_1469];
+                var _1529 = {};
+                for (var _1530 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(102))) {
+                    if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(102))).hasOwnProperty(_1530)) {
+                        _1529[_1530] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(102)))[_1530];
                     };
                 };
-                _1468.name = new Data_Maybe.Just("other");
-                return _1468;
+                _1529.name = new Data_Maybe.Just("other");
+                return _1529;
             })() ]));
-            return _1470;
+            return _1531;
         })()
     }) ];
     var options = ECharts_Options.Option.create((function () {
-        var _1484 = {};
-        for (var _1485 in ECharts_Options.optionDefault) {
-            if (ECharts_Options.optionDefault.hasOwnProperty(_1485)) {
-                _1484[_1485] = ECharts_Options.optionDefault[_1485];
+        var _1545 = {};
+        for (var _1546 in ECharts_Options.optionDefault) {
+            if (ECharts_Options.optionDefault.hasOwnProperty(_1546)) {
+                _1545[_1546] = ECharts_Options.optionDefault[_1546];
             };
         };
-        _1484.tooltip = Data_Maybe.Just.create((function () {
-            var _1472 = {};
-            for (var _1473 in ECharts_Tooltip.tooltipDefault) {
-                if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1473)) {
-                    _1472[_1473] = ECharts_Tooltip.tooltipDefault[_1473];
+        _1545.tooltip = Data_Maybe.Just.create((function () {
+            var _1533 = {};
+            for (var _1534 in ECharts_Tooltip.tooltipDefault) {
+                if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1534)) {
+                    _1533[_1534] = ECharts_Tooltip.tooltipDefault[_1534];
                 };
             };
-            _1472.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerAxis.value);
-            return _1472;
+            _1533.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerAxis.value);
+            return _1533;
         })());
-        _1484.toolbox = Data_Maybe.Just.create((function () {
-            var _1474 = {};
-            for (var _1475 in ECharts_Toolbox.toolboxDefault) {
-                if (ECharts_Toolbox.toolboxDefault.hasOwnProperty(_1475)) {
-                    _1474[_1475] = ECharts_Toolbox.toolboxDefault[_1475];
+        _1545.toolbox = Data_Maybe.Just.create((function () {
+            var _1535 = {};
+            for (var _1536 in ECharts_Toolbox.toolboxDefault) {
+                if (ECharts_Toolbox.toolboxDefault.hasOwnProperty(_1536)) {
+                    _1535[_1536] = ECharts_Toolbox.toolboxDefault[_1536];
                 };
             };
-            _1474.show = new Data_Maybe.Just(true);
-            _1474.y = new Data_Maybe.Just(ECharts_Coords.YBottom.value);
-            _1474.feature = Data_Maybe.Just.create({
+            _1535.show = new Data_Maybe.Just(true);
+            _1535.y = new Data_Maybe.Just(ECharts_Coords.YBottom.value);
+            _1535.feature = Data_Maybe.Just.create({
                 mark: Data_Maybe.Just.create({
                     show: new Data_Maybe.Just(true), 
                     title: Data_Maybe.Nothing.value, 
@@ -6681,59 +7351,69 @@ PS.Mix2Safe = (function () {
                 }), 
                 dataZoom: Data_Maybe.Nothing.value
             });
-            return _1474;
+            return _1535;
         })());
-        _1484.calculable = new Data_Maybe.Just(true);
-        _1484.legend = Data_Maybe.Just.create(ECharts_Legend.Legend.create((function () {
-            var _1476 = {};
-            for (var _1477 in ECharts_Legend.legendDefault) {
-                if (ECharts_Legend.legendDefault.hasOwnProperty(_1477)) {
-                    _1476[_1477] = ECharts_Legend.legendDefault[_1477];
+        _1545.calculable = new Data_Maybe.Just(true);
+        _1545.legend = Data_Maybe.Just.create(ECharts_Legend.Legend.create((function () {
+            var _1537 = {};
+            for (var _1538 in ECharts_Legend.legendDefault) {
+                if (ECharts_Legend.legendDefault.hasOwnProperty(_1538)) {
+                    _1537[_1538] = ECharts_Legend.legendDefault[_1538];
                 };
             };
-            _1476.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Legend.legendItemDefault)([ "direct access", "email marketing", "affiliate advertising", "video ads", "search engine", "Baidu", "Google", "must be", "other" ]));
-            return _1476;
+            _1537.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Legend.legendItemDefault)([ "direct access", "email marketing", "affiliate advertising", "video ads", "search engine", "Baidu", "Google", "must be", "other" ]));
+            return _1537;
         })()));
-        _1484.xAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create(ECharts_Axis.Axis.create((function () {
-            var _1480 = {};
-            for (var _1481 in ECharts_Axis.axisDefault) {
-                if (ECharts_Axis.axisDefault.hasOwnProperty(_1481)) {
-                    _1480[_1481] = ECharts_Axis.axisDefault[_1481];
+        _1545.xAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create(ECharts_Axis.Axis.create((function () {
+            var _1541 = {};
+            for (var _1542 in ECharts_Axis.axisDefault) {
+                if (ECharts_Axis.axisDefault.hasOwnProperty(_1542)) {
+                    _1541[_1542] = ECharts_Axis.axisDefault[_1542];
                 };
             };
-            _1480.type = new Data_Maybe.Just(ECharts_Axis.CategoryAxis.value);
-            _1480.splitLine = Data_Maybe.Just.create(ECharts_Axis.AxisSplitLine.create((function () {
-                var _1478 = {};
-                for (var _1479 in ECharts_Axis.axisSplitLineDefault) {
-                    if (ECharts_Axis.axisSplitLineDefault.hasOwnProperty(_1479)) {
-                        _1478[_1479] = ECharts_Axis.axisSplitLineDefault[_1479];
+            _1541.type = new Data_Maybe.Just(ECharts_Axis.CategoryAxis.value);
+            _1541.splitLine = Data_Maybe.Just.create(ECharts_Axis.AxisSplitLine.create((function () {
+                var _1539 = {};
+                for (var _1540 in ECharts_Axis.axisSplitLineDefault) {
+                    if (ECharts_Axis.axisSplitLineDefault.hasOwnProperty(_1540)) {
+                        _1539[_1540] = ECharts_Axis.axisSplitLineDefault[_1540];
                     };
                 };
-                _1478.show = new Data_Maybe.Just(false);
-                return _1478;
+                _1539.show = new Data_Maybe.Just(false);
+                return _1539;
             })()));
-            _1480.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Axis.CommonAxisData.create)([ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ]));
-            return _1480;
+            _1541.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Axis.CommonAxisData.create)([ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ]));
+            return _1541;
         })())));
-        _1484.yAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create(ECharts_Axis.Axis.create((function () {
-            var _1482 = {};
-            for (var _1483 in ECharts_Axis.axisDefault) {
-                if (ECharts_Axis.axisDefault.hasOwnProperty(_1483)) {
-                    _1482[_1483] = ECharts_Axis.axisDefault[_1483];
+        _1545.yAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create(ECharts_Axis.Axis.create((function () {
+            var _1543 = {};
+            for (var _1544 in ECharts_Axis.axisDefault) {
+                if (ECharts_Axis.axisDefault.hasOwnProperty(_1544)) {
+                    _1543[_1544] = ECharts_Axis.axisDefault[_1544];
                 };
             };
-            _1482.type = new Data_Maybe.Just(ECharts_Axis.ValueAxis.value);
-            _1482.position = new Data_Maybe.Just(ECharts_Axis.RightAxis.value);
-            return _1482;
+            _1543.type = new Data_Maybe.Just(ECharts_Axis.ValueAxis.value);
+            _1543.position = new Data_Maybe.Just(ECharts_Axis.RightAxis.value);
+            return _1543;
         })())));
-        _1484.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)(series));
-        return _1484;
+        _1545.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)(series));
+        return _1545;
     })());
     var mix2safe = function (id) {
         return function __do() {
-            var _84 = Prelude[">>="](Control_Monad_Eff.bindEff)(Utils.getElementById(id))(ECharts_Chart.init(Data_Maybe.Nothing.value))();
-            ECharts_Options.setOption(options)(true)(_84)();
-            return Prelude.unit;
+            var _95 = Utils.getElementById(id)();
+            return (function () {
+                if (_95 instanceof Data_Maybe.Nothing) {
+                    return Debug_Trace.trace("incorrect id in mix2safe");
+                };
+                if (_95 instanceof Data_Maybe.Just) {
+                    return function __do() {
+                        var _ = Prelude[">>="](Control_Monad_Eff.bindEff)(ECharts_Chart.init(Data_Maybe.Nothing.value)(_95.value0))(ECharts_Options.setOption(options)(true))();
+                        return Prelude.unit;
+                    };
+                };
+                throw new Error("Failed pattern match");
+            })()();
         };
     };
     return {
@@ -6752,6 +7432,7 @@ PS.Radar3 = (function () {
     var ECharts_Series = PS.ECharts_Series;
     var Prelude = PS.Prelude;
     var Utils = PS.Utils;
+    var Debug_Trace = PS.Debug_Trace;
     var ECharts_Chart = PS.ECharts_Chart;
     var Data_Maybe = PS.Data_Maybe;
     var ECharts_Item_Value = PS.ECharts_Item_Value;
@@ -6760,77 +7441,88 @@ PS.Radar3 = (function () {
     var indicator = function (text) {
         return function (max) {
             return ECharts_Axis.Indicator.create((function () {
-                var _1487 = {};
-                for (var _1488 in ECharts_Axis.indicatorDefault) {
-                    if (ECharts_Axis.indicatorDefault.hasOwnProperty(_1488)) {
-                        _1487[_1488] = ECharts_Axis.indicatorDefault[_1488];
+                var _1550 = {};
+                for (var _1551 in ECharts_Axis.indicatorDefault) {
+                    if (ECharts_Axis.indicatorDefault.hasOwnProperty(_1551)) {
+                        _1550[_1551] = ECharts_Axis.indicatorDefault[_1551];
                     };
                 };
-                _1487.text = new Data_Maybe.Just(text);
-                _1487.max = new Data_Maybe.Just(max);
-                return _1487;
+                _1550.text = new Data_Maybe.Just(text);
+                _1550.max = new Data_Maybe.Just(max);
+                return _1550;
             })());
         };
     };
     var datPair = function (val) {
         return function (name) {
             return ECharts_Item_Data.Dat.create((function () {
-                var _1489 = {};
-                for (var _1490 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Many(val))) {
-                    if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Many(val))).hasOwnProperty(_1490)) {
-                        _1489[_1490] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Many(val)))[_1490];
+                var _1552 = {};
+                for (var _1553 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Many(val))) {
+                    if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Many(val))).hasOwnProperty(_1553)) {
+                        _1552[_1553] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Many(val)))[_1553];
                     };
                 };
-                _1489.name = new Data_Maybe.Just(name);
-                return _1489;
+                _1552.name = new Data_Maybe.Just(name);
+                return _1552;
             })());
         };
     };
     var option = ECharts_Options.Option.create((function () {
-        var _1497 = {};
-        for (var _1498 in ECharts_Options.optionDefault) {
-            if (ECharts_Options.optionDefault.hasOwnProperty(_1498)) {
-                _1497[_1498] = ECharts_Options.optionDefault[_1498];
+        var _1560 = {};
+        for (var _1561 in ECharts_Options.optionDefault) {
+            if (ECharts_Options.optionDefault.hasOwnProperty(_1561)) {
+                _1560[_1561] = ECharts_Options.optionDefault[_1561];
             };
         };
-        _1497.polar = Data_Maybe.Just.create([ (function () {
-            var _1491 = {};
-            for (var _1492 in ECharts_Axis.polarDefault) {
-                if (ECharts_Axis.polarDefault.hasOwnProperty(_1492)) {
-                    _1491[_1492] = ECharts_Axis.polarDefault[_1492];
+        _1560.polar = Data_Maybe.Just.create([ (function () {
+            var _1554 = {};
+            for (var _1555 in ECharts_Axis.polarDefault) {
+                if (ECharts_Axis.polarDefault.hasOwnProperty(_1555)) {
+                    _1554[_1555] = ECharts_Axis.polarDefault[_1555];
                 };
             };
-            _1491.indicator = new Data_Maybe.Just([ indicator("sales")(6000), indicator("Administration")(16000), indicator("IT")(30000), indicator("Development")(52000), indicator("Customer Support")(38000), indicator("Marketing")(25000) ]);
-            return _1491;
+            _1554.indicator = new Data_Maybe.Just([ indicator("sales")(6000), indicator("Administration")(16000), indicator("IT")(30000), indicator("Development")(52000), indicator("Customer Support")(38000), indicator("Marketing")(25000) ]);
+            return _1554;
         })() ]);
-        _1497.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.RadarSeries({
+        _1560.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.RadarSeries({
             common: (function () {
-                var _1493 = {};
-                for (var _1494 in ECharts_Series.universalSeriesDefault) {
-                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1494)) {
-                        _1493[_1494] = ECharts_Series.universalSeriesDefault[_1494];
+                var _1556 = {};
+                for (var _1557 in ECharts_Series.universalSeriesDefault) {
+                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1557)) {
+                        _1556[_1557] = ECharts_Series.universalSeriesDefault[_1557];
                     };
                 };
-                _1493.name = new Data_Maybe.Just("budget vs spending");
-                return _1493;
+                _1556.name = new Data_Maybe.Just("budget vs spending");
+                return _1556;
             })(), 
-            special: (function () {
-                var _1495 = {};
-                for (var _1496 in ECharts_Series.radarSeriesDefault) {
-                    if (ECharts_Series.radarSeriesDefault.hasOwnProperty(_1496)) {
-                        _1495[_1496] = ECharts_Series.radarSeriesDefault[_1496];
+            radarSeries: (function () {
+                var _1558 = {};
+                for (var _1559 in ECharts_Series.radarSeriesDefault) {
+                    if (ECharts_Series.radarSeriesDefault.hasOwnProperty(_1559)) {
+                        _1558[_1559] = ECharts_Series.radarSeriesDefault[_1559];
                     };
                 };
-                _1495.data = new Data_Maybe.Just([ datPair([ 4300, 10000, 28000, 35000, 50000, 19000 ])("Allocated"), datPair([ 5000, 14000, 28000, 31000, 42000, 21000 ])("Actual") ]);
-                return _1495;
+                _1558.data = new Data_Maybe.Just([ datPair([ 4300, 10000, 28000, 35000, 50000, 19000 ])("Allocated"), datPair([ 5000, 14000, 28000, 31000, 42000, 21000 ])("Actual") ]);
+                return _1558;
             })()
         }) ]));
-        return _1497;
+        return _1560;
     })());
     var radar3 = function (id) {
         return function __do() {
-            var _85 = Prelude[">>="](Control_Monad_Eff.bindEff)(Prelude[">>="](Control_Monad_Eff.bindEff)(Utils.getElementById(id))(ECharts_Chart.init(Data_Maybe.Nothing.value)))(ECharts_Options.setOption(option)(true))();
-            return Prelude.unit;
+            var _96 = Utils.getElementById(id)();
+            return (function () {
+                if (_96 instanceof Data_Maybe.Nothing) {
+                    return Debug_Trace.trace("incorrect id in radar3");
+                };
+                if (_96 instanceof Data_Maybe.Just) {
+                    return function __do() {
+                        var _ = Prelude[">>="](Control_Monad_Eff.bindEff)(ECharts_Chart.init(Data_Maybe.Nothing.value)(_96.value0))(ECharts_Options.setOption(option)(true))();
+                        return Prelude.unit;
+                    };
+                };
+                throw new Error("Failed pattern match");
+            })()();
         };
     };
     return {
@@ -6850,6 +7542,7 @@ PS.Scatter3 = (function () {
     var ECharts_Options = PS.ECharts_Options;
     var ECharts_Axis = PS.ECharts_Axis;
     var ECharts_Series = PS.ECharts_Series;
+    var Debug_Trace = PS.Debug_Trace;
     var ECharts_Chart = PS.ECharts_Chart;
     var Control_Monad_Eff = PS.Control_Monad_Eff;
     var Data_Tuple = PS.Data_Tuple;
@@ -6857,125 +7550,136 @@ PS.Scatter3 = (function () {
     var ECharts_Item_Value = PS.ECharts_Item_Value;
     var Data_Maybe = PS.Data_Maybe;
     var sinData = function __do() {
-        var _87 = Utils.randomLst(10000)();
-        var _86 = Utils.randomLst(10000)();
+        var _98 = Utils.randomLst(10000)();
+        var _97 = Utils.randomLst(10000)();
         return (function () {
             var randoms = Data_Array.zipWith(function (i) {
                 return function (x) {
                     return new Data_Tuple.Tuple(Utils.precise(3)(i * 10), x);
                 };
-            })(_87)(_86);
-            var mapfn = function (_851) {
-                return new Data_Tuple.Tuple(_851.value0, Utils.precise(3)(Math.sin(_851.value0) - _851.value0 * ((_851.value0 % 2) > 0 ? 0.1 : -0.1) * _851.value1));
+            })(_98)(_97);
+            var mapfn = function (_883) {
+                return new Data_Tuple.Tuple(_883.value0, Utils.precise(3)(Math.sin(_883.value0) - _883.value0 * ((_883.value0 % 2) > 0 ? 0.1 : -0.1) * _883.value1));
             };
             return Prelude["return"](Control_Monad_Eff.monadEff)(Prelude["<$>"](Data_Array.functorArray)(mapfn)(randoms));
         })()();
     };
-    var simpleData = function (_853) {
+    var simpleData = function (_885) {
         return ECharts_Item_Data.Value.create(new ECharts_Item_Value.XYR({
-            x: _853.value0, 
-            y: _853.value1, 
+            x: _885.value0, 
+            y: _885.value1, 
             r: Data_Maybe.Nothing.value
         }));
     };
     var cosData = function __do() {
-        var _89 = Utils.randomLst(10000)();
-        var _88 = Utils.randomLst(10000)();
+        var _100 = Utils.randomLst(10000)();
+        var _99 = Utils.randomLst(10000)();
         return (function () {
             var randoms = Data_Array.zipWith(function (i) {
                 return function (x) {
                     return new Data_Tuple.Tuple(Utils.precise(3)(i * 10), x);
                 };
-            })(_89)(_88);
-            var mapfn = function (_852) {
-                return new Data_Tuple.Tuple(_852.value0, Utils.precise(3)(Math.cos(_852.value0) - _852.value0 * ((_852.value0 % 2) > 0 ? 0.1 : -0.1) * _852.value1));
+            })(_100)(_99);
+            var mapfn = function (_884) {
+                return new Data_Tuple.Tuple(_884.value0, Utils.precise(3)(Math.cos(_884.value0) - _884.value0 * ((_884.value0 % 2) > 0 ? 0.1 : -0.1) * _884.value1));
             };
             return Prelude["return"](Control_Monad_Eff.monadEff)(Prelude["<$>"](Data_Array.functorArray)(mapfn)(randoms));
         })()();
     };
     var options = function __do() {
-        var _91 = sinData();
-        var _90 = cosData();
+        var _102 = sinData();
+        var _101 = cosData();
         return ECharts_Options.Option.create((function () {
-            var _1527 = {};
-            for (var _1528 in ECharts_Options.optionDefault) {
-                if (ECharts_Options.optionDefault.hasOwnProperty(_1528)) {
-                    _1527[_1528] = ECharts_Options.optionDefault[_1528];
+            var _1592 = {};
+            for (var _1593 in ECharts_Options.optionDefault) {
+                if (ECharts_Options.optionDefault.hasOwnProperty(_1593)) {
+                    _1592[_1593] = ECharts_Options.optionDefault[_1593];
                 };
             };
-            _1527.xAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create((function () {
-                var _1515 = {};
-                for (var _1516 in ECharts_Axis.axisDefault) {
-                    if (ECharts_Axis.axisDefault.hasOwnProperty(_1516)) {
-                        _1515[_1516] = ECharts_Axis.axisDefault[_1516];
+            _1592.xAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create((function () {
+                var _1580 = {};
+                for (var _1581 in ECharts_Axis.axisDefault) {
+                    if (ECharts_Axis.axisDefault.hasOwnProperty(_1581)) {
+                        _1580[_1581] = ECharts_Axis.axisDefault[_1581];
                     };
                 };
-                _1515.type = new Data_Maybe.Just(ECharts_Axis.ValueAxis.value);
-                return _1515;
+                _1580.type = new Data_Maybe.Just(ECharts_Axis.ValueAxis.value);
+                return _1580;
             })()));
-            _1527.yAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create((function () {
-                var _1517 = {};
-                for (var _1518 in ECharts_Axis.axisDefault) {
-                    if (ECharts_Axis.axisDefault.hasOwnProperty(_1518)) {
-                        _1517[_1518] = ECharts_Axis.axisDefault[_1518];
+            _1592.yAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create((function () {
+                var _1582 = {};
+                for (var _1583 in ECharts_Axis.axisDefault) {
+                    if (ECharts_Axis.axisDefault.hasOwnProperty(_1583)) {
+                        _1582[_1583] = ECharts_Axis.axisDefault[_1583];
                     };
                 };
-                _1517.type = new Data_Maybe.Just(ECharts_Axis.ValueAxis.value);
-                return _1517;
+                _1582.type = new Data_Maybe.Just(ECharts_Axis.ValueAxis.value);
+                return _1582;
             })()));
-            _1527.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.ScatterSeries({
+            _1592.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.ScatterSeries({
                 common: (function () {
-                    var _1519 = {};
-                    for (var _1520 in ECharts_Series.universalSeriesDefault) {
-                        if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1520)) {
-                            _1519[_1520] = ECharts_Series.universalSeriesDefault[_1520];
+                    var _1584 = {};
+                    for (var _1585 in ECharts_Series.universalSeriesDefault) {
+                        if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1585)) {
+                            _1584[_1585] = ECharts_Series.universalSeriesDefault[_1585];
                         };
                     };
-                    _1519.name = new Data_Maybe.Just("sin");
-                    return _1519;
+                    _1584.name = new Data_Maybe.Just("sin");
+                    return _1584;
                 })(), 
-                special: (function () {
-                    var _1521 = {};
-                    for (var _1522 in ECharts_Series.scatterSeriesDefault) {
-                        if (ECharts_Series.scatterSeriesDefault.hasOwnProperty(_1522)) {
-                            _1521[_1522] = ECharts_Series.scatterSeriesDefault[_1522];
+                scatterSeries: (function () {
+                    var _1586 = {};
+                    for (var _1587 in ECharts_Series.scatterSeriesDefault) {
+                        if (ECharts_Series.scatterSeriesDefault.hasOwnProperty(_1587)) {
+                            _1586[_1587] = ECharts_Series.scatterSeriesDefault[_1587];
                         };
                     };
-                    _1521.large = new Data_Maybe.Just(true);
-                    _1521.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)(_91));
-                    return _1521;
+                    _1586.large = new Data_Maybe.Just(true);
+                    _1586.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)(_102));
+                    return _1586;
                 })()
             }), new ECharts_Series.ScatterSeries({
                 common: (function () {
-                    var _1523 = {};
-                    for (var _1524 in ECharts_Series.universalSeriesDefault) {
-                        if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1524)) {
-                            _1523[_1524] = ECharts_Series.universalSeriesDefault[_1524];
+                    var _1588 = {};
+                    for (var _1589 in ECharts_Series.universalSeriesDefault) {
+                        if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1589)) {
+                            _1588[_1589] = ECharts_Series.universalSeriesDefault[_1589];
                         };
                     };
-                    _1523.name = new Data_Maybe.Just("cos");
-                    return _1523;
+                    _1588.name = new Data_Maybe.Just("cos");
+                    return _1588;
                 })(), 
-                special: (function () {
-                    var _1525 = {};
-                    for (var _1526 in ECharts_Series.scatterSeriesDefault) {
-                        if (ECharts_Series.scatterSeriesDefault.hasOwnProperty(_1526)) {
-                            _1525[_1526] = ECharts_Series.scatterSeriesDefault[_1526];
+                scatterSeries: (function () {
+                    var _1590 = {};
+                    for (var _1591 in ECharts_Series.scatterSeriesDefault) {
+                        if (ECharts_Series.scatterSeriesDefault.hasOwnProperty(_1591)) {
+                            _1590[_1591] = ECharts_Series.scatterSeriesDefault[_1591];
                         };
                     };
-                    _1525.large = new Data_Maybe.Just(true);
-                    _1525.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)(_90));
-                    return _1525;
+                    _1590.large = new Data_Maybe.Just(true);
+                    _1590.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)(_101));
+                    return _1590;
                 })()
             }) ]));
-            return _1527;
+            return _1592;
         })());
     };
     var scatter3 = function (id) {
         return function __do() {
-            var _93 = options();
-            var _92 = Prelude[">>="](Control_Monad_Eff.bindEff)(Prelude[">>="](Control_Monad_Eff.bindEff)(Utils.getElementById(id))(ECharts_Chart.init(Data_Maybe.Nothing.value)))(ECharts_Options.setOption(_93)(true))();
-            return Prelude.unit;
+            var _104 = Utils.getElementById(id)();
+            return (function () {
+                if (_104 instanceof Data_Maybe.Nothing) {
+                    return Debug_Trace.trace("incorrect id in scatter3");
+                };
+                if (_104 instanceof Data_Maybe.Just) {
+                    return function __do() {
+                        var _103 = options();
+                        var _ = Prelude[">>="](Control_Monad_Eff.bindEff)(ECharts_Chart.init(Data_Maybe.Nothing.value)(_104.value0))(ECharts_Options.setOption(_103)(true))();
+                        return Prelude.unit;
+                    };
+                };
+                throw new Error("Failed pattern match");
+            })()();
         };
     };
     return {
@@ -7001,6 +7705,7 @@ PS.Connect = (function () {
     var Prelude = PS.Prelude;
     var ECharts_Connect = PS.ECharts_Connect;
     var Utils = PS.Utils;
+    var Debug_Trace = PS.Debug_Trace;
     var ECharts_Chart = PS.ECharts_Chart;
     var ECharts_Item_Value = PS.ECharts_Item_Value;
     var Data_Maybe = PS.Data_Maybe;
@@ -7012,370 +7717,370 @@ PS.Connect = (function () {
     var Control_Monad_Eff = PS.Control_Monad_Eff;
     var simpleData = Prelude["<<<"](Prelude.semigroupoidArr)(ECharts_Item_Data.Value.create)(ECharts_Item_Value.Simple.create);
     var options2 = ECharts_Options.Option.create((function () {
-        var _1577 = {};
-        for (var _1578 in ECharts_Options.optionDefault) {
-            if (ECharts_Options.optionDefault.hasOwnProperty(_1578)) {
-                _1577[_1578] = ECharts_Options.optionDefault[_1578];
+        var _1644 = {};
+        for (var _1645 in ECharts_Options.optionDefault) {
+            if (ECharts_Options.optionDefault.hasOwnProperty(_1645)) {
+                _1644[_1645] = ECharts_Options.optionDefault[_1645];
             };
         };
-        _1577.tooltip = Data_Maybe.Just.create((function () {
-            var _1533 = {};
-            for (var _1534 in ECharts_Tooltip.tooltipDefault) {
-                if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1534)) {
-                    _1533[_1534] = ECharts_Tooltip.tooltipDefault[_1534];
+        _1644.tooltip = Data_Maybe.Just.create((function () {
+            var _1600 = {};
+            for (var _1601 in ECharts_Tooltip.tooltipDefault) {
+                if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1601)) {
+                    _1600[_1601] = ECharts_Tooltip.tooltipDefault[_1601];
                 };
             };
-            _1533.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerAxis.value);
-            _1533.axisPointer = Data_Maybe.Just.create((function () {
-                var _1531 = {};
-                for (var _1532 in ECharts_Tooltip.tooltipAxisPointerDefault) {
-                    if (ECharts_Tooltip.tooltipAxisPointerDefault.hasOwnProperty(_1532)) {
-                        _1531[_1532] = ECharts_Tooltip.tooltipAxisPointerDefault[_1532];
+            _1600.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerAxis.value);
+            _1600.axisPointer = Data_Maybe.Just.create((function () {
+                var _1598 = {};
+                for (var _1599 in ECharts_Tooltip.tooltipAxisPointerDefault) {
+                    if (ECharts_Tooltip.tooltipAxisPointerDefault.hasOwnProperty(_1599)) {
+                        _1598[_1599] = ECharts_Tooltip.tooltipAxisPointerDefault[_1599];
                     };
                 };
-                _1531.type = new Data_Maybe.Just(ECharts_Tooltip.ShadowPointer.value);
-                return _1531;
+                _1598.type = new Data_Maybe.Just(ECharts_Tooltip.ShadowPointer.value);
+                return _1598;
             })());
-            return _1533;
+            return _1600;
         })());
-        _1577.legend = Data_Maybe.Just.create(ECharts_Legend.Legend.create((function () {
-            var _1535 = {};
-            for (var _1536 in ECharts_Legend.legendDefault) {
-                if (ECharts_Legend.legendDefault.hasOwnProperty(_1536)) {
-                    _1535[_1536] = ECharts_Legend.legendDefault[_1536];
+        _1644.legend = Data_Maybe.Just.create(ECharts_Legend.Legend.create((function () {
+            var _1602 = {};
+            for (var _1603 in ECharts_Legend.legendDefault) {
+                if (ECharts_Legend.legendDefault.hasOwnProperty(_1603)) {
+                    _1602[_1603] = ECharts_Legend.legendDefault[_1603];
                 };
             };
-            _1535.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Legend.legendItemDefault)([ "direct access", "email marketing", "affiliate advertising", "video ads", "search engine" ]));
-            return _1535;
+            _1602.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Legend.legendItemDefault)([ "direct access", "email marketing", "affiliate advertising", "video ads", "search engine" ]));
+            return _1602;
         })()));
-        _1577.toolbox = Data_Maybe.Just.create(ECharts_Toolbox.Toolbox.create((function () {
-            var _1547 = {};
-            for (var _1548 in ECharts_Toolbox.toolboxDefault) {
-                if (ECharts_Toolbox.toolboxDefault.hasOwnProperty(_1548)) {
-                    _1547[_1548] = ECharts_Toolbox.toolboxDefault[_1548];
+        _1644.toolbox = Data_Maybe.Just.create(ECharts_Toolbox.Toolbox.create((function () {
+            var _1614 = {};
+            for (var _1615 in ECharts_Toolbox.toolboxDefault) {
+                if (ECharts_Toolbox.toolboxDefault.hasOwnProperty(_1615)) {
+                    _1614[_1615] = ECharts_Toolbox.toolboxDefault[_1615];
                 };
             };
-            _1547.feature = Data_Maybe.Just.create(ECharts_Toolbox.Feature.create((function () {
-                var _1545 = {};
-                for (var _1546 in ECharts_Toolbox.featureDefault) {
-                    if (ECharts_Toolbox.featureDefault.hasOwnProperty(_1546)) {
-                        _1545[_1546] = ECharts_Toolbox.featureDefault[_1546];
+            _1614.feature = Data_Maybe.Just.create(ECharts_Toolbox.Feature.create((function () {
+                var _1612 = {};
+                for (var _1613 in ECharts_Toolbox.featureDefault) {
+                    if (ECharts_Toolbox.featureDefault.hasOwnProperty(_1613)) {
+                        _1612[_1613] = ECharts_Toolbox.featureDefault[_1613];
                     };
                 };
-                _1545.mark = Data_Maybe.Just.create(ECharts_Toolbox.MarkFeature.create((function () {
-                    var _1537 = {};
-                    for (var _1538 in ECharts_Toolbox.markFeatureDefault) {
-                        if (ECharts_Toolbox.markFeatureDefault.hasOwnProperty(_1538)) {
-                            _1537[_1538] = ECharts_Toolbox.markFeatureDefault[_1538];
+                _1612.mark = Data_Maybe.Just.create(ECharts_Toolbox.MarkFeature.create((function () {
+                    var _1604 = {};
+                    for (var _1605 in ECharts_Toolbox.markFeatureDefault) {
+                        if (ECharts_Toolbox.markFeatureDefault.hasOwnProperty(_1605)) {
+                            _1604[_1605] = ECharts_Toolbox.markFeatureDefault[_1605];
                         };
                     };
-                    _1537.show = new Data_Maybe.Just(true);
-                    return _1537;
+                    _1604.show = new Data_Maybe.Just(true);
+                    return _1604;
                 })()));
-                _1545.magicType = Data_Maybe.Just.create(ECharts_Toolbox.MagicTypeFeature.create((function () {
-                    var _1539 = {};
-                    for (var _1540 in ECharts_Toolbox.magicTypeFeatureDefault) {
-                        if (ECharts_Toolbox.magicTypeFeatureDefault.hasOwnProperty(_1540)) {
-                            _1539[_1540] = ECharts_Toolbox.magicTypeFeatureDefault[_1540];
+                _1612.magicType = Data_Maybe.Just.create(ECharts_Toolbox.MagicTypeFeature.create((function () {
+                    var _1606 = {};
+                    for (var _1607 in ECharts_Toolbox.magicTypeFeatureDefault) {
+                        if (ECharts_Toolbox.magicTypeFeatureDefault.hasOwnProperty(_1607)) {
+                            _1606[_1607] = ECharts_Toolbox.magicTypeFeatureDefault[_1607];
                         };
                     };
-                    _1539.show = new Data_Maybe.Just(true);
-                    _1539.type = new Data_Maybe.Just([ ECharts_Toolbox.MagicLine.value, ECharts_Toolbox.MagicBar.value, ECharts_Toolbox.MagicStack.value, ECharts_Toolbox.MagicTiled.value ]);
-                    return _1539;
+                    _1606.show = new Data_Maybe.Just(true);
+                    _1606.type = new Data_Maybe.Just([ ECharts_Toolbox.MagicLine.value, ECharts_Toolbox.MagicBar.value, ECharts_Toolbox.MagicStack.value, ECharts_Toolbox.MagicTiled.value ]);
+                    return _1606;
                 })()));
-                _1545.restore = Data_Maybe.Just.create(ECharts_Toolbox.RestoreFeature.create((function () {
-                    var _1541 = {};
-                    for (var _1542 in ECharts_Toolbox.restoreFeatureDefault) {
-                        if (ECharts_Toolbox.restoreFeatureDefault.hasOwnProperty(_1542)) {
-                            _1541[_1542] = ECharts_Toolbox.restoreFeatureDefault[_1542];
+                _1612.restore = Data_Maybe.Just.create(ECharts_Toolbox.RestoreFeature.create((function () {
+                    var _1608 = {};
+                    for (var _1609 in ECharts_Toolbox.restoreFeatureDefault) {
+                        if (ECharts_Toolbox.restoreFeatureDefault.hasOwnProperty(_1609)) {
+                            _1608[_1609] = ECharts_Toolbox.restoreFeatureDefault[_1609];
                         };
                     };
-                    _1541.show = new Data_Maybe.Just(true);
-                    return _1541;
+                    _1608.show = new Data_Maybe.Just(true);
+                    return _1608;
                 })()));
-                _1545.saveAsImage = Data_Maybe.Just.create(ECharts_Toolbox.SaveAsImageFeature.create((function () {
-                    var _1543 = {};
-                    for (var _1544 in ECharts_Toolbox.saveAsImageFeatureDefault) {
-                        if (ECharts_Toolbox.saveAsImageFeatureDefault.hasOwnProperty(_1544)) {
-                            _1543[_1544] = ECharts_Toolbox.saveAsImageFeatureDefault[_1544];
+                _1612.saveAsImage = Data_Maybe.Just.create(ECharts_Toolbox.SaveAsImageFeature.create((function () {
+                    var _1610 = {};
+                    for (var _1611 in ECharts_Toolbox.saveAsImageFeatureDefault) {
+                        if (ECharts_Toolbox.saveAsImageFeatureDefault.hasOwnProperty(_1611)) {
+                            _1610[_1611] = ECharts_Toolbox.saveAsImageFeatureDefault[_1611];
                         };
                     };
-                    _1543.show = new Data_Maybe.Just(true);
-                    return _1543;
+                    _1610.show = new Data_Maybe.Just(true);
+                    return _1610;
                 })()));
-                return _1545;
+                return _1612;
             })()));
-            _1547.show = new Data_Maybe.Just(true);
-            return _1547;
+            _1614.show = new Data_Maybe.Just(true);
+            return _1614;
         })()));
-        _1577.calculable = new Data_Maybe.Just(true);
-        _1577.xAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create((function () {
-            var _1549 = {};
-            for (var _1550 in ECharts_Axis.axisDefault) {
-                if (ECharts_Axis.axisDefault.hasOwnProperty(_1550)) {
-                    _1549[_1550] = ECharts_Axis.axisDefault[_1550];
+        _1644.calculable = new Data_Maybe.Just(true);
+        _1644.xAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create((function () {
+            var _1616 = {};
+            for (var _1617 in ECharts_Axis.axisDefault) {
+                if (ECharts_Axis.axisDefault.hasOwnProperty(_1617)) {
+                    _1616[_1617] = ECharts_Axis.axisDefault[_1617];
                 };
             };
-            _1549.type = new Data_Maybe.Just(ECharts_Axis.CategoryAxis.value);
-            _1549.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Axis.CommonAxisData.create)([ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ]));
-            return _1549;
+            _1616.type = new Data_Maybe.Just(ECharts_Axis.CategoryAxis.value);
+            _1616.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Axis.CommonAxisData.create)([ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ]));
+            return _1616;
         })()));
-        _1577.yAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create((function () {
-            var _1553 = {};
-            for (var _1554 in ECharts_Axis.axisDefault) {
-                if (ECharts_Axis.axisDefault.hasOwnProperty(_1554)) {
-                    _1553[_1554] = ECharts_Axis.axisDefault[_1554];
+        _1644.yAxis = Data_Maybe.Just.create(ECharts_Axis.OneAxis.create((function () {
+            var _1620 = {};
+            for (var _1621 in ECharts_Axis.axisDefault) {
+                if (ECharts_Axis.axisDefault.hasOwnProperty(_1621)) {
+                    _1620[_1621] = ECharts_Axis.axisDefault[_1621];
                 };
             };
-            _1553.type = new Data_Maybe.Just(ECharts_Axis.ValueAxis.value);
-            _1553.splitArea = Data_Maybe.Just.create((function () {
-                var _1551 = {};
-                for (var _1552 in ECharts_Axis.axisSplitAreaDefault) {
-                    if (ECharts_Axis.axisSplitAreaDefault.hasOwnProperty(_1552)) {
-                        _1551[_1552] = ECharts_Axis.axisSplitAreaDefault[_1552];
+            _1620.type = new Data_Maybe.Just(ECharts_Axis.ValueAxis.value);
+            _1620.splitArea = Data_Maybe.Just.create((function () {
+                var _1618 = {};
+                for (var _1619 in ECharts_Axis.axisSplitAreaDefault) {
+                    if (ECharts_Axis.axisSplitAreaDefault.hasOwnProperty(_1619)) {
+                        _1618[_1619] = ECharts_Axis.axisSplitAreaDefault[_1619];
                     };
                 };
-                _1551.show = new Data_Maybe.Just(true);
-                return _1551;
+                _1618.show = new Data_Maybe.Just(true);
+                return _1618;
             })());
-            return _1553;
+            return _1620;
         })()));
-        _1577.grid = Data_Maybe.Just.create((function () {
-            var _1555 = {};
-            for (var _1556 in ECharts_Grid.gridDefault) {
-                if (ECharts_Grid.gridDefault.hasOwnProperty(_1556)) {
-                    _1555[_1556] = ECharts_Grid.gridDefault[_1556];
+        _1644.grid = Data_Maybe.Just.create((function () {
+            var _1622 = {};
+            for (var _1623 in ECharts_Grid.gridDefault) {
+                if (ECharts_Grid.gridDefault.hasOwnProperty(_1623)) {
+                    _1622[_1623] = ECharts_Grid.gridDefault[_1623];
                 };
             };
-            _1555.x2 = Data_Maybe.Just.create(new ECharts_Common.Pixel(40));
-            return _1555;
+            _1622.x2 = Data_Maybe.Just.create(new ECharts_Common.Pixel(40));
+            return _1622;
         })());
-        _1577.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.BarSeries({
+        _1644.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.BarSeries({
             common: (function () {
-                var _1557 = {};
-                for (var _1558 in ECharts_Series.universalSeriesDefault) {
-                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1558)) {
-                        _1557[_1558] = ECharts_Series.universalSeriesDefault[_1558];
+                var _1624 = {};
+                for (var _1625 in ECharts_Series.universalSeriesDefault) {
+                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1625)) {
+                        _1624[_1625] = ECharts_Series.universalSeriesDefault[_1625];
                     };
                 };
-                _1557.name = new Data_Maybe.Just("direct access");
-                return _1557;
+                _1624.name = new Data_Maybe.Just("direct access");
+                return _1624;
             })(), 
-            special: (function () {
-                var _1559 = {};
-                for (var _1560 in ECharts_Series.barSeriesDefault) {
-                    if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1560)) {
-                        _1559[_1560] = ECharts_Series.barSeriesDefault[_1560];
+            barSeries: (function () {
+                var _1626 = {};
+                for (var _1627 in ECharts_Series.barSeriesDefault) {
+                    if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1627)) {
+                        _1626[_1627] = ECharts_Series.barSeriesDefault[_1627];
                     };
                 };
-                _1559.stack = new Data_Maybe.Just("total");
-                _1559.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 320, 332, 301, 334, 390, 330, 320 ]));
-                return _1559;
+                _1626.stack = new Data_Maybe.Just("total");
+                _1626.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 320, 332, 301, 334, 390, 330, 320 ]));
+                return _1626;
             })()
         }), new ECharts_Series.BarSeries({
             common: (function () {
-                var _1561 = {};
-                for (var _1562 in ECharts_Series.universalSeriesDefault) {
-                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1562)) {
-                        _1561[_1562] = ECharts_Series.universalSeriesDefault[_1562];
+                var _1628 = {};
+                for (var _1629 in ECharts_Series.universalSeriesDefault) {
+                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1629)) {
+                        _1628[_1629] = ECharts_Series.universalSeriesDefault[_1629];
                     };
                 };
-                _1561.name = new Data_Maybe.Just("email marketing");
-                return _1561;
+                _1628.name = new Data_Maybe.Just("email marketing");
+                return _1628;
             })(), 
-            special: (function () {
-                var _1563 = {};
-                for (var _1564 in ECharts_Series.barSeriesDefault) {
-                    if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1564)) {
-                        _1563[_1564] = ECharts_Series.barSeriesDefault[_1564];
+            barSeries: (function () {
+                var _1630 = {};
+                for (var _1631 in ECharts_Series.barSeriesDefault) {
+                    if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1631)) {
+                        _1630[_1631] = ECharts_Series.barSeriesDefault[_1631];
                     };
                 };
-                _1563.stack = new Data_Maybe.Just("email marketing");
-                _1563.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 120, 132, 101, 134, 90, 230, 210 ]));
-                return _1563;
+                _1630.stack = new Data_Maybe.Just("email marketing");
+                _1630.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 120, 132, 101, 134, 90, 230, 210 ]));
+                return _1630;
             })()
         }), new ECharts_Series.BarSeries({
             common: (function () {
-                var _1565 = {};
-                for (var _1566 in ECharts_Series.universalSeriesDefault) {
-                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1566)) {
-                        _1565[_1566] = ECharts_Series.universalSeriesDefault[_1566];
+                var _1632 = {};
+                for (var _1633 in ECharts_Series.universalSeriesDefault) {
+                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1633)) {
+                        _1632[_1633] = ECharts_Series.universalSeriesDefault[_1633];
                     };
                 };
-                _1565.name = new Data_Maybe.Just("affiliate advertising");
-                return _1565;
+                _1632.name = new Data_Maybe.Just("affiliate advertising");
+                return _1632;
             })(), 
-            special: (function () {
-                var _1567 = {};
-                for (var _1568 in ECharts_Series.barSeriesDefault) {
-                    if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1568)) {
-                        _1567[_1568] = ECharts_Series.barSeriesDefault[_1568];
+            barSeries: (function () {
+                var _1634 = {};
+                for (var _1635 in ECharts_Series.barSeriesDefault) {
+                    if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1635)) {
+                        _1634[_1635] = ECharts_Series.barSeriesDefault[_1635];
                     };
                 };
-                _1567.stack = new Data_Maybe.Just("total");
-                _1567.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 220, 182, 191, 234, 290, 330, 310 ]));
-                return _1567;
+                _1634.stack = new Data_Maybe.Just("total");
+                _1634.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 220, 182, 191, 234, 290, 330, 310 ]));
+                return _1634;
             })()
         }), new ECharts_Series.BarSeries({
             common: (function () {
-                var _1569 = {};
-                for (var _1570 in ECharts_Series.universalSeriesDefault) {
-                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1570)) {
-                        _1569[_1570] = ECharts_Series.universalSeriesDefault[_1570];
+                var _1636 = {};
+                for (var _1637 in ECharts_Series.universalSeriesDefault) {
+                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1637)) {
+                        _1636[_1637] = ECharts_Series.universalSeriesDefault[_1637];
                     };
                 };
-                _1569.name = new Data_Maybe.Just("video Ads");
-                return _1569;
+                _1636.name = new Data_Maybe.Just("video Ads");
+                return _1636;
             })(), 
-            special: (function () {
-                var _1571 = {};
-                for (var _1572 in ECharts_Series.barSeriesDefault) {
-                    if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1572)) {
-                        _1571[_1572] = ECharts_Series.barSeriesDefault[_1572];
+            barSeries: (function () {
+                var _1638 = {};
+                for (var _1639 in ECharts_Series.barSeriesDefault) {
+                    if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1639)) {
+                        _1638[_1639] = ECharts_Series.barSeriesDefault[_1639];
                     };
                 };
-                _1571.stack = new Data_Maybe.Just("total");
-                _1571.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 150, 232, 201, 154, 190, 330, 410 ]));
-                return _1571;
+                _1638.stack = new Data_Maybe.Just("total");
+                _1638.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 150, 232, 201, 154, 190, 330, 410 ]));
+                return _1638;
             })()
         }), new ECharts_Series.BarSeries({
             common: (function () {
-                var _1573 = {};
-                for (var _1574 in ECharts_Series.universalSeriesDefault) {
-                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1574)) {
-                        _1573[_1574] = ECharts_Series.universalSeriesDefault[_1574];
+                var _1640 = {};
+                for (var _1641 in ECharts_Series.universalSeriesDefault) {
+                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1641)) {
+                        _1640[_1641] = ECharts_Series.universalSeriesDefault[_1641];
                     };
                 };
-                _1573.name = new Data_Maybe.Just("search engine");
-                return _1573;
+                _1640.name = new Data_Maybe.Just("search engine");
+                return _1640;
             })(), 
-            special: (function () {
-                var _1575 = {};
-                for (var _1576 in ECharts_Series.barSeriesDefault) {
-                    if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1576)) {
-                        _1575[_1576] = ECharts_Series.barSeriesDefault[_1576];
+            barSeries: (function () {
+                var _1642 = {};
+                for (var _1643 in ECharts_Series.barSeriesDefault) {
+                    if (ECharts_Series.barSeriesDefault.hasOwnProperty(_1643)) {
+                        _1642[_1643] = ECharts_Series.barSeriesDefault[_1643];
                     };
                 };
-                _1575.stack = new Data_Maybe.Just("total");
-                _1575.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 820, 932, 901, 934, 1290, 1330, 1320 ]));
-                return _1575;
+                _1642.stack = new Data_Maybe.Just("total");
+                _1642.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(simpleData)([ 820, 932, 901, 934, 1290, 1330, 1320 ]));
+                return _1642;
             })()
         }) ]));
-        return _1577;
+        return _1644;
     })());
     var options1 = ECharts_Options.Option.create((function () {
-        var _1599 = {};
-        for (var _1600 in ECharts_Options.optionDefault) {
-            if (ECharts_Options.optionDefault.hasOwnProperty(_1600)) {
-                _1599[_1600] = ECharts_Options.optionDefault[_1600];
+        var _1666 = {};
+        for (var _1667 in ECharts_Options.optionDefault) {
+            if (ECharts_Options.optionDefault.hasOwnProperty(_1667)) {
+                _1666[_1667] = ECharts_Options.optionDefault[_1667];
             };
         };
-        _1599.tooltip = Data_Maybe.Just.create((function () {
-            var _1579 = {};
-            for (var _1580 in ECharts_Tooltip.tooltipDefault) {
-                if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1580)) {
-                    _1579[_1580] = ECharts_Tooltip.tooltipDefault[_1580];
+        _1666.tooltip = Data_Maybe.Just.create((function () {
+            var _1646 = {};
+            for (var _1647 in ECharts_Tooltip.tooltipDefault) {
+                if (ECharts_Tooltip.tooltipDefault.hasOwnProperty(_1647)) {
+                    _1646[_1647] = ECharts_Tooltip.tooltipDefault[_1647];
                 };
             };
-            _1579.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerItem.value);
-            _1579.formatter = Data_Maybe.Just.create(new ECharts_Formatter.Template("{a} <br/> {b}: {c} ({d}%)"));
-            return _1579;
+            _1646.trigger = new Data_Maybe.Just(ECharts_Tooltip.TriggerItem.value);
+            _1646.formatter = Data_Maybe.Just.create(new ECharts_Formatter.Template("{a} <br/> {b}: {c} ({d}%)"));
+            return _1646;
         })());
-        _1599.title = Data_Maybe.Just.create((function () {
-            var _1581 = {};
-            for (var _1582 in ECharts_Title.titleDefault) {
-                if (ECharts_Title.titleDefault.hasOwnProperty(_1582)) {
-                    _1581[_1582] = ECharts_Title.titleDefault[_1582];
+        _1666.title = Data_Maybe.Just.create((function () {
+            var _1648 = {};
+            for (var _1649 in ECharts_Title.titleDefault) {
+                if (ECharts_Title.titleDefault.hasOwnProperty(_1649)) {
+                    _1648[_1649] = ECharts_Title.titleDefault[_1649];
                 };
             };
-            _1581.text = new Data_Maybe.Just("a site user to access source");
-            _1581.subtext = new Data_Maybe.Just("fictitious");
-            _1581.x = new Data_Maybe.Just(ECharts_Coords.XLeft.value);
-            return _1581;
+            _1648.text = new Data_Maybe.Just("a site user to access source");
+            _1648.subtext = new Data_Maybe.Just("fictitious");
+            _1648.x = new Data_Maybe.Just(ECharts_Coords.XLeft.value);
+            return _1648;
         })());
-        _1599.legend = Data_Maybe.Just.create((function () {
-            var _1583 = {};
-            for (var _1584 in ECharts_Legend.legendDefault) {
-                if (ECharts_Legend.legendDefault.hasOwnProperty(_1584)) {
-                    _1583[_1584] = ECharts_Legend.legendDefault[_1584];
+        _1666.legend = Data_Maybe.Just.create((function () {
+            var _1650 = {};
+            for (var _1651 in ECharts_Legend.legendDefault) {
+                if (ECharts_Legend.legendDefault.hasOwnProperty(_1651)) {
+                    _1650[_1651] = ECharts_Legend.legendDefault[_1651];
                 };
             };
-            _1583.orient = new Data_Maybe.Just(ECharts_Coords.Vertical.value);
-            _1583.x = new Data_Maybe.Just(ECharts_Coords.XLeft.value);
-            _1583.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Legend.legendItemDefault)([ "direct access", "email marketing", "affiliate advertising", "video ads", "search engine" ]));
-            return _1583;
+            _1650.orient = new Data_Maybe.Just(ECharts_Coords.Vertical.value);
+            _1650.x = new Data_Maybe.Just(ECharts_Coords.XLeft.value);
+            _1650.data = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(ECharts_Legend.legendItemDefault)([ "direct access", "email marketing", "affiliate advertising", "video ads", "search engine" ]));
+            return _1650;
         })());
-        _1599.calculable = new Data_Maybe.Just(true);
-        _1599.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.PieSeries({
+        _1666.calculable = new Data_Maybe.Just(true);
+        _1666.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.PieSeries({
             common: (function () {
-                var _1585 = {};
-                for (var _1586 in ECharts_Series.universalSeriesDefault) {
-                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1586)) {
-                        _1585[_1586] = ECharts_Series.universalSeriesDefault[_1586];
+                var _1652 = {};
+                for (var _1653 in ECharts_Series.universalSeriesDefault) {
+                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1653)) {
+                        _1652[_1653] = ECharts_Series.universalSeriesDefault[_1653];
                     };
                 };
-                _1585.name = new Data_Maybe.Just("access to the source.");
-                return _1585;
+                _1652.name = new Data_Maybe.Just("access to the source.");
+                return _1652;
             })(), 
-            special: (function () {
-                var _1597 = {};
-                for (var _1598 in ECharts_Series.pieSeriesDefault) {
-                    if (ECharts_Series.pieSeriesDefault.hasOwnProperty(_1598)) {
-                        _1597[_1598] = ECharts_Series.pieSeriesDefault[_1598];
+            pieSeries: (function () {
+                var _1664 = {};
+                for (var _1665 in ECharts_Series.pieSeriesDefault) {
+                    if (ECharts_Series.pieSeriesDefault.hasOwnProperty(_1665)) {
+                        _1664[_1665] = ECharts_Series.pieSeriesDefault[_1665];
                     };
                 };
-                _1597.radius = Data_Maybe.Just.create(new ECharts_Common.R(new ECharts_Common.Percent(55)));
-                _1597.center = Data_Maybe.Just.create(new Data_Tuple.Tuple(new ECharts_Common.Percent(50), new ECharts_Common.Pixel(225)));
-                _1597.data = Data_Maybe.Just.create([ ECharts_Item_Data.Dat.create((function () {
-                    var _1587 = {};
-                    for (var _1588 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(335))) {
-                        if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(335))).hasOwnProperty(_1588)) {
-                            _1587[_1588] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(335)))[_1588];
+                _1664.radius = Data_Maybe.Just.create(new ECharts_Common.R(new ECharts_Common.Percent(55)));
+                _1664.center = Data_Maybe.Just.create(new Data_Tuple.Tuple(new ECharts_Common.Percent(50), new ECharts_Common.Pixel(225)));
+                _1664.data = Data_Maybe.Just.create([ ECharts_Item_Data.Dat.create((function () {
+                    var _1654 = {};
+                    for (var _1655 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(335))) {
+                        if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(335))).hasOwnProperty(_1655)) {
+                            _1654[_1655] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(335)))[_1655];
                         };
                     };
-                    _1587.name = new Data_Maybe.Just("direct access");
-                    return _1587;
+                    _1654.name = new Data_Maybe.Just("direct access");
+                    return _1654;
                 })()), ECharts_Item_Data.Dat.create((function () {
-                    var _1589 = {};
-                    for (var _1590 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(310))) {
-                        if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(310))).hasOwnProperty(_1590)) {
-                            _1589[_1590] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(310)))[_1590];
+                    var _1656 = {};
+                    for (var _1657 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(310))) {
+                        if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(310))).hasOwnProperty(_1657)) {
+                            _1656[_1657] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(310)))[_1657];
                         };
                     };
-                    _1589.name = new Data_Maybe.Just("email marketing");
-                    return _1589;
+                    _1656.name = new Data_Maybe.Just("email marketing");
+                    return _1656;
                 })()), ECharts_Item_Data.Dat.create((function () {
-                    var _1591 = {};
-                    for (var _1592 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(234))) {
-                        if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(234))).hasOwnProperty(_1592)) {
-                            _1591[_1592] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(234)))[_1592];
+                    var _1658 = {};
+                    for (var _1659 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(234))) {
+                        if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(234))).hasOwnProperty(_1659)) {
+                            _1658[_1659] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(234)))[_1659];
                         };
                     };
-                    _1591.name = new Data_Maybe.Just("affiliate advertising");
-                    return _1591;
+                    _1658.name = new Data_Maybe.Just("affiliate advertising");
+                    return _1658;
                 })()), ECharts_Item_Data.Dat.create((function () {
-                    var _1593 = {};
-                    for (var _1594 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(135))) {
-                        if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(135))).hasOwnProperty(_1594)) {
-                            _1593[_1594] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(135)))[_1594];
+                    var _1660 = {};
+                    for (var _1661 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(135))) {
+                        if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(135))).hasOwnProperty(_1661)) {
+                            _1660[_1661] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(135)))[_1661];
                         };
                     };
-                    _1593.name = new Data_Maybe.Just("video ads");
-                    return _1593;
+                    _1660.name = new Data_Maybe.Just("video ads");
+                    return _1660;
                 })()), ECharts_Item_Data.Dat.create((function () {
-                    var _1595 = {};
-                    for (var _1596 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(158))) {
-                        if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(158))).hasOwnProperty(_1596)) {
-                            _1595[_1596] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(158)))[_1596];
+                    var _1662 = {};
+                    for (var _1663 in ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(158))) {
+                        if ((ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(158))).hasOwnProperty(_1663)) {
+                            _1662[_1663] = (ECharts_Item_Data.dataDefault(new ECharts_Item_Value.Simple(158)))[_1663];
                         };
                     };
-                    _1595.name = new Data_Maybe.Just("search engine");
-                    return _1595;
+                    _1662.name = new Data_Maybe.Just("search engine");
+                    return _1662;
                 })()) ]);
-                return _1597;
+                return _1664;
             })()
         }) ]));
-        return _1599;
+        return _1666;
     })());
     var bind = function (first) {
         return function (second) {
@@ -7388,9 +8093,26 @@ PS.Connect = (function () {
     var connectM = function (firstId) {
         return function (secondId) {
             return function __do() {
-                var _95 = Prelude[">>="](Control_Monad_Eff.bindEff)(Prelude[">>="](Control_Monad_Eff.bindEff)(Utils.getElementById(firstId))(ECharts_Chart.init(Data_Maybe.Nothing.value)))(ECharts_Options.setOption(options1)(true))();
-                var _94 = Prelude[">>="](Control_Monad_Eff.bindEff)(Prelude[">>="](Control_Monad_Eff.bindEff)(Utils.getElementById(secondId))(ECharts_Chart.init(Data_Maybe.Nothing.value)))(ECharts_Options.setOption(options2)(true))();
-                return bind(_95)(_94)();
+                var _108 = Utils.getElementById(firstId)();
+                var _107 = Utils.getElementById(secondId)();
+                return (function () {
+                    var _1670 = new Data_Tuple.Tuple(_108, _107);
+                    if (_1670.value0 instanceof Data_Maybe.Nothing) {
+                        return Debug_Trace.trace("incorrect first id in connect");
+                    };
+                    if (_1670.value1 instanceof Data_Maybe.Nothing) {
+                        return Debug_Trace.trace("incorrect second id in connect");
+                    };
+                    if (_1670.value0 instanceof Data_Maybe.Just && _1670.value1 instanceof Data_Maybe.Just) {
+                        return function __do() {
+                            var _106 = Prelude[">>="](Control_Monad_Eff.bindEff)(ECharts_Chart.init(Data_Maybe.Nothing.value)(_1670.value0.value0))(ECharts_Options.setOption(options1)(true))();
+                            var _105 = Prelude[">>="](Control_Monad_Eff.bindEff)(ECharts_Chart.init(Data_Maybe.Nothing.value)(_1670.value1.value0))(ECharts_Options.setOption(options2)(true))();
+                            bind(_106)(_105)();
+                            return Prelude.unit;
+                        };
+                    };
+                    throw new Error("Failed pattern match");
+                })()();
             };
         };
     };
@@ -7409,6 +8131,7 @@ PS.Chord2 = (function () {
     var ECharts_Series = PS.ECharts_Series;
     var Prelude = PS.Prelude;
     var Utils = PS.Utils;
+    var Debug_Trace = PS.Debug_Trace;
     var ECharts_Chart = PS.ECharts_Chart;
     var Data_Maybe = PS.Data_Maybe;
     var Data_Array = PS.Data_Array;
@@ -7416,45 +8139,56 @@ PS.Chord2 = (function () {
     var ECharts_Item_Data = PS.ECharts_Item_Data;
     var Control_Monad_Eff = PS.Control_Monad_Eff;
     var options = ECharts_Options.Option.create((function () {
-        var _1607 = {};
-        for (var _1608 in ECharts_Options.optionDefault) {
-            if (ECharts_Options.optionDefault.hasOwnProperty(_1608)) {
-                _1607[_1608] = ECharts_Options.optionDefault[_1608];
+        var _1685 = {};
+        for (var _1686 in ECharts_Options.optionDefault) {
+            if (ECharts_Options.optionDefault.hasOwnProperty(_1686)) {
+                _1685[_1686] = ECharts_Options.optionDefault[_1686];
             };
         };
-        _1607.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.ChordSeries({
+        _1685.series = Data_Maybe.Just.create(Prelude["<$>"](Data_Array.functorArray)(Data_Maybe.Just.create)([ new ECharts_Series.ChordSeries({
             common: (function () {
-                var _1603 = {};
-                for (var _1604 in ECharts_Series.universalSeriesDefault) {
-                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1604)) {
-                        _1603[_1604] = ECharts_Series.universalSeriesDefault[_1604];
+                var _1681 = {};
+                for (var _1682 in ECharts_Series.universalSeriesDefault) {
+                    if (ECharts_Series.universalSeriesDefault.hasOwnProperty(_1682)) {
+                        _1681[_1682] = ECharts_Series.universalSeriesDefault[_1682];
                     };
                 };
-                _1603.name = new Data_Maybe.Just("chord");
-                return _1603;
+                _1681.name = new Data_Maybe.Just("chord");
+                return _1681;
             })(), 
-            special: (function () {
-                var _1605 = {};
-                for (var _1606 in ECharts_Series.chordSeriesDefault) {
-                    if (ECharts_Series.chordSeriesDefault.hasOwnProperty(_1606)) {
-                        _1605[_1606] = ECharts_Series.chordSeriesDefault[_1606];
+            chordSeries: (function () {
+                var _1683 = {};
+                for (var _1684 in ECharts_Series.chordSeriesDefault) {
+                    if (ECharts_Series.chordSeriesDefault.hasOwnProperty(_1684)) {
+                        _1683[_1684] = ECharts_Series.chordSeriesDefault[_1684];
                     };
                 };
-                _1605.sort = new Data_Maybe.Just(ECharts_Common.Asc.value);
-                _1605.sortSub = new Data_Maybe.Just(ECharts_Common.Desc.value);
-                _1605.showScale = new Data_Maybe.Just(true);
-                _1605.showScaleText = new Data_Maybe.Just(true);
-                _1605.data = new Data_Maybe.Just([ new ECharts_Item_Data.Label("group1"), new ECharts_Item_Data.Label("group2"), new ECharts_Item_Data.Label("group3"), new ECharts_Item_Data.Label("group4") ]);
-                _1605.matrix = Data_Maybe.Just.create([ [ 11975, 5871, 8916, 2868 ], [ 1951, 10048, 2060, 6171 ], [ 8010, 16145, 8090, 8045 ], [ 1013, 990, 940, 6907 ] ]);
-                return _1605;
+                _1683.sort = new Data_Maybe.Just(ECharts_Common.Asc.value);
+                _1683.sortSub = new Data_Maybe.Just(ECharts_Common.Desc.value);
+                _1683.showScale = new Data_Maybe.Just(true);
+                _1683.showScaleText = new Data_Maybe.Just(true);
+                _1683.data = new Data_Maybe.Just([ new ECharts_Item_Data.Label("group1"), new ECharts_Item_Data.Label("group2"), new ECharts_Item_Data.Label("group3"), new ECharts_Item_Data.Label("group4") ]);
+                _1683.matrix = Data_Maybe.Just.create([ [ 11975, 5871, 8916, 2868 ], [ 1951, 10048, 2060, 6171 ], [ 8010, 16145, 8090, 8045 ], [ 1013, 990, 940, 6907 ] ]);
+                return _1683;
             })()
         }) ]));
-        return _1607;
+        return _1685;
     })());
     var chord2 = function (id) {
         return function __do() {
-            var _96 = Prelude[">>="](Control_Monad_Eff.bindEff)(Prelude[">>="](Control_Monad_Eff.bindEff)(Utils.getElementById(id))(ECharts_Chart.init(Data_Maybe.Nothing.value)))(ECharts_Options.setOption(options)(true))();
-            return Prelude.unit;
+            var _109 = Utils.getElementById(id)();
+            return (function () {
+                if (_109 instanceof Data_Maybe.Nothing) {
+                    return Debug_Trace.trace("Incorrect id in chord 2");
+                };
+                if (_109 instanceof Data_Maybe.Just) {
+                    return function __do() {
+                        var _ = Prelude[">>="](Control_Monad_Eff.bindEff)(ECharts_Chart.init(Data_Maybe.Nothing.value)(_109.value0))(ECharts_Options.setOption(options)(true))();
+                        return Prelude.unit;
+                    };
+                };
+                throw new Error("Failed pattern match");
+            })()();
         };
     };
     return {

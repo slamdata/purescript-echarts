@@ -1,8 +1,8 @@
 module Gauge4 where
 
+import Debug.Trace (trace)
 import Control.Monad.Eff
 import Control.Monad.Eff.Random
---import Data.Tuple
 import Data.Tuple.Nested
 import Signal
 import Signal.Time
@@ -26,7 +26,7 @@ options_ val = Option $ optionDefault {
   series = Just $ Just <$> [
      GaugeSeries {
         common: universalSeriesDefault,
-        special: gaugeSeriesDefault{
+        gaugeSeries: gaugeSeriesDefault{
           "data" = Just [Value $ Simple val]
           }
         }
@@ -39,10 +39,13 @@ options = gaugeValueSignal ~> \g -> do
   return $ options_ gv
 
 gauge4 id = do
-  chart <- getElementById id
-           >>= init Nothing
-  runSignal $ options ~> \opts -> do
-    os <- opts
-    setOption os true chart
-    return unit
+  mbEl <- getElementById id
+  case mbEl of
+    Nothing -> trace "incorrect id in gauge4"
+    Just el -> do
+      chart <- init Nothing el
+      runSignal $ options ~> \opts -> do
+        os <- opts
+        setOption os true chart
+        return unit
            

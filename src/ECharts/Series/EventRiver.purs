@@ -19,7 +19,6 @@ import ECharts.Common
 import ECharts.Coords
 import ECharts.Chart
 import ECharts.Tooltip
-import ECharts.Type
 import ECharts.Style.Item
 import ECharts.Mark.Line
 import ECharts.Mark.Point

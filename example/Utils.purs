@@ -3,69 +3,33 @@ module Utils where
 import Control.Monad.Eff
 import Control.Monad.Eff.Random
 import DOM
-import Math (floor)
+import Math (floor, round, pow)
 import Data.Array
 import Data.Maybe
 import Data.Tuple
+import qualified Data.DOM.Simple.Window as Win
+import qualified Data.DOM.Simple.Document as Doc
+import qualified Data.DOM.Simple.Element as El
+import qualified Data.DOM.Simple.Events as Ev
+import Data.DOM.Simple.Types (DOMEvent(..))
 
-foreign import undefine  """
-function undefine(a) {
-  return undefined;
-}
-""" :: forall a. a -> a
-
-
-foreign import log """
-function log(a) {
-  return function() {
-    console.log(a);
-  };
-}
-
-""" :: forall a e. a -> Eff e Unit
+getElementById id = do
+  doc <- Win.document Win.globalWindow
+  El.getElementById id doc
 
 
-foreign import getElementById """
-function getElementById(id) {
-  return function() {
-    console.log(id);
-    return document.getElementById(id);
-  };
-}
-""" :: forall e. String -> Eff (dom :: DOM|e) Node
-
-
-foreign import onLoad """
-function onLoad(action) {
-  return function() {
-    window.onload = action;
-  };
-}
-""" :: forall e. Eff e Unit -> Eff e Unit
-
-foreign import windowize """
-function windowize(key) {
-  return function(a) {
-    return function() {
-      window[key] = a;
-    };
-  };
-}
-""" :: forall e a. String -> a -> Eff e Unit
+onLoad action = 
+  let actionWrap :: DOMEvent -> Eff _ Unit
+      actionWrap _ = action
+  in Ev.addUIEventListener Ev.LoadEvent actionWrap Win.globalWindow
 
 
 
+precise :: Number -> Number -> Number
+precise pre num =
+  (round $  (pow 10 pre) * num) / (pow 10 pre)
 
-foreign import precise """
-function precise(pre) {
-  return function(num) {
-    var Math = window['Math'];
-    var result = Math.round(Math.pow(10, pre) * num) / Math.pow(10, pre);
-    return result;
-  };
-}
-""" :: Number -> Number -> Number
-
+-- sequence_ $ traverse (\i -> random) (1..10000) -> stackoverflow
 foreign import randomLst """
 function randomLst(count) {
   return function() {

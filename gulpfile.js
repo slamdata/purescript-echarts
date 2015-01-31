@@ -26,7 +26,8 @@ var paths = {
             ]
         }
     },
-    example: ['example/**/*.purs', "example/bower_components/purescript-*/src/**/*.purs"],
+    example: ['example/**/*.purs',
+              "example/bower_components/purescript-*/src/**/*.purs"],
     test: 'test/**/*.purs'
 };
 
@@ -58,8 +59,6 @@ function docs (target) {
 }
 gulp.task('docs', docs('all'));
 
-// Halt! Production on examples will not work
-// Because of incorrect working with chinese language
 gulp.task("prod", function() {
     var psc = purescript.psc({
         output: "build.js",

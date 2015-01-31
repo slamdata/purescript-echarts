@@ -1,4 +1,13 @@
-module ECharts.Tooltip where
+module ECharts.Tooltip (
+  TooltipTrigger(..),
+  TooltipPosition(..),
+  TooltipAxisPointerType(..),
+  TooltipAxisPointer(..),
+  Tooltip(..),
+  
+  tooltipAxisPointerDefault,
+  tooltipDefault
+  ) where
 
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
@@ -21,6 +30,12 @@ instance tooltipTriggerEncodeJson :: EncodeJson TooltipTrigger where
   encodeJson TriggerItem = encodeJson "item"
   encodeJson TriggerAxis = encodeJson "axis"
 
+
+foreign import func2json """
+function func2json(fn) {
+  return fn;
+}
+""" :: forall a. a -> Json
 
 data TooltipPosition = Fixed [Number] | FuncPos ([Number] -> [Number])
 instance tooltipPositionEncodeJson :: EncodeJson TooltipPosition where

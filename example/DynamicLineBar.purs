@@ -1,5 +1,6 @@
 module DynamicLineBar where
 
+import Debug.Trace 
 import Data.Tuple.Nested
 import Control.Monad.Eff
 import Control.Monad.Eff.Random
@@ -23,7 +24,6 @@ import ECharts.Coords
 import ECharts.Legend
 import ECharts.Axis
 import ECharts.Series
-import ECharts.Type
 import ECharts.Item.Data
 import ECharts.Item.Value
 import ECharts.Common
@@ -138,7 +138,7 @@ options_ xAxis d1 d2 = Option $ optionDefault {
          common: universalSeriesDefault {
             "name" = Just "pre-order queue"
             },
-         special: barSeriesDefault {
+         barSeries: barSeriesDefault {
            "xAxisIndex" = Just 1,
            "yAxisIndex" = Just 1,
            "data" = Just $ simpleData <$> d1
@@ -148,7 +148,7 @@ options_ xAxis d1 d2 = Option $ optionDefault {
         common: universalSeriesDefault {
            "name" = Just "new price"
            },
-        special: lineSeriesDefault {
+        lineSeries: lineSeriesDefault {
           "data" = Just $ simpleData <$> d2
           }
         }
@@ -196,12 +196,14 @@ dataStream =
 
 
 dynamicLineBar id = do
-  opts <- options
-  chart <- getElementById id
-           >>= init Nothing
-           >>= setOption opts true
-  runSignal $ dataStream ~> \effContent -> do
-    content <- effContent
-    sequence_ $ (flip addData) chart <$> content
+  mbEl <- getElementById id
+  case mbEl of
+    Nothing -> trace "Inocrrect id in dymaniclinebar"
+    Just el -> do
+      opts <- options
+      chart <- init Nothing el >>= setOption opts true
+      runSignal $ dataStream ~> \effContent -> do
+        content <- effContent
+        sequence_ $ (flip addData) chart <$> content
 
   
