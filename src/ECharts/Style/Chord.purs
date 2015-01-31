@@ -10,13 +10,15 @@ import Data.Argonaut.Combinators
 
 import ECharts.Color
 
-newtype ChordStyle =
-  ChordStyle {
+type ChordStyleRec = {
     width :: Maybe Number,
     color :: Maybe Color,
     borderWidth :: Maybe Number,
     borderColor :: Maybe Color
   }
+
+newtype ChordStyle = ChordStyle ChordStyleRec
+   
 
 
 instance chordStyleJson :: EncodeJson ChordStyle where
@@ -29,6 +31,7 @@ instance chordStyleJson :: EncodeJson ChordStyle where
       "borderColor" := cs.borderColor
     ]
 
+chordStyleDefault :: ChordStyleRec
 chordStyleDefault = {
   width: Nothing,
   color: Nothing,

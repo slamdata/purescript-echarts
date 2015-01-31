@@ -12,8 +12,7 @@ import ECharts.Style.Text
 import ECharts.Style.Line
 import ECharts.Image
 
-newtype Toolbox =
-  Toolbox {
+type ToolboxRec = {
     "show" :: Maybe Boolean,
     "orient" :: Maybe Orient,
     "x" :: Maybe XPos,
@@ -32,6 +31,9 @@ newtype Toolbox =
     "feature" :: Maybe Feature
     }
 
+
+newtype Toolbox = Toolbox ToolboxRec
+toolboxDefault :: ToolboxRec
 toolboxDefault =
   {
     "show": Nothing,
@@ -76,8 +78,7 @@ instance toolboxEncodeJson :: EncodeJson Toolbox where
     ]
 
 
-newtype Feature =
-  Feature {
+type FeatureRec = {
     "mark" :: Maybe MarkFeature,
     "dataZoom" :: Maybe DataZoomFeature,
     "dataView" :: Maybe DataViewFeature,
@@ -86,6 +87,7 @@ newtype Feature =
     "saveAsImage" :: Maybe SaveAsImageFeature
     }
 
+newtype Feature = Feature FeatureRec
 
 instance featureEncodeJson :: EncodeJson Feature where
   encodeJson (Feature obj) =
@@ -98,7 +100,7 @@ instance featureEncodeJson :: EncodeJson Feature where
       "restore" := obj.restore,
       "saveAsImage" := obj.saveAsImage
     ]
-
+featureDefault :: FeatureRec
 featureDefault = {
   mark: Nothing,
   dataZoom: Nothing,
@@ -108,13 +110,15 @@ featureDefault = {
   saveAsImage: Nothing
   }
 
-newtype SaveAsImageFeature =
-  SaveAsImageFeature {
+type SaveAsImageFeatureRec = {
     "show" :: Maybe Boolean,
     "title" :: Maybe String,
     "type" :: Maybe ImgType,
     "lang" :: Maybe [String]
     }
+
+newtype SaveAsImageFeature = SaveAsImageFeature SaveAsImageFeatureRec
+
 
 instance saveAsImageEncodeJson :: EncodeJson SaveAsImageFeature where
   encodeJson (SaveAsImageFeature obj) =
@@ -125,6 +129,8 @@ instance saveAsImageEncodeJson :: EncodeJson SaveAsImageFeature where
       "type" := obj.type,
       "lang" := obj.lang
     ]
+
+saveAsImageFeatureDefault :: SaveAsImageFeatureRec
 saveAsImageFeatureDefault = {
   show: Nothing,
   title: Nothing,
@@ -132,11 +138,13 @@ saveAsImageFeatureDefault = {
   lang: Nothing
   }
 
-newtype RestoreFeature =
-  RestoreFeature {
+type RestoreFeatureRec = {
     "show" :: Maybe Boolean,
     "title" :: Maybe String
     }
+
+newtype RestoreFeature = RestoreFeature RestoreFeatureRec
+
 
 instance restoreFeatureEncodeJson :: EncodeJson RestoreFeature where
   encodeJson (RestoreFeature obj) =
@@ -146,16 +154,19 @@ instance restoreFeatureEncodeJson :: EncodeJson RestoreFeature where
       "title" := obj.title
     ]
 
+restoreFeatureDefault :: RestoreFeatureRec
 restoreFeatureDefault = {
   show: Nothing,
   title: Nothing
   }
 
-newtype DataZoomFeatureTitle =
-  DataZoomFeatureTitle {
+
+type DataZoomFeatureTitleRec = {
     dataZoom :: String,
     dataZoomReset :: String
     }
+newtype DataZoomFeatureTitle = DataZoomFeatureTitle DataZoomFeatureTitleRec
+
 instance datazoomTitleEncodeJson :: EncodeJson DataZoomFeatureTitle where
   encodeJson (DataZoomFeatureTitle obj) =
     fromObject $ fromList $
@@ -163,13 +174,15 @@ instance datazoomTitleEncodeJson :: EncodeJson DataZoomFeatureTitle where
       "dataZoom" := obj.dataZoom,
       "dataZoomReset" := obj.dataZoomReset
     ]
-  
-newtype DataZoomFeature =
-  DataZoomFeature {
+
+type DataZoomFeatureRec = {
     "show" :: Maybe Boolean,
     "title" :: Maybe DataZoomFeatureTitle
     }
 
+newtype DataZoomFeature = DataZoomFeature DataZoomFeatureRec
+
+dataZoomFeatureDefault :: DataZoomFeatureRec
 dataZoomFeatureDefault = {
   show: Nothing,
   title: Nothing
@@ -183,15 +196,15 @@ instance dataviewFeatureEncodeJson :: EncodeJson DataZoomFeature where
       "title" := obj.title
     ]
 
-
-newtype DataViewFeature =
-  DataViewFeature {
+type DataViewFeatureRec = {
     "show" :: Maybe Boolean,
     "title" :: Maybe String,
     "readOnly" :: Maybe Boolean,
     "lang" :: Maybe [String]
     }
+newtype DataViewFeature = DataViewFeature DataViewFeatureRec
 
+dataViewFeatureDefault :: DataViewFeatureRec
 dataViewFeatureDefault = {
   show: Nothing,
   title: Nothing,
@@ -209,13 +222,14 @@ instance dataViewFeatureEncodeJson :: EncodeJson DataViewFeature where
       "lang" := obj.lang
     ]
 
-
-newtype MarkFeatureTitle =
-  MarkFeatureTitle {
+type MarkFeatureTitleRec = {
     "mark" :: Maybe String,
     "markUndo" :: String,
     "markClear" :: String
     }
+
+newtype MarkFeatureTitle = MarkFeatureTitle MarkFeatureTitleRec
+
 
 instance mftitleEncodeJson :: EncodeJson MarkFeatureTitle where
   encodeJson (MarkFeatureTitle obj) =
@@ -226,12 +240,14 @@ instance mftitleEncodeJson :: EncodeJson MarkFeatureTitle where
       "markClear" := obj.markUndo
     ]
 
-newtype MarkFeature =
-  MarkFeature {
+type MarkFeatureRec = {
     "show" :: Maybe Boolean,
     "title" :: Maybe MarkFeatureTitle,
     "lineStyle" :: Maybe LineStyle
     }
+
+newtype MarkFeature = MarkFeature MarkFeatureRec
+
 
 instance markFeatureEncodeJson :: EncodeJson MarkFeature where
   encodeJson (MarkFeature obj) =
@@ -241,7 +257,7 @@ instance markFeatureEncodeJson :: EncodeJson MarkFeature where
       "title" := obj.title,
       "lineStyle" := obj.lineStyle
     ]
-
+markFeatureDefault :: MarkFeatureRec
 markFeatureDefault = {
   show: Nothing,
   title: Nothing,
@@ -262,14 +278,16 @@ instance magicTypeEncodeJson :: EncodeJson MagicType where
     MagicPie -> "pie"
     MagicFunnel -> "funnel"
 
-newtype MagicTypeFeature =
-  MagicTypeFeature {
+type MagicTypeFeatureRec = {
     "show" :: Maybe Boolean,
     "title" :: Maybe (StrMap String),
     "option" :: Maybe Json,
     "type" :: Maybe [MagicType]
     }
 
+newtype MagicTypeFeature = MagicTypeFeature MagicTypeFeatureRec
+
+magicTypeFeatureDefault :: MagicTypeFeatureRec
 magicTypeFeatureDefault = {
   show: Nothing,
   title: Nothing,

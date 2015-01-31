@@ -1,8 +1,11 @@
 module ECharts.Series.EventRiver (
   EvolutionDetail(..),
+  EvolutionDetailRec(),
   evolutionDetailDefault,
   Evolution(..),
+  EvolutionRec(),
   OneEvent(..),
+  OneEventRec(),
   oneEventDefault
   ) where 
 
@@ -29,13 +32,14 @@ import ECharts.Series.Gauge
 import ECharts.Axis
 import ECharts.Title
 
-
-newtype EvolutionDetail =
-  EvolutionDetail {
+type EvolutionDetailRec = {
     "link" :: Maybe String,
     "text" :: Maybe String,
     "img" :: Maybe String
     }
+
+newtype EvolutionDetail = EvolutionDetail EvolutionDetailRec
+   
 
 instance evoDetailEncodeJson :: EncodeJson EvolutionDetail where
   encodeJson (EvolutionDetail e) = fromObject $ fromList $ [
@@ -43,19 +47,21 @@ instance evoDetailEncodeJson :: EncodeJson EvolutionDetail where
     "text" := e.text,
     "img" := e.img
     ]
-
+evolutionDetailDefault :: EvolutionDetailRec
 evolutionDetailDefault = {
   link: Nothing,
   text: Nothing,
   img: Nothing
   }
 
-newtype Evolution =
-  Evolution {
+type EvolutionRec = {
     "time" :: Date,
     "value" :: Number,
     "detail" :: Maybe EvolutionDetail
     }
+
+newtype Evolution = Evolution EvolutionRec
+   
 
 instance evoEncodeJson :: EncodeJson Evolution where
   encodeJson (Evolution e) = fromObject $ fromList $ [
@@ -64,13 +70,15 @@ instance evoEncodeJson :: EncodeJson Evolution where
     "detail" := e.detail
     ]
 
-newtype OneEvent =
-  OneEvent {
+type OneEventRec = {
     "name" :: Maybe String,
     "weight" :: Maybe Number,
     "evolution" :: Maybe [Evolution]
     }
 
+newtype OneEvent = OneEvent OneEventRec
+   
+oneEventDefault :: OneEventRec
 oneEventDefault = {
   name: Nothing,
   weight: Nothing,

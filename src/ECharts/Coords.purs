@@ -62,11 +62,13 @@ instance textAlignEncodeJson :: EncodeJson HorizontalAlign where
     HAlignCenter -> "center"
 
 
-newtype Location =
-  Location {
+type LocationRec = {
     x :: Maybe XPos,
     y :: Maybe YPos
     }
+
+newtype Location = Location LocationRec
+
 instance locationEncodeJson :: EncodeJson Location where
   encodeJson (Location xy) = fromObject $ fromList $ [
     "x" := xy.x,

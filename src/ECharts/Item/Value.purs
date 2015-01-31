@@ -5,11 +5,15 @@ import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Combinators
 
+
+type XYRRec = {x :: Number, y :: Number, r :: Maybe Number}
+type HLOCRec = {h :: Number, l :: Number, o :: Number, c :: Number}
+
 data ItemValue = None
                | Simple Number
                | Many [Number]
-               | XYR {x :: Number, y :: Number, r :: Maybe Number}
-               | HLOC {h :: Number, l :: Number, o :: Number, c :: Number}
+               | XYR XYRRec
+               | HLOC HLOCRec
 
 instance itemValueEncodeJson :: EncodeJson ItemValue where
   encodeJson val = case val of

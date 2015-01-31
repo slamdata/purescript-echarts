@@ -62,9 +62,9 @@ instance fontWeightEncodeJson :: EncodeJson FontWeight where
     FW700 -> "700"
     FW800 -> "800"
     FW900 -> "900"
-    
-newtype TextStyle = 
-  TextStyle {
+
+
+type TextStyleRec = {
     color :: Maybe Color,
     decoration :: Maybe Decoration,
     align :: Maybe HorizontalAlign,
@@ -75,7 +75,7 @@ newtype TextStyle =
     fontWeight :: Maybe FontWeight
   }
 
-
+newtype TextStyle = TextStyle TextStyleRec
 
 instance textStyleEncodeJson :: EncodeJson TextStyle where
   encodeJson (TextStyle ts) =
@@ -90,7 +90,7 @@ instance textStyleEncodeJson :: EncodeJson TextStyle where
       "fontWeight" := ts.fontWeight
     ]
 
-
+textStyleDefault :: TextStyleRec
 textStyleDefault =
   {
     color: Nothing,

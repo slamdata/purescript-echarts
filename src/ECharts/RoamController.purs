@@ -11,9 +11,7 @@ import ECharts.Coords
 import ECharts.Color
 import ECharts.Common
 
-
-newtype RoamController =
-  RoamController {
+type RoamControllerRec = {
     "show" :: Maybe Boolean,
     "x" :: Maybe XPos,
     "y" :: Maybe YPos,
@@ -26,8 +24,11 @@ newtype RoamController =
     "fillerColor" :: Maybe Color,
     "handleColor" :: Maybe Color,
     "step" :: Maybe Number,
-    "mapTypeControl" :: StrMap Boolean
+    "mapTypeControl" :: Maybe (StrMap Boolean)
     }
+
+newtype RoamController = RoamController RoamControllerRec
+   
 instance roamControllerEncodeJson :: EncodeJson RoamController where
   encodeJson (RoamController obj) =
     fromObject $ fromList $
@@ -46,6 +47,7 @@ instance roamControllerEncodeJson :: EncodeJson RoamController where
       "step" := obj.step,
       "mapTypeControl" := obj.mapTypeControl
     ]
+roamControllerDefault :: RoamControllerRec
 roamControllerDefault = {
   show: Nothing,
   x: Nothing,

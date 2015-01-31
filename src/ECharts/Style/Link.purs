@@ -17,12 +17,15 @@ instance linkTypeEncodeJson :: EncodeJson LinkType where
     LTCurve -> "curve"
     LTLine -> "line"
 
-newtype LinkStyle =
-  LinkStyle {
+type LinkStyleRec = {
     "type" :: Maybe LinkType,
     color :: Maybe Color,
     width :: Maybe Number
   }
+
+
+newtype LinkStyle = LinkStyle LinkStyleRec
+
 
 instance linkStyleEncodeJson :: EncodeJson LinkStyle where
   encodeJson (LinkStyle ls) =
@@ -33,6 +36,7 @@ instance linkStyleEncodeJson :: EncodeJson LinkStyle where
       "width" := ls.width
     ]
 
+linkStyleDefault :: LinkStyleRec
 linkStyleDefault = {
   type: Nothing,
   color: Nothing,

@@ -1,5 +1,6 @@
 module ECharts.Color (
   Color(..),
+  ColorFuncParamRec(),
   ColorFuncParam(..),
   CalculableColor(..)
   ) where
@@ -19,8 +20,7 @@ function func2json(fn) {
 }
 """ :: forall a. a -> Json
 
-newtype ColorFuncParam =
-  ColorFuncParam {
+type ColorFuncParamRec = {
     "seriesIndex" :: Number,
     "series" :: String,
     "dataIndex" :: Number,
@@ -29,6 +29,9 @@ newtype ColorFuncParam =
       name :: String
       }
   }
+
+newtype ColorFuncParam = ColorFuncParam ColorFuncParamRec
+
 
 
 data CalculableColor = SimpleColor Color | ColorFunc (ColorFuncParam -> Color)

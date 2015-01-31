@@ -1,5 +1,6 @@
 module ECharts.Mark.Line (
   MarkLine(..),
+  MarkLineRec(),
   markLineDefault,
   addMarkLine,
   delMarkLine
@@ -24,10 +25,7 @@ import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Combinators
 
-
-
-newtype MarkLine =
-  MarkLine {
+type MarkLineRec = {
     symbol :: Maybe (Tuple Symbol Symbol),
     symbolSize :: Maybe DoubleSymbolSize,
     symbolRotate :: Maybe (Tuple Number Number),
@@ -36,6 +34,9 @@ newtype MarkLine =
     "data" :: Maybe [Tuple MarkPointData MarkPointData],
     itemStyle :: Maybe ItemStyle
   }
+
+newtype MarkLine = MarkLine MarkLineRec
+   
 
 instance mlEncodeJson :: EncodeJson MarkLine where
   encodeJson (MarkLine ml) =
@@ -49,7 +50,7 @@ instance mlEncodeJson :: EncodeJson MarkLine where
       "data" := ml.data,
       "itemStyle" := ml.itemStyle
     ]
-
+markLineDefault :: MarkLineRec
 markLineDefault =
   {
     symbol: Nothing,
@@ -57,7 +58,8 @@ markLineDefault =
     symbolRotate: Nothing,
     effect: Nothing,
     geoCoord: Nothing,
-    "data": Nothing
+    "data": Nothing,
+    itemStyle: Nothing
   }
 
 

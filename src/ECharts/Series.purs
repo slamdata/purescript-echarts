@@ -1,6 +1,19 @@
 module ECharts.Series (
   setSeries,
   Series(..),
+  UniversalSeriesRec(),
+  LineSeriesRec(),
+  BarSeriesRec(),
+  ScatterSeriesRec(),
+  PieSeriesRec(),
+  RadarSeriesRec(),
+  ChordSeriesRec(),
+  ForceSeriesRec(),
+  CandlestickSeriesRec(),
+  MapSeriesRec(),
+  GaugeSeriesRec(),
+  FunnelSeriesRec(),
+  EventRiverSeriesRec(),
   universalSeriesDefault,
   lineSeriesDefault,
   barSeriesDefault,
@@ -114,7 +127,7 @@ type UniversalSeriesRec = {
   "markPoint" :: Maybe MarkPoint,
   "markLine" :: Maybe MarkLine
   }
-
+universalSeriesDefault :: UniversalSeriesRec
 universalSeriesDefault = {
   "name": Nothing,
   "tooltip": Nothing,
@@ -163,7 +176,7 @@ type LineSeriesRec = {
   "smooth" :: Maybe Boolean,
   "legendHoverLink" :: Maybe Boolean
   }
-
+lineSeriesDefault :: LineSeriesRec
 lineSeriesDefault  = {
   "data": Nothing,
   "stack": Nothing,
@@ -203,7 +216,7 @@ type BarSeriesRec = {
   "barMaxWidth" :: Maybe Number,
   "legendHoverLink" :: Maybe Boolean
   }
-
+barSeriesDefault :: BarSeriesRec
 barSeriesDefault = {
   "data": Nothing,
   "stack": Nothing,
@@ -242,7 +255,7 @@ type ScatterSeriesRec = {
   "largeThreshold" :: Maybe Number,
   "legendHoverLink" :: Maybe Boolean
   }
-
+scatterSeriesDefault :: ScatterSeriesRec
 scatterSeriesDefault = {
   "data": Nothing,
   "xAxisIndex": Nothing,
@@ -276,7 +289,7 @@ type CandlestickSeriesRec = {
   "barWidth" :: Maybe Number,
   "barMaxWidth" :: Maybe Number
   }
-
+candlestickSeriesDefault :: CandlestickSeriesRec
 candlestickSeriesDefault = {
   "data": Nothing,
   "xAxisIndex": Nothing,
@@ -307,7 +320,7 @@ type PieSeriesRec = {
   "selectedMode" :: Maybe SelectedMode,
   "legendHoverLink" :: Maybe Boolean
   }
-
+pieSeriesDefault :: PieSeriesRec
 pieSeriesDefault = {
   "data": Nothing,
   "center": Nothing,
@@ -346,7 +359,7 @@ type RadarSeriesRec = {
   "legendHoverLink" :: Maybe Boolean
   }
 
-
+radarSeriesDefault :: RadarSeriesRec
 radarSeriesDefault = {
   "data": Nothing,
   "polarIndex": Nothing,
@@ -384,6 +397,7 @@ type ChordSeriesRec = {
   "sortSub" :: Maybe Sort,
   "clockWise" :: Maybe Boolean
   }
+chordSeriesDefault :: ChordSeriesRec
 chordSeriesDefault = {
   "nodes": Nothing,
   "categories": Nothing,
@@ -444,7 +458,7 @@ type ForceSeriesRec = {
   "steps" :: Maybe Number,
   "ribbonType" :: Maybe Boolean
   }
-
+forceSeriesDefault :: ForceSeriesRec
 forceSeriesDefault = {
   "categories": Nothing,
   "nodes": Nothing,
@@ -506,7 +520,7 @@ type MapSeriesRec = {
   "textFixed" ::  Maybe (StrMap (Tuple Number Number)),
   "geoCoord" :: Maybe (StrMap (Tuple Number Number))
   }
-
+mapSeriesDefault :: MapSeriesRec
 mapSeriesDefault = {
   "data": Nothing,
   "selectedMode": Nothing,
@@ -561,7 +575,7 @@ type GaugeSeriesRec = {
   "pointer" :: Maybe Pointer,
   "legendHoverLink" :: Maybe Boolean
   }
-
+gaugeSeriesDefault :: GaugeSeriesRec
 gaugeSeriesDefault = {
   "data": Nothing,
   "center": Nothing,
@@ -620,7 +634,7 @@ type FunnelSeriesRec = {
   "sort" :: Maybe Sort,
   "legendHoverLink" :: Maybe Boolean
   }
-
+funnelSeriesDefault :: FunnelSeriesRec 
 funnelSeriesDefault = {
   "data": Nothing,
   "x": Nothing,
@@ -664,7 +678,7 @@ type EventRiverSeriesRec = {
   "weight" :: Maybe Number,
   "legendHoverLink" :: Maybe Boolean
   }
-  
+eventRiverSeriesDefault :: EventRiverSeriesRec
 eventRiverSeriesDefault = {
   "eventList": Nothing,
   "xAxisIndex": Nothing,

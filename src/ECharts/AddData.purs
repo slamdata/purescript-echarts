@@ -1,5 +1,6 @@
 module ECharts.AddData (
   AdditionalData(..),
+  AdditionalDataRec(),
   addData
   ) where
 
@@ -15,15 +16,16 @@ import ECharts.Item.Data
 import ECharts.Effects
 
 
-
-newtype AdditionalData =
-  AdditionalData {
+type AdditionalDataRec = 
+  {
     idx :: Number,
     datum :: ItemData,
     isHead :: Boolean,
     dataGrow :: Boolean,
     additionalData :: Maybe String
   }
+newtype AdditionalData = AdditionalData AdditionalDataRec
+
 
 instance additionalDataEncodeJson :: EncodeJson AdditionalData where
   encodeJson (AdditionalData ad) =

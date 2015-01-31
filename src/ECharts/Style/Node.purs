@@ -10,12 +10,14 @@ import Data.Argonaut.Combinators
 
 import ECharts.Color
 
-newtype NodeStyle =
-  NodeStyle {
+type NodeStyleRec = {
     color :: Maybe Color,
     borderColor :: Maybe Color,
     borderWidth :: Maybe Number
   }
+
+newtype NodeStyle = NodeStyle NodeStyleRec
+
 
 instance nodeStyleEncodeJson :: EncodeJson NodeStyle where
   encodeJson (NodeStyle ns) =
@@ -25,7 +27,8 @@ instance nodeStyleEncodeJson :: EncodeJson NodeStyle where
       "borderColor" := ns.borderColor,
       "borderWidth" := ns.borderWidth
     ]
-  
+
+nodeStyleDefault :: NodeStyleRec
 nodeStyleDefault = {
   color: Nothing,
   borderColor: Nothing,

@@ -7,8 +7,7 @@ import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Combinators
 
-newtype MarkPointData =
-  MarkPointData {
+type MarkPointDataRec = {
     name :: Maybe String,
     value :: Maybe Number,
     x :: Maybe Number,
@@ -17,6 +16,9 @@ newtype MarkPointData =
     yAxis :: Maybe Number,
     "type" :: Maybe String
   }
+
+newtype MarkPointData = MarkPointData MarkPointDataRec
+   
 instance mpDataEncodeJson :: EncodeJson MarkPointData where
   encodeJson (MarkPointData mp) =
     fromObject $ fromList $
@@ -29,7 +31,7 @@ instance mpDataEncodeJson :: EncodeJson MarkPointData where
       "yAxis" := mp.yAxis,
       "type" := mp.type
     ]
-
+markPointDataDefault :: MarkPointDataRec
 markPointDataDefault =
   {
     name: Nothing,

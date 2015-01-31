@@ -10,15 +10,16 @@ import ECharts.Item.Value
 import ECharts.Tooltip
 import ECharts.Style.Item
 
+type ItemDataDatRec =  {
+  "value" :: ItemValue,
+  "name" :: Maybe String,
+  "tooltip" :: Maybe Tooltip,
+  "itemStyle" :: Maybe ItemStyle,
+  "selected" :: Maybe Boolean
+  }
 
 data ItemData = Value ItemValue
-              | Dat {
-                "value" :: ItemValue,
-                "name" :: Maybe String,
-                "tooltip" :: Maybe Tooltip,
-                "itemStyle" :: Maybe ItemStyle,
-                "selected" :: Maybe Boolean
-                    }
+              | Dat ItemDataDatRec
               | Label String
 
 
@@ -37,8 +38,8 @@ instance itemDataEncodeJson :: EncodeJson ItemData where
     fromObject $ fromList $ 
     ["name" := name]
 
--- Shortcut 
-dataDefault :: ItemValue -> _
+
+dataDefault :: ItemValue -> ItemDataDatRec
 dataDefault value =
   {
     "value": value,

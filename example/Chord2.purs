@@ -29,7 +29,7 @@ options = Option $ optionDefault {
            "name" = Just "chord"
            },
         chordSeries: chordSeriesDefault {
-          "sort" = Just Asc,
+          sort = Just Asc,
           "sortSub" = Just Desc,
           "showScale" = Just true,
           "showScaleText" = Just true,

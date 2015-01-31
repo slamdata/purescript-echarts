@@ -9,8 +9,7 @@ import Data.Argonaut.Combinators
 import ECharts.Common
 import ECharts.Color
 
-newtype Grid =
-  Grid {
+type GridRec = {
     "x" :: Maybe PercentOrPixel,
     "x2" :: Maybe PercentOrPixel,
     "y" :: Maybe PercentOrPixel,
@@ -21,6 +20,9 @@ newtype Grid =
     "borderWidth" :: Maybe Number,
     "borderColor" :: Maybe Number
     }
+
+newtype Grid = Grid GridRec
+   
 
 instance gridEncodeJson :: EncodeJson Grid where
   encodeJson (Grid obj) =
@@ -37,6 +39,7 @@ instance gridEncodeJson :: EncodeJson Grid where
       "borderColor" := obj.borderColor
     ]
 
+gridDefault :: GridRec
 gridDefault = {
   x: Nothing,
   y: Nothing,

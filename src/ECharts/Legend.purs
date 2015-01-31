@@ -12,10 +12,12 @@ import ECharts.Coords
 import ECharts.Style.Text
 import ECharts.Formatter
 
-data LegendItem = LegendItem String {
+type LegendItemRec = {
   "icon" :: Maybe String,
   "textStyle" :: Maybe TextStyle
   }
+
+data LegendItem = LegendItem String LegendItemRec
 
 instance legendItemEncodeJson :: EncodeJson LegendItem where
   encodeJson (LegendItem name obj) =
@@ -26,10 +28,10 @@ instance legendItemEncodeJson :: EncodeJson LegendItem where
       "textStyle" := obj.textStyle
     ]
 
+legendItemDefault :: String -> LegendItem
 legendItemDefault name = LegendItem name {icon: Nothing, textStyle: Nothing}
 
-newtype Legend =
-  Legend {
+type LegendRec = {
     "show" :: Maybe Boolean,
     "orient" :: Maybe Orient,
     "x" :: Maybe XPos,
@@ -48,6 +50,9 @@ newtype Legend =
     "data" :: Maybe [LegendItem]
     }
 
+
+newtype Legend = Legend LegendRec
+legendDefault :: LegendRec
 legendDefault = {
   show: Nothing,
   orient: Nothing,

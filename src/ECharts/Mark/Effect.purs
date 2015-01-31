@@ -8,8 +8,7 @@ import Data.StrMap (fromList, StrMap(..))
 import ECharts.Common
 import ECharts.Color
 
-newtype MarkPointEffect =
-  MarkPointEffect {
+type MarkPointEffectRec = {
     show :: Maybe Boolean,
     loop :: Maybe Boolean,
     period :: Maybe Boolean,
@@ -17,6 +16,9 @@ newtype MarkPointEffect =
     color :: Maybe Color,
     shadowBlur :: Maybe Number
   }
+
+newtype MarkPointEffect = MarkPointEffect MarkPointEffectRec
+ 
 instance mpEffectEncodeJson :: EncodeJson MarkPointEffect where
   encodeJson (MarkPointEffect cfg) =
     fromObject $ fromList $
@@ -28,6 +30,7 @@ instance mpEffectEncodeJson :: EncodeJson MarkPointEffect where
       "color" := cfg.color,
       "shadowBlur" := cfg.shadowBlur
     ]
+markPointEffectDefault :: MarkPointEffectRec
 markPointEffectDefault =
   {
     show: Nothing,

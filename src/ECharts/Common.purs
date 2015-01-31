@@ -56,11 +56,13 @@ instance roamEncodeJson :: EncodeJson Roam where
   encodeJson Move = encodeJson "move"
 
 
-newtype MinMax =
-  MinMax {
-    min :: Number,
-    max :: Number 
-    }
+type MinMaxRec = {
+  min :: Number,
+  max :: Number
+  }
+
+newtype MinMax = MinMax MinMaxRec
+
 instance minMaxEncodeJson :: EncodeJson MinMax where
   encodeJson (MinMax mm) = fromObject $ M.fromList $ [
     "min" := mm.min,

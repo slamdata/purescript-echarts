@@ -3,7 +3,9 @@ module ECharts.Tooltip (
   TooltipPosition(..),
   TooltipAxisPointerType(..),
   TooltipAxisPointer(..),
+  TooltipAxisPointerRec(),
   Tooltip(..),
+  TooltipRec(),
   
   tooltipAxisPointerDefault,
   tooltipDefault
@@ -53,13 +55,15 @@ instance tooltipAxisPointerTypeEncodeJson :: EncodeJson TooltipAxisPointerType w
     NonePointer -> "none"
 
 
-newtype TooltipAxisPointer =
-  TooltipAxisPointer {
+type TooltipAxisPointerRec = {
     "type" :: Maybe TooltipAxisPointerType,
     "lineStyle" :: Maybe LineStyle,
     "crossStyle" :: Maybe LineStyle,
     "shadowStyle" :: Maybe AreaStyle
     }
+
+newtype TooltipAxisPointer = TooltipAxisPointer TooltipAxisPointerRec
+
 instance tooltipAxisPointerEncodeJson :: EncodeJson TooltipAxisPointer where
   encodeJson (TooltipAxisPointer obj) =
     fromObject $ fromList $
@@ -69,6 +73,7 @@ instance tooltipAxisPointerEncodeJson :: EncodeJson TooltipAxisPointer where
       "crossStyle" := obj.crossStyle,
       "shadowStyle" := obj.shadowStyle
     ]
+tooltipAxisPointerDefault :: TooltipAxisPointerRec
 tooltipAxisPointerDefault = {
   type: Nothing,
   lineStyle: Nothing,
@@ -76,8 +81,7 @@ tooltipAxisPointerDefault = {
   shadowStyle: Nothing
   }
 
-newtype Tooltip =
-  Tooltip {
+type TooltipRec = {
     "show" :: Maybe Boolean,
     "showContent" :: Maybe Boolean,
     "trigger" :: Maybe TooltipTrigger,
@@ -96,6 +100,9 @@ newtype Tooltip =
     "textStyle" :: Maybe TextStyle,
     "enterable" :: Maybe Boolean
     }
+
+
+newtype Tooltip = Tooltip TooltipRec
 
 
 instance tooltipEncodeJson :: EncodeJson Tooltip where
@@ -121,6 +128,7 @@ instance tooltipEncodeJson :: EncodeJson Tooltip where
       "enterable" := obj.enterable
     ]
 
+tooltipDefault :: TooltipRec
 tooltipDefault = {
   "show": Nothing,
   "showContent": Nothing,

@@ -1,5 +1,6 @@
 module ECharts.Mark.Point (
   MarkPoint(..),
+  MarkPointRec(),
   markPointDefault,
   addMarkPoint,
   delMarkPoint
@@ -22,9 +23,7 @@ import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Combinators
 
-
-newtype MarkPoint =
-  MarkPoint {
+type MarkPointRec = {
     symbol :: Maybe Symbol,
     symbolSize :: Maybe SymbolSize,
     large :: Maybe Boolean,
@@ -32,6 +31,9 @@ newtype MarkPoint =
     "data" :: Maybe [MarkPointData],
     geoCoord:: Maybe (StrMap (Tuple Number Number))
   }
+
+newtype MarkPoint = MarkPoint MarkPointRec
+   
 
 instance markPointEncodeJson :: EncodeJson MarkPoint where
   encodeJson (MarkPoint mp) =
@@ -45,6 +47,7 @@ instance markPointEncodeJson :: EncodeJson MarkPoint where
       "geoCoord" := mp.geoCoord
     ]
 
+markPointDefault :: MarkPointRec
 markPointDefault =
   {
     symbol: Nothing,

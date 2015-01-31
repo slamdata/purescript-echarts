@@ -1,6 +1,7 @@
 module ECharts.Loading (
   LoadingEffect(..),
   LoadingOption(..),
+  LoadingOptionRec(),
   loadingOptionDefault,
   showLoading,
   hideLoading
@@ -36,8 +37,7 @@ instance loadingEffectEncodeJson :: EncodeJson LoadingEffect where
     DynamicLine -> "dynamicLine"
     Bubble -> "bubble"    
 
-newtype LoadingOption = 
-  LoadingOption {
+type LoadingOptionRec = {
     text :: Maybe String,
     x :: Maybe XPos,
     y :: Maybe YPos,
@@ -46,6 +46,9 @@ newtype LoadingOption =
     effectOption :: Maybe Json,
     progress :: Maybe Number
     }
+
+newtype LoadingOption = LoadingOption LoadingOptionRec
+   
 instance showLoadingOptions :: EncodeJson LoadingOption where
   encodeJson (LoadingOption options) =
     fromObject $ M.fromList [
@@ -83,7 +86,7 @@ function hideLoading(chart) {
 }
 """ :: forall e. EChart -> Eff (hideLoadingECharts::LoadingHide|e) EChart
 
-
+loadingOptionDefault :: LoadingOptionRec
 loadingOptionDefault =
   {
     text: Nothing,

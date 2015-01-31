@@ -9,15 +9,16 @@ import ECharts.Symbol
 import ECharts.Color
 import ECharts.Axis
 
-
-newtype CheckpointStyle =
-  CheckpointStyle {
+type CheckpointStyleRec = {
     "symbol" :: Maybe Symbol,
     "symbolSize" :: Maybe SymbolSize,
     "color" :: Maybe Color,
     "borderColor" :: Maybe Color,
     "label" :: Maybe AxisLabel
     }
+
+newtype CheckpointStyle = CheckpointStyle CheckpointStyleRec
+   
 
 instance checkpointStyleEncodeJson :: EncodeJson CheckpointStyle where
   encodeJson (CheckpointStyle obj) =
@@ -29,7 +30,7 @@ instance checkpointStyleEncodeJson :: EncodeJson CheckpointStyle where
       "borderColor" := obj.borderColor,
       "label" := obj.label
     ]
-
+checkpointStyleDefault :: CheckpointStyleRec
 checkpointStyleDefault = {
   symbol: Nothing,
   symbolSize: Nothing,

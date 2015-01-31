@@ -8,10 +8,7 @@ import Data.StrMap (fromList)
 import ECharts.Color
 import ECharts.Coords
 
-
-
-newtype DataZoom =
-  DataZoom {
+type DataZoomRec = {
     "show" :: Maybe Boolean,
     "orient" :: Maybe Orient,
     "x" :: Maybe XPos,
@@ -30,6 +27,9 @@ newtype DataZoom =
     "realtime" :: Maybe Boolean,
     "zoomlock" :: Maybe Boolean
     }
+
+newtype DataZoom = DataZoom DataZoomRec
+   
 
 instance dataZoomEncodeJson :: EncodeJson DataZoom where
   encodeJson (DataZoom obj) =
@@ -53,6 +53,7 @@ instance dataZoomEncodeJson :: EncodeJson DataZoom where
       "realtime" := obj.realtime,
       "zoomlock" := obj.zoomlock
     ]
+dataZoomDefault :: DataZoomRec
 dataZoomDefault = {
   show: Nothing,
   orient: Nothing,

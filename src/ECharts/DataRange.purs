@@ -13,8 +13,7 @@ import ECharts.Common
 import ECharts.Formatter
 import ECharts.Style.Text
 
-newtype DataRange =
-  DataRange {
+type DataRangeRec = {
     "show" :: Maybe Boolean,
     "orient" :: Maybe Orient,
     "x" :: Maybe XPos,
@@ -39,6 +38,9 @@ newtype DataRange =
     "text" :: Maybe (Tuple String String),
     "textStyle" :: Maybe TextStyle
     }
+
+newtype DataRange = DataRange DataRangeRec
+   
 
 instance dataRangeEncodeJson :: EncodeJson DataRange where
   encodeJson (DataRange obj) =
@@ -69,6 +71,7 @@ instance dataRangeEncodeJson :: EncodeJson DataRange where
       "textStyle" := obj.textStyle
     ]
 
+dataRangeDefault :: DataRangeRec
 dataRangeDefault = {
   show: Nothing,
   orient: Nothing,
@@ -91,5 +94,6 @@ dataRangeDefault = {
   realtime: Nothing,
   formatter: Nothing,
   text: Nothing,
-  textStyle: Nothing
+  textStyle: Nothing,
+  color: Nothing
   }

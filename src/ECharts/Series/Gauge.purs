@@ -17,15 +17,15 @@ import ECharts.Style.Text
 import ECharts.Symbol
 import ECharts.Formatter
 
-
-  
-newtype Pointer =
-  Pointer {
+type PointerRec = {
     "length" :: Maybe Number,
     "width" :: Maybe Number,
     "color" :: Maybe Color
     }
+  
+newtype Pointer = Pointer PointerRec
 
+pointerDefault :: PointerRec
 pointerDefault = {
   length: Nothing,
   width: Nothing,
@@ -39,13 +39,15 @@ instance pointerEncodeJson :: EncodeJson Pointer where
     "color" := p.color
     ]
 
-newtype SplitLine =
-  SplitLine {
+type SplitLineRec = {
     "show" :: Maybe Boolean,
     "length" :: Maybe Number,
     "lineStyle" :: Maybe LineStyle
     }
 
+newtype SplitLine = SplitLine SplitLineRec
+
+splitLineDefault :: SplitLineRec
 splitLineDefault = {
   show: Nothing,
   length: Nothing,
@@ -59,9 +61,7 @@ instance splitLineEncodeJson :: EncodeJson SplitLine where
     "lineStyle" := sl.lineStyle
     ]
 
-
-newtype GaugeDetail =
-  GaugeDetail {
+type GaugeDetailRec = {
     "show" :: Maybe Boolean,
     "backgroundColor" :: Maybe Color,
     "borderWidth" :: Maybe Number,
@@ -73,6 +73,9 @@ newtype GaugeDetail =
     "textStyle" :: Maybe TextStyle
     }
 
+newtype GaugeDetail = GaugeDetail GaugeDetailRec
+   
+gaugeDetailDefault :: GaugeDetailRec
 gaugeDetailDefault = {
   show: Nothing,
   backgroundColor: Nothing,

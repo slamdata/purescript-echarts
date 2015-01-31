@@ -17,35 +17,42 @@ import ECharts.Symbol
 import ECharts.Formatter
 
 
-
-newtype AxisLineStyle =
-  AxisLineStyle {
+type AxisLineStyleRec = {
     "color" :: Maybe [Tuple Number Color],
     "width" :: Maybe Number
     }
+
+newtype AxisLineStyle = AxisLineStyle AxisLineStyleRec
+
 instance axisLineStyleEncodeJson :: EncodeJson AxisLineStyle where
   encodeJson (AxisLineStyle a) = fromObject $ fromList $ [
     "color" := a.color,
     "width" := a.width
     ]
+
+axisLineStyleDefault :: AxisLineStyleRec
 axisLineStyleDefault = {
   color: Nothing,
   width: Nothing
   }
 
 
-newtype AxisLine =
-  AxisLine {
+type AxisLineRec = {
     "show" :: Maybe Boolean,
     "onZero" :: Maybe Boolean,
     "lineStyle" :: Maybe AxisLineStyle
     }
+
+newtype AxisLine = AxisLine AxisLineRec
+   
 instance axisLineEncodeJson :: EncodeJson AxisLine where
   encodeJson (AxisLine a) = fromObject $ fromList $ [
     "show" := a.show,
     "lineStyle" := a.lineStyle,
     "onZero" := a.onZero
     ]
+
+axisLineDefault :: AxisLineRec                            
 axisLineDefault = {
   show: Nothing,
   onZero: Nothing,
@@ -53,8 +60,7 @@ axisLineDefault = {
   }
 
 
-newtype AxisTick =
-  AxisTick {
+type AxisTickRec = {
     "show" :: Maybe Boolean,
     "splitNumber" :: Maybe Number,
     "length" :: Maybe Number,
@@ -63,6 +69,9 @@ newtype AxisTick =
     "onGap" :: Maybe Boolean,
     "inside" :: Maybe Boolean
     }
+
+newtype AxisTick = AxisTick AxisTickRec
+   
 instance axisTickEncodeJson :: EncodeJson AxisTick where
   encodeJson (AxisTick a) = fromObject $ fromList $ [
     "show" := a.show,
@@ -73,6 +82,8 @@ instance axisTickEncodeJson :: EncodeJson AxisTick where
     "onGap" := a.onGap,
     "inside" := a.inside
     ]
+                            
+axisTickDefault :: AxisTickRec
 axisTickDefault = {
   show: Nothing,
   splitNumber: Nothing,
@@ -83,9 +94,7 @@ axisTickDefault = {
   inside: Nothing
   }
 
-
-newtype AxisLabel =
-  AxisLabel {
+type AxisLabelRec =  {
     "show" :: Maybe Boolean,
     "interval" :: Maybe Interval,
     "formatter" :: Maybe Formatter,
@@ -94,6 +103,9 @@ newtype AxisLabel =
     "margin" :: Maybe Number,
     "clickable" :: Maybe Boolean
     }
+
+newtype AxisLabel = AxisLabel AxisLabelRec
+  
 instance axisLabelEncodeJson :: EncodeJson AxisLabel  where
   encodeJson (AxisLabel a) = fromObject $ fromList $ [
     "show" := a.show,
@@ -104,6 +116,8 @@ instance axisLabelEncodeJson :: EncodeJson AxisLabel  where
     "margin" := a.margin,
     "clickable" := a.clickable
     ]
+                             
+axisLabelDefault :: AxisLabelRec
 axisLabelDefault = {
   show: Nothing,
   formatter: Nothing,
@@ -120,13 +134,14 @@ instance axisesEncodeJson :: EncodeJson Axises where
   encodeJson (OneAxis axis) = encodeJson axis
   encodeJson (TwoAxises axis axis2) = encodeJson [axis, axis2]
 
-
-newtype AxisSplitLine =
-  AxisSplitLine {
+type AxisSplitLineRec = {
     "show" :: Maybe Boolean,
     "onGap" :: Maybe Boolean,
     "lineStyle" :: Maybe LineStyle
     }
+
+newtype AxisSplitLine = AxisSplitLine AxisSplitLineRec
+   
 instance axisSplitLineEncodeJson :: EncodeJson AxisSplitLine where
   encodeJson (AxisSplitLine obj) =
     fromObject $ fromList $
@@ -135,6 +150,8 @@ instance axisSplitLineEncodeJson :: EncodeJson AxisSplitLine where
       "onGap" := obj.onGap,
       "lineStyle" := obj.lineStyle
     ]
+
+axisSplitLineDefault :: AxisSplitLineRec
 axisSplitLineDefault = {
   show: Nothing,
   onGap: Nothing,
@@ -142,12 +159,15 @@ axisSplitLineDefault = {
   }
 
 
-newtype AxisSplitArea =
-  AxisSplitArea {
+type AxisSplitAreaRec =  {
     "show" :: Maybe Boolean,
     "onGap" :: Maybe Boolean,
     "areaStyle" :: Maybe AreaStyle
     }
+
+
+newtype AxisSplitArea = AxisSplitArea AxisSplitAreaRec
+  
 instance axisSplitAreaEncodeJson :: EncodeJson AxisSplitArea where
   encodeJson (AxisSplitArea obj) =
     fromObject $ fromList $
@@ -156,6 +176,8 @@ instance axisSplitAreaEncodeJson :: EncodeJson AxisSplitArea where
       "onGap" := obj.onGap,
       "areaStyle" := obj.areaStyle
     ]
+
+axisSplitAreaDefault :: AxisSplitAreaRec
 axisSplitAreaDefault = {
   show: Nothing,
   onGap: Nothing,
@@ -187,9 +209,13 @@ instance axisNameLocationEncodeJson :: EncodeJson AxisNameLocation where
     End -> "end"
 
 
+type CustomAxisDataRec = {
+  value :: String,
+  textStyle :: TextStyle
+  }
 
 data AxisData = CommonAxisData String
-              | CustomAxisData {"value" :: String, "textStyle" :: TextStyle}
+              | CustomAxisData CustomAxisDataRec
 instance axisDataEncodeJson :: EncodeJson AxisData where
   encodeJson (CommonAxisData name) = fromString name
   encodeJson (CustomAxisData obj) =
@@ -207,8 +233,7 @@ instance axisBoundaryGapEncodeJson :: EncodeJson AxisBoundaryGap where
   encodeJson (ValueBoundaryGap num1 num2) = encodeJson [num1, num2]
 
 
-newtype Axis =
-  Axis {
+type AxisRec = {
     "type" :: Maybe AxisType,
     "show" :: Maybe Boolean,
     "position" :: Maybe AxisPosition,
@@ -227,6 +252,10 @@ newtype Axis =
     "splitArea" :: Maybe AxisSplitArea,
     "data" :: Maybe [AxisData]
     }
+
+newtype Axis = Axis AxisRec
+
+axisDefault :: AxisRec
 axisDefault = {
   "type": Nothing,
   show: Nothing,
@@ -270,12 +299,14 @@ instance axisEncJson :: EncodeJson Axis where
     ]
 
 
-newtype PolarName =
-  PolarName {
+type PolarNameRec = {
     "show" :: Maybe Boolean,
     "formatter" :: Maybe Formatter,
     "textStyle" :: Maybe TextStyle
     }
+
+newtype PolarName = PolarName PolarNameRec
+   
 instance polarNameEncode :: EncodeJson PolarName where
   encodeJson (PolarName obj) =
     fromObject $ fromList $
@@ -284,6 +315,8 @@ instance polarNameEncode :: EncodeJson PolarName where
       "formatter" := obj.formatter,
       "textStyle" := obj.textStyle
     ]
+
+polarNameDefault :: PolarNameRec
 polarNameDefault = {
   show: Nothing,
   formatter: Nothing,
@@ -298,14 +331,15 @@ instance polarTypeEncode :: EncodeJson PolarType where
     PolarCircle -> "circle"
 
 
-
-newtype Indicator =
-  Indicator {
+type IndicatorRec = {
     "text" :: Maybe String,
     "min" :: Maybe Number,
     "max" :: Maybe Number,
     "axisLabel" :: Maybe AxisLabel
     }
+
+newtype Indicator = Indicator IndicatorRec
+
 instance indicatorEncodeJson :: EncodeJson Indicator where
   encodeJson (Indicator obj) =
     fromObject $ fromList $
@@ -315,6 +349,7 @@ instance indicatorEncodeJson :: EncodeJson Indicator where
       "max" := obj.max,
       "axisLabel" := obj.axisLabel
     ]
+indicatorDefault :: IndicatorRec
 indicatorDefault = {
   text: Nothing,
   min: Nothing,
@@ -322,8 +357,7 @@ indicatorDefault = {
   axisLabel: Nothing
   }
 
-newtype Polar =
-  Polar {
+type PolarRec =  {
     "center" :: Maybe (Tuple PercentOrPixel PercentOrPixel),
     "radius" :: Maybe PercentOrPixel,
     "startAngle" :: Maybe Number,
@@ -338,6 +372,9 @@ newtype Polar =
     "type" :: Maybe PolarType,
     "indicator" :: Maybe [Indicator]
     }
+
+newtype Polar = Polar PolarRec
+
 instance polarEncodeJson :: EncodeJson Polar where
   encodeJson (Polar obj) =
     fromObject $ fromList $
@@ -356,6 +393,8 @@ instance polarEncodeJson :: EncodeJson Polar where
       "type" := obj.type,
       "indicator" := obj.indicator
     ]
+
+polarDefault :: PolarRec
 polarDefault = {
   center: Nothing,
   radius: Nothing,

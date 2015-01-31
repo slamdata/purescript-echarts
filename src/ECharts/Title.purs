@@ -18,8 +18,7 @@ instance linkTargetEncodeJson :: EncodeJson LinkTarget where
     Self -> "self"
     Blank -> "blank"
 
-newtype Title =
-  Title {
+type TitleRec = {
     "text" :: Maybe String,
     "link" :: Maybe String,
     "target" :: Maybe LinkTarget,
@@ -37,6 +36,9 @@ newtype Title =
     "textStyle" :: Maybe TextStyle,
     "subtextStyle" :: Maybe TextStyle
     }
+
+newtype Title = Title TitleRec
+
 
 instance titleEncodeJson :: EncodeJson Title where
   encodeJson (Title obj) =
@@ -60,6 +62,7 @@ instance titleEncodeJson :: EncodeJson Title where
       "subtextStyle" := obj.subtextStyle
     ]
 
+titleDefault :: TitleRec
 titleDefault = {
   text: Nothing,
   link: Nothing,

@@ -19,14 +19,16 @@ import ECharts.Item.Data
 import ECharts.Symbol
 import ECharts.Series.Force
 
-newtype ForceCategory =
-  ForceCategory {
+type ForceCategoryRec = {
     "name" :: Maybe String,
     "symbol" :: Maybe Symbol,
     "symbolSize" :: Maybe SymbolSize,
     "itemStyle" :: Maybe ItemStyle
     }
 
+newtype ForceCategory = ForceCategory ForceCategoryRec
+   
+forceCategoryDefault :: ForceCategoryRec
 forceCategoryDefault = {
   name: Nothing,
   symbol: Nothing,
@@ -42,8 +44,7 @@ instance forceCategoryEncodeJson :: EncodeJson ForceCategory where
      "itemStyle" := fc.itemStyle
      ]
 
-newtype Node =
-  Node {
+type NodeRec = {
     "name" :: Maybe String,
     "label" :: Maybe String,
     "value" :: Number,
@@ -59,6 +60,9 @@ newtype Node =
     "category" :: Maybe Number
     }
 
+
+newtype Node = Node NodeRec
+nodeDefault :: Number -> NodeRec
 nodeDefault value = {
   name: Nothing,
   label: Nothing,
@@ -96,13 +100,15 @@ instance linkEndEncodeJson :: EncodeJson LinkEnd where
   encodeJson (Name name) = encodeJson name
   encodeJson (Index id) = encodeJson id 
 
-newtype Link =
-  Link {
+type LinkRec = {
     source :: LinkEnd,
     target :: LinkEnd,
     weight :: Number,
     itemStyle :: Maybe ItemStyle 
     }
+
+newtype Link = Link LinkRec
+
 
 instance linkEncodeJson :: EncodeJson Link where
   encodeJson (Link link) = fromObject $ fromList $ [

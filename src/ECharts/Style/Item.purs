@@ -18,8 +18,7 @@ import ECharts.Style.Node
 import ECharts.Style.Link
 import ECharts.Style.Text
 
-newtype ItemLabel =
-  ItemLabel {
+type ItemLabelRec = {
     show :: Maybe Boolean,
     position :: Maybe LabelPosition,
     rotate :: Maybe Boolean,
@@ -27,6 +26,9 @@ newtype ItemLabel =
     formatter :: Maybe Formatter,
     textStyle :: Maybe TextStyle
   }
+
+newtype ItemLabel = ItemLabel ItemLabelRec
+
 
 instance itemLabelEncodeJson :: EncodeJson ItemLabel where
   encodeJson (ItemLabel il) =
@@ -38,20 +40,24 @@ instance itemLabelEncodeJson :: EncodeJson ItemLabel where
       "formatter" := il.formatter,
       "textStyle" := il.textStyle
     ]
+itemLabelDefault :: ItemLabelRec
 itemLabelDefault = {
   show: Nothing,
   position: Nothing,
   distance: Nothing,
   formatter: Nothing,
-  textStyle: Nothing
+  textStyle: Nothing,
+  rotate: Nothing
   }
 
-newtype ItemLabelLine =
-  ItemLabelLine {
+type ItemLabelLineRec = {
     show :: Maybe Boolean,
     length :: Maybe Number,
     lineStyle :: Maybe LineStyle
   }
+
+newtype ItemLabelLine = ItemLabelLine ItemLabelLineRec
+
 
 instance itemLabelLineEncodeJson :: EncodeJson ItemLabelLine where
   encodeJson (ItemLabelLine ill) =
@@ -61,14 +67,15 @@ instance itemLabelLineEncodeJson :: EncodeJson ItemLabelLine where
       "length" := ill.length,
       "lineStyle" := ill.lineStyle
     ]
+itemLabelLineDefault :: ItemLabelLineRec
 itemLabelLineDefault = {
   show: Nothing,
   length: Nothing,
   lineStyle: Nothing
   }
 
-newtype IStyle =
-  IStyle {
+
+type IStyleRec = {
     color :: Maybe CalculableColor,
     borderColor :: Maybe Color,
     borderWidth :: Maybe Number,
@@ -84,6 +91,9 @@ newtype IStyle =
     linkStyle :: Maybe LinkStyle
   }
 
+newtype IStyle = IStyle IStyleRec
+
+istyleDefault :: IStyleRec
 istyleDefault =
   {
     color: Nothing,
@@ -120,17 +130,20 @@ instance istyleEncodeJson :: EncodeJson IStyle where
       "linkStyle" := is.linkStyle
     ]
 
-newtype ItemStyle =
-  ItemStyle {
+type ItemStyleRec = {
     normal :: Maybe IStyle,
     emphasis :: Maybe IStyle
   }
+
+newtype ItemStyle = ItemStyle ItemStyleRec
+
 
 
 instance itemStyleEncodeJson :: EncodeJson ItemStyle where
   encodeJson (ItemStyle is) =
     fromObject $ fromList ["normal" := is.normal, "emphasis" := is.emphasis]
 
+itemStyleDefault :: ItemStyleRec
 itemStyleDefault = {
   normal: Nothing,
   emphasis: Nothing

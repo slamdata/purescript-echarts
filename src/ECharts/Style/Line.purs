@@ -20,8 +20,7 @@ instance linetypeEncodeJson :: EncodeJson LineType where
     Dashed -> "dashed"    
 
 
-newtype LineStyle =
-  LineStyle {
+type LineStyleRec = {
     color :: Maybe Color,
     "type" :: Maybe LineType, 
     width :: Maybe Number,
@@ -29,6 +28,9 @@ newtype LineStyle =
     shadowOffsetX :: Maybe Number,
     shadowOffsetY :: Maybe Number
     }
+
+newtype LineStyle = LineStyle LineStyleRec
+
 
 instance lineStyleEncodeJson :: EncodeJson LineStyle where
   encodeJson (LineStyle ls) =
@@ -42,7 +44,7 @@ instance lineStyleEncodeJson :: EncodeJson LineStyle where
       "shadowOffsetY" := ls.shadowOffsetY
     ]
 
-
+lineStyleDefault :: LineStyleRec
 lineStyleDefault = {
   color: Nothing,
   type: Nothing,

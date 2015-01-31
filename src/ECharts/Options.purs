@@ -1,5 +1,6 @@
 module ECharts.Options (
   Option(..),
+  OptionRec(),
   optionDefault,
   setOption
   ) where
@@ -38,8 +39,7 @@ import ECharts.Effects
    i.e. legend.
 -}
 
-newtype Option =
-  Option {
+type OptionRec = {
     "backgroundColor" :: Maybe Color,
     "color" :: Maybe [Color],
     "renderAsImage" :: Maybe Boolean,
@@ -61,6 +61,9 @@ newtype Option =
 
     "series" :: Maybe [Maybe Series]
     }
+
+newtype Option = Option OptionRec
+   
 
 instance optionsEncodeJson :: EncodeJson Option where
   encodeJson (Option opts) =
@@ -88,6 +91,7 @@ instance optionsEncodeJson :: EncodeJson Option where
       "polar" := opts.polar
     ]
 
+optionDefault :: OptionRec
 optionDefault = {
   "backgroundColor": Nothing,
   "color": Nothing,

@@ -29,8 +29,7 @@ instance timelineControlPositionEncodeJson :: EncodeJson TimelineControlPosition
     TCPLeft -> "left"
                                       
 
-newtype Timeline =
-  Timeline {
+type TimelineRec = {
     "show" :: Maybe Boolean,
     "type" :: Maybe TimelineType,
     "notMerge" :: Maybe Boolean,
@@ -58,6 +57,9 @@ newtype Timeline =
     "currentIndex" :: Maybe Number,
     "data" :: Maybe [String]
     }
+
+newtype Timeline = Timeline TimelineRec
+
 
 instance timelineEncodeJson :: EncodeJson Timeline where
   encodeJson (Timeline obj) =
@@ -90,7 +92,7 @@ instance timelineEncodeJson :: EncodeJson Timeline where
       "currentIndex" := obj.currentIndex,
       "data" := obj.data
     ]
-
+timelineDefault :: TimelineRec
 timelineDefault = {
   show: Nothing,
   type: Nothing,
