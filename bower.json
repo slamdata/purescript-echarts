@@ -31,10 +31,10 @@
     "purescript-math": "~0.1.0",
     "purescript-monoid": "~0.1.5",
     "purescript-strings": "~0.4.2",
-    "purescript-argonaut": "git@github.com:purescript-contrib/purescript-argonaut.git#~0.3.0",
+    "purescript-argonaut": "https://github.com/purescript-contrib/purescript-argonaut.git#~0.3.0",
     "purescript-datetime": "~0.2.0",
     "purescript-exists": "~0.1.0",
     "purescript-signal": "~2.1.0",
-    "purescript-simple-dom": "git@github.com:aktowns/purescript-simple-dom.git#~0.0.1"
+    "purescript-simple-dom": "https://github.com/aktowns/purescript-simple-dom.git#~0.0.1"
   }
 }
