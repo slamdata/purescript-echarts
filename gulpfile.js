@@ -6,7 +6,7 @@ var gulp = require('gulp')
 , sequence = require('run-sequence')
 , jsValidate = require('gulp-jsvalidate')
 , rename = require('gulp-rename')
-;
+; 
 
 require("./gulp/serve.js")();
 require("./gulp/runner.js")("runner", "Main");
@@ -59,7 +59,7 @@ function docs (target) {
 }
 gulp.task('docs', docs('all'));
 
-gulp.task("prod", function() {
+gulp.task("make-prod", function() {
     var psc = purescript.psc({
         output: "build.js",
         modules: ["Main"],
@@ -70,6 +70,19 @@ gulp.task("prod", function() {
         [paths.src].concat(paths.example).concat(paths.bowerSrc)
     ).pipe(psc).pipe(gulp.dest("public"));
 });
+
+gulp.task("concat-prod", function() {
+    gulp.src(["bower_components/echarts/build/source/echarts-all.js",
+              "public/build.js"])
+        .pipe(concat("build.js"))
+        .pipe(gulp.dest("public"));
+});
+            
+
+gulp.task("prod", function(cb) {
+    sequence("make-prod", "concat-prod", cb);
+});
+          
 
 gulp.task("make-dev", function() {
     var psc = purescript.pscMake({
@@ -104,6 +117,8 @@ gulp.task('psci', function() {
     gulp.src([paths.src].concat(paths.example).concat(paths.bowerSrc))
         .pipe(purescript.dotPsci({}));
 });
+
+
 
 gulp.task("default", function() {
     sequence("prod", "docs", "serve", function() {
