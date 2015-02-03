@@ -84,7 +84,7 @@ gulp.task("make-dev", function() {
 gulp.task("bundle-dev", function() {
     gulp.src("dist/main.js")
         .pipe(browserify({}))
-        .pipe(rename("example.js"))
+        .pipe(rename("build.js"))
         .pipe(gulp.dest("public"));
 });
 
@@ -106,5 +106,9 @@ gulp.task('psci', function() {
 });
 
 gulp.task("default", function() {
-    sequence("prod", "docs", "serve");
+    sequence("prod", "docs", "serve", function() {
+        console.log("**************************************************");
+        console.log(" To see examples navigate to http://localhost:5050");
+        console.log("**************************************************");
+    });
 });
