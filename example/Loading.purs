@@ -28,7 +28,7 @@ import ECharts.Style.Text
 import qualified ECharts.DataZoom as Zoom
 import qualified ECharts.Loading as L
 
-import Signal
+import Signal hiding (map)
 import Signal.Time
 
 simpleData = Value <<< Simple

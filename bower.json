@@ -34,7 +34,7 @@
     "purescript-argonaut": "https://github.com/purescript-contrib/purescript-argonaut.git#~0.3.0",
     "purescript-datetime": "~0.2.0",
     "purescript-exists": "~0.1.0",
-    "purescript-signal": "~2.1.0",
+    "purescript-signal": "https://github.com/cryogenian/purescript-signal.git#8a57887fdb08f7c34b10242e1decb47a336ca94e",
     "purescript-simple-dom": "https://github.com/aktowns/purescript-simple-dom.git#~0.0.1"
   }
 }

@@ -34,7 +34,7 @@ import ECharts.Title
 import qualified ECharts.DataZoom as Zoom
 
 
-import Signal
+import Signal hiding (map)
 import Signal.Time (every)
 
 
