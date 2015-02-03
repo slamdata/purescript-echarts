@@ -104,3 +104,7 @@ gulp.task('psci', function() {
     gulp.src([paths.src].concat(paths.example).concat(paths.bowerSrc))
         .pipe(purescript.dotPsci({}));
 });
+
+gulp.task("default", function() {
+    sequence("prod", "docs", "serve");
+});
