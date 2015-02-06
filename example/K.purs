@@ -26,7 +26,9 @@ options = Option $ optionDefault {
               ["2013/1/24", "2013/1/25", "2013/1/28", "2013/1/29", "2013/1/30"]
      },
   yAxis = Just $ OneAxis $ Axis axisDefault {
-    "type" = Just ValueAxis
+    "type" = Just ValueAxis,
+    min = Just 2200,
+    scale = Just true
     },
   series = Just $ Just <$> [
     CandlestickSeries {

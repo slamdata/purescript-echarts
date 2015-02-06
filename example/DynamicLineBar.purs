@@ -32,7 +32,8 @@ import ECharts.Style.Item
 import ECharts.AddData
 import ECharts.Title
 import qualified ECharts.DataZoom as Zoom
-
+import ECharts.Style.Text
+import ECharts.Coords
 
 import Signal hiding (map)
 import Signal.Time (every)
@@ -130,8 +131,11 @@ options_ xAxis d1 d2 = Option $ optionDefault {
               (Axis axisDefault {
                   "type" = Just ValueAxis,
                   scale = Just true,
-                  name = Just "pre-order quantity",
-                  boundaryGap = Just $ ValueBoundaryGap 0.2 0.2
+                  name = Just "pre-order",
+                  boundaryGap = Just $ ValueBoundaryGap 0.2 0.2,
+                  nameTextStyle = Just $ TextStyle textStyleDefault {
+                    align = Just HAlignLeft
+                    }
                   }),
     series = Just $ Just <$> [
       BarSeries {

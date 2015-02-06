@@ -33,7 +33,7 @@ options1 = Option $ optionDefault {
   title = Just $ Title titleDefault {
     text = Just "a site user to access source",
     subtext = Just "fictitious",
-    x = Just XLeft
+    x = Just XRight
     },
   legend = Just $ Legend legendDefault {
     orient = Just Vertical,
@@ -90,7 +90,8 @@ options2 = Option $ optionDefault {
          show = Just true
          }
        },
-    show = Just true
+    show = Just true,
+    y = Just YBottom
   },
   calculable = Just true,
   xAxis = Just $ OneAxis $ Axis axisDefault {

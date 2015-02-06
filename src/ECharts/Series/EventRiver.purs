@@ -15,7 +15,7 @@ import Data.Argonaut.Encode
 import Data.Argonaut.Combinators
 import Data.Tuple
 import Data.StrMap
-import Data.Date (Date(..))
+import Data.Date (Date(..), JSDate(), toJSDate)
 
 
 import ECharts.Common
@@ -61,11 +61,19 @@ type EvolutionRec = {
     }
 
 newtype Evolution = Evolution EvolutionRec
-   
+
+foreign import jsDateToJson """
+function jsDateToJson(date) {
+  return date;
+}
+""" :: JSDate -> Json 
+
+dateToJson :: Date -> Json
+dateToJson = jsDateToJson <<< toJSDate
 
 instance evoEncodeJson :: EncodeJson Evolution where
   encodeJson (Evolution e) = fromObject $ fromList $ [
-    "time" := show e.time,
+    "time" := dateToJson e.time,
     "value" := e.value,
     "detail" := e.detail
     ]

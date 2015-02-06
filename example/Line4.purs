@@ -33,6 +33,7 @@ options = Option $ optionDefault {
   toolbox = Just $ Toolbox $ toolboxDefault {
     show = Just true,
     x = Just XRight,
+    y = Just YBottom,
     feature = Just $ Feature $ featureDefault {
       mark = Just $ MarkFeature $ markFeatureDefault {show = Just true},
       dataView = Just $ DataViewFeature $ dataViewFeatureDefault {

@@ -116,8 +116,6 @@ optionDefault = {
 foreign import setOptionImpl """
 function setOptionImpl(option, notMerge, chart) {
   return function() {
-if (!window.options) window.options = [];
-window.options.push(option);
     return chart.setOption(option, notMerge);
   };
 }

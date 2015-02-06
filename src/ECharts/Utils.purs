@@ -11,7 +11,11 @@ i.e
 
 foreign import unnull """
 function unnull(obj) {
-  if (obj == null || typeof(obj) != 'object') {
+  if (obj == null
+     || typeof(obj) != 'object'
+     || obj instanceof window['Date']
+     || obj instanceof window['Function']
+     || obj instanceof window['RegExp']) {
     return obj;
   }
   var temp = new obj.constructor();
