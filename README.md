@@ -1,3 +1,4 @@
+![travis build status](https://travis-ci.org/cryogenian/purescript-echarts.svg?branch=master)
 # purescript-echarts
 
 Purescript bindings for Baidu's [Enterprise Charts (Echarts) charting library](https://ecomfe.github.io/echarts/doc/doc-en.html).

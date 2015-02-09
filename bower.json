@@ -2,7 +2,8 @@
   "name": "purescript-echarts",
   "license": "MIT",
   "authors": [
-    "John A. De Goes <john@degoes.net> (http://degoes.net)"
+    "John A. De Goes <john@degoes.net> (http://degoes.net)",
+    "Maxim Zimaliev <zimaliev@gmail.com>"
   ],
   "ignore": [
     "**/.*",
@@ -14,12 +15,26 @@
     "bower.json",
     "Gruntfile.js",
     "gulpfile.js",
-    "package.json"
+    "package.json",
+    "dist"
   ],
   "dependencies": {
-    "echarts":              "~2.1.10",
-    "purescript-argonaut":  "~0.2.10"
-  },
-  "devDependencies": {
+    "echarts": "~2.1.10",
+    "purescript-dom": "~0.1.1",
+    "purescript-maybe": "~0.2.1",
+    "purescript-foldable-traversable": "~0.2.1",
+    "purescript-control": "~0.2.1",
+    "purescript-maps": "~0.2.0",
+    "purescript-tuples": "~0.2.3",
+    "purescript-arrays": "~0.3.0",
+    "purescript-math": "~0.1.0",
+    "purescript-monoid": "~0.1.5",
+    "purescript-strings": "~0.4.2",
+    "purescript-argonaut": "https://github.com/purescript-contrib/purescript-argonaut.git#~0.3.0",
+    "purescript-datetime": "~0.2.0",
+    "purescript-exists": "~0.1.0",
+    "purescript-signal": "https://github.com/bodil/purescript-signal.git#df34ba55e8cefbeee9dcd20167db80ca6491a325",
+    "purescript-simple-dom": "https://github.com/aktowns/purescript-simple-dom.git#~0.0.1",
+    "purescript-random": "https://github.com/cryogenian/purescript-random.git#573de58651264a2b04636eed8f4bf09364fbca02"
   }
 }

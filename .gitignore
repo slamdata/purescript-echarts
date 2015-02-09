@@ -2,4 +2,8 @@
 /node_modules/
 /bower_components/
 /tmp/
-/node_modules/
+/dist/
+public/*.js
+.psci_modules
+.psci
+
