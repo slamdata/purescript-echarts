@@ -3,8 +3,6 @@
 
 Purescript bindings for Baidu's [Enterprise Charts (Echarts) charting library](https://ecomfe.github.io/echarts/doc/doc-en.html).
 
-**Note**: *SlamData is offering a $2K bounty to whoever authors the first Pull Request that we merge into this repository. This is a great way to learn some Purescript, as well as contribute to a 100% open source library released under a commercial-friendly MIT license.*
-
 ## API
 
 The API is a low-level, type-safe, straightforward binding to Echarts:
