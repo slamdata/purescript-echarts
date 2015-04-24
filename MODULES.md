@@ -2,1887 +2,3196 @@
 
 ## Module ECharts.AddData
 
-### Types
+#### `AdditionalDataRec`
+
+``` purescript
+type AdditionalDataRec = { additionalData :: Maybe String, dataGrow :: Boolean, isHead :: Boolean, datum :: ItemData, idx :: Number }
+```
 
 
-    newtype AdditionalData where
-      AdditionalData :: AdditionalDataRec -> AdditionalData
+#### `AdditionalData`
+
+``` purescript
+newtype AdditionalData
+  = AdditionalData AdditionalDataRec
+```
 
 
-    type AdditionalDataRec = { additionalData :: Maybe String, dataGrow :: Boolean, isHead :: Boolean, datum :: ItemData, idx :: Number }
+#### `additionalDataEncodeJson`
+
+``` purescript
+instance additionalDataEncodeJson :: EncodeJson AdditionalData
+```
 
 
-### Type Class Instances
+#### `addData`
 
+``` purescript
+addData :: forall e. AdditionalData -> EChart -> Eff (dataAdd :: AddData | e) EChart
+```
 
-    instance additionalDataEncodeJson :: EncodeJson AdditionalData
-
-
-### Values
-
-
-    addData :: forall e. AdditionalData -> EChart -> Eff (dataAdd :: AddData | e) EChart
 
 
 ## Module ECharts.Axis
 
-### Types
+#### `AxisLineStyleRec`
 
+``` purescript
+type AxisLineStyleRec = { width :: Maybe Number, color :: Maybe [Tuple Number Color] }
+```
 
-    newtype Axis where
-      Axis :: AxisRec -> Axis
 
+#### `AxisLineStyle`
 
-    data AxisBoundaryGap where
-      CatBoundaryGap :: Boolean -> AxisBoundaryGap
-      ValueBoundaryGap :: Number -> Number -> AxisBoundaryGap
+``` purescript
+newtype AxisLineStyle
+  = AxisLineStyle AxisLineStyleRec
+```
 
 
-    data AxisData where
-      CommonAxisData :: String -> AxisData
-      CustomAxisData :: CustomAxisDataRec -> AxisData
+#### `axisLineStyleEncodeJson`
 
+``` purescript
+instance axisLineStyleEncodeJson :: EncodeJson AxisLineStyle
+```
 
-    newtype AxisLabel where
-      AxisLabel :: AxisLabelRec -> AxisLabel
 
+#### `axisLineStyleDefault`
 
-    type AxisLabelRec = { clickable :: Maybe Boolean, margin :: Maybe Number, rotate :: Maybe Number, textStyle :: Maybe TextStyle, formatter :: Maybe Formatter, interval :: Maybe Interval, show :: Maybe Boolean }
+``` purescript
+axisLineStyleDefault :: AxisLineStyleRec
+```
 
 
-    newtype AxisLine where
-      AxisLine :: AxisLineRec -> AxisLine
+#### `AxisLineRec`
 
+``` purescript
+type AxisLineRec = { lineStyle :: Maybe AxisLineStyle, onZero :: Maybe Boolean, show :: Maybe Boolean }
+```
 
-    type AxisLineRec = { lineStyle :: Maybe AxisLineStyle, onZero :: Maybe Boolean, show :: Maybe Boolean }
 
+#### `AxisLine`
 
-    newtype AxisLineStyle where
-      AxisLineStyle :: AxisLineStyleRec -> AxisLineStyle
+``` purescript
+newtype AxisLine
+  = AxisLine AxisLineRec
+```
 
 
-    type AxisLineStyleRec = { width :: Maybe Number, color :: Maybe [Tuple Number Color] }
+#### `axisLineEncodeJson`
 
+``` purescript
+instance axisLineEncodeJson :: EncodeJson AxisLine
+```
 
-    data AxisNameLocation where
-      Start :: AxisNameLocation
-      End :: AxisNameLocation
 
+#### `axisLineDefault`
 
-    data AxisPosition where
-      LeftAxis :: AxisPosition
-      RightAxis :: AxisPosition
-      TopAxis :: AxisPosition
-      BottomAxis :: AxisPosition
+``` purescript
+axisLineDefault :: AxisLineRec
+```
 
 
-    type AxisRec = { "data" :: Maybe [AxisData], splitArea :: Maybe AxisSplitArea, splitLine :: Maybe AxisSplitLine, axisLabel :: Maybe AxisLabel, axisTick :: Maybe AxisTick, axisLine :: Maybe AxisLine, splitNumber :: Maybe Number, scale :: Maybe Boolean, max :: Maybe Number, min :: Maybe Number, boundaryGap :: Maybe AxisBoundaryGap, nameTextStyle :: Maybe TextStyle, nameLocation :: Maybe AxisNameLocation, name :: Maybe String, position :: Maybe AxisPosition, show :: Maybe Boolean, "type" :: Maybe AxisType }
+#### `AxisTickRec`
 
+``` purescript
+type AxisTickRec = { inside :: Maybe Boolean, onGap :: Maybe Boolean, interval :: Maybe Interval, lineStyle :: Maybe LineStyle, length :: Maybe Number, splitNumber :: Maybe Number, show :: Maybe Boolean }
+```
 
-    newtype AxisSplitArea where
-      AxisSplitArea :: AxisSplitAreaRec -> AxisSplitArea
 
+#### `AxisTick`
 
-    type AxisSplitAreaRec = { areaStyle :: Maybe AreaStyle, onGap :: Maybe Boolean, show :: Maybe Boolean }
+``` purescript
+newtype AxisTick
+  = AxisTick AxisTickRec
+```
 
 
-    newtype AxisSplitLine where
-      AxisSplitLine :: AxisSplitLineRec -> AxisSplitLine
+#### `axisTickEncodeJson`
 
+``` purescript
+instance axisTickEncodeJson :: EncodeJson AxisTick
+```
 
-    type AxisSplitLineRec = { lineStyle :: Maybe LineStyle, onGap :: Maybe Boolean, show :: Maybe Boolean }
 
+#### `axisTickDefault`
 
-    newtype AxisTick where
-      AxisTick :: AxisTickRec -> AxisTick
+``` purescript
+axisTickDefault :: AxisTickRec
+```
 
 
-    type AxisTickRec = { inside :: Maybe Boolean, onGap :: Maybe Boolean, interval :: Maybe Interval, lineStyle :: Maybe LineStyle, length :: Maybe Number, splitNumber :: Maybe Number, show :: Maybe Boolean }
+#### `AxisLabelRec`
 
+``` purescript
+type AxisLabelRec = { clickable :: Maybe Boolean, margin :: Maybe Number, rotate :: Maybe Number, textStyle :: Maybe TextStyle, formatter :: Maybe Formatter, interval :: Maybe Interval, show :: Maybe Boolean }
+```
 
-    data AxisType where
-      CategoryAxis :: AxisType
-      ValueAxis :: AxisType
-      TimeAxis :: AxisType
 
+#### `AxisLabel`
 
-    data Axises where
-      OneAxis :: Axis -> Axises
-      TwoAxises :: Axis -> Axis -> Axises
+``` purescript
+newtype AxisLabel
+  = AxisLabel AxisLabelRec
+```
 
 
-    type CustomAxisDataRec = { textStyle :: TextStyle, value :: String }
+#### `axisLabelEncodeJson`
 
+``` purescript
+instance axisLabelEncodeJson :: EncodeJson AxisLabel
+```
 
-    newtype Indicator where
-      Indicator :: IndicatorRec -> Indicator
 
+#### `axisLabelDefault`
 
-    type IndicatorRec = { axisLabel :: Maybe AxisLabel, max :: Maybe Number, min :: Maybe Number, text :: Maybe String }
+``` purescript
+axisLabelDefault :: AxisLabelRec
+```
 
 
-    newtype Polar where
-      Polar :: PolarRec -> Polar
+#### `Axises`
 
+``` purescript
+data Axises
+  = OneAxis Axis
+  | TwoAxises Axis Axis
+```
 
-    newtype PolarName where
-      PolarName :: PolarNameRec -> PolarName
 
+#### `axisesEncodeJson`
 
-    type PolarNameRec = { textStyle :: Maybe TextStyle, formatter :: Maybe Formatter, show :: Maybe Boolean }
+``` purescript
+instance axisesEncodeJson :: EncodeJson Axises
+```
 
 
-    type PolarRec = { indicator :: Maybe [Indicator], "type" :: Maybe PolarType, splitArea :: Maybe AxisSplitArea, splitLine :: Maybe AxisSplitLine, axisLabel :: Maybe AxisLabel, axisLine :: Maybe AxisLine, scale :: Maybe Boolean, boundaryGap :: Maybe (Tuple Number Number), name :: Maybe PolarName, splitNumber :: Maybe Number, startAngle :: Maybe Number, radius :: Maybe PercentOrPixel, center :: Maybe (Tuple PercentOrPixel PercentOrPixel) }
+#### `AxisSplitLineRec`
 
+``` purescript
+type AxisSplitLineRec = { lineStyle :: Maybe LineStyle, onGap :: Maybe Boolean, show :: Maybe Boolean }
+```
 
-    data PolarType where
-      PolarPolygon :: PolarType
-      PolarCircle :: PolarType
 
+#### `AxisSplitLine`
 
-### Type Class Instances
+``` purescript
+newtype AxisSplitLine
+  = AxisSplitLine AxisSplitLineRec
+```
 
 
-    instance axisBoundaryGapEncodeJson :: EncodeJson AxisBoundaryGap
+#### `axisSplitLineEncodeJson`
 
+``` purescript
+instance axisSplitLineEncodeJson :: EncodeJson AxisSplitLine
+```
 
-    instance axisDataEncodeJson :: EncodeJson AxisData
 
+#### `axisSplitLineDefault`
 
-    instance axisEncJson :: EncodeJson Axis
+``` purescript
+axisSplitLineDefault :: AxisSplitLineRec
+```
 
 
-    instance axisLabelEncodeJson :: EncodeJson AxisLabel
+#### `AxisSplitAreaRec`
 
+``` purescript
+type AxisSplitAreaRec = { areaStyle :: Maybe AreaStyle, onGap :: Maybe Boolean, show :: Maybe Boolean }
+```
 
-    instance axisLineEncodeJson :: EncodeJson AxisLine
 
+#### `AxisSplitArea`
 
-    instance axisLineStyleEncodeJson :: EncodeJson AxisLineStyle
+``` purescript
+newtype AxisSplitArea
+  = AxisSplitArea AxisSplitAreaRec
+```
 
 
-    instance axisNameLocationEncodeJson :: EncodeJson AxisNameLocation
+#### `axisSplitAreaEncodeJson`
 
+``` purescript
+instance axisSplitAreaEncodeJson :: EncodeJson AxisSplitArea
+```
 
-    instance axisPositionEncodeJson :: EncodeJson AxisPosition
 
+#### `axisSplitAreaDefault`
 
-    instance axisSplitAreaEncodeJson :: EncodeJson AxisSplitArea
+``` purescript
+axisSplitAreaDefault :: AxisSplitAreaRec
+```
 
 
-    instance axisSplitLineEncodeJson :: EncodeJson AxisSplitLine
+#### `AxisType`
 
+``` purescript
+data AxisType
+  = CategoryAxis 
+  | ValueAxis 
+  | TimeAxis 
+```
 
-    instance axisTickEncodeJson :: EncodeJson AxisTick
 
+#### `axisTypeEncodeJson`
 
-    instance axisTypeEncodeJson :: EncodeJson AxisType
+``` purescript
+instance axisTypeEncodeJson :: EncodeJson AxisType
+```
 
 
-    instance axisesEncodeJson :: EncodeJson Axises
+#### `AxisPosition`
 
+``` purescript
+data AxisPosition
+  = LeftAxis 
+  | RightAxis 
+  | TopAxis 
+  | BottomAxis 
+```
 
-    instance indicatorEncodeJson :: EncodeJson Indicator
 
+#### `axisPositionEncodeJson`
 
-    instance polarEncodeJson :: EncodeJson Polar
+``` purescript
+instance axisPositionEncodeJson :: EncodeJson AxisPosition
+```
 
 
-    instance polarNameEncode :: EncodeJson PolarName
+#### `AxisNameLocation`
 
+``` purescript
+data AxisNameLocation
+  = Start 
+  | End 
+```
 
-    instance polarTypeEncode :: EncodeJson PolarType
 
+#### `axisNameLocationEncodeJson`
 
-### Values
+``` purescript
+instance axisNameLocationEncodeJson :: EncodeJson AxisNameLocation
+```
 
 
-    axisDefault :: AxisRec
+#### `CustomAxisDataRec`
 
+``` purescript
+type CustomAxisDataRec = { textStyle :: TextStyle, value :: String }
+```
 
-    axisLabelDefault :: AxisLabelRec
 
+#### `AxisData`
 
-    axisLineDefault :: AxisLineRec
+``` purescript
+data AxisData
+  = CommonAxisData String
+  | CustomAxisData CustomAxisDataRec
+```
 
 
-    axisLineStyleDefault :: AxisLineStyleRec
+#### `axisDataEncodeJson`
 
+``` purescript
+instance axisDataEncodeJson :: EncodeJson AxisData
+```
 
-    axisSplitAreaDefault :: AxisSplitAreaRec
 
+#### `AxisBoundaryGap`
 
-    axisSplitLineDefault :: AxisSplitLineRec
+``` purescript
+data AxisBoundaryGap
+  = CatBoundaryGap Boolean
+  | ValueBoundaryGap Number Number
+```
 
 
-    axisTickDefault :: AxisTickRec
+#### `axisBoundaryGapEncodeJson`
 
+``` purescript
+instance axisBoundaryGapEncodeJson :: EncodeJson AxisBoundaryGap
+```
 
-    indicatorDefault :: IndicatorRec
 
+#### `AxisRec`
 
-    polarDefault :: PolarRec
+``` purescript
+type AxisRec = { "data" :: Maybe [AxisData], splitArea :: Maybe AxisSplitArea, splitLine :: Maybe AxisSplitLine, axisLabel :: Maybe AxisLabel, axisTick :: Maybe AxisTick, axisLine :: Maybe AxisLine, splitNumber :: Maybe Number, scale :: Maybe Boolean, max :: Maybe Number, min :: Maybe Number, boundaryGap :: Maybe AxisBoundaryGap, nameTextStyle :: Maybe TextStyle, nameLocation :: Maybe AxisNameLocation, name :: Maybe String, position :: Maybe AxisPosition, show :: Maybe Boolean, "type" :: Maybe AxisType }
+```
 
 
-    polarNameDefault :: PolarNameRec
+#### `Axis`
+
+``` purescript
+newtype Axis
+  = Axis AxisRec
+```
+
+
+#### `axisDefault`
+
+``` purescript
+axisDefault :: AxisRec
+```
+
+
+#### `axisEncJson`
+
+``` purescript
+instance axisEncJson :: EncodeJson Axis
+```
+
+
+#### `PolarNameRec`
+
+``` purescript
+type PolarNameRec = { textStyle :: Maybe TextStyle, formatter :: Maybe Formatter, show :: Maybe Boolean }
+```
+
+
+#### `PolarName`
+
+``` purescript
+newtype PolarName
+  = PolarName PolarNameRec
+```
+
+
+#### `polarNameEncode`
+
+``` purescript
+instance polarNameEncode :: EncodeJson PolarName
+```
+
+
+#### `polarNameDefault`
+
+``` purescript
+polarNameDefault :: PolarNameRec
+```
+
+
+#### `PolarType`
+
+``` purescript
+data PolarType
+  = PolarPolygon 
+  | PolarCircle 
+```
+
+
+#### `polarTypeEncode`
+
+``` purescript
+instance polarTypeEncode :: EncodeJson PolarType
+```
+
+
+#### `IndicatorRec`
+
+``` purescript
+type IndicatorRec = { axisLabel :: Maybe AxisLabel, max :: Maybe Number, min :: Maybe Number, text :: Maybe String }
+```
+
+
+#### `Indicator`
+
+``` purescript
+newtype Indicator
+  = Indicator IndicatorRec
+```
+
+
+#### `indicatorEncodeJson`
+
+``` purescript
+instance indicatorEncodeJson :: EncodeJson Indicator
+```
+
+
+#### `indicatorDefault`
+
+``` purescript
+indicatorDefault :: IndicatorRec
+```
+
+
+#### `PolarRec`
+
+``` purescript
+type PolarRec = { indicator :: Maybe [Indicator], "type" :: Maybe PolarType, splitArea :: Maybe AxisSplitArea, splitLine :: Maybe AxisSplitLine, axisLabel :: Maybe AxisLabel, axisLine :: Maybe AxisLine, scale :: Maybe Boolean, boundaryGap :: Maybe (Tuple Number Number), name :: Maybe PolarName, splitNumber :: Maybe Number, startAngle :: Maybe Number, radius :: Maybe PercentOrPixel, center :: Maybe (Tuple PercentOrPixel PercentOrPixel) }
+```
+
+
+#### `Polar`
+
+``` purescript
+newtype Polar
+  = Polar PolarRec
+```
+
+
+#### `polarEncodeJson`
+
+``` purescript
+instance polarEncodeJson :: EncodeJson Polar
+```
+
+
+#### `polarDefault`
+
+``` purescript
+polarDefault :: PolarRec
+```
+
 
 
 ## Module ECharts.Chart
 
-### Types
+#### `EChart`
+
+``` purescript
+data EChart :: *
+```
 
 
-    data EChart :: *
+#### `ZRender`
+
+``` purescript
+data ZRender :: *
+```
 
 
-    data Theme where
-      ThemeName :: String -> Theme
-      ThemeConfig :: Json -> Theme
+#### `Theme`
+
+``` purescript
+data Theme
+  = ThemeName String
+  | ThemeConfig Json
+```
 
 
-    data ZRender :: *
+#### `themeEncodeJson`
+
+``` purescript
+instance themeEncodeJson :: EncodeJson Theme
+```
 
 
-### Type Class Instances
+#### `init`
+
+``` purescript
+init :: forall e. Maybe Theme -> HTMLElement -> Eff (echartInit :: EChartInit, dom :: DOM | e) EChart
+```
 
 
-    instance themeEncodeJson :: EncodeJson Theme
+#### `setTheme`
+
+``` purescript
+setTheme :: forall e. Theme -> EChart -> Eff (echartTheme :: EChartThemeSet, dom :: DOM | e) EChart
+```
 
 
-### Values
+#### `getZRender`
+
+``` purescript
+getZRender :: forall e. EChart -> Eff e ZRender
+```
 
 
-    clear :: forall e. EChart -> Eff (echartClear :: EChartClear, dom :: DOM | e) Unit
+#### `resize`
+
+``` purescript
+resize :: forall e. EChart -> Eff (echartResize :: EChartResize, dom :: DOM | e) Unit
+```
 
 
-    dispose :: forall e. EChart -> Eff (echartDispose :: EChartDispose, dom :: DOM | e) Unit
+#### `refresh`
+
+``` purescript
+refresh :: forall e. EChart -> Eff (echartRefresh :: EChartRefresh, dom :: DOM | e) Unit
+```
 
 
-    getZRender :: forall e. EChart -> Eff e ZRender
+#### `clear`
+
+``` purescript
+clear :: forall e. EChart -> Eff (echartClear :: EChartClear, dom :: DOM | e) Unit
+```
 
 
-    init :: forall e. Maybe Theme -> HTMLElement -> Eff (echartInit :: EChartInit, dom :: DOM | e) EChart
+#### `dispose`
 
+``` purescript
+dispose :: forall e. EChart -> Eff (echartDispose :: EChartDispose, dom :: DOM | e) Unit
+```
 
-    refresh :: forall e. EChart -> Eff (echartRefresh :: EChartRefresh, dom :: DOM | e) Unit
-
-
-    resize :: forall e. EChart -> Eff (echartResize :: EChartResize, dom :: DOM | e) Unit
-
-
-    setTheme :: forall e. Theme -> EChart -> Eff (echartTheme :: EChartThemeSet, dom :: DOM | e) EChart
 
 
 ## Module ECharts.Color
 
-### Types
+#### `Color`
+
+``` purescript
+type Color = String
+```
 
 
-    data CalculableColor where
-      SimpleColor :: Color -> CalculableColor
-      ColorFunc :: (ColorFuncParam -> Color) -> CalculableColor
+#### `ColorFuncParamRec`
+
+``` purescript
+type ColorFuncParamRec = { "data" :: { name :: String, value :: ItemValue }, dataIndex :: Number, series :: String, seriesIndex :: Number }
+```
 
 
-    type Color = String
+#### `ColorFuncParam`
+
+``` purescript
+newtype ColorFuncParam
+  = ColorFuncParam ColorFuncParamRec
+```
 
 
-    newtype ColorFuncParam where
-      ColorFuncParam :: ColorFuncParamRec -> ColorFuncParam
+#### `CalculableColor`
+
+``` purescript
+data CalculableColor
+  = SimpleColor Color
+  | ColorFunc (ColorFuncParam -> Color)
+```
 
 
-    type ColorFuncParamRec = { "data" :: { name :: String, value :: ItemValue }, dataIndex :: Number, series :: String, seriesIndex :: Number }
+#### `calculableColorEncodeJson`
 
+``` purescript
+instance calculableColorEncodeJson :: EncodeJson CalculableColor
+```
 
-### Type Class Instances
-
-
-    instance calculableColorEncodeJson :: EncodeJson CalculableColor
 
 
 ## Module ECharts.Common
 
-### Types
+#### `GeoCoord`
+
+``` purescript
+type GeoCoord = M.StrMap (Tuple Number Number)
+```
 
 
-    type Center = Tuple PercentOrPixel PercentOrPixel
+#### `Corner`
+
+``` purescript
+data Corner a
+  = AllCorners a
+  | Corners a a a a
+```
 
 
-    data Corner a where
-      AllCorners :: a -> Corner a
-      Corners :: a -> a -> a -> a -> Corner a
+#### `cornerJsonEncode`
+
+``` purescript
+instance cornerJsonEncode :: (EncodeJson a) => EncodeJson (Corner a)
+```
 
 
-    type GeoCoord = M.StrMap (Tuple Number Number)
+#### `PercentOrPixel`
+
+``` purescript
+data PercentOrPixel
+  = Percent Number
+  | Pixel Number
+```
 
 
-    data Interval where
-      Auto :: Interval
-      Custom :: Number -> Interval
+#### `percentOrPixelEncodeJson`
+
+``` purescript
+instance percentOrPixelEncodeJson :: EncodeJson PercentOrPixel
+```
 
 
-    data MapValueCalculation where
-      SumCalculation :: MapValueCalculation
-      AverageCalculation :: MapValueCalculation
+#### `RoseType`
+
+``` purescript
+data RoseType
+  = RTRadius 
+  | RTArea 
+```
 
 
-    newtype MinMax where
-      MinMax :: MinMaxRec -> MinMax
+#### `roseTypeEncodeJson`
+
+``` purescript
+instance roseTypeEncodeJson :: EncodeJson RoseType
+```
 
 
-    type MinMaxRec = { max :: Number, min :: Number }
+#### `SelectedMode`
+
+``` purescript
+data SelectedMode
+  = SelModeSingle 
+  | SelModeMultiple 
+  | SelModeFalse 
+```
 
 
-    data PercentOrPixel where
-      Percent :: Number -> PercentOrPixel
-      Pixel :: Number -> PercentOrPixel
+#### `selModeEncodeJson`
+
+``` purescript
+instance selModeEncodeJson :: EncodeJson SelectedMode
+```
 
 
-    data Radius where
-      R :: PercentOrPixel -> Radius
-      Rs :: RsRec -> Radius
+#### `MapValueCalculation`
+
+``` purescript
+data MapValueCalculation
+  = SumCalculation 
+  | AverageCalculation 
+```
 
 
-    data Roam where
-      Enable :: Roam
-      Disable :: Roam
-      Scale :: Roam
-      Move :: Roam
+#### `mapValueCalculationEncodeJson`
+
+``` purescript
+instance mapValueCalculationEncodeJson :: EncodeJson MapValueCalculation
+```
 
 
-    data RoseType where
-      RTRadius :: RoseType
-      RTArea :: RoseType
+#### `Roam`
+
+``` purescript
+data Roam
+  = Enable 
+  | Disable 
+  | Scale 
+  | Move 
+```
 
 
-    type RsRec = { outer :: PercentOrPixel, inner :: PercentOrPixel }
+#### `roamEncodeJson`
+
+``` purescript
+instance roamEncodeJson :: EncodeJson Roam
+```
 
 
-    data SelectedMode where
-      SelModeSingle :: SelectedMode
-      SelModeMultiple :: SelectedMode
-      SelModeFalse :: SelectedMode
+#### `MinMaxRec`
+
+``` purescript
+type MinMaxRec = { max :: Number, min :: Number }
+```
 
 
-    data Sort where
-      NoSort :: Sort
-      Asc :: Sort
-      Desc :: Sort
+#### `MinMax`
+
+``` purescript
+newtype MinMax
+  = MinMax MinMaxRec
+```
 
 
-### Type Class Instances
+#### `minMaxEncodeJson`
+
+``` purescript
+instance minMaxEncodeJson :: EncodeJson MinMax
+```
 
 
-    instance cornerJsonEncode :: (EncodeJson a) => EncodeJson (Corner a)
+#### `Center`
+
+``` purescript
+type Center = Tuple PercentOrPixel PercentOrPixel
+```
 
 
-    instance intervalEncodeJson :: EncodeJson Interval
+#### `RsRec`
+
+``` purescript
+type RsRec = { outer :: PercentOrPixel, inner :: PercentOrPixel }
+```
 
 
-    instance mapValueCalculationEncodeJson :: EncodeJson MapValueCalculation
+#### `Radius`
+
+``` purescript
+data Radius
+  = R PercentOrPixel
+  | Rs RsRec
+```
 
 
-    instance minMaxEncodeJson :: EncodeJson MinMax
+#### `radiusEncodeJson`
+
+``` purescript
+instance radiusEncodeJson :: EncodeJson Radius
+```
 
 
-    instance percentOrPixelEncodeJson :: EncodeJson PercentOrPixel
+#### `Sort`
+
+``` purescript
+data Sort
+  = NoSort 
+  | Asc 
+  | Desc 
+```
 
 
-    instance radiusEncodeJson :: EncodeJson Radius
+#### `sortEncodeJson`
+
+``` purescript
+instance sortEncodeJson :: EncodeJson Sort
+```
 
 
-    instance roamEncodeJson :: EncodeJson Roam
+#### `Interval`
+
+``` purescript
+data Interval
+  = Auto 
+  | Custom Number
+```
 
 
-    instance roseTypeEncodeJson :: EncodeJson RoseType
+#### `intervalEncodeJson`
 
+``` purescript
+instance intervalEncodeJson :: EncodeJson Interval
+```
 
-    instance selModeEncodeJson :: EncodeJson SelectedMode
-
-
-    instance sortEncodeJson :: EncodeJson Sort
 
 
 ## Module ECharts.Connect
 
-### Types
+#### `Connection`
+
+``` purescript
+newtype Connection
+```
 
 
-    newtype Connection
+#### `connect`
 
+``` purescript
+connect :: forall e. EChart -> EChart -> Eff (connect :: Connect | e) Connection
+```
 
-### Values
-
-
-    connect :: forall e. EChart -> EChart -> Eff (connect :: Connect | e) Connection
 
 
 ## Module ECharts.Coords
 
-### Types
+#### `XPos`
+
+``` purescript
+data XPos
+  = XLeft 
+  | XRight 
+  | XCenter 
+  | X Number
+```
 
 
-    data HorizontalAlign where
-      HAlignLeft :: HorizontalAlign
-      HAlignRight :: HorizontalAlign
-      HAlignCenter :: HorizontalAlign
+#### `xPosEncodeJson`
+
+``` purescript
+instance xPosEncodeJson :: EncodeJson XPos
+```
 
 
-    data LabelPosition where
-      LPOuter :: LabelPosition
-      LPInner :: LabelPosition
-      LPTop :: LabelPosition
-      LPRight :: LabelPosition
-      LPLeft :: LabelPosition
-      LPBottom :: LabelPosition
-      LPInside :: LabelPosition
-      LPInsideLeft :: LabelPosition
-      LPInsideRight :: LabelPosition
-      LPInsideTop :: LabelPosition
-      LPInsideBottom :: LabelPosition
+#### `YPos`
+
+``` purescript
+data YPos
+  = YTop 
+  | YBottom 
+  | YCenter 
+  | Y Number
+```
 
 
-    newtype Location where
-      Location :: LocationRec -> Location
+#### `yPosEncodeJson`
+
+``` purescript
+instance yPosEncodeJson :: EncodeJson YPos
+```
 
 
-    type LocationRec = { y :: Maybe YPos, x :: Maybe XPos }
+#### `LabelPosition`
+
+``` purescript
+data LabelPosition
+  = LPOuter 
+  | LPInner 
+  | LPTop 
+  | LPRight 
+  | LPLeft 
+  | LPBottom 
+  | LPInside 
+  | LPInsideLeft 
+  | LPInsideRight 
+  | LPInsideTop 
+  | LPInsideBottom 
+```
 
 
-    data Orient where
-      Horizontal :: Orient
-      Vertical :: Orient
+#### `labelPositionEncodeJson`
+
+``` purescript
+instance labelPositionEncodeJson :: EncodeJson LabelPosition
+```
 
 
-    data XPos where
-      XLeft :: XPos
-      XRight :: XPos
-      XCenter :: XPos
-      X :: Number -> XPos
+#### `HorizontalAlign`
+
+``` purescript
+data HorizontalAlign
+  = HAlignLeft 
+  | HAlignRight 
+  | HAlignCenter 
+```
 
 
-    data YPos where
-      YTop :: YPos
-      YBottom :: YPos
-      YCenter :: YPos
-      Y :: Number -> YPos
+#### `textAlignEncodeJson`
+
+``` purescript
+instance textAlignEncodeJson :: EncodeJson HorizontalAlign
+```
 
 
-### Type Class Instances
+#### `LocationRec`
+
+``` purescript
+type LocationRec = { y :: Maybe YPos, x :: Maybe XPos }
+```
 
 
-    instance labelPositionEncodeJson :: EncodeJson LabelPosition
+#### `Location`
+
+``` purescript
+newtype Location
+  = Location LocationRec
+```
 
 
-    instance locationEncodeJson :: EncodeJson Location
+#### `locationEncodeJson`
+
+``` purescript
+instance locationEncodeJson :: EncodeJson Location
+```
 
 
-    instance orientEncodeJson :: EncodeJson Orient
+#### `Orient`
+
+``` purescript
+data Orient
+  = Horizontal 
+  | Vertical 
+```
 
 
-    instance textAlignEncodeJson :: EncodeJson HorizontalAlign
+#### `orientEncodeJson`
 
+``` purescript
+instance orientEncodeJson :: EncodeJson Orient
+```
 
-    instance xPosEncodeJson :: EncodeJson XPos
-
-
-    instance yPosEncodeJson :: EncodeJson YPos
 
 
 ## Module ECharts.DataRange
 
-### Types
+#### `DataRangeRec`
+
+``` purescript
+type DataRangeRec = { textStyle :: Maybe TextStyle, text :: Maybe (Tuple String String), formatter :: Maybe Formatter, color :: Maybe [Color], realtime :: Maybe Boolean, hoverLink :: Maybe Boolean, calculable :: Maybe Boolean, selectedMode :: Maybe SelectedMode, splitNumber :: Maybe Number, precision :: Maybe Number, max :: Maybe Number, min :: Maybe Number, itemHeight :: Maybe Number, itemWidth :: Maybe Number, itemGap :: Maybe Number, padding :: Maybe (Corner Number), borderWidth :: Maybe Number, borderColor :: Maybe Color, backgroundColor :: Maybe Color, y :: Maybe YPos, x :: Maybe XPos, orient :: Maybe Orient, show :: Maybe Boolean }
+```
 
 
-    newtype DataRange where
-      DataRange :: DataRangeRec -> DataRange
+#### `DataRange`
+
+``` purescript
+newtype DataRange
+  = DataRange DataRangeRec
+```
 
 
-    type DataRangeRec = { textStyle :: Maybe TextStyle, text :: Maybe (Tuple String String), formatter :: Maybe Formatter, color :: Maybe [Color], realtime :: Maybe Boolean, hoverLink :: Maybe Boolean, calculable :: Maybe Boolean, selectedMode :: Maybe SelectedMode, splitNumber :: Maybe Number, precision :: Maybe Number, max :: Maybe Number, min :: Maybe Number, itemHeight :: Maybe Number, itemWidth :: Maybe Number, itemGap :: Maybe Number, padding :: Maybe (Corner Number), borderWidth :: Maybe Number, borderColor :: Maybe Color, backgroundColor :: Maybe Color, y :: Maybe YPos, x :: Maybe XPos, orient :: Maybe Orient, show :: Maybe Boolean }
+#### `dataRangeEncodeJson`
+
+``` purescript
+instance dataRangeEncodeJson :: EncodeJson DataRange
+```
 
 
-### Type Class Instances
+#### `dataRangeDefault`
 
+``` purescript
+dataRangeDefault :: DataRangeRec
+```
 
-    instance dataRangeEncodeJson :: EncodeJson DataRange
-
-
-### Values
-
-
-    dataRangeDefault :: DataRangeRec
 
 
 ## Module ECharts.DataZoom
 
-### Types
+#### `DataZoomRec`
+
+``` purescript
+type DataZoomRec = { zoomlock :: Maybe Boolean, realtime :: Maybe Boolean, showDetail :: Maybe Boolean, end :: Maybe Number, start :: Maybe Number, yAxisIndex :: Maybe [Number], xAxisIndex :: Maybe [Number], handleColor :: Maybe Color, fillerColor :: Maybe Color, dataBackgroundColor :: Maybe Color, backgroundColor :: Maybe Color, height :: Maybe Number, width :: Maybe Number, y :: Maybe YPos, x :: Maybe XPos, orient :: Maybe Orient, show :: Maybe Boolean }
+```
 
 
-    newtype DataZoom where
-      DataZoom :: DataZoomRec -> DataZoom
+#### `DataZoom`
+
+``` purescript
+newtype DataZoom
+  = DataZoom DataZoomRec
+```
 
 
-    type DataZoomRec = { zoomlock :: Maybe Boolean, realtime :: Maybe Boolean, showDetail :: Maybe Boolean, end :: Maybe Number, start :: Maybe Number, yAxisIndex :: Maybe [Number], xAxisIndex :: Maybe [Number], handleColor :: Maybe Color, fillerColor :: Maybe Color, dataBackgroundColor :: Maybe Color, backgroundColor :: Maybe Color, height :: Maybe Number, width :: Maybe Number, y :: Maybe YPos, x :: Maybe XPos, orient :: Maybe Orient, show :: Maybe Boolean }
+#### `dataZoomEncodeJson`
+
+``` purescript
+instance dataZoomEncodeJson :: EncodeJson DataZoom
+```
 
 
-### Type Class Instances
+#### `dataZoomDefault`
 
+``` purescript
+dataZoomDefault :: DataZoomRec
+```
 
-    instance dataZoomEncodeJson :: EncodeJson DataZoom
-
-
-### Values
-
-
-    dataZoomDefault :: DataZoomRec
 
 
 ## Module ECharts.Effects
 
-### Types
+#### `EChartInit`
+
+``` purescript
+data EChartInit :: !
+```
 
 
-    data AddData :: !
+#### `EChartResize`
+
+``` purescript
+data EChartResize :: !
+```
 
 
-    data AddMarkLine :: !
+#### `EChartClear`
+
+``` purescript
+data EChartClear :: !
+```
 
 
-    data AddMarkPoint :: !
+#### `EChartRefresh`
+
+``` purescript
+data EChartRefresh :: !
+```
 
 
-    data Connect :: !
+#### `EChartDispose`
+
+``` purescript
+data EChartDispose :: !
+```
 
 
-    data Disconnect :: !
+#### `EChartThemeSet`
+
+``` purescript
+data EChartThemeSet :: !
+```
 
 
-    data EChartClear :: !
+#### `EChartOptionSet`
+
+``` purescript
+data EChartOptionSet :: !
+```
 
 
-    data EChartDispose :: !
+#### `AddData`
+
+``` purescript
+data AddData :: !
+```
 
 
-    data EChartInit :: !
+#### `Connect`
+
+``` purescript
+data Connect :: !
+```
 
 
-    data EChartOptionSet :: !
+#### `Disconnect`
+
+``` purescript
+data Disconnect :: !
+```
 
 
-    data EChartRefresh :: !
+#### `Listen`
+
+``` purescript
+data Listen :: !
+```
 
 
-    data EChartResize :: !
+#### `Unlisten`
+
+``` purescript
+data Unlisten :: !
+```
 
 
-    data EChartThemeSet :: !
+#### `ImageMaking`
+
+``` purescript
+data ImageMaking :: !
+```
 
 
-    data ImageMaking :: !
+#### `LoadingShow`
+
+``` purescript
+data LoadingShow :: !
+```
 
 
-    data Listen :: !
+#### `LoadingHide`
+
+``` purescript
+data LoadingHide :: !
+```
 
 
-    data LoadingHide :: !
+#### `AddMarkLine`
+
+``` purescript
+data AddMarkLine :: !
+```
 
 
-    data LoadingShow :: !
+#### `RemoveMarkLine`
+
+``` purescript
+data RemoveMarkLine :: !
+```
 
 
-    data RemoveMarkLine :: !
+#### `AddMarkPoint`
+
+``` purescript
+data AddMarkPoint :: !
+```
 
 
-    data RemoveMarkPoint :: !
+#### `RemoveMarkPoint`
 
+``` purescript
+data RemoveMarkPoint :: !
+```
 
-    data Unlisten :: !
 
 
 ## Module ECharts.Events
 
-### Types
+#### `EventType`
+
+``` purescript
+data EventType
+  = Refresh 
+  | Restore 
+  | Resize 
+  | Click 
+  | DoubleClick 
+  | Hover 
+  | DataChanged 
+  | DataZoom 
+  | DataRange 
+  | DataRangeHoverLink 
+  | LegendSelected 
+  | LegendHoverLink 
+  | MapSelected 
+  | PieSelected 
+  | DataViewChanged 
+  | MapRoam 
+  | MagicTypeChanged 
+```
 
 
-    type EventParam = Json
+#### `EventParam`
+
+``` purescript
+type EventParam = Json
+```
 
 
-    data EventType where
-      Refresh :: EventType
-      Restore :: EventType
-      Resize :: EventType
-      Click :: EventType
-      DoubleClick :: EventType
-      Hover :: EventType
-      DataChanged :: EventType
-      DataZoom :: EventType
-      DataRange :: EventType
-      DataRangeHoverLink :: EventType
-      LegendSelected :: EventType
-      LegendHoverLink :: EventType
-      MapSelected :: EventType
-      PieSelected :: EventType
-      DataViewChanged :: EventType
-      MapRoam :: EventType
-      MagicTypeChanged :: EventType
+#### `Sub`
+
+``` purescript
+newtype Sub
+```
 
 
-    newtype Sub
+#### `listen`
 
+``` purescript
+listen :: forall e. EventType -> (EventParam -> Eff (listen :: Listen | e) Unit) -> EChart -> Eff (listen :: Listen | e) Sub
+```
 
-### Values
-
-
-    listen :: forall e. EventType -> (EventParam -> Eff (listen :: Listen | e) Unit) -> EChart -> Eff (listen :: Listen | e) Sub
 
 
 ## Module ECharts.Formatter
 
-### Types
+#### `FormatParams`
+
+``` purescript
+type FormatParams = Json
+```
 
 
-    type FormatParams = Json
+#### `Formatter`
+
+``` purescript
+data Formatter
+  = Template String
+  | FormatFunc (forall eff. [FormatParams] -> Eff eff String)
+```
 
 
-    data Formatter where
-      Template :: String -> Formatter
-      FormatFunc :: (forall eff. [FormatParams] -> Eff eff String) -> Formatter
+#### `formatterEncodeJson`
 
+``` purescript
+instance formatterEncodeJson :: EncodeJson Formatter
+```
 
-### Type Class Instances
-
-
-    instance formatterEncodeJson :: EncodeJson Formatter
 
 
 ## Module ECharts.Grid
 
-### Types
+#### `GridRec`
+
+``` purescript
+type GridRec = { borderColor :: Maybe Number, borderWidth :: Maybe Number, backgroundColor :: Maybe Color, height :: Maybe PercentOrPixel, width :: Maybe PercentOrPixel, y2 :: Maybe PercentOrPixel, y :: Maybe PercentOrPixel, x2 :: Maybe PercentOrPixel, x :: Maybe PercentOrPixel }
+```
 
 
-    newtype Grid where
-      Grid :: GridRec -> Grid
+#### `Grid`
+
+``` purescript
+newtype Grid
+  = Grid GridRec
+```
 
 
-    type GridRec = { borderColor :: Maybe Number, borderWidth :: Maybe Number, backgroundColor :: Maybe Color, height :: Maybe PercentOrPixel, width :: Maybe PercentOrPixel, y2 :: Maybe PercentOrPixel, y :: Maybe PercentOrPixel, x2 :: Maybe PercentOrPixel, x :: Maybe PercentOrPixel }
+#### `gridEncodeJson`
+
+``` purescript
+instance gridEncodeJson :: EncodeJson Grid
+```
 
 
-### Type Class Instances
+#### `gridDefault`
 
+``` purescript
+gridDefault :: GridRec
+```
 
-    instance gridEncodeJson :: EncodeJson Grid
-
-
-### Values
-
-
-    gridDefault :: GridRec
 
 
 ## Module ECharts.Image
 
-### Types
+#### `ImgType`
+
+``` purescript
+data ImgType
+  = PNG 
+  | JPEG 
+```
 
 
-    data ImgType where
-      PNG :: ImgType
-      JPEG :: ImgType
+#### `encodeImg`
+
+``` purescript
+instance encodeImg :: EncodeJson ImgType
+```
 
 
-### Type Class Instances
+#### `getDataURL`
+
+``` purescript
+getDataURL :: forall e. ImgType -> EChart -> Eff (image :: ImageMaking | e) String
+```
 
 
-    instance encodeImg :: EncodeJson ImgType
+#### `getImage`
 
+``` purescript
+getImage :: forall e. ImgType -> EChart -> Eff (image :: ImageMaking, dom :: DOM | e) Node
+```
 
-### Values
-
-
-    getDataURL :: forall e. ImgType -> EChart -> Eff (image :: ImageMaking | e) String
-
-
-    getImage :: forall e. ImgType -> EChart -> Eff (image :: ImageMaking, dom :: DOM | e) Node
 
 
 ## Module ECharts.Legend
 
-### Types
+#### `LegendItemRec`
+
+``` purescript
+type LegendItemRec = { textStyle :: Maybe TextStyle, icon :: Maybe String }
+```
 
 
-    newtype Legend where
-      Legend :: LegendRec -> Legend
+#### `LegendItem`
+
+``` purescript
+data LegendItem
+  = LegendItem String LegendItemRec
+```
 
 
-    data LegendItem where
-      LegendItem :: String -> LegendItemRec -> LegendItem
+#### `legendItemEncodeJson`
+
+``` purescript
+instance legendItemEncodeJson :: EncodeJson LegendItem
+```
 
 
-    type LegendItemRec = { textStyle :: Maybe TextStyle, icon :: Maybe String }
+#### `legendItemDefault`
+
+``` purescript
+legendItemDefault :: String -> LegendItem
+```
 
 
-    type LegendRec = { "data" :: Maybe [LegendItem], selected :: Maybe (StrMap Boolean), selectedMode :: Maybe SelectedMode, formatter :: Maybe Formatter, textStyle :: Maybe TextStyle, itemWidth :: Maybe Number, itemHeight :: Maybe Number, itemGap :: Maybe Number, padding :: Maybe (Corner Number), borderWidth :: Maybe Number, borderColor :: Maybe Color, backgroundColor :: Maybe Color, y :: Maybe YPos, x :: Maybe XPos, orient :: Maybe Orient, show :: Maybe Boolean }
+#### `LegendRec`
+
+``` purescript
+type LegendRec = { "data" :: Maybe [LegendItem], selected :: Maybe (StrMap Boolean), selectedMode :: Maybe SelectedMode, formatter :: Maybe Formatter, textStyle :: Maybe TextStyle, itemWidth :: Maybe Number, itemHeight :: Maybe Number, itemGap :: Maybe Number, padding :: Maybe (Corner Number), borderWidth :: Maybe Number, borderColor :: Maybe Color, backgroundColor :: Maybe Color, y :: Maybe YPos, x :: Maybe XPos, orient :: Maybe Orient, show :: Maybe Boolean }
+```
 
 
-### Type Class Instances
+#### `Legend`
+
+``` purescript
+newtype Legend
+  = Legend LegendRec
+```
 
 
-    instance legendEncodeJson :: EncodeJson Legend
+#### `legendDefault`
+
+``` purescript
+legendDefault :: LegendRec
+```
 
 
-    instance legendItemEncodeJson :: EncodeJson LegendItem
+#### `legendEncodeJson`
 
+``` purescript
+instance legendEncodeJson :: EncodeJson Legend
+```
 
-### Values
-
-
-    legendDefault :: LegendRec
-
-
-    legendItemDefault :: String -> LegendItem
 
 
 ## Module ECharts.Loading
 
-### Types
+#### `LoadingEffect`
+
+``` purescript
+data LoadingEffect
+  = Spin 
+  | Bar 
+  | Ring 
+  | Whirling 
+  | DynamicLine 
+  | Bubble 
+```
 
 
-    data LoadingEffect where
-      Spin :: LoadingEffect
-      Bar :: LoadingEffect
-      Ring :: LoadingEffect
-      Whirling :: LoadingEffect
-      DynamicLine :: LoadingEffect
-      Bubble :: LoadingEffect
+#### `loadingEffectEncodeJson`
+
+``` purescript
+instance loadingEffectEncodeJson :: EncodeJson LoadingEffect
+```
 
 
-    newtype LoadingOption where
-      LoadingOption :: LoadingOptionRec -> LoadingOption
+#### `LoadingOptionRec`
+
+``` purescript
+type LoadingOptionRec = { progress :: Maybe Number, effectOption :: Maybe Json, effect :: Maybe LoadingEffect, textStyle :: Maybe TextStyle, y :: Maybe YPos, x :: Maybe XPos, text :: Maybe String }
+```
 
 
-    type LoadingOptionRec = { progress :: Maybe Number, effectOption :: Maybe Json, effect :: Maybe LoadingEffect, textStyle :: Maybe TextStyle, y :: Maybe YPos, x :: Maybe XPos, text :: Maybe String }
+#### `LoadingOption`
+
+``` purescript
+newtype LoadingOption
+  = LoadingOption LoadingOptionRec
+```
 
 
-### Type Class Instances
+#### `showLoadingOptions`
+
+``` purescript
+instance showLoadingOptions :: EncodeJson LoadingOption
+```
 
 
-    instance loadingEffectEncodeJson :: EncodeJson LoadingEffect
+#### `showLoading`
+
+``` purescript
+showLoading :: forall e. LoadingOption -> EChart -> Eff (showLoadingECharts :: LoadingShow | e) EChart
+```
 
 
-    instance showLoadingOptions :: EncodeJson LoadingOption
+#### `hideLoading`
+
+``` purescript
+hideLoading :: forall e. EChart -> Eff (hideLoadingECharts :: LoadingHide | e) EChart
+```
 
 
-### Values
+#### `loadingOptionDefault`
 
+``` purescript
+loadingOptionDefault :: LoadingOptionRec
+```
 
-    hideLoading :: forall e. EChart -> Eff (hideLoadingECharts :: LoadingHide | e) EChart
-
-
-    loadingOptionDefault :: LoadingOptionRec
-
-
-    showLoading :: forall e. LoadingOption -> EChart -> Eff (showLoadingECharts :: LoadingShow | e) EChart
 
 
 ## Module ECharts.Options
 
-### Types
+#### `OptionRec`
+
+``` purescript
+type OptionRec = { series :: Maybe [Maybe Series], polar :: Maybe [Polar], yAxis :: Maybe Axises, xAxis :: Maybe Axises, grid :: Maybe Grid, roamController :: Maybe RoamController, dataZoom :: Maybe DataZoom, dataRange :: Maybe DataRange, legend :: Maybe Legend, title :: Maybe Title, toolbox :: Maybe Toolbox, tooltip :: Maybe Tooltip, timeline :: Maybe Timeline, animation :: Maybe Boolean, calculable :: Maybe Boolean, renderAsImage :: Maybe Boolean, color :: Maybe [Color], backgroundColor :: Maybe Color }
+```
+
+#### `Option`
+
+``` purescript
+newtype Option
+  = Option OptionRec
+```
 
 
-    newtype Option where
-      Option :: OptionRec -> Option
+#### `optionsEncodeJson`
 
-     To set second series tooltip
-         Option{series = Just [Nothing,
-            Just $ SomeSeries
-                     universalSeriesDefault{tooltip = Just myTooltip}
-                     someSeriesDefault 
-           }
-       It will erase all series data if we use [] as zero in updating
-       i.e. legend.
-
-    type OptionRec = { series :: Maybe [Maybe Series], polar :: Maybe [Polar], yAxis :: Maybe Axises, xAxis :: Maybe Axises, grid :: Maybe Grid, roamController :: Maybe RoamController, dataZoom :: Maybe DataZoom, dataRange :: Maybe DataRange, legend :: Maybe Legend, title :: Maybe Title, toolbox :: Maybe Toolbox, tooltip :: Maybe Tooltip, timeline :: Maybe Timeline, animation :: Maybe Boolean, calculable :: Maybe Boolean, renderAsImage :: Maybe Boolean, color :: Maybe [Color], backgroundColor :: Maybe Color }
+``` purescript
+instance optionsEncodeJson :: EncodeJson Option
+```
 
 
-### Type Class Instances
+#### `optionDefault`
+
+``` purescript
+optionDefault :: OptionRec
+```
 
 
-    instance optionsEncodeJson :: EncodeJson Option
+#### `setOption`
 
+``` purescript
+setOption :: forall e. Option -> Boolean -> EChart -> Eff (echartSetOption :: EChartOptionSet | e) EChart
+```
 
-### Values
-
-
-    optionDefault :: OptionRec
-
-
-    setOption :: forall e. Option -> Boolean -> EChart -> Eff (echartSetOption :: EChartOptionSet | e) EChart
 
 
 ## Module ECharts.RoamController
 
-### Types
+#### `RoamControllerRec`
+
+``` purescript
+type RoamControllerRec = { mapTypeControl :: Maybe (StrMap Boolean), step :: Maybe Number, handleColor :: Maybe Color, fillerColor :: Maybe Color, padding :: Maybe (Corner Number), borderWidth :: Maybe Number, borderColor :: Maybe Color, backgroundColor :: Maybe Color, height :: Maybe Number, width :: Maybe Number, y :: Maybe YPos, x :: Maybe XPos, show :: Maybe Boolean }
+```
 
 
-    newtype RoamController where
-      RoamController :: RoamControllerRec -> RoamController
+#### `RoamController`
+
+``` purescript
+newtype RoamController
+  = RoamController RoamControllerRec
+```
 
 
-    type RoamControllerRec = { mapTypeControl :: Maybe (StrMap Boolean), step :: Maybe Number, handleColor :: Maybe Color, fillerColor :: Maybe Color, padding :: Maybe (Corner Number), borderWidth :: Maybe Number, borderColor :: Maybe Color, backgroundColor :: Maybe Color, height :: Maybe Number, width :: Maybe Number, y :: Maybe YPos, x :: Maybe XPos, show :: Maybe Boolean }
+#### `roamControllerEncodeJson`
+
+``` purescript
+instance roamControllerEncodeJson :: EncodeJson RoamController
+```
 
 
-### Type Class Instances
+#### `roamControllerDefault`
 
+``` purescript
+roamControllerDefault :: RoamControllerRec
+```
 
-    instance roamControllerEncodeJson :: EncodeJson RoamController
-
-
-### Values
-
-
-    roamControllerDefault :: RoamControllerRec
 
 
 ## Module ECharts.Series
 
-### Types
+#### `chartTypeEncodeJson`
 
+``` purescript
+instance chartTypeEncodeJson :: EncodeJson ChartType
+```
 
-    type BarSeriesRec = { legendHoverLink :: Maybe Boolean, barMaxWidth :: Maybe Number, barWidth :: Maybe Number, barMinHeight :: Maybe Number, barCategoryGap :: Maybe PercentOrPixel, barGap :: Maybe PercentOrPixel, yAxisIndex :: Maybe Number, xAxisIndex :: Maybe Number, stack :: Maybe String, "data" :: Maybe [ItemData] }
 
+#### `Series`
 
-    type CandlestickSeriesRec = { barMaxWidth :: Maybe Number, barWidth :: Maybe Number, barMinHeight :: Maybe Number, yAxisIndex :: Maybe Number, xAxisIndex :: Maybe Number, "data" :: Maybe [ItemData] }
+``` purescript
+data Series
+  = LineSeries { lineSeries :: LineSeriesRec, common :: UniversalSeriesRec }
+  | BarSeries { barSeries :: BarSeriesRec, common :: UniversalSeriesRec }
+  | ScatterSeries { scatterSeries :: ScatterSeriesRec, common :: UniversalSeriesRec }
+  | CandlestickSeries { candlestickSeries :: CandlestickSeriesRec, common :: UniversalSeriesRec }
+  | PieSeries { pieSeries :: PieSeriesRec, common :: UniversalSeriesRec }
+  | RadarSeries { radarSeries :: RadarSeriesRec, common :: UniversalSeriesRec }
+  | ChordSeries { chordSeries :: ChordSeriesRec, common :: UniversalSeriesRec }
+  | ForceSeries { forceSeries :: ForceSeriesRec, common :: UniversalSeriesRec }
+  | MapSeries { mapSeries :: MapSeriesRec, common :: UniversalSeriesRec }
+  | GaugeSeries { gaugeSeries :: GaugeSeriesRec, common :: UniversalSeriesRec }
+  | FunnelSeries { funnelSeries :: FunnelSeriesRec, common :: UniversalSeriesRec }
+  | EventRiverSeries { eventRiverSeries :: EventRiverSeriesRec, common :: UniversalSeriesRec }
+```
 
 
-    type ChordSeriesRec = { clockWise :: Maybe Boolean, sortSub :: Maybe Sort, sort :: Maybe Sort, padding :: Maybe Number, showScaleText :: Maybe Boolean, showScale :: Maybe Boolean, maxRadius :: Maybe Number, minRadius :: Maybe Number, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol, ribbonType :: Maybe Boolean, "data" :: Maybe [ItemData], matrix :: Maybe Matrix, links :: Maybe [Link], categories :: Maybe [ForceCategory], nodes :: Maybe [Node] }
+#### `UniversalSeriesRec`
 
+``` purescript
+type UniversalSeriesRec = { markLine :: Maybe MarkLine, markPoint :: Maybe MarkPoint, itemStyle :: Maybe ItemStyle, clickable :: Maybe Boolean, tooltip :: Maybe Tooltip, name :: Maybe String }
+```
 
-    type EventRiverSeriesRec = { legendHoverLink :: Maybe Boolean, weight :: Maybe Number, xAxisIndex :: Maybe Number, eventList :: Maybe [OneEvent] }
 
+#### `universalSeriesDefault`
 
-    type ForceSeriesRec = { ribbonType :: Maybe Boolean, steps :: Maybe Number, useWorker :: Maybe Boolean, large :: Maybe Boolean, draggable :: Maybe Number, gravity :: Maybe Number, scaling :: Maybe Number, linkSymbolSize :: Maybe Symbol, linkSymbol :: Maybe Symbol, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol, maxRadius :: Maybe Number, minRadius :: Maybe Number, size :: Maybe Number, center :: Maybe Center, matrix :: Maybe Matrix, links :: Maybe [Link], nodes :: Maybe [Node], categories :: Maybe [ForceCategory] }
+``` purescript
+universalSeriesDefault :: UniversalSeriesRec
+```
 
 
-    type FunnelSeriesRec = { legendHoverLink :: Maybe Boolean, sort :: Maybe Sort, gap :: Maybe Number, maxSize :: Maybe PercentOrPixel, minSize :: Maybe PercentOrPixel, max :: Maybe Number, min :: Maybe Number, funnelAlign :: Maybe HorizontalAlign, height :: Maybe PercentOrPixel, width :: Maybe PercentOrPixel, y2 :: Maybe PercentOrPixel, y :: Maybe PercentOrPixel, x2 :: Maybe PercentOrPixel, x :: Maybe PercentOrPixel, "data" :: Maybe [ItemData] }
+#### `LineSeriesRec`
 
+``` purescript
+type LineSeriesRec = { legendHoverLink :: Maybe Boolean, smooth :: Maybe Boolean, showAllSymbol :: Maybe Boolean, symbolRotate :: Maybe Boolean, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol, yAxisIndex :: Maybe Number, xAxisIndex :: Maybe Number, stack :: Maybe String, "data" :: Maybe [ItemData] }
+```
 
-    type GaugeSeriesRec = { legendHoverLink :: Maybe Boolean, pointer :: Maybe Pointer, detail :: Maybe GaugeDetail, title :: Maybe Title, splitLine :: Maybe SplitLine, axisLabel :: Maybe AxisLabel, axisTick :: Maybe AxisTick, axisLine :: Maybe AxisLine, splitNumber :: Maybe Number, precision :: Maybe Number, max :: Maybe Number, min :: Maybe Number, endAngle :: Maybe Number, startAngle :: Maybe Number, radius :: Maybe Radius, center :: Maybe (Tuple Number Number), "data" :: Maybe [ItemData] }
 
+#### `lineSeriesDefault`
 
-    type LineSeriesRec = { legendHoverLink :: Maybe Boolean, smooth :: Maybe Boolean, showAllSymbol :: Maybe Boolean, symbolRotate :: Maybe Boolean, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol, yAxisIndex :: Maybe Number, xAxisIndex :: Maybe Number, stack :: Maybe String, "data" :: Maybe [ItemData] }
+``` purescript
+lineSeriesDefault :: LineSeriesRec
+```
 
 
-    type MapSeriesRec = { geoCoord :: Maybe (StrMap (Tuple Number Number)), textFixed :: Maybe (StrMap (Tuple Number Number)), nameMap :: Maybe (StrMap String), scaleLimit :: Maybe MinMax, roam :: Maybe Roam, showLegendSymbol :: Maybe Boolean, mapValuePrecision :: Maybe Number, mapValueCalculation :: Maybe MapValueCalculation, mapLocation :: Maybe Location, dataRangeHoverLink :: Maybe Boolean, hoverable :: Maybe Boolean, mapType :: Maybe String, selectedMode :: Maybe SelectedMode, "data" :: Maybe [ItemData] }
+#### `BarSeriesRec`
 
+``` purescript
+type BarSeriesRec = { legendHoverLink :: Maybe Boolean, barMaxWidth :: Maybe Number, barWidth :: Maybe Number, barMinHeight :: Maybe Number, barCategoryGap :: Maybe PercentOrPixel, barGap :: Maybe PercentOrPixel, yAxisIndex :: Maybe Number, xAxisIndex :: Maybe Number, stack :: Maybe String, "data" :: Maybe [ItemData] }
+```
 
-    type PieSeriesRec = { legendHoverLink :: Maybe Boolean, selectedMode :: Maybe SelectedMode, selectedOffset :: Maybe Number, roseType :: Maybe RoseType, clockWise :: Maybe Boolean, minAngle :: Maybe Number, startAngle :: Maybe Number, radius :: Maybe Radius, center :: Maybe Center, "data" :: Maybe [ItemData] }
 
+#### `barSeriesDefault`
 
-    type RadarSeriesRec = { legendHoverLink :: Maybe Boolean, symbolRotate :: Maybe Boolean, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol, polarIndex :: Maybe Number, "data" :: Maybe [ItemData] }
+``` purescript
+barSeriesDefault :: BarSeriesRec
+```
 
 
-    type ScatterSeriesRec = { legendHoverLink :: Maybe Boolean, largeThreshold :: Maybe Number, large :: Maybe Boolean, symbolRotate :: Maybe Boolean, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol, yAxisIndex :: Maybe Number, xAxisIndex :: Maybe Number, "data" :: Maybe [ItemData] }
+#### `ScatterSeriesRec`
 
+``` purescript
+type ScatterSeriesRec = { legendHoverLink :: Maybe Boolean, largeThreshold :: Maybe Number, large :: Maybe Boolean, symbolRotate :: Maybe Boolean, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol, yAxisIndex :: Maybe Number, xAxisIndex :: Maybe Number, "data" :: Maybe [ItemData] }
+```
 
-    data Series where
-      LineSeries :: { lineSeries :: LineSeriesRec, common :: UniversalSeriesRec } -> Series
-      BarSeries :: { barSeries :: BarSeriesRec, common :: UniversalSeriesRec } -> Series
-      ScatterSeries :: { scatterSeries :: ScatterSeriesRec, common :: UniversalSeriesRec } -> Series
-      CandlestickSeries :: { candlestickSeries :: CandlestickSeriesRec, common :: UniversalSeriesRec } -> Series
-      PieSeries :: { pieSeries :: PieSeriesRec, common :: UniversalSeriesRec } -> Series
-      RadarSeries :: { radarSeries :: RadarSeriesRec, common :: UniversalSeriesRec } -> Series
-      ChordSeries :: { chordSeries :: ChordSeriesRec, common :: UniversalSeriesRec } -> Series
-      ForceSeries :: { forceSeries :: ForceSeriesRec, common :: UniversalSeriesRec } -> Series
-      MapSeries :: { mapSeries :: MapSeriesRec, common :: UniversalSeriesRec } -> Series
-      GaugeSeries :: { gaugeSeries :: GaugeSeriesRec, common :: UniversalSeriesRec } -> Series
-      FunnelSeries :: { funnelSeries :: FunnelSeriesRec, common :: UniversalSeriesRec } -> Series
-      EventRiverSeries :: { eventRiverSeries :: EventRiverSeriesRec, common :: UniversalSeriesRec } -> Series
 
+#### `scatterSeriesDefault`
 
-    type UniversalSeriesRec = { markLine :: Maybe MarkLine, markPoint :: Maybe MarkPoint, itemStyle :: Maybe ItemStyle, clickable :: Maybe Boolean, tooltip :: Maybe Tooltip, name :: Maybe String }
+``` purescript
+scatterSeriesDefault :: ScatterSeriesRec
+```
 
 
-### Type Class Instances
+#### `CandlestickSeriesRec`
 
+``` purescript
+type CandlestickSeriesRec = { barMaxWidth :: Maybe Number, barWidth :: Maybe Number, barMinHeight :: Maybe Number, yAxisIndex :: Maybe Number, xAxisIndex :: Maybe Number, "data" :: Maybe [ItemData] }
+```
 
-    instance chartTypeEncodeJson :: EncodeJson ChartType
 
+#### `candlestickSeriesDefault`
 
-    instance encodeSeries :: EncodeJson Series
+``` purescript
+candlestickSeriesDefault :: CandlestickSeriesRec
+```
 
 
-### Values
+#### `PieSeriesRec`
 
+``` purescript
+type PieSeriesRec = { legendHoverLink :: Maybe Boolean, selectedMode :: Maybe SelectedMode, selectedOffset :: Maybe Number, roseType :: Maybe RoseType, clockWise :: Maybe Boolean, minAngle :: Maybe Number, startAngle :: Maybe Number, radius :: Maybe Radius, center :: Maybe Center, "data" :: Maybe [ItemData] }
+```
 
-    barSeriesDefault :: BarSeriesRec
 
+#### `pieSeriesDefault`
 
-    candlestickSeriesDefault :: CandlestickSeriesRec
+``` purescript
+pieSeriesDefault :: PieSeriesRec
+```
 
 
-    chordSeriesDefault :: ChordSeriesRec
+#### `RadarSeriesRec`
 
+``` purescript
+type RadarSeriesRec = { legendHoverLink :: Maybe Boolean, symbolRotate :: Maybe Boolean, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol, polarIndex :: Maybe Number, "data" :: Maybe [ItemData] }
+```
 
-    eventRiverSeriesDefault :: EventRiverSeriesRec
 
+#### `radarSeriesDefault`
 
-    forceSeriesDefault :: ForceSeriesRec
+``` purescript
+radarSeriesDefault :: RadarSeriesRec
+```
 
 
-    funnelSeriesDefault :: FunnelSeriesRec
+#### `ChordSeriesRec`
 
+``` purescript
+type ChordSeriesRec = { clockWise :: Maybe Boolean, sortSub :: Maybe Sort, sort :: Maybe Sort, padding :: Maybe Number, showScaleText :: Maybe Boolean, showScale :: Maybe Boolean, maxRadius :: Maybe Number, minRadius :: Maybe Number, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol, ribbonType :: Maybe Boolean, "data" :: Maybe [ItemData], matrix :: Maybe Matrix, links :: Maybe [Link], categories :: Maybe [ForceCategory], nodes :: Maybe [Node] }
+```
 
-    gaugeSeriesDefault :: GaugeSeriesRec
 
+#### `chordSeriesDefault`
 
-    lineSeriesDefault :: LineSeriesRec
+``` purescript
+chordSeriesDefault :: ChordSeriesRec
+```
 
 
-    mapSeriesDefault :: MapSeriesRec
+#### `ForceSeriesRec`
 
+``` purescript
+type ForceSeriesRec = { ribbonType :: Maybe Boolean, steps :: Maybe Number, useWorker :: Maybe Boolean, large :: Maybe Boolean, draggable :: Maybe Number, gravity :: Maybe Number, scaling :: Maybe Number, linkSymbolSize :: Maybe Symbol, linkSymbol :: Maybe Symbol, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol, maxRadius :: Maybe Number, minRadius :: Maybe Number, size :: Maybe Number, center :: Maybe Center, matrix :: Maybe Matrix, links :: Maybe [Link], nodes :: Maybe [Node], categories :: Maybe [ForceCategory] }
+```
 
-    pieSeriesDefault :: PieSeriesRec
 
+#### `forceSeriesDefault`
 
-    radarSeriesDefault :: RadarSeriesRec
+``` purescript
+forceSeriesDefault :: ForceSeriesRec
+```
 
 
-    scatterSeriesDefault :: ScatterSeriesRec
+#### `MapSeriesRec`
 
+``` purescript
+type MapSeriesRec = { geoCoord :: Maybe (StrMap (Tuple Number Number)), textFixed :: Maybe (StrMap (Tuple Number Number)), nameMap :: Maybe (StrMap String), scaleLimit :: Maybe MinMax, roam :: Maybe Roam, showLegendSymbol :: Maybe Boolean, mapValuePrecision :: Maybe Number, mapValueCalculation :: Maybe MapValueCalculation, mapLocation :: Maybe Location, dataRangeHoverLink :: Maybe Boolean, hoverable :: Maybe Boolean, mapType :: Maybe String, selectedMode :: Maybe SelectedMode, "data" :: Maybe [ItemData] }
+```
 
-    setSeries :: forall e. [Series] -> Boolean -> EChart -> Eff e EChart
 
+#### `mapSeriesDefault`
 
-    universalSeriesDefault :: UniversalSeriesRec
+``` purescript
+mapSeriesDefault :: MapSeriesRec
+```
+
+
+#### `GaugeSeriesRec`
+
+``` purescript
+type GaugeSeriesRec = { legendHoverLink :: Maybe Boolean, pointer :: Maybe Pointer, detail :: Maybe GaugeDetail, title :: Maybe Title, splitLine :: Maybe SplitLine, axisLabel :: Maybe AxisLabel, axisTick :: Maybe AxisTick, axisLine :: Maybe AxisLine, splitNumber :: Maybe Number, precision :: Maybe Number, max :: Maybe Number, min :: Maybe Number, endAngle :: Maybe Number, startAngle :: Maybe Number, radius :: Maybe Radius, center :: Maybe (Tuple Number Number), "data" :: Maybe [ItemData] }
+```
+
+
+#### `gaugeSeriesDefault`
+
+``` purescript
+gaugeSeriesDefault :: GaugeSeriesRec
+```
+
+
+#### `FunnelSeriesRec`
+
+``` purescript
+type FunnelSeriesRec = { legendHoverLink :: Maybe Boolean, sort :: Maybe Sort, gap :: Maybe Number, maxSize :: Maybe PercentOrPixel, minSize :: Maybe PercentOrPixel, max :: Maybe Number, min :: Maybe Number, funnelAlign :: Maybe HorizontalAlign, height :: Maybe PercentOrPixel, width :: Maybe PercentOrPixel, y2 :: Maybe PercentOrPixel, y :: Maybe PercentOrPixel, x2 :: Maybe PercentOrPixel, x :: Maybe PercentOrPixel, "data" :: Maybe [ItemData] }
+```
+
+
+#### `funnelSeriesDefault`
+
+``` purescript
+funnelSeriesDefault :: FunnelSeriesRec
+```
+
+
+#### `EventRiverSeriesRec`
+
+``` purescript
+type EventRiverSeriesRec = { legendHoverLink :: Maybe Boolean, weight :: Maybe Number, xAxisIndex :: Maybe Number, eventList :: Maybe [OneEvent] }
+```
+
+
+#### `eventRiverSeriesDefault`
+
+``` purescript
+eventRiverSeriesDefault :: EventRiverSeriesRec
+```
+
+
+#### `encodeSeries`
+
+``` purescript
+instance encodeSeries :: EncodeJson Series
+```
+
+
+#### `setSeries`
+
+``` purescript
+setSeries :: forall e. [Series] -> Boolean -> EChart -> Eff e EChart
+```
+
 
 
 ## Module ECharts.Symbol
 
-### Types
+#### `Symbol`
+
+``` purescript
+data Symbol
+  = Circle 
+  | Rectangle 
+  | Triangle 
+  | Diamond 
+  | EmptyCircle 
+  | EmptyRectangle 
+  | EmptyTriangle 
+  | EmptyDiamond 
+```
 
 
-    data DoubleSymbolSize where
-      DblSize :: Tuple Number Number -> DoubleSymbolSize
-      DblFunc :: (ItemValue -> Tuple Number Number) -> DoubleSymbolSize
+#### `encodeJsonSymbol`
+
+``` purescript
+instance encodeJsonSymbol :: EncodeJson Symbol
+```
 
 
-    data Symbol where
-      Circle :: Symbol
-      Rectangle :: Symbol
-      Triangle :: Symbol
-      Diamond :: Symbol
-      EmptyCircle :: Symbol
-      EmptyRectangle :: Symbol
-      EmptyTriangle :: Symbol
-      EmptyDiamond :: Symbol
+#### `SymbolSize`
+
+``` purescript
+data SymbolSize
+  = Size Number
+  | Func (ItemValue -> Number)
+```
 
 
-    data SymbolSize where
-      Size :: Number -> SymbolSize
-      Func :: (ItemValue -> Number) -> SymbolSize
+#### `symbolSizeEncodeJson`
+
+``` purescript
+instance symbolSizeEncodeJson :: EncodeJson SymbolSize
+```
 
 
-### Type Class Instances
+#### `DoubleSymbolSize`
+
+``` purescript
+data DoubleSymbolSize
+  = DblSize (Tuple Number Number)
+  | DblFunc (ItemValue -> Tuple Number Number)
+```
 
 
-    instance dblSymbolSizeEncodeJson :: EncodeJson DoubleSymbolSize
+#### `dblSymbolSizeEncodeJson`
 
+``` purescript
+instance dblSymbolSizeEncodeJson :: EncodeJson DoubleSymbolSize
+```
 
-    instance encodeJsonSymbol :: EncodeJson Symbol
-
-
-    instance symbolSizeEncodeJson :: EncodeJson SymbolSize
 
 
 ## Module ECharts.Timeline
 
-### Types
+#### `TimelineType`
+
+``` purescript
+data TimelineType
+  = TimelineTime 
+  | TimelineNumber 
+```
 
 
-    newtype Timeline where
-      Timeline :: TimelineRec -> Timeline
+#### `timelineTypeEncodeJson`
+
+``` purescript
+instance timelineTypeEncodeJson :: EncodeJson TimelineType
+```
 
 
-    data TimelineControlPosition where
-      TCPLeft :: TimelineControlPosition
-      TCPRight :: TimelineControlPosition
-      TCPNone :: TimelineControlPosition
+#### `TimelineControlPosition`
+
+``` purescript
+data TimelineControlPosition
+  = TCPLeft 
+  | TCPRight 
+  | TCPNone 
+```
 
 
-    type TimelineRec = { "data" :: Maybe [String], currentIndex :: Maybe Number, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol, controlStyle :: Maybe ItemStyle, checkpointStyle :: Maybe CheckpointStyle, label :: Maybe AxisLabel, lineStyle :: Maybe LineStyle, playInterval :: Maybe Number, loop :: Maybe Boolean, autoPlay :: Maybe Boolean, controlPosition :: Maybe TimelineControlPosition, padding :: Maybe (Corner Number), borderColor :: Maybe Color, borderWidth :: Maybe Number, backgroundColor :: Maybe Color, height :: Maybe PercentOrPixel, width :: Maybe PercentOrPixel, y2 :: Maybe PercentOrPixel, y :: Maybe PercentOrPixel, x2 :: Maybe PercentOrPixel, x :: Maybe PercentOrPixel, realtime :: Maybe Boolean, notMerge :: Maybe Boolean, "type" :: Maybe TimelineType, show :: Maybe Boolean }
+#### `timelineControlPositionEncodeJson`
+
+``` purescript
+instance timelineControlPositionEncodeJson :: EncodeJson TimelineControlPosition
+```
 
 
-    data TimelineType where
-      TimelineTime :: TimelineType
-      TimelineNumber :: TimelineType
+#### `TimelineRec`
+
+``` purescript
+type TimelineRec = { "data" :: Maybe [String], currentIndex :: Maybe Number, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol, controlStyle :: Maybe ItemStyle, checkpointStyle :: Maybe CheckpointStyle, label :: Maybe AxisLabel, lineStyle :: Maybe LineStyle, playInterval :: Maybe Number, loop :: Maybe Boolean, autoPlay :: Maybe Boolean, controlPosition :: Maybe TimelineControlPosition, padding :: Maybe (Corner Number), borderColor :: Maybe Color, borderWidth :: Maybe Number, backgroundColor :: Maybe Color, height :: Maybe PercentOrPixel, width :: Maybe PercentOrPixel, y2 :: Maybe PercentOrPixel, y :: Maybe PercentOrPixel, x2 :: Maybe PercentOrPixel, x :: Maybe PercentOrPixel, realtime :: Maybe Boolean, notMerge :: Maybe Boolean, "type" :: Maybe TimelineType, show :: Maybe Boolean }
+```
 
 
-### Type Class Instances
+#### `Timeline`
+
+``` purescript
+newtype Timeline
+  = Timeline TimelineRec
+```
 
 
-    instance timelineControlPositionEncodeJson :: EncodeJson TimelineControlPosition
+#### `timelineEncodeJson`
+
+``` purescript
+instance timelineEncodeJson :: EncodeJson Timeline
+```
 
 
-    instance timelineEncodeJson :: EncodeJson Timeline
+#### `timelineDefault`
 
+``` purescript
+timelineDefault :: TimelineRec
+```
 
-    instance timelineTypeEncodeJson :: EncodeJson TimelineType
-
-
-### Values
-
-
-    timelineDefault :: TimelineRec
 
 
 ## Module ECharts.Title
 
-### Types
+#### `LinkTarget`
+
+``` purescript
+data LinkTarget
+  = Self 
+  | Blank 
+```
 
 
-    data LinkTarget where
-      Self :: LinkTarget
-      Blank :: LinkTarget
+#### `linkTargetEncodeJson`
+
+``` purescript
+instance linkTargetEncodeJson :: EncodeJson LinkTarget
+```
 
 
-    newtype Title where
-      Title :: TitleRec -> Title
+#### `TitleRec`
+
+``` purescript
+type TitleRec = { subtextStyle :: Maybe TextStyle, textStyle :: Maybe TextStyle, itemGap :: Maybe Number, padding :: Maybe (Corner Number), borderWidth :: Maybe Number, borderColor :: Maybe Color, backgroundColor :: Maybe Color, textAlign :: Maybe HorizontalAlign, y :: Maybe YPos, x :: Maybe XPos, subtarget :: Maybe LinkTarget, sublink :: Maybe String, subtext :: Maybe String, target :: Maybe LinkTarget, link :: Maybe String, text :: Maybe String }
+```
 
 
-    type TitleRec = { subtextStyle :: Maybe TextStyle, textStyle :: Maybe TextStyle, itemGap :: Maybe Number, padding :: Maybe (Corner Number), borderWidth :: Maybe Number, borderColor :: Maybe Color, backgroundColor :: Maybe Color, textAlign :: Maybe HorizontalAlign, y :: Maybe YPos, x :: Maybe XPos, subtarget :: Maybe LinkTarget, sublink :: Maybe String, subtext :: Maybe String, target :: Maybe LinkTarget, link :: Maybe String, text :: Maybe String }
+#### `Title`
+
+``` purescript
+newtype Title
+  = Title TitleRec
+```
 
 
-### Type Class Instances
+#### `titleEncodeJson`
+
+``` purescript
+instance titleEncodeJson :: EncodeJson Title
+```
 
 
-    instance linkTargetEncodeJson :: EncodeJson LinkTarget
+#### `titleDefault`
 
+``` purescript
+titleDefault :: TitleRec
+```
 
-    instance titleEncodeJson :: EncodeJson Title
-
-
-### Values
-
-
-    titleDefault :: TitleRec
 
 
 ## Module ECharts.Toolbox
 
-### Types
+#### `ToolboxRec`
 
+``` purescript
+type ToolboxRec = { feature :: Maybe Feature, textStyle :: Maybe TextStyle, showTitle :: Maybe Boolean, effectiveColor :: Maybe Color, disableColor :: Maybe Color, color :: Maybe [Color], itemSize :: Maybe Number, itemGap :: Maybe Number, padding :: Maybe (Corner Number), borderWidth :: Maybe Number, borderColor :: Maybe Color, backgroundColor :: Maybe Color, y :: Maybe YPos, x :: Maybe XPos, orient :: Maybe Orient, show :: Maybe Boolean }
+```
 
-    newtype DataViewFeature where
-      DataViewFeature :: DataViewFeatureRec -> DataViewFeature
 
+#### `Toolbox`
 
-    type DataViewFeatureRec = { lang :: Maybe [String], readOnly :: Maybe Boolean, title :: Maybe String, show :: Maybe Boolean }
+``` purescript
+newtype Toolbox
+  = Toolbox ToolboxRec
+```
 
 
-    newtype DataZoomFeature where
-      DataZoomFeature :: DataZoomFeatureRec -> DataZoomFeature
+#### `toolboxDefault`
 
+``` purescript
+toolboxDefault :: ToolboxRec
+```
 
-    type DataZoomFeatureRec = { title :: Maybe DataZoomFeatureTitle, show :: Maybe Boolean }
 
+#### `toolboxEncodeJson`
 
-    newtype DataZoomFeatureTitle where
-      DataZoomFeatureTitle :: DataZoomFeatureTitleRec -> DataZoomFeatureTitle
+``` purescript
+instance toolboxEncodeJson :: EncodeJson Toolbox
+```
 
 
-    type DataZoomFeatureTitleRec = { dataZoomReset :: String, dataZoom :: String }
+#### `FeatureRec`
 
+``` purescript
+type FeatureRec = { saveAsImage :: Maybe SaveAsImageFeature, restore :: Maybe RestoreFeature, magicType :: Maybe MagicTypeFeature, dataView :: Maybe DataViewFeature, dataZoom :: Maybe DataZoomFeature, mark :: Maybe MarkFeature }
+```
 
-    newtype Feature where
-      Feature :: FeatureRec -> Feature
 
+#### `Feature`
 
-    type FeatureRec = { saveAsImage :: Maybe SaveAsImageFeature, restore :: Maybe RestoreFeature, magicType :: Maybe MagicTypeFeature, dataView :: Maybe DataViewFeature, dataZoom :: Maybe DataZoomFeature, mark :: Maybe MarkFeature }
+``` purescript
+newtype Feature
+  = Feature FeatureRec
+```
 
 
-    data MagicType where
-      MagicLine :: MagicType
-      MagicBar :: MagicType
-      MagicStack :: MagicType
-      MagicTiled :: MagicType
-      MagicForce :: MagicType
-      MagicChord :: MagicType
-      MagicPie :: MagicType
-      MagicFunnel :: MagicType
+#### `featureEncodeJson`
 
+``` purescript
+instance featureEncodeJson :: EncodeJson Feature
+```
 
-    newtype MagicTypeFeature where
-      MagicTypeFeature :: MagicTypeFeatureRec -> MagicTypeFeature
 
+#### `featureDefault`
 
-    type MagicTypeFeatureRec = { "type" :: Maybe [MagicType], option :: Maybe Json, title :: Maybe (StrMap String), show :: Maybe Boolean }
+``` purescript
+featureDefault :: FeatureRec
+```
 
 
-    newtype MarkFeature where
-      MarkFeature :: MarkFeatureRec -> MarkFeature
+#### `SaveAsImageFeatureRec`
 
+``` purescript
+type SaveAsImageFeatureRec = { lang :: Maybe [String], "type" :: Maybe ImgType, title :: Maybe String, show :: Maybe Boolean }
+```
 
-    type MarkFeatureRec = { lineStyle :: Maybe LineStyle, title :: Maybe MarkFeatureTitle, show :: Maybe Boolean }
 
+#### `SaveAsImageFeature`
 
-    newtype MarkFeatureTitle where
-      MarkFeatureTitle :: MarkFeatureTitleRec -> MarkFeatureTitle
+``` purescript
+newtype SaveAsImageFeature
+  = SaveAsImageFeature SaveAsImageFeatureRec
+```
 
 
-    type MarkFeatureTitleRec = { markClear :: String, markUndo :: String, mark :: Maybe String }
+#### `saveAsImageEncodeJson`
 
+``` purescript
+instance saveAsImageEncodeJson :: EncodeJson SaveAsImageFeature
+```
 
-    newtype RestoreFeature where
-      RestoreFeature :: RestoreFeatureRec -> RestoreFeature
 
+#### `saveAsImageFeatureDefault`
 
-    type RestoreFeatureRec = { title :: Maybe String, show :: Maybe Boolean }
+``` purescript
+saveAsImageFeatureDefault :: SaveAsImageFeatureRec
+```
 
 
-    newtype SaveAsImageFeature where
-      SaveAsImageFeature :: SaveAsImageFeatureRec -> SaveAsImageFeature
+#### `RestoreFeatureRec`
 
+``` purescript
+type RestoreFeatureRec = { title :: Maybe String, show :: Maybe Boolean }
+```
 
-    type SaveAsImageFeatureRec = { lang :: Maybe [String], "type" :: Maybe ImgType, title :: Maybe String, show :: Maybe Boolean }
 
+#### `RestoreFeature`
 
-    newtype Toolbox where
-      Toolbox :: ToolboxRec -> Toolbox
+``` purescript
+newtype RestoreFeature
+  = RestoreFeature RestoreFeatureRec
+```
 
 
-    type ToolboxRec = { feature :: Maybe Feature, textStyle :: Maybe TextStyle, showTitle :: Maybe Boolean, effectiveColor :: Maybe Color, disableColor :: Maybe Color, color :: Maybe [Color], itemSize :: Maybe Number, itemGap :: Maybe Number, padding :: Maybe (Corner Number), borderWidth :: Maybe Number, borderColor :: Maybe Color, backgroundColor :: Maybe Color, y :: Maybe YPos, x :: Maybe XPos, orient :: Maybe Orient, show :: Maybe Boolean }
+#### `restoreFeatureEncodeJson`
 
+``` purescript
+instance restoreFeatureEncodeJson :: EncodeJson RestoreFeature
+```
 
-### Type Class Instances
 
+#### `restoreFeatureDefault`
 
-    instance dataViewFeatureEncodeJson :: EncodeJson DataViewFeature
+``` purescript
+restoreFeatureDefault :: RestoreFeatureRec
+```
 
 
-    instance dataviewFeatureEncodeJson :: EncodeJson DataZoomFeature
+#### `DataZoomFeatureTitleRec`
 
+``` purescript
+type DataZoomFeatureTitleRec = { dataZoomReset :: String, dataZoom :: String }
+```
 
-    instance datazoomTitleEncodeJson :: EncodeJson DataZoomFeatureTitle
 
+#### `DataZoomFeatureTitle`
 
-    instance featureEncodeJson :: EncodeJson Feature
+``` purescript
+newtype DataZoomFeatureTitle
+  = DataZoomFeatureTitle DataZoomFeatureTitleRec
+```
 
 
-    instance magicTypeEncodeJson :: EncodeJson MagicType
+#### `datazoomTitleEncodeJson`
 
+``` purescript
+instance datazoomTitleEncodeJson :: EncodeJson DataZoomFeatureTitle
+```
 
-    instance magicTypeFeatureEncodeJson :: EncodeJson MagicTypeFeature
 
+#### `DataZoomFeatureRec`
 
-    instance markFeatureEncodeJson :: EncodeJson MarkFeature
+``` purescript
+type DataZoomFeatureRec = { title :: Maybe DataZoomFeatureTitle, show :: Maybe Boolean }
+```
 
 
-    instance mftitleEncodeJson :: EncodeJson MarkFeatureTitle
+#### `DataZoomFeature`
 
+``` purescript
+newtype DataZoomFeature
+  = DataZoomFeature DataZoomFeatureRec
+```
 
-    instance restoreFeatureEncodeJson :: EncodeJson RestoreFeature
 
+#### `dataZoomFeatureDefault`
 
-    instance saveAsImageEncodeJson :: EncodeJson SaveAsImageFeature
+``` purescript
+dataZoomFeatureDefault :: DataZoomFeatureRec
+```
 
 
-    instance toolboxEncodeJson :: EncodeJson Toolbox
+#### `dataviewFeatureEncodeJson`
 
+``` purescript
+instance dataviewFeatureEncodeJson :: EncodeJson DataZoomFeature
+```
 
-### Values
 
+#### `DataViewFeatureRec`
 
-    dataViewFeatureDefault :: DataViewFeatureRec
+``` purescript
+type DataViewFeatureRec = { lang :: Maybe [String], readOnly :: Maybe Boolean, title :: Maybe String, show :: Maybe Boolean }
+```
 
 
-    dataZoomFeatureDefault :: DataZoomFeatureRec
+#### `DataViewFeature`
 
+``` purescript
+newtype DataViewFeature
+  = DataViewFeature DataViewFeatureRec
+```
 
-    featureDefault :: FeatureRec
 
+#### `dataViewFeatureDefault`
 
-    magicTypeFeatureDefault :: MagicTypeFeatureRec
+``` purescript
+dataViewFeatureDefault :: DataViewFeatureRec
+```
 
 
-    markFeatureDefault :: MarkFeatureRec
+#### `dataViewFeatureEncodeJson`
 
+``` purescript
+instance dataViewFeatureEncodeJson :: EncodeJson DataViewFeature
+```
 
-    restoreFeatureDefault :: RestoreFeatureRec
 
+#### `MarkFeatureTitleRec`
 
-    saveAsImageFeatureDefault :: SaveAsImageFeatureRec
+``` purescript
+type MarkFeatureTitleRec = { markClear :: String, markUndo :: String, mark :: Maybe String }
+```
 
 
-    toolboxDefault :: ToolboxRec
+#### `MarkFeatureTitle`
+
+``` purescript
+newtype MarkFeatureTitle
+  = MarkFeatureTitle MarkFeatureTitleRec
+```
+
+
+#### `mftitleEncodeJson`
+
+``` purescript
+instance mftitleEncodeJson :: EncodeJson MarkFeatureTitle
+```
+
+
+#### `MarkFeatureRec`
+
+``` purescript
+type MarkFeatureRec = { lineStyle :: Maybe LineStyle, title :: Maybe MarkFeatureTitle, show :: Maybe Boolean }
+```
+
+
+#### `MarkFeature`
+
+``` purescript
+newtype MarkFeature
+  = MarkFeature MarkFeatureRec
+```
+
+
+#### `markFeatureEncodeJson`
+
+``` purescript
+instance markFeatureEncodeJson :: EncodeJson MarkFeature
+```
+
+
+#### `markFeatureDefault`
+
+``` purescript
+markFeatureDefault :: MarkFeatureRec
+```
+
+
+#### `MagicType`
+
+``` purescript
+data MagicType
+  = MagicLine 
+  | MagicBar 
+  | MagicStack 
+  | MagicTiled 
+  | MagicForce 
+  | MagicChord 
+  | MagicPie 
+  | MagicFunnel 
+```
+
+
+#### `magicTypeEncodeJson`
+
+``` purescript
+instance magicTypeEncodeJson :: EncodeJson MagicType
+```
+
+
+#### `MagicTypeFeatureRec`
+
+``` purescript
+type MagicTypeFeatureRec = { "type" :: Maybe [MagicType], option :: Maybe Json, title :: Maybe (StrMap String), show :: Maybe Boolean }
+```
+
+
+#### `MagicTypeFeature`
+
+``` purescript
+newtype MagicTypeFeature
+  = MagicTypeFeature MagicTypeFeatureRec
+```
+
+
+#### `magicTypeFeatureDefault`
+
+``` purescript
+magicTypeFeatureDefault :: MagicTypeFeatureRec
+```
+
+
+#### `magicTypeFeatureEncodeJson`
+
+``` purescript
+instance magicTypeFeatureEncodeJson :: EncodeJson MagicTypeFeature
+```
+
 
 
 ## Module ECharts.Tooltip
 
-### Types
+#### `TooltipTrigger`
+
+``` purescript
+data TooltipTrigger
+  = TriggerItem 
+  | TriggerAxis 
+```
 
 
-    newtype Tooltip where
-      Tooltip :: TooltipRec -> Tooltip
+#### `tooltipTriggerEncodeJson`
+
+``` purescript
+instance tooltipTriggerEncodeJson :: EncodeJson TooltipTrigger
+```
 
 
-    newtype TooltipAxisPointer where
-      TooltipAxisPointer :: TooltipAxisPointerRec -> TooltipAxisPointer
+#### `TooltipPosition`
+
+``` purescript
+data TooltipPosition
+  = Fixed [Number]
+  | FuncPos ([Number] -> [Number])
+```
 
 
-    type TooltipAxisPointerRec = { shadowStyle :: Maybe AreaStyle, crossStyle :: Maybe LineStyle, lineStyle :: Maybe LineStyle, "type" :: Maybe TooltipAxisPointerType }
+#### `tooltipPositionEncodeJson`
+
+``` purescript
+instance tooltipPositionEncodeJson :: EncodeJson TooltipPosition
+```
 
 
-    data TooltipAxisPointerType where
-      LinePointer :: TooltipAxisPointerType
-      CrossPointer :: TooltipAxisPointerType
-      ShadowPointer :: TooltipAxisPointerType
-      NonePointer :: TooltipAxisPointerType
+#### `TooltipAxisPointerType`
+
+``` purescript
+data TooltipAxisPointerType
+  = LinePointer 
+  | CrossPointer 
+  | ShadowPointer 
+  | NonePointer 
+```
 
 
-    data TooltipPosition where
-      Fixed :: [Number] -> TooltipPosition
-      FuncPos :: ([Number] -> [Number]) -> TooltipPosition
+#### `tooltipAxisPointerTypeEncodeJson`
+
+``` purescript
+instance tooltipAxisPointerTypeEncodeJson :: EncodeJson TooltipAxisPointerType
+```
 
 
-    type TooltipRec = { enterable :: Maybe Boolean, textStyle :: Maybe TextStyle, axisPointer :: Maybe TooltipAxisPointer, padding :: Maybe (Corner Number), borderWidth :: Maybe Number, borderRadius :: Maybe Number, borderColor :: Maybe Color, backgroundColor :: Maybe Color, transitionDuration :: Maybe Number, hideDelay :: Maybe Number, showDelay :: Maybe Number, islandFormatter :: Maybe Formatter, formatter :: Maybe Formatter, position :: Maybe TooltipPosition, trigger :: Maybe TooltipTrigger, showContent :: Maybe Boolean, show :: Maybe Boolean }
+#### `TooltipAxisPointerRec`
+
+``` purescript
+type TooltipAxisPointerRec = { shadowStyle :: Maybe AreaStyle, crossStyle :: Maybe LineStyle, lineStyle :: Maybe LineStyle, "type" :: Maybe TooltipAxisPointerType }
+```
 
 
-    data TooltipTrigger where
-      TriggerItem :: TooltipTrigger
-      TriggerAxis :: TooltipTrigger
+#### `TooltipAxisPointer`
+
+``` purescript
+newtype TooltipAxisPointer
+  = TooltipAxisPointer TooltipAxisPointerRec
+```
 
 
-### Type Class Instances
+#### `tooltipAxisPointerEncodeJson`
+
+``` purescript
+instance tooltipAxisPointerEncodeJson :: EncodeJson TooltipAxisPointer
+```
 
 
-    instance tooltipAxisPointerEncodeJson :: EncodeJson TooltipAxisPointer
+#### `tooltipAxisPointerDefault`
+
+``` purescript
+tooltipAxisPointerDefault :: TooltipAxisPointerRec
+```
 
 
-    instance tooltipAxisPointerTypeEncodeJson :: EncodeJson TooltipAxisPointerType
+#### `TooltipRec`
+
+``` purescript
+type TooltipRec = { enterable :: Maybe Boolean, textStyle :: Maybe TextStyle, axisPointer :: Maybe TooltipAxisPointer, padding :: Maybe (Corner Number), borderWidth :: Maybe Number, borderRadius :: Maybe Number, borderColor :: Maybe Color, backgroundColor :: Maybe Color, transitionDuration :: Maybe Number, hideDelay :: Maybe Number, showDelay :: Maybe Number, islandFormatter :: Maybe Formatter, formatter :: Maybe Formatter, position :: Maybe TooltipPosition, trigger :: Maybe TooltipTrigger, showContent :: Maybe Boolean, show :: Maybe Boolean }
+```
 
 
-    instance tooltipEncodeJson :: EncodeJson Tooltip
+#### `Tooltip`
+
+``` purescript
+newtype Tooltip
+  = Tooltip TooltipRec
+```
 
 
-    instance tooltipPositionEncodeJson :: EncodeJson TooltipPosition
+#### `tooltipEncodeJson`
+
+``` purescript
+instance tooltipEncodeJson :: EncodeJson Tooltip
+```
 
 
-    instance tooltipTriggerEncodeJson :: EncodeJson TooltipTrigger
+#### `tooltipDefault`
 
+``` purescript
+tooltipDefault :: TooltipRec
+```
 
-### Values
-
-
-    tooltipAxisPointerDefault :: TooltipAxisPointerRec
-
-
-    tooltipDefault :: TooltipRec
 
 
 ## Module ECharts.Utils
 
-### Values
+#### `unnull`
 
-    This func is used to construct copy of object, without null and undefined fields.
-    i.e
-    {foo: 1, bar: 12, baz: null, quux: undefined} ->
-    {foo: 1, bar: 12} 
-
-    unnull :: Json -> Json
+``` purescript
+unnull :: Json -> Json
+```
 
 
 ## Module ECharts.Item.Data
 
-### Types
+#### `ItemDataDatRec`
+
+``` purescript
+type ItemDataDatRec = { selected :: Maybe Boolean, itemStyle :: Maybe ItemStyle, tooltip :: Maybe Tooltip, name :: Maybe String, value :: ItemValue }
+```
 
 
-    data ItemData where
-      Value :: ItemValue -> ItemData
-      Dat :: ItemDataDatRec -> ItemData
-      Label :: String -> ItemData
+#### `ItemData`
+
+``` purescript
+data ItemData
+  = Value ItemValue
+  | Dat ItemDataDatRec
+  | Label String
+```
 
 
-    type ItemDataDatRec = { selected :: Maybe Boolean, itemStyle :: Maybe ItemStyle, tooltip :: Maybe Tooltip, name :: Maybe String, value :: ItemValue }
+#### `itemDataEncodeJson`
+
+``` purescript
+instance itemDataEncodeJson :: EncodeJson ItemData
+```
 
 
-### Type Class Instances
+#### `dataDefault`
 
+``` purescript
+dataDefault :: ItemValue -> ItemDataDatRec
+```
 
-    instance itemDataEncodeJson :: EncodeJson ItemData
-
-
-### Values
-
-
-    dataDefault :: ItemValue -> ItemDataDatRec
 
 
 ## Module ECharts.Item.Value
 
-### Types
+#### `XYRRec`
+
+``` purescript
+type XYRRec = { r :: Maybe Number, y :: Number, x :: Number }
+```
 
 
-    type HLOCRec = { c :: Number, o :: Number, l :: Number, h :: Number }
+#### `HLOCRec`
+
+``` purescript
+type HLOCRec = { c :: Number, o :: Number, l :: Number, h :: Number }
+```
 
 
-    data ItemValue where
-      None :: ItemValue
-      Simple :: Number -> ItemValue
-      Many :: [Number] -> ItemValue
-      XYR :: XYRRec -> ItemValue
-      HLOC :: HLOCRec -> ItemValue
+#### `ItemValue`
+
+``` purescript
+data ItemValue
+  = None 
+  | Simple Number
+  | Many [Number]
+  | XYR XYRRec
+  | HLOC HLOCRec
+```
 
 
-    type XYRRec = { r :: Maybe Number, y :: Number, x :: Number }
+#### `itemValueEncodeJson`
 
+``` purescript
+instance itemValueEncodeJson :: EncodeJson ItemValue
+```
 
-### Type Class Instances
-
-
-    instance itemValueEncodeJson :: EncodeJson ItemValue
 
 
 ## Module ECharts.Mark.Data
 
-### Types
+#### `MarkPointDataRec`
+
+``` purescript
+type MarkPointDataRec = { "type" :: Maybe String, yAxis :: Maybe Number, xAxis :: Maybe Number, y :: Maybe Number, x :: Maybe Number, value :: Maybe Number, name :: Maybe String }
+```
 
 
-    newtype MarkPointData where
-      MarkPointData :: MarkPointDataRec -> MarkPointData
+#### `MarkPointData`
+
+``` purescript
+newtype MarkPointData
+  = MarkPointData MarkPointDataRec
+```
 
 
-    type MarkPointDataRec = { "type" :: Maybe String, yAxis :: Maybe Number, xAxis :: Maybe Number, y :: Maybe Number, x :: Maybe Number, value :: Maybe Number, name :: Maybe String }
+#### `mpDataEncodeJson`
+
+``` purescript
+instance mpDataEncodeJson :: EncodeJson MarkPointData
+```
 
 
-### Type Class Instances
+#### `markPointDataDefault`
 
+``` purescript
+markPointDataDefault :: MarkPointDataRec
+```
 
-    instance mpDataEncodeJson :: EncodeJson MarkPointData
-
-
-### Values
-
-
-    markPointDataDefault :: MarkPointDataRec
 
 
 ## Module ECharts.Mark.Effect
 
-### Types
+#### `MarkPointEffectRec`
+
+``` purescript
+type MarkPointEffectRec = { shadowBlur :: Maybe Number, color :: Maybe Color, scaleSize :: Maybe Boolean, period :: Maybe Boolean, loop :: Maybe Boolean, show :: Maybe Boolean }
+```
 
 
-    newtype MarkPointEffect where
-      MarkPointEffect :: MarkPointEffectRec -> MarkPointEffect
+#### `MarkPointEffect`
+
+``` purescript
+newtype MarkPointEffect
+  = MarkPointEffect MarkPointEffectRec
+```
 
 
-    type MarkPointEffectRec = { shadowBlur :: Maybe Number, color :: Maybe Color, scaleSize :: Maybe Boolean, period :: Maybe Boolean, loop :: Maybe Boolean, show :: Maybe Boolean }
+#### `mpEffectEncodeJson`
+
+``` purescript
+instance mpEffectEncodeJson :: EncodeJson MarkPointEffect
+```
 
 
-### Type Class Instances
+#### `markPointEffectDefault`
 
+``` purescript
+markPointEffectDefault :: MarkPointEffectRec
+```
 
-    instance mpEffectEncodeJson :: EncodeJson MarkPointEffect
-
-
-### Values
-
-
-    markPointEffectDefault :: MarkPointEffectRec
 
 
 ## Module ECharts.Mark.Line
 
-### Types
+#### `MarkLineRec`
+
+``` purescript
+type MarkLineRec = { itemStyle :: Maybe ItemStyle, "data" :: Maybe [Tuple MarkPointData MarkPointData], geoCoord :: Maybe [GeoCoord], effect :: Maybe MarkPointEffect, symbolRotate :: Maybe (Tuple Number Number), symbolSize :: Maybe DoubleSymbolSize, symbol :: Maybe (Tuple Symbol Symbol) }
+```
 
 
-    newtype MarkLine where
-      MarkLine :: MarkLineRec -> MarkLine
+#### `MarkLine`
+
+``` purescript
+newtype MarkLine
+  = MarkLine MarkLineRec
+```
 
 
-    type MarkLineRec = { itemStyle :: Maybe ItemStyle, "data" :: Maybe [Tuple MarkPointData MarkPointData], geoCoord :: Maybe [GeoCoord], effect :: Maybe MarkPointEffect, symbolRotate :: Maybe (Tuple Number Number), symbolSize :: Maybe DoubleSymbolSize, symbol :: Maybe (Tuple Symbol Symbol) }
+#### `mlEncodeJson`
+
+``` purescript
+instance mlEncodeJson :: EncodeJson MarkLine
+```
 
 
-### Type Class Instances
+#### `markLineDefault`
+
+``` purescript
+markLineDefault :: MarkLineRec
+```
 
 
-    instance mlEncodeJson :: EncodeJson MarkLine
+#### `addMarkLine`
+
+``` purescript
+addMarkLine :: forall e a. MarkLine -> EChart -> Eff (addMarkLineECharts :: AddMarkLine | e) EChart
+```
 
 
-### Values
+#### `delMarkLine`
 
+``` purescript
+delMarkLine :: forall e. Number -> String -> EChart -> Eff (removeMarkLine :: RemoveMarkLine | e) EChart
+```
 
-    addMarkLine :: forall e a. MarkLine -> EChart -> Eff (addMarkLineECharts :: AddMarkLine | e) EChart
-
-
-    delMarkLine :: forall e. Number -> String -> EChart -> Eff (removeMarkLine :: RemoveMarkLine | e) EChart
-
-
-    markLineDefault :: MarkLineRec
 
 
 ## Module ECharts.Mark.Point
 
-### Types
+#### `MarkPointRec`
+
+``` purescript
+type MarkPointRec = { geoCoord :: Maybe (StrMap (Tuple Number Number)), "data" :: Maybe [MarkPointData], effect :: Maybe MarkPointEffect, large :: Maybe Boolean, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol }
+```
 
 
-    newtype MarkPoint where
-      MarkPoint :: MarkPointRec -> MarkPoint
+#### `MarkPoint`
+
+``` purescript
+newtype MarkPoint
+  = MarkPoint MarkPointRec
+```
 
 
-    type MarkPointRec = { geoCoord :: Maybe (StrMap (Tuple Number Number)), "data" :: Maybe [MarkPointData], effect :: Maybe MarkPointEffect, large :: Maybe Boolean, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol }
+#### `markPointEncodeJson`
+
+``` purescript
+instance markPointEncodeJson :: EncodeJson MarkPoint
+```
 
 
-### Type Class Instances
+#### `markPointDefault`
+
+``` purescript
+markPointDefault :: MarkPointRec
+```
 
 
-    instance markPointEncodeJson :: EncodeJson MarkPoint
+#### `delMarkPoint`
+
+``` purescript
+delMarkPoint :: forall e. Number -> String -> EChart -> Eff (removeMarkPointECharts :: RemoveMarkPoint | e) EChart
+```
 
 
-### Values
+#### `addMarkPoint`
 
+``` purescript
+addMarkPoint :: forall e. MarkPoint -> EChart -> Eff (addMarkPointECharts :: AddMarkPoint | e) EChart
+```
 
-    addMarkPoint :: forall e. MarkPoint -> EChart -> Eff (addMarkPointECharts :: AddMarkPoint | e) EChart
-
-
-    delMarkPoint :: forall e. Number -> String -> EChart -> Eff (removeMarkPointECharts :: RemoveMarkPoint | e) EChart
-
-
-    markPointDefault :: MarkPointRec
 
 
 ## Module ECharts.Series.EventRiver
 
-### Types
+#### `EvolutionDetailRec`
+
+``` purescript
+type EvolutionDetailRec = { img :: Maybe String, text :: Maybe String, link :: Maybe String }
+```
 
 
-    newtype Evolution where
-      Evolution :: EvolutionRec -> Evolution
+#### `EvolutionDetail`
+
+``` purescript
+newtype EvolutionDetail
+  = EvolutionDetail EvolutionDetailRec
+```
 
 
-    newtype EvolutionDetail where
-      EvolutionDetail :: EvolutionDetailRec -> EvolutionDetail
+#### `evoDetailEncodeJson`
+
+``` purescript
+instance evoDetailEncodeJson :: EncodeJson EvolutionDetail
+```
 
 
-    type EvolutionDetailRec = { img :: Maybe String, text :: Maybe String, link :: Maybe String }
+#### `evolutionDetailDefault`
+
+``` purescript
+evolutionDetailDefault :: EvolutionDetailRec
+```
 
 
-    type EvolutionRec = { detail :: Maybe EvolutionDetail, value :: Number, time :: Date }
+#### `EvolutionRec`
+
+``` purescript
+type EvolutionRec = { detail :: Maybe EvolutionDetail, value :: Number, time :: Date }
+```
 
 
-    newtype OneEvent where
-      OneEvent :: OneEventRec -> OneEvent
+#### `Evolution`
+
+``` purescript
+newtype Evolution
+  = Evolution EvolutionRec
+```
 
 
-    type OneEventRec = { evolution :: Maybe [Evolution], weight :: Maybe Number, name :: Maybe String }
+#### `evoEncodeJson`
+
+``` purescript
+instance evoEncodeJson :: EncodeJson Evolution
+```
 
 
-### Type Class Instances
+#### `OneEventRec`
+
+``` purescript
+type OneEventRec = { evolution :: Maybe [Evolution], weight :: Maybe Number, name :: Maybe String }
+```
 
 
-    instance evoDetailEncodeJson :: EncodeJson EvolutionDetail
+#### `OneEvent`
+
+``` purescript
+newtype OneEvent
+  = OneEvent OneEventRec
+```
 
 
-    instance evoEncodeJson :: EncodeJson Evolution
+#### `oneEventDefault`
+
+``` purescript
+oneEventDefault :: OneEventRec
+```
 
 
-    instance oneEventEncodeJson :: EncodeJson OneEvent
+#### `oneEventEncodeJson`
 
+``` purescript
+instance oneEventEncodeJson :: EncodeJson OneEvent
+```
 
-### Values
-
-
-    evolutionDetailDefault :: EvolutionDetailRec
-
-
-    oneEventDefault :: OneEventRec
 
 
 ## Module ECharts.Series.Force
 
-### Types
+#### `ForceCategoryRec`
+
+``` purescript
+type ForceCategoryRec = { itemStyle :: Maybe ItemStyle, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol, name :: Maybe String }
+```
 
 
-    newtype ForceCategory where
-      ForceCategory :: ForceCategoryRec -> ForceCategory
+#### `ForceCategory`
+
+``` purescript
+newtype ForceCategory
+  = ForceCategory ForceCategoryRec
+```
 
 
-    type ForceCategoryRec = { itemStyle :: Maybe ItemStyle, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol, name :: Maybe String }
+#### `forceCategoryDefault`
+
+``` purescript
+forceCategoryDefault :: ForceCategoryRec
+```
 
 
-    newtype Link where
-      Link :: LinkRec -> Link
+#### `forceCategoryEncodeJson`
+
+``` purescript
+instance forceCategoryEncodeJson :: EncodeJson ForceCategory
+```
 
 
-    data LinkEnd where
-      Name :: String -> LinkEnd
-      Index :: Number -> LinkEnd
+#### `NodeRec`
+
+``` purescript
+type NodeRec = { category :: Maybe Number, draggable :: Maybe Boolean, fixY :: Maybe Boolean, fixX :: Maybe Boolean, initial :: Maybe (Tuple Number Number), itemStyle :: Maybe ItemStyle, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol, ignore :: Maybe Boolean, value :: Number, label :: Maybe String, name :: Maybe String }
+```
 
 
-    type LinkRec = { itemStyle :: Maybe ItemStyle, weight :: Number, target :: LinkEnd, source :: LinkEnd }
+#### `Node`
+
+``` purescript
+newtype Node
+  = Node NodeRec
+```
 
 
-    type Matrix = [[Number]]
+#### `nodeDefault`
+
+``` purescript
+nodeDefault :: Number -> NodeRec
+```
 
 
-    newtype Node where
-      Node :: NodeRec -> Node
+#### `nodeEncodeJson`
+
+``` purescript
+instance nodeEncodeJson :: EncodeJson Node
+```
 
 
-    type NodeRec = { category :: Maybe Number, draggable :: Maybe Boolean, fixY :: Maybe Boolean, fixX :: Maybe Boolean, initial :: Maybe (Tuple Number Number), itemStyle :: Maybe ItemStyle, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol, ignore :: Maybe Boolean, value :: Number, label :: Maybe String, name :: Maybe String }
+#### `LinkEnd`
+
+``` purescript
+data LinkEnd
+  = Name String
+  | Index Number
+```
 
 
-### Type Class Instances
+#### `linkEndEncodeJson`
+
+``` purescript
+instance linkEndEncodeJson :: EncodeJson LinkEnd
+```
 
 
-    instance forceCategoryEncodeJson :: EncodeJson ForceCategory
+#### `LinkRec`
+
+``` purescript
+type LinkRec = { itemStyle :: Maybe ItemStyle, weight :: Number, target :: LinkEnd, source :: LinkEnd }
+```
 
 
-    instance linkEncodeJson :: EncodeJson Link
+#### `Link`
+
+``` purescript
+newtype Link
+  = Link LinkRec
+```
 
 
-    instance linkEndEncodeJson :: EncodeJson LinkEnd
+#### `linkEncodeJson`
+
+``` purescript
+instance linkEncodeJson :: EncodeJson Link
+```
 
 
-    instance nodeEncodeJson :: EncodeJson Node
+#### `Matrix`
 
+``` purescript
+type Matrix = [[Number]]
+```
 
-### Values
-
-
-    forceCategoryDefault :: ForceCategoryRec
-
-
-    nodeDefault :: Number -> NodeRec
 
 
 ## Module ECharts.Series.Gauge
 
-### Types
+#### `PointerRec`
+
+``` purescript
+type PointerRec = { color :: Maybe Color, width :: Maybe Number, length :: Maybe Number }
+```
 
 
-    newtype GaugeDetail where
-      GaugeDetail :: GaugeDetailRec -> GaugeDetail
+#### `Pointer`
+
+``` purescript
+newtype Pointer
+  = Pointer PointerRec
+```
 
 
-    type GaugeDetailRec = { textStyle :: Maybe TextStyle, formatter :: Maybe Formatter, offsetCenter :: Maybe (Tuple PercentOrPixel PercentOrPixel), height :: Maybe Number, width :: Maybe Number, borderColor :: Maybe Color, borderWidth :: Maybe Number, backgroundColor :: Maybe Color, show :: Maybe Boolean }
+#### `pointerDefault`
+
+``` purescript
+pointerDefault :: PointerRec
+```
 
 
-    newtype Pointer where
-      Pointer :: PointerRec -> Pointer
+#### `pointerEncodeJson`
+
+``` purescript
+instance pointerEncodeJson :: EncodeJson Pointer
+```
 
 
-    type PointerRec = { color :: Maybe Color, width :: Maybe Number, length :: Maybe Number }
+#### `SplitLineRec`
+
+``` purescript
+type SplitLineRec = { lineStyle :: Maybe LineStyle, length :: Maybe Number, show :: Maybe Boolean }
+```
 
 
-    newtype SplitLine where
-      SplitLine :: SplitLineRec -> SplitLine
+#### `SplitLine`
+
+``` purescript
+newtype SplitLine
+  = SplitLine SplitLineRec
+```
 
 
-    type SplitLineRec = { lineStyle :: Maybe LineStyle, length :: Maybe Number, show :: Maybe Boolean }
+#### `splitLineDefault`
+
+``` purescript
+splitLineDefault :: SplitLineRec
+```
 
 
-### Type Class Instances
+#### `splitLineEncodeJson`
+
+``` purescript
+instance splitLineEncodeJson :: EncodeJson SplitLine
+```
 
 
-    instance gaugeDetailEncodeJson :: EncodeJson GaugeDetail
+#### `GaugeDetailRec`
+
+``` purescript
+type GaugeDetailRec = { textStyle :: Maybe TextStyle, formatter :: Maybe Formatter, offsetCenter :: Maybe (Tuple PercentOrPixel PercentOrPixel), height :: Maybe Number, width :: Maybe Number, borderColor :: Maybe Color, borderWidth :: Maybe Number, backgroundColor :: Maybe Color, show :: Maybe Boolean }
+```
 
 
-    instance pointerEncodeJson :: EncodeJson Pointer
+#### `GaugeDetail`
+
+``` purescript
+newtype GaugeDetail
+  = GaugeDetail GaugeDetailRec
+```
 
 
-    instance splitLineEncodeJson :: EncodeJson SplitLine
+#### `gaugeDetailDefault`
+
+``` purescript
+gaugeDetailDefault :: GaugeDetailRec
+```
 
 
-### Values
+#### `gaugeDetailEncodeJson`
 
+``` purescript
+instance gaugeDetailEncodeJson :: EncodeJson GaugeDetail
+```
 
-    gaugeDetailDefault :: GaugeDetailRec
-
-
-    pointerDefault :: PointerRec
-
-
-    splitLineDefault :: SplitLineRec
 
 
 ## Module ECharts.Style.Area
 
-### Types
+#### `AreaStyle`
+
+``` purescript
+newtype AreaStyle
+  = AreaStyle Color
+```
 
 
-    newtype AreaStyle where
-      AreaStyle :: Color -> AreaStyle
+#### `areaStyleEncodeJson`
 
+``` purescript
+instance areaStyleEncodeJson :: EncodeJson AreaStyle
+```
 
-### Type Class Instances
-
-
-    instance areaStyleEncodeJson :: EncodeJson AreaStyle
 
 
 ## Module ECharts.Style.Checkpoint
 
-### Types
+#### `CheckpointStyleRec`
+
+``` purescript
+type CheckpointStyleRec = { label :: Maybe AxisLabel, borderColor :: Maybe Color, color :: Maybe Color, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol }
+```
 
 
-    newtype CheckpointStyle where
-      CheckpointStyle :: CheckpointStyleRec -> CheckpointStyle
+#### `CheckpointStyle`
+
+``` purescript
+newtype CheckpointStyle
+  = CheckpointStyle CheckpointStyleRec
+```
 
 
-    type CheckpointStyleRec = { label :: Maybe AxisLabel, borderColor :: Maybe Color, color :: Maybe Color, symbolSize :: Maybe SymbolSize, symbol :: Maybe Symbol }
+#### `checkpointStyleEncodeJson`
+
+``` purescript
+instance checkpointStyleEncodeJson :: EncodeJson CheckpointStyle
+```
 
 
-### Type Class Instances
+#### `checkpointStyleDefault`
 
+``` purescript
+checkpointStyleDefault :: CheckpointStyleRec
+```
 
-    instance checkpointStyleEncodeJson :: EncodeJson CheckpointStyle
-
-
-### Values
-
-
-    checkpointStyleDefault :: CheckpointStyleRec
 
 
 ## Module ECharts.Style.Chord
 
-### Types
+#### `ChordStyleRec`
+
+``` purescript
+type ChordStyleRec = { borderColor :: Maybe Color, borderWidth :: Maybe Number, color :: Maybe Color, width :: Maybe Number }
+```
 
 
-    newtype ChordStyle where
-      ChordStyle :: ChordStyleRec -> ChordStyle
+#### `ChordStyle`
+
+``` purescript
+newtype ChordStyle
+  = ChordStyle ChordStyleRec
+```
 
 
-    type ChordStyleRec = { borderColor :: Maybe Color, borderWidth :: Maybe Number, color :: Maybe Color, width :: Maybe Number }
+#### `chordStyleJson`
+
+``` purescript
+instance chordStyleJson :: EncodeJson ChordStyle
+```
 
 
-### Type Class Instances
+#### `chordStyleDefault`
 
+``` purescript
+chordStyleDefault :: ChordStyleRec
+```
 
-    instance chordStyleJson :: EncodeJson ChordStyle
-
-
-### Values
-
-
-    chordStyleDefault :: ChordStyleRec
 
 
 ## Module ECharts.Style.Item
 
-### Types
+#### `ItemLabelRec`
+
+``` purescript
+type ItemLabelRec = { textStyle :: Maybe TextStyle, formatter :: Maybe Formatter, distance :: Maybe Boolean, rotate :: Maybe Boolean, position :: Maybe LabelPosition, show :: Maybe Boolean }
+```
 
 
-    newtype IStyle where
-      IStyle :: IStyleRec -> IStyle
+#### `ItemLabel`
+
+``` purescript
+newtype ItemLabel
+  = ItemLabel ItemLabelRec
+```
 
 
-    type IStyleRec = { linkStyle :: Maybe LinkStyle, nodeStyle :: Maybe NodeStyle, chordStyle :: Maybe ChordStyle, areaStyle :: Maybe AreaStyle, lineStyle :: Maybe LineStyle, labelLine :: Maybe ItemLabelLine, label :: Maybe ItemLabel, barBorderWidth :: Maybe Number, barBorderRadius :: Maybe (Corner Number), barBorderColor :: Maybe Color, borderWidth :: Maybe Number, borderColor :: Maybe Color, color :: Maybe CalculableColor }
+#### `itemLabelEncodeJson`
+
+``` purescript
+instance itemLabelEncodeJson :: EncodeJson ItemLabel
+```
 
 
-    newtype ItemLabel where
-      ItemLabel :: ItemLabelRec -> ItemLabel
+#### `itemLabelDefault`
+
+``` purescript
+itemLabelDefault :: ItemLabelRec
+```
 
 
-    newtype ItemLabelLine where
-      ItemLabelLine :: ItemLabelLineRec -> ItemLabelLine
+#### `ItemLabelLineRec`
+
+``` purescript
+type ItemLabelLineRec = { lineStyle :: Maybe LineStyle, length :: Maybe Number, show :: Maybe Boolean }
+```
 
 
-    type ItemLabelLineRec = { lineStyle :: Maybe LineStyle, length :: Maybe Number, show :: Maybe Boolean }
+#### `ItemLabelLine`
+
+``` purescript
+newtype ItemLabelLine
+  = ItemLabelLine ItemLabelLineRec
+```
 
 
-    type ItemLabelRec = { textStyle :: Maybe TextStyle, formatter :: Maybe Formatter, distance :: Maybe Boolean, rotate :: Maybe Boolean, position :: Maybe LabelPosition, show :: Maybe Boolean }
+#### `itemLabelLineEncodeJson`
+
+``` purescript
+instance itemLabelLineEncodeJson :: EncodeJson ItemLabelLine
+```
 
 
-    newtype ItemStyle where
-      ItemStyle :: ItemStyleRec -> ItemStyle
+#### `itemLabelLineDefault`
+
+``` purescript
+itemLabelLineDefault :: ItemLabelLineRec
+```
 
 
-    type ItemStyleRec = { emphasis :: Maybe IStyle, normal :: Maybe IStyle }
+#### `IStyleRec`
+
+``` purescript
+type IStyleRec = { linkStyle :: Maybe LinkStyle, nodeStyle :: Maybe NodeStyle, chordStyle :: Maybe ChordStyle, areaStyle :: Maybe AreaStyle, lineStyle :: Maybe LineStyle, labelLine :: Maybe ItemLabelLine, label :: Maybe ItemLabel, barBorderWidth :: Maybe Number, barBorderRadius :: Maybe (Corner Number), barBorderColor :: Maybe Color, borderWidth :: Maybe Number, borderColor :: Maybe Color, color :: Maybe CalculableColor }
+```
 
 
-### Type Class Instances
+#### `IStyle`
+
+``` purescript
+newtype IStyle
+  = IStyle IStyleRec
+```
 
 
-    instance istyleEncodeJson :: EncodeJson IStyle
+#### `istyleDefault`
+
+``` purescript
+istyleDefault :: IStyleRec
+```
 
 
-    instance itemLabelEncodeJson :: EncodeJson ItemLabel
+#### `istyleEncodeJson`
+
+``` purescript
+instance istyleEncodeJson :: EncodeJson IStyle
+```
 
 
-    instance itemLabelLineEncodeJson :: EncodeJson ItemLabelLine
+#### `ItemStyleRec`
+
+``` purescript
+type ItemStyleRec = { emphasis :: Maybe IStyle, normal :: Maybe IStyle }
+```
 
 
-    instance itemStyleEncodeJson :: EncodeJson ItemStyle
+#### `ItemStyle`
+
+``` purescript
+newtype ItemStyle
+  = ItemStyle ItemStyleRec
+```
 
 
-### Values
+#### `itemStyleEncodeJson`
+
+``` purescript
+instance itemStyleEncodeJson :: EncodeJson ItemStyle
+```
 
 
-    istyleDefault :: IStyleRec
+#### `itemStyleDefault`
 
+``` purescript
+itemStyleDefault :: ItemStyleRec
+```
 
-    itemLabelDefault :: ItemLabelRec
-
-
-    itemLabelLineDefault :: ItemLabelLineRec
-
-
-    itemStyleDefault :: ItemStyleRec
 
 
 ## Module ECharts.Style.Line
 
-### Types
+#### `LineType`
+
+``` purescript
+data LineType
+  = Solid 
+  | Dotted 
+  | Dashed 
+```
 
 
-    newtype LineStyle where
-      LineStyle :: LineStyleRec -> LineStyle
+#### `linetypeEncodeJson`
+
+``` purescript
+instance linetypeEncodeJson :: EncodeJson LineType
+```
 
 
-    type LineStyleRec = { shadowOffsetY :: Maybe Number, shadowOffsetX :: Maybe Number, shadowColor :: Maybe Color, width :: Maybe Number, "type" :: Maybe LineType, color :: Maybe Color }
+#### `LineStyleRec`
+
+``` purescript
+type LineStyleRec = { shadowOffsetY :: Maybe Number, shadowOffsetX :: Maybe Number, shadowColor :: Maybe Color, width :: Maybe Number, "type" :: Maybe LineType, color :: Maybe Color }
+```
 
 
-    data LineType where
-      Solid :: LineType
-      Dotted :: LineType
-      Dashed :: LineType
+#### `LineStyle`
+
+``` purescript
+newtype LineStyle
+  = LineStyle LineStyleRec
+```
 
 
-### Type Class Instances
+#### `lineStyleEncodeJson`
+
+``` purescript
+instance lineStyleEncodeJson :: EncodeJson LineStyle
+```
 
 
-    instance lineStyleEncodeJson :: EncodeJson LineStyle
+#### `lineStyleDefault`
 
+``` purescript
+lineStyleDefault :: LineStyleRec
+```
 
-    instance linetypeEncodeJson :: EncodeJson LineType
-
-
-### Values
-
-
-    lineStyleDefault :: LineStyleRec
 
 
 ## Module ECharts.Style.Link
 
-### Types
+#### `LinkType`
+
+``` purescript
+data LinkType
+  = LTCurve 
+  | LTLine 
+```
 
 
-    newtype LinkStyle where
-      LinkStyle :: LinkStyleRec -> LinkStyle
+#### `linkTypeEncodeJson`
+
+``` purescript
+instance linkTypeEncodeJson :: EncodeJson LinkType
+```
 
 
-    type LinkStyleRec = { width :: Maybe Number, color :: Maybe Color, "type" :: Maybe LinkType }
+#### `LinkStyleRec`
+
+``` purescript
+type LinkStyleRec = { width :: Maybe Number, color :: Maybe Color, "type" :: Maybe LinkType }
+```
 
 
-    data LinkType where
-      LTCurve :: LinkType
-      LTLine :: LinkType
+#### `LinkStyle`
+
+``` purescript
+newtype LinkStyle
+  = LinkStyle LinkStyleRec
+```
 
 
-### Type Class Instances
+#### `linkStyleEncodeJson`
+
+``` purescript
+instance linkStyleEncodeJson :: EncodeJson LinkStyle
+```
 
 
-    instance linkStyleEncodeJson :: EncodeJson LinkStyle
+#### `linkStyleDefault`
 
+``` purescript
+linkStyleDefault :: LinkStyleRec
+```
 
-    instance linkTypeEncodeJson :: EncodeJson LinkType
-
-
-### Values
-
-
-    linkStyleDefault :: LinkStyleRec
 
 
 ## Module ECharts.Style.Node
 
-### Types
+#### `NodeStyleRec`
+
+``` purescript
+type NodeStyleRec = { borderWidth :: Maybe Number, borderColor :: Maybe Color, color :: Maybe Color }
+```
 
 
-    newtype NodeStyle where
-      NodeStyle :: NodeStyleRec -> NodeStyle
+#### `NodeStyle`
+
+``` purescript
+newtype NodeStyle
+  = NodeStyle NodeStyleRec
+```
 
 
-    type NodeStyleRec = { borderWidth :: Maybe Number, borderColor :: Maybe Color, color :: Maybe Color }
+#### `nodeStyleEncodeJson`
+
+``` purescript
+instance nodeStyleEncodeJson :: EncodeJson NodeStyle
+```
 
 
-### Type Class Instances
+#### `nodeStyleDefault`
 
+``` purescript
+nodeStyleDefault :: NodeStyleRec
+```
 
-    instance nodeStyleEncodeJson :: EncodeJson NodeStyle
-
-
-### Values
-
-
-    nodeStyleDefault :: NodeStyleRec
 
 
 ## Module ECharts.Style.Text
 
-### Types
+#### `Decoration`
+
+``` purescript
+type Decoration = String
+```
 
 
-    type Decoration = String
+#### `FontFamily`
+
+``` purescript
+type FontFamily = String
+```
 
 
-    type FontFamily = String
+#### `TextBaseline`
+
+``` purescript
+data TextBaseline
+  = TBLTop 
+  | TBLBottom 
+  | TBLMiddle 
+```
 
 
-    data FontStyle where
-      FSNormal :: FontStyle
-      FSItalic :: FontStyle
-      FSOblique :: FontStyle
+#### `textBaselineEncodeJson`
+
+``` purescript
+instance textBaselineEncodeJson :: EncodeJson TextBaseline
+```
 
 
-    data FontWeight where
-      FWNormal :: FontWeight
-      FWBold :: FontWeight
-      FWBolder :: FontWeight
-      FWLighter :: FontWeight
-      FW100 :: FontWeight
-      FW200 :: FontWeight
-      FW300 :: FontWeight
-      FW400 :: FontWeight
-      FW500 :: FontWeight
-      FW600 :: FontWeight
-      FW700 :: FontWeight
-      FW800 :: FontWeight
-      FW900 :: FontWeight
+#### `FontStyle`
+
+``` purescript
+data FontStyle
+  = FSNormal 
+  | FSItalic 
+  | FSOblique 
+```
 
 
-    data TextBaseline where
-      TBLTop :: TextBaseline
-      TBLBottom :: TextBaseline
-      TBLMiddle :: TextBaseline
+#### `fontStyleEncodeJson`
+
+``` purescript
+instance fontStyleEncodeJson :: EncodeJson FontStyle
+```
 
 
-    newtype TextStyle where
-      TextStyle :: TextStyleRec -> TextStyle
+#### `FontWeight`
+
+``` purescript
+data FontWeight
+  = FWNormal 
+  | FWBold 
+  | FWBolder 
+  | FWLighter 
+  | FW100 
+  | FW200 
+  | FW300 
+  | FW400 
+  | FW500 
+  | FW600 
+  | FW700 
+  | FW800 
+  | FW900 
+```
 
 
-    type TextStyleRec = { fontWeight :: Maybe FontWeight, fontStyle :: Maybe FontStyle, fontSize :: Maybe Number, fontFamily :: Maybe FontFamily, baseline :: Maybe TextBaseline, align :: Maybe HorizontalAlign, decoration :: Maybe Decoration, color :: Maybe Color }
+#### `fontWeightEncodeJson`
+
+``` purescript
+instance fontWeightEncodeJson :: EncodeJson FontWeight
+```
 
 
-### Type Class Instances
+#### `TextStyleRec`
+
+``` purescript
+type TextStyleRec = { fontWeight :: Maybe FontWeight, fontStyle :: Maybe FontStyle, fontSize :: Maybe Number, fontFamily :: Maybe FontFamily, baseline :: Maybe TextBaseline, align :: Maybe HorizontalAlign, decoration :: Maybe Decoration, color :: Maybe Color }
+```
 
 
-    instance fontStyleEncodeJson :: EncodeJson FontStyle
+#### `TextStyle`
+
+``` purescript
+newtype TextStyle
+  = TextStyle TextStyleRec
+```
 
 
-    instance fontWeightEncodeJson :: EncodeJson FontWeight
+#### `textStyleEncodeJson`
+
+``` purescript
+instance textStyleEncodeJson :: EncodeJson TextStyle
+```
 
 
-    instance textBaselineEncodeJson :: EncodeJson TextBaseline
+#### `textStyleDefault`
 
+``` purescript
+textStyleDefault :: TextStyleRec
+```
 
-    instance textStyleEncodeJson :: EncodeJson TextStyle
-
-
-### Values
-
-
-    textStyleDefault :: TextStyleRec
 
 
 
