@@ -59,6 +59,8 @@ instance itemDataDecodeJson :: DecodeJson ItemData where
             pure $ Dat r)
     <|>
     (Label <$> (decodeJson json >>= (.? "name")))
+    <|>
+    (Value <$> (decodeJson json))
     
 
 
