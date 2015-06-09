@@ -45,8 +45,8 @@ function addDataImpl(data, chart) {
     return chart.addData.apply(chart, data);
   };
 }
-""" :: forall e. Fn2 Json EChart (Eff (dataAdd::AddData|e) EChart)
+""" :: forall e. Fn2 Json EChart (Eff (dataAdd::ADD_DATA|e) EChart)
 
-addData :: forall e. AdditionalData -> EChart -> Eff (dataAdd::AddData|e) EChart
+addData :: forall e. AdditionalData -> EChart -> Eff (dataAdd::ADD_DATA|e) EChart
 addData d chart = runFn2 addDataImpl (encodeJson d) chart
 

@@ -1,8 +1,10 @@
 module ECharts.Item.Data where
 
+import Control.Alt ((<|>))
 import Data.Maybe
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 import Data.StrMap (fromList)
 
@@ -37,6 +39,27 @@ instance itemDataEncodeJson :: EncodeJson ItemData where
   encodeJson (Label name) =
     fromObject $ fromList $ 
     ["name" := name]
+
+instance itemDataDecodeJson :: DecodeJson ItemData where
+  decodeJson json = 
+    (do obj <- decodeJson json
+        val <- obj .? "value"
+        name <- obj .? "name"
+        case name of
+          Nothing -> pure $ Value val
+          Just n -> do
+            r <- { value: val
+                 , name: n
+                 , tooltip: _
+                 , itemStyle: _
+                 , selected: _ } <$>
+                 (obj .? "tooltip") <*>
+                 (obj .? "itemStyle") <*>
+                 (obj .? "selected")
+            pure $ Dat r)
+    <|>
+    (Label <$> (decodeJson json >>= (.? "name")))
+    
 
 
 dataDefault :: ItemValue -> ItemDataDatRec

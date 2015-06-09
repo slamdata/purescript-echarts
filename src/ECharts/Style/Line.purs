@@ -1,10 +1,12 @@
 module ECharts.Style.Line where
 
 import Data.Maybe
+import Data.Either
 import Data.StrMap (fromList, StrMap (..))
 import Data.Tuple
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 
 import ECharts.Color
@@ -19,6 +21,14 @@ instance linetypeEncodeJson :: EncodeJson LineType where
     Dotted -> "dotted"
     Dashed -> "dashed"    
 
+instance linetypeDecodeJson :: DecodeJson LineType where
+  decodeJson j = do
+    str <- decodeJson j
+    case str of
+      "solid" -> pure Solid
+      "dotted" -> pure Dotted
+      "dashed" -> pure Dashed
+      _ -> Left "incorrect line type"
 
 type LineStyleRec = {
     color :: Maybe Color,
@@ -43,6 +53,23 @@ instance lineStyleEncodeJson :: EncodeJson LineStyle where
       "shadowOffsetX" := ls.shadowOffsetX,
       "shadowOffsetY" := ls.shadowOffsetY
     ]
+
+instance lineStyleDecodeJson :: DecodeJson LineStyle where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { color: _
+         , "type": _
+         , width: _
+         , shadowColor: _
+         , shadowOffsetX: _
+         , shadowOffsetY: _ } <$>
+         (o .? "color") <*>
+         (o .? "type") <*>
+         (o .? "width") <*>
+         (o .? "shadowColor") <*>
+         (o .? "shadowOffsetX") <*>
+         (o .? "shadowOffsetY")
+    pure $ LineStyle r
 
 lineStyleDefault :: LineStyleRec
 lineStyleDefault = {

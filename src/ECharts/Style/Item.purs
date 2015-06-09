@@ -1,10 +1,12 @@
 module ECharts.Style.Item where
 
 import Data.Maybe
+import Data.Either
 import Data.StrMap (fromList, StrMap (..))
 import Data.Tuple
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 
 import ECharts.Common
@@ -38,8 +40,28 @@ instance itemLabelEncodeJson :: EncodeJson ItemLabel where
       "position" := il.position,
       "distance" := il.distance,
       "formatter" := il.formatter,
-      "textStyle" := il.textStyle
+      "textStyle" := il.textStyle,
+      "rotate" := il.rotate
     ]
+
+instance itemLabelDecodeJson :: DecodeJson ItemLabel where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { show: _
+         , position: _
+         , distance: _
+         , formatter: _
+         , textStyle: _
+         , rotate: _} <$>
+         (o .? "show") <*>
+         (o .? "position") <*>
+         (o .? "distance") <*>
+         (o .? "formatter") <*>
+         (o .? "textStyle") <*>
+         (o .? "rotate")
+    pure $ ItemLabel r
+
+    
 itemLabelDefault :: ItemLabelRec
 itemLabelDefault = {
   show: Nothing,
@@ -67,6 +89,18 @@ instance itemLabelLineEncodeJson :: EncodeJson ItemLabelLine where
       "length" := ill.length,
       "lineStyle" := ill.lineStyle
     ]
+
+instance itemLabelLineDecodeJson :: DecodeJson ItemLabelLine where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { show: _
+         , length: _
+         , lineStyle: _ } <$>
+         (o .? "show") <*>
+         (o .? "length") <*>
+         (o .? "lineStyle")
+    pure $ ItemLabelLine r 
+  
 itemLabelLineDefault :: ItemLabelLineRec
 itemLabelLineDefault = {
   show: Nothing,
@@ -130,6 +164,37 @@ instance istyleEncodeJson :: EncodeJson IStyle where
       "linkStyle" := is.linkStyle
     ]
 
+instance istyleDecodeJson :: DecodeJson IStyle where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { color: _
+         , borderColor: _
+         , borderWidth: _
+         , barBorderColor: _
+         , barBorderWidth: _
+         , barBorderRadius: _
+         , label: _
+         , labelLine: _
+         , lineStyle: _
+         , areaStyle: _
+         , chordStyle: _
+         , nodeStyle: _
+         , linkStyle: _ } <$>
+         (o .? "color") <*>
+         (o .? "borderColor" ) <*>
+         (o .? "borderWidth") <*>
+         (o .? "barBorderColor") <*>
+         (o .? "barBorderWidth") <*>
+         (o .? "barBorderRadius") <*>
+         (o .? "label") <*>
+         (o .? "labelLine") <*>
+         (o .? "lineStyle") <*>
+         (o .? "areaStyle") <*>
+         (o .? "chordStyle") <*>
+         (o .? "nodeStyle") <*>
+         (o .? "linkStyle")
+    pure $ IStyle r
+
 type ItemStyleRec = {
     normal :: Maybe IStyle,
     emphasis :: Maybe IStyle
@@ -142,6 +207,12 @@ newtype ItemStyle = ItemStyle ItemStyleRec
 instance itemStyleEncodeJson :: EncodeJson ItemStyle where
   encodeJson (ItemStyle is) =
     fromObject $ fromList ["normal" := is.normal, "emphasis" := is.emphasis]
+
+instance itemStyleDecodeJson :: DecodeJson ItemStyle where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- {normal: _, emphasis: _} <$> (o .? "normal") <*> (o .? "emphasis")
+    pure $ ItemStyle r
 
 itemStyleDefault :: ItemStyleRec
 itemStyleDefault = {

@@ -3,6 +3,7 @@ module ECharts.DataZoom where
 import Data.Argonaut.Core
 import Data.Argonaut.Combinators
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Maybe
 import Data.StrMap (fromList)
 import ECharts.Color
@@ -53,6 +54,47 @@ instance dataZoomEncodeJson :: EncodeJson DataZoom where
       "realtime" := obj.realtime,
       "zoomlock" := obj.zoomlock
     ]
+
+
+instance dataZoomDecodeJson :: DecodeJson DataZoom where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { show: _
+         , orient: _
+         , x: _
+         , y: _
+         , width: _
+         , height: _
+         , backgroundColor: _
+         , dataBackgroundColor: _
+         , fillerColor: _
+         , handleColor: _
+         , xAxisIndex: _
+         , yAxisIndex: _
+         , start: _
+         , end: _
+         , showDetail: _
+         , realtime: _
+         , zoomlock: _ } <$>
+         (o .? "show") <*>
+         (o .? "orient") <*>
+         (o .? "x") <*>
+         (o .? "y") <*>
+         (o .? "width") <*>
+         (o .? "height") <*>
+         (o .? "backgroundColor") <*>
+         (o .? "dataBackgroundColor") <*>
+         (o .? "fillerColor") <*>
+         (o .? "handleColor") <*>
+         (o .? "xAxisIndex" ) <*>
+         (o .? "yAxisIndex" ) <*>
+         (o .? "start") <*>
+         (o .? "end") <*>
+         (o .? "showDetail") <*>
+         (o .? "realtime") <*>
+         (o .? "zoomlock")
+    pure $ DataZoom r
+
 dataZoomDefault :: DataZoomRec
 dataZoomDefault = {
   show: Nothing,

@@ -2,6 +2,7 @@ module ECharts.RoamController where
 
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 
 import Data.Maybe
@@ -47,6 +48,38 @@ instance roamControllerEncodeJson :: EncodeJson RoamController where
       "step" := obj.step,
       "mapTypeControl" := obj.mapTypeControl
     ]
+
+instance roamControllerDecodeJson :: DecodeJson RoamController where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { show: _
+         , x: _
+         , y: _
+         , width: _
+         , height: _
+         , backgroundColor: _
+         , borderColor: _
+         , borderWidth: _
+         , padding: _
+         , fillerColor: _
+         , handleColor: _
+         , step: _
+         , mapTypeControl: _ } <$>
+         (o .? "show") <*>
+         (o .? "x") <*>
+         (o .? "y") <*>
+         (o .? "width") <*>
+         (o .? "height") <*>
+         (o .? "backgroundColor") <*>
+         (o .? "borderColor") <*>
+         (o .? "borderWidth") <*>
+         (o .? "padding") <*>
+         (o .? "fillerColor") <*>
+         (o .? "handleColor") <*>
+         (o .? "step") <*>
+         (o .? "mapTypeControl")
+    pure $ RoamController r
+    
 roamControllerDefault :: RoamControllerRec
 roamControllerDefault = {
   show: Nothing,

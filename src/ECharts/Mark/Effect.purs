@@ -4,6 +4,7 @@ import Data.Maybe
 import Data.Argonaut.Core
 import Data.Argonaut.Combinators
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.StrMap (fromList, StrMap(..))
 import ECharts.Common
 import ECharts.Color
@@ -30,6 +31,23 @@ instance mpEffectEncodeJson :: EncodeJson MarkPointEffect where
       "color" := cfg.color,
       "shadowBlur" := cfg.shadowBlur
     ]
+
+instance mpEffectDecodeJson :: DecodeJson MarkPointEffect where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { show: _
+         , loop: _
+         , period: _
+         , scaleSize: _
+         , color: _
+         , shadowBlur: _ } <$>
+         (o .? "show") <*>
+         (o .? "loop") <*>
+         (o .? "period") <*>
+         (o .? "scaleSize") <*>
+         (o .? "color") <*>
+         (o .? "shoadowBlur")
+    pure $ MarkPointEffect r
 markPointEffectDefault :: MarkPointEffectRec
 markPointEffectDefault =
   {

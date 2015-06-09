@@ -27,7 +27,7 @@ instance additionalDataEncodeJson :: EncodeJson AdditionalData
 #### `addData`
 
 ``` purescript
-addData :: forall e. AdditionalData -> EChart -> Eff (dataAdd :: AddData | e) EChart
+addData :: forall e. AdditionalData -> EChart -> Eff (dataAdd :: ADD_DATA | e) EChart
 ```
 
 
@@ -53,6 +53,13 @@ newtype AxisLineStyle
 
 ``` purescript
 instance axisLineStyleEncodeJson :: EncodeJson AxisLineStyle
+```
+
+
+#### `axisLineStyleDecodeJson`
+
+``` purescript
+instance axisLineStyleDecodeJson :: DecodeJson AxisLineStyle
 ```
 
 
@@ -85,6 +92,13 @@ instance axisLineEncodeJson :: EncodeJson AxisLine
 ```
 
 
+#### `axisLineDecodeJson`
+
+``` purescript
+instance axisLineDecodeJson :: DecodeJson AxisLine
+```
+
+
 #### `axisLineDefault`
 
 ``` purescript
@@ -111,6 +125,13 @@ newtype AxisTick
 
 ``` purescript
 instance axisTickEncodeJson :: EncodeJson AxisTick
+```
+
+
+#### `axisTickDecodeJson`
+
+``` purescript
+instance axisTickDecodeJson :: DecodeJson AxisTick
 ```
 
 
@@ -143,6 +164,13 @@ instance axisLabelEncodeJson :: EncodeJson AxisLabel
 ```
 
 
+#### `axisLabelDecodeJson`
+
+``` purescript
+instance axisLabelDecodeJson :: DecodeJson AxisLabel
+```
+
+
 #### `axisLabelDefault`
 
 ``` purescript
@@ -166,6 +194,13 @@ instance axisesEncodeJson :: EncodeJson Axises
 ```
 
 
+#### `axisesDecodeJson`
+
+``` purescript
+instance axisesDecodeJson :: DecodeJson Axises
+```
+
+
 #### `AxisSplitLineRec`
 
 ``` purescript
@@ -185,6 +220,13 @@ newtype AxisSplitLine
 
 ``` purescript
 instance axisSplitLineEncodeJson :: EncodeJson AxisSplitLine
+```
+
+
+#### `axisSplitLineDecodeJson`
+
+``` purescript
+instance axisSplitLineDecodeJson :: DecodeJson AxisSplitLine
 ```
 
 
@@ -217,6 +259,13 @@ instance axisSplitAreaEncodeJson :: EncodeJson AxisSplitArea
 ```
 
 
+#### `axisSplitAreaDecodeJson`
+
+``` purescript
+instance axisSplitAreaDecodeJson :: DecodeJson AxisSplitArea
+```
+
+
 #### `axisSplitAreaDefault`
 
 ``` purescript
@@ -241,6 +290,13 @@ instance axisTypeEncodeJson :: EncodeJson AxisType
 ```
 
 
+#### `axisTypeDecodeJson`
+
+``` purescript
+instance axisTypeDecodeJson :: DecodeJson AxisType
+```
+
+
 #### `AxisPosition`
 
 ``` purescript
@@ -259,6 +315,13 @@ instance axisPositionEncodeJson :: EncodeJson AxisPosition
 ```
 
 
+#### `axisPositionDecodeJson`
+
+``` purescript
+instance axisPositionDecodeJson :: DecodeJson AxisPosition
+```
+
+
 #### `AxisNameLocation`
 
 ``` purescript
@@ -272,6 +335,13 @@ data AxisNameLocation
 
 ``` purescript
 instance axisNameLocationEncodeJson :: EncodeJson AxisNameLocation
+```
+
+
+#### `axisNameLocationDecodeJson`
+
+``` purescript
+instance axisNameLocationDecodeJson :: DecodeJson AxisNameLocation
 ```
 
 
@@ -298,6 +368,13 @@ instance axisDataEncodeJson :: EncodeJson AxisData
 ```
 
 
+#### `axisDataDecodeJson`
+
+``` purescript
+instance axisDataDecodeJson :: DecodeJson AxisData
+```
+
+
 #### `AxisBoundaryGap`
 
 ``` purescript
@@ -311,6 +388,13 @@ data AxisBoundaryGap
 
 ``` purescript
 instance axisBoundaryGapEncodeJson :: EncodeJson AxisBoundaryGap
+```
+
+
+#### `axisBoundaryGapDecodeJson`
+
+``` purescript
+instance axisBoundaryGapDecodeJson :: DecodeJson AxisBoundaryGap
 ```
 
 
@@ -343,6 +427,13 @@ instance axisEncJson :: EncodeJson Axis
 ```
 
 
+#### `axisDecJson`
+
+``` purescript
+instance axisDecJson :: DecodeJson Axis
+```
+
+
 #### `PolarNameRec`
 
 ``` purescript
@@ -362,6 +453,13 @@ newtype PolarName
 
 ``` purescript
 instance polarNameEncode :: EncodeJson PolarName
+```
+
+
+#### `polarNameDecodeJson`
+
+``` purescript
+instance polarNameDecodeJson :: DecodeJson PolarName
 ```
 
 
@@ -388,6 +486,13 @@ instance polarTypeEncode :: EncodeJson PolarType
 ```
 
 
+#### `polarTypeDecodeJson`
+
+``` purescript
+instance polarTypeDecodeJson :: DecodeJson PolarType
+```
+
+
 #### `IndicatorRec`
 
 ``` purescript
@@ -407,6 +512,13 @@ newtype Indicator
 
 ``` purescript
 instance indicatorEncodeJson :: EncodeJson Indicator
+```
+
+
+#### `indicatorDecodeJson`
+
+``` purescript
+instance indicatorDecodeJson :: DecodeJson Indicator
 ```
 
 
@@ -436,6 +548,13 @@ newtype Polar
 
 ``` purescript
 instance polarEncodeJson :: EncodeJson Polar
+```
+
+
+#### `polarDecodeJson`
+
+``` purescript
+instance polarDecodeJson :: DecodeJson Polar
 ```
 
 
@@ -482,14 +601,14 @@ instance themeEncodeJson :: EncodeJson Theme
 #### `init`
 
 ``` purescript
-init :: forall e. Maybe Theme -> HTMLElement -> Eff (echartInit :: EChartInit, dom :: DOM | e) EChart
+init :: forall e. Maybe Theme -> HTMLElement -> Eff (echartInit :: ECHARTS_INIT, dom :: DOM | e) EChart
 ```
 
 
 #### `setTheme`
 
 ``` purescript
-setTheme :: forall e. Theme -> EChart -> Eff (echartTheme :: EChartThemeSet, dom :: DOM | e) EChart
+setTheme :: forall e. Theme -> EChart -> Eff (echartTheme :: ECHARTS_THEME_SET, dom :: DOM | e) EChart
 ```
 
 
@@ -503,28 +622,28 @@ getZRender :: forall e. EChart -> Eff e ZRender
 #### `resize`
 
 ``` purescript
-resize :: forall e. EChart -> Eff (echartResize :: EChartResize, dom :: DOM | e) Unit
+resize :: forall e. EChart -> Eff (echartResize :: ECHARTS_RESIZE, dom :: DOM | e) Unit
 ```
 
 
 #### `refresh`
 
 ``` purescript
-refresh :: forall e. EChart -> Eff (echartRefresh :: EChartRefresh, dom :: DOM | e) Unit
+refresh :: forall e. EChart -> Eff (echartRefresh :: ECHARTS_REFRESH, dom :: DOM | e) Unit
 ```
 
 
 #### `clear`
 
 ``` purescript
-clear :: forall e. EChart -> Eff (echartClear :: EChartClear, dom :: DOM | e) Unit
+clear :: forall e. EChart -> Eff (echartClear :: ECHARTS_CLEAR, dom :: DOM | e) Unit
 ```
 
 
 #### `dispose`
 
 ``` purescript
-dispose :: forall e. EChart -> Eff (echartDispose :: EChartDispose, dom :: DOM | e) Unit
+dispose :: forall e. EChart -> Eff (echartDispose :: ECHARTS_DISPOSE, dom :: DOM | e) Unit
 ```
 
 
@@ -569,6 +688,13 @@ instance calculableColorEncodeJson :: EncodeJson CalculableColor
 ```
 
 
+#### `calculableColorDecodeJson`
+
+``` purescript
+instance calculableColorDecodeJson :: DecodeJson CalculableColor
+```
+
+
 
 ## Module ECharts.Common
 
@@ -595,6 +721,13 @@ instance cornerJsonEncode :: (EncodeJson a) => EncodeJson (Corner a)
 ```
 
 
+#### `cornerJsonDecode`
+
+``` purescript
+instance cornerJsonDecode :: (DecodeJson a) => DecodeJson (Corner a)
+```
+
+
 #### `PercentOrPixel`
 
 ``` purescript
@@ -611,6 +744,13 @@ instance percentOrPixelEncodeJson :: EncodeJson PercentOrPixel
 ```
 
 
+#### `percentOrPixelDecodeJson`
+
+``` purescript
+instance percentOrPixelDecodeJson :: DecodeJson PercentOrPixel
+```
+
+
 #### `RoseType`
 
 ``` purescript
@@ -624,6 +764,13 @@ data RoseType
 
 ``` purescript
 instance roseTypeEncodeJson :: EncodeJson RoseType
+```
+
+
+#### `roseTypeDecodeJson`
+
+``` purescript
+instance roseTypeDecodeJson :: DecodeJson RoseType
 ```
 
 
@@ -644,6 +791,13 @@ instance selModeEncodeJson :: EncodeJson SelectedMode
 ```
 
 
+#### `selModeDecodeJson`
+
+``` purescript
+instance selModeDecodeJson :: DecodeJson SelectedMode
+```
+
+
 #### `MapValueCalculation`
 
 ``` purescript
@@ -657,6 +811,13 @@ data MapValueCalculation
 
 ``` purescript
 instance mapValueCalculationEncodeJson :: EncodeJson MapValueCalculation
+```
+
+
+#### `mapValueCalculationDecodeJson`
+
+``` purescript
+instance mapValueCalculationDecodeJson :: DecodeJson MapValueCalculation
 ```
 
 
@@ -675,6 +836,13 @@ data Roam
 
 ``` purescript
 instance roamEncodeJson :: EncodeJson Roam
+```
+
+
+#### `roamDecodeJson`
+
+``` purescript
+instance roamDecodeJson :: DecodeJson Roam
 ```
 
 
@@ -697,6 +865,13 @@ newtype MinMax
 
 ``` purescript
 instance minMaxEncodeJson :: EncodeJson MinMax
+```
+
+
+#### `minMaxDecodeJson`
+
+``` purescript
+instance minMaxDecodeJson :: DecodeJson MinMax
 ```
 
 
@@ -730,6 +905,13 @@ instance radiusEncodeJson :: EncodeJson Radius
 ```
 
 
+#### `radiusDecodeJson`
+
+``` purescript
+instance radiusDecodeJson :: DecodeJson Radius
+```
+
+
 #### `Sort`
 
 ``` purescript
@@ -744,6 +926,13 @@ data Sort
 
 ``` purescript
 instance sortEncodeJson :: EncodeJson Sort
+```
+
+
+#### `sortDecodeJson`
+
+``` purescript
+instance sortDecodeJson :: DecodeJson Sort
 ```
 
 
@@ -763,6 +952,13 @@ instance intervalEncodeJson :: EncodeJson Interval
 ```
 
 
+#### `intervalDecodeJson`
+
+``` purescript
+instance intervalDecodeJson :: DecodeJson Interval
+```
+
+
 
 ## Module ECharts.Connect
 
@@ -776,7 +972,7 @@ newtype Connection
 #### `connect`
 
 ``` purescript
-connect :: forall e. EChart -> EChart -> Eff (connect :: Connect | e) Connection
+connect :: forall e. EChart -> EChart -> Eff (connect :: CONNECT | e) Connection
 ```
 
 
@@ -801,6 +997,13 @@ instance xPosEncodeJson :: EncodeJson XPos
 ```
 
 
+#### `xPosDecodeJson`
+
+``` purescript
+instance xPosDecodeJson :: DecodeJson XPos
+```
+
+
 #### `YPos`
 
 ``` purescript
@@ -816,6 +1019,13 @@ data YPos
 
 ``` purescript
 instance yPosEncodeJson :: EncodeJson YPos
+```
+
+
+#### `yPosDecodeJson`
+
+``` purescript
+instance yPosDecodeJson :: DecodeJson YPos
 ```
 
 
@@ -844,6 +1054,13 @@ instance labelPositionEncodeJson :: EncodeJson LabelPosition
 ```
 
 
+#### `labelPositionDecodeJson`
+
+``` purescript
+instance labelPositionDecodeJson :: DecodeJson LabelPosition
+```
+
+
 #### `HorizontalAlign`
 
 ``` purescript
@@ -858,6 +1075,13 @@ data HorizontalAlign
 
 ``` purescript
 instance textAlignEncodeJson :: EncodeJson HorizontalAlign
+```
+
+
+#### `textAlignDecodeJson`
+
+``` purescript
+instance textAlignDecodeJson :: DecodeJson HorizontalAlign
 ```
 
 
@@ -883,6 +1107,13 @@ instance locationEncodeJson :: EncodeJson Location
 ```
 
 
+#### `locationDecodeJson`
+
+``` purescript
+instance locationDecodeJson :: DecodeJson Location
+```
+
+
 #### `Orient`
 
 ``` purescript
@@ -896,6 +1127,13 @@ data Orient
 
 ``` purescript
 instance orientEncodeJson :: EncodeJson Orient
+```
+
+
+#### `orientDecodeJson`
+
+``` purescript
+instance orientDecodeJson :: DecodeJson Orient
 ```
 
 
@@ -921,6 +1159,13 @@ newtype DataRange
 
 ``` purescript
 instance dataRangeEncodeJson :: EncodeJson DataRange
+```
+
+
+#### `dataRangeDecodeJson`
+
+``` purescript
+instance dataRangeDecodeJson :: DecodeJson DataRange
 ```
 
 
@@ -956,6 +1201,13 @@ instance dataZoomEncodeJson :: EncodeJson DataZoom
 ```
 
 
+#### `dataZoomDecodeJson`
+
+``` purescript
+instance dataZoomDecodeJson :: DecodeJson DataZoom
+```
+
+
 #### `dataZoomDefault`
 
 ``` purescript
@@ -966,136 +1218,136 @@ dataZoomDefault :: DataZoomRec
 
 ## Module ECharts.Effects
 
-#### `EChartInit`
+#### `ECHARTS_INIT`
 
 ``` purescript
-data EChartInit :: !
+data ECHARTS_INIT :: !
 ```
 
 
-#### `EChartResize`
+#### `ECHARTS_RESIZE`
 
 ``` purescript
-data EChartResize :: !
+data ECHARTS_RESIZE :: !
 ```
 
 
-#### `EChartClear`
+#### `ECHARTS_CLEAR`
 
 ``` purescript
-data EChartClear :: !
+data ECHARTS_CLEAR :: !
 ```
 
 
-#### `EChartRefresh`
+#### `ECHARTS_REFRESH`
 
 ``` purescript
-data EChartRefresh :: !
+data ECHARTS_REFRESH :: !
 ```
 
 
-#### `EChartDispose`
+#### `ECHARTS_DISPOSE`
 
 ``` purescript
-data EChartDispose :: !
+data ECHARTS_DISPOSE :: !
 ```
 
 
-#### `EChartThemeSet`
+#### `ECHARTS_THEME_SET`
 
 ``` purescript
-data EChartThemeSet :: !
+data ECHARTS_THEME_SET :: !
 ```
 
 
-#### `EChartOptionSet`
+#### `ECHARTS_OPTION_SET`
 
 ``` purescript
-data EChartOptionSet :: !
+data ECHARTS_OPTION_SET :: !
 ```
 
 
-#### `AddData`
+#### `ADD_DATA`
 
 ``` purescript
-data AddData :: !
+data ADD_DATA :: !
 ```
 
 
-#### `Connect`
+#### `CONNECT`
 
 ``` purescript
-data Connect :: !
+data CONNECT :: !
 ```
 
 
-#### `Disconnect`
+#### `DISCONNECT`
 
 ``` purescript
-data Disconnect :: !
+data DISCONNECT :: !
 ```
 
 
-#### `Listen`
+#### `LISTEN`
 
 ``` purescript
-data Listen :: !
+data LISTEN :: !
 ```
 
 
-#### `Unlisten`
+#### `UNLISTEN`
 
 ``` purescript
-data Unlisten :: !
+data UNLISTEN :: !
 ```
 
 
-#### `ImageMaking`
+#### `IMAGE_MAKING`
 
 ``` purescript
-data ImageMaking :: !
+data IMAGE_MAKING :: !
 ```
 
 
-#### `LoadingShow`
+#### `LOADING_SHOW`
 
 ``` purescript
-data LoadingShow :: !
+data LOADING_SHOW :: !
 ```
 
 
-#### `LoadingHide`
+#### `LOADING_HIDE`
 
 ``` purescript
-data LoadingHide :: !
+data LOADING_HIDE :: !
 ```
 
 
-#### `AddMarkLine`
+#### `ADD_MARKLINE`
 
 ``` purescript
-data AddMarkLine :: !
+data ADD_MARKLINE :: !
 ```
 
 
-#### `RemoveMarkLine`
+#### `REMOVE_MARKLINE`
 
 ``` purescript
-data RemoveMarkLine :: !
+data REMOVE_MARKLINE :: !
 ```
 
 
-#### `AddMarkPoint`
+#### `ADD_MARKPOINT`
 
 ``` purescript
-data AddMarkPoint :: !
+data ADD_MARKPOINT :: !
 ```
 
 
-#### `RemoveMarkPoint`
+#### `REMOVE_MARKPOINT`
 
 ``` purescript
-data RemoveMarkPoint :: !
+data REMOVE_MARKPOINT :: !
 ```
 
 
@@ -1143,7 +1395,7 @@ newtype Sub
 #### `listen`
 
 ``` purescript
-listen :: forall e. EventType -> (EventParam -> Eff (listen :: Listen | e) Unit) -> EChart -> Eff (listen :: Listen | e) Sub
+listen :: forall e. EventType -> (EventParam -> Eff (listen :: LISTEN | e) Unit) -> EChart -> Eff (listen :: LISTEN | e) Sub
 ```
 
 
@@ -1173,6 +1425,13 @@ instance formatterEncodeJson :: EncodeJson Formatter
 ```
 
 
+#### `formatterDecodeJson`
+
+``` purescript
+instance formatterDecodeJson :: DecodeJson Formatter
+```
+
+
 
 ## Module ECharts.Grid
 
@@ -1195,6 +1454,13 @@ newtype Grid
 
 ``` purescript
 instance gridEncodeJson :: EncodeJson Grid
+```
+
+
+#### `gridDecodeJson`
+
+``` purescript
+instance gridDecodeJson :: DecodeJson Grid
 ```
 
 
@@ -1224,17 +1490,24 @@ instance encodeImg :: EncodeJson ImgType
 ```
 
 
+#### `decodeImg`
+
+``` purescript
+instance decodeImg :: DecodeJson ImgType
+```
+
+
 #### `getDataURL`
 
 ``` purescript
-getDataURL :: forall e. ImgType -> EChart -> Eff (image :: ImageMaking | e) String
+getDataURL :: forall e. ImgType -> EChart -> Eff (image :: IMAGE_MAKING | e) String
 ```
 
 
 #### `getImage`
 
 ``` purescript
-getImage :: forall e. ImgType -> EChart -> Eff (image :: ImageMaking, dom :: DOM | e) Node
+getImage :: forall e. ImgType -> EChart -> Eff (image :: IMAGE_MAKING, dom :: DOM | e) Node
 ```
 
 
@@ -1260,6 +1533,13 @@ data LegendItem
 
 ``` purescript
 instance legendItemEncodeJson :: EncodeJson LegendItem
+```
+
+
+#### `legendItemDecodeJson`
+
+``` purescript
+instance legendItemDecodeJson :: DecodeJson LegendItem
 ```
 
 
@@ -1296,6 +1576,13 @@ legendDefault :: LegendRec
 
 ``` purescript
 instance legendEncodeJson :: EncodeJson Legend
+```
+
+
+#### `legendDecodeJson`
+
+``` purescript
+instance legendDecodeJson :: DecodeJson Legend
 ```
 
 
@@ -1347,14 +1634,14 @@ instance showLoadingOptions :: EncodeJson LoadingOption
 #### `showLoading`
 
 ``` purescript
-showLoading :: forall e. LoadingOption -> EChart -> Eff (showLoadingECharts :: LoadingShow | e) EChart
+showLoading :: forall e. LoadingOption -> EChart -> Eff (showLoadingECharts :: LOADING_SHOW | e) EChart
 ```
 
 
 #### `hideLoading`
 
 ``` purescript
-hideLoading :: forall e. EChart -> Eff (hideLoadingECharts :: LoadingHide | e) EChart
+hideLoading :: forall e. EChart -> Eff (hideLoadingECharts :: LOADING_HIDE | e) EChart
 ```
 
 
@@ -1389,6 +1676,13 @@ instance optionsEncodeJson :: EncodeJson Option
 ```
 
 
+#### `optionsDecodeJson`
+
+``` purescript
+instance optionsDecodeJson :: DecodeJson Option
+```
+
+
 #### `optionDefault`
 
 ``` purescript
@@ -1399,7 +1693,7 @@ optionDefault :: OptionRec
 #### `setOption`
 
 ``` purescript
-setOption :: forall e. Option -> Boolean -> EChart -> Eff (echartSetOption :: EChartOptionSet | e) EChart
+setOption :: forall e. Option -> Boolean -> EChart -> Eff (echartSetOption :: ECHARTS_OPTION_SET | e) EChart
 ```
 
 
@@ -1425,6 +1719,13 @@ newtype RoamController
 
 ``` purescript
 instance roamControllerEncodeJson :: EncodeJson RoamController
+```
+
+
+#### `roamControllerDecodeJson`
+
+``` purescript
+instance roamControllerDecodeJson :: DecodeJson RoamController
 ```
 
 
@@ -1653,6 +1954,13 @@ instance encodeSeries :: EncodeJson Series
 ```
 
 
+#### `decodeSeries`
+
+``` purescript
+instance decodeSeries :: DecodeJson Series
+```
+
+
 #### `setSeries`
 
 ``` purescript
@@ -1685,6 +1993,13 @@ instance encodeJsonSymbol :: EncodeJson Symbol
 ```
 
 
+#### `symbolDecodeJson`
+
+``` purescript
+instance symbolDecodeJson :: DecodeJson Symbol
+```
+
+
 #### `SymbolSize`
 
 ``` purescript
@@ -1701,6 +2016,13 @@ instance symbolSizeEncodeJson :: EncodeJson SymbolSize
 ```
 
 
+#### `symbolSizeDecodeJson`
+
+``` purescript
+instance symbolSizeDecodeJson :: DecodeJson SymbolSize
+```
+
+
 #### `DoubleSymbolSize`
 
 ``` purescript
@@ -1714,6 +2036,13 @@ data DoubleSymbolSize
 
 ``` purescript
 instance dblSymbolSizeEncodeJson :: EncodeJson DoubleSymbolSize
+```
+
+
+#### `dblSymbolSizeDecodeJson`
+
+``` purescript
+instance dblSymbolSizeDecodeJson :: DecodeJson DoubleSymbolSize
 ```
 
 
@@ -1736,6 +2065,13 @@ instance timelineTypeEncodeJson :: EncodeJson TimelineType
 ```
 
 
+#### `timelineTypeDecodeJson`
+
+``` purescript
+instance timelineTypeDecodeJson :: DecodeJson TimelineType
+```
+
+
 #### `TimelineControlPosition`
 
 ``` purescript
@@ -1750,6 +2086,13 @@ data TimelineControlPosition
 
 ``` purescript
 instance timelineControlPositionEncodeJson :: EncodeJson TimelineControlPosition
+```
+
+
+#### `timelineControlPositionDecodeJson`
+
+``` purescript
+instance timelineControlPositionDecodeJson :: DecodeJson TimelineControlPosition
 ```
 
 
@@ -1772,6 +2115,13 @@ newtype Timeline
 
 ``` purescript
 instance timelineEncodeJson :: EncodeJson Timeline
+```
+
+
+#### `timelineDecodeJson`
+
+``` purescript
+instance timelineDecodeJson :: DecodeJson Timeline
 ```
 
 
@@ -1801,6 +2151,13 @@ instance linkTargetEncodeJson :: EncodeJson LinkTarget
 ```
 
 
+#### `linkTargetDecodeJson`
+
+``` purescript
+instance linkTargetDecodeJson :: DecodeJson LinkTarget
+```
+
+
 #### `TitleRec`
 
 ``` purescript
@@ -1820,6 +2177,13 @@ newtype Title
 
 ``` purescript
 instance titleEncodeJson :: EncodeJson Title
+```
+
+
+#### `titleDecodeJson`
+
+``` purescript
+instance titleDecodeJson :: DecodeJson Title
 ```
 
 
@@ -1862,6 +2226,13 @@ instance toolboxEncodeJson :: EncodeJson Toolbox
 ```
 
 
+#### `toolboxDecodeJson`
+
+``` purescript
+instance toolboxDecodeJson :: DecodeJson Toolbox
+```
+
+
 #### `FeatureRec`
 
 ``` purescript
@@ -1881,6 +2252,13 @@ newtype Feature
 
 ``` purescript
 instance featureEncodeJson :: EncodeJson Feature
+```
+
+
+#### `featureDecodeJson`
+
+``` purescript
+instance featureDecodeJson :: DecodeJson Feature
 ```
 
 
@@ -1913,6 +2291,13 @@ instance saveAsImageEncodeJson :: EncodeJson SaveAsImageFeature
 ```
 
 
+#### `saveAsImageDecodeJson`
+
+``` purescript
+instance saveAsImageDecodeJson :: DecodeJson SaveAsImageFeature
+```
+
+
 #### `saveAsImageFeatureDefault`
 
 ``` purescript
@@ -1939,6 +2324,13 @@ newtype RestoreFeature
 
 ``` purescript
 instance restoreFeatureEncodeJson :: EncodeJson RestoreFeature
+```
+
+
+#### `restoreFeatureDecodeJson`
+
+``` purescript
+instance restoreFeatureDecodeJson :: DecodeJson RestoreFeature
 ```
 
 
@@ -1971,6 +2363,13 @@ instance datazoomTitleEncodeJson :: EncodeJson DataZoomFeatureTitle
 ```
 
 
+#### `datazoomTitleDecodeJson`
+
+``` purescript
+instance datazoomTitleDecodeJson :: DecodeJson DataZoomFeatureTitle
+```
+
+
 #### `DataZoomFeatureRec`
 
 ``` purescript
@@ -1993,10 +2392,17 @@ dataZoomFeatureDefault :: DataZoomFeatureRec
 ```
 
 
-#### `dataviewFeatureEncodeJson`
+#### `dataZoomFeatureEncodeJson`
 
 ``` purescript
-instance dataviewFeatureEncodeJson :: EncodeJson DataZoomFeature
+instance dataZoomFeatureEncodeJson :: EncodeJson DataZoomFeature
+```
+
+
+#### `dataZoomFeatureDecodeJson`
+
+``` purescript
+instance dataZoomFeatureDecodeJson :: DecodeJson DataZoomFeature
 ```
 
 
@@ -2029,6 +2435,13 @@ instance dataViewFeatureEncodeJson :: EncodeJson DataViewFeature
 ```
 
 
+#### `dataViewFeatureDecodeJson`
+
+``` purescript
+instance dataViewFeatureDecodeJson :: DecodeJson DataViewFeature
+```
+
+
 #### `MarkFeatureTitleRec`
 
 ``` purescript
@@ -2051,6 +2464,13 @@ instance mftitleEncodeJson :: EncodeJson MarkFeatureTitle
 ```
 
 
+#### `mftitleDecodeJson`
+
+``` purescript
+instance mftitleDecodeJson :: DecodeJson MarkFeatureTitle
+```
+
+
 #### `MarkFeatureRec`
 
 ``` purescript
@@ -2070,6 +2490,13 @@ newtype MarkFeature
 
 ``` purescript
 instance markFeatureEncodeJson :: EncodeJson MarkFeature
+```
+
+
+#### `markFeatureDecodeJson`
+
+``` purescript
+instance markFeatureDecodeJson :: DecodeJson MarkFeature
 ```
 
 
@@ -2102,6 +2529,13 @@ instance magicTypeEncodeJson :: EncodeJson MagicType
 ```
 
 
+#### `magicTypeDecodeJson`
+
+``` purescript
+instance magicTypeDecodeJson :: DecodeJson MagicType
+```
+
+
 #### `MagicTypeFeatureRec`
 
 ``` purescript
@@ -2131,6 +2565,13 @@ instance magicTypeFeatureEncodeJson :: EncodeJson MagicTypeFeature
 ```
 
 
+#### `magicTypeFeatureDecodeJson`
+
+``` purescript
+instance magicTypeFeatureDecodeJson :: DecodeJson MagicTypeFeature
+```
+
+
 
 ## Module ECharts.Tooltip
 
@@ -2150,6 +2591,13 @@ instance tooltipTriggerEncodeJson :: EncodeJson TooltipTrigger
 ```
 
 
+#### `tooltipTriggerDecodeJson`
+
+``` purescript
+instance tooltipTriggerDecodeJson :: DecodeJson TooltipTrigger
+```
+
+
 #### `TooltipPosition`
 
 ``` purescript
@@ -2163,6 +2611,13 @@ data TooltipPosition
 
 ``` purescript
 instance tooltipPositionEncodeJson :: EncodeJson TooltipPosition
+```
+
+
+#### `tooltipPositionDecodeJson`
+
+``` purescript
+instance tooltipPositionDecodeJson :: DecodeJson TooltipPosition
 ```
 
 
@@ -2181,6 +2636,13 @@ data TooltipAxisPointerType
 
 ``` purescript
 instance tooltipAxisPointerTypeEncodeJson :: EncodeJson TooltipAxisPointerType
+```
+
+
+#### `tooltiopAxisPointerTypeDecodeJson`
+
+``` purescript
+instance tooltiopAxisPointerTypeDecodeJson :: DecodeJson TooltipAxisPointerType
 ```
 
 
@@ -2203,6 +2665,13 @@ newtype TooltipAxisPointer
 
 ``` purescript
 instance tooltipAxisPointerEncodeJson :: EncodeJson TooltipAxisPointer
+```
+
+
+#### `tooltipAxisPointerDecodeJson`
+
+``` purescript
+instance tooltipAxisPointerDecodeJson :: DecodeJson TooltipAxisPointer
 ```
 
 
@@ -2232,6 +2701,13 @@ newtype Tooltip
 
 ``` purescript
 instance tooltipEncodeJson :: EncodeJson Tooltip
+```
+
+
+#### `tooltipDecodeJson`
+
+``` purescript
+instance tooltipDecodeJson :: DecodeJson Tooltip
 ```
 
 
@@ -2278,6 +2754,13 @@ instance itemDataEncodeJson :: EncodeJson ItemData
 ```
 
 
+#### `itemDataDecodeJson`
+
+``` purescript
+instance itemDataDecodeJson :: DecodeJson ItemData
+```
+
+
 #### `dataDefault`
 
 ``` purescript
@@ -2321,6 +2804,13 @@ instance itemValueEncodeJson :: EncodeJson ItemValue
 ```
 
 
+#### `itemValueDecodeJson`
+
+``` purescript
+instance itemValueDecodeJson :: DecodeJson ItemValue
+```
+
+
 
 ## Module ECharts.Mark.Data
 
@@ -2343,6 +2833,13 @@ newtype MarkPointData
 
 ``` purescript
 instance mpDataEncodeJson :: EncodeJson MarkPointData
+```
+
+
+#### `mpDataDecodeJson`
+
+``` purescript
+instance mpDataDecodeJson :: DecodeJson MarkPointData
 ```
 
 
@@ -2378,6 +2875,13 @@ instance mpEffectEncodeJson :: EncodeJson MarkPointEffect
 ```
 
 
+#### `mpEffectDecodeJson`
+
+``` purescript
+instance mpEffectDecodeJson :: DecodeJson MarkPointEffect
+```
+
+
 #### `markPointEffectDefault`
 
 ``` purescript
@@ -2410,6 +2914,13 @@ instance mlEncodeJson :: EncodeJson MarkLine
 ```
 
 
+#### `mlDecodeJson`
+
+``` purescript
+instance mlDecodeJson :: DecodeJson MarkLine
+```
+
+
 #### `markLineDefault`
 
 ``` purescript
@@ -2420,14 +2931,14 @@ markLineDefault :: MarkLineRec
 #### `addMarkLine`
 
 ``` purescript
-addMarkLine :: forall e a. MarkLine -> EChart -> Eff (addMarkLineECharts :: AddMarkLine | e) EChart
+addMarkLine :: forall e a. MarkLine -> EChart -> Eff (addMarkLineECharts :: ADD_MARKLINE | e) EChart
 ```
 
 
 #### `delMarkLine`
 
 ``` purescript
-delMarkLine :: forall e. Number -> String -> EChart -> Eff (removeMarkLine :: RemoveMarkLine | e) EChart
+delMarkLine :: forall e. Number -> String -> EChart -> Eff (removeMarkLine :: REMOVE_MARKLINE | e) EChart
 ```
 
 
@@ -2456,6 +2967,13 @@ instance markPointEncodeJson :: EncodeJson MarkPoint
 ```
 
 
+#### `markPointDecodeJson`
+
+``` purescript
+instance markPointDecodeJson :: DecodeJson MarkPoint
+```
+
+
 #### `markPointDefault`
 
 ``` purescript
@@ -2466,14 +2984,14 @@ markPointDefault :: MarkPointRec
 #### `delMarkPoint`
 
 ``` purescript
-delMarkPoint :: forall e. Number -> String -> EChart -> Eff (removeMarkPointECharts :: RemoveMarkPoint | e) EChart
+delMarkPoint :: forall e. Number -> String -> EChart -> Eff (removeMarkPointECharts :: REMOVE_MARKPOINT | e) EChart
 ```
 
 
 #### `addMarkPoint`
 
 ``` purescript
-addMarkPoint :: forall e. MarkPoint -> EChart -> Eff (addMarkPointECharts :: AddMarkPoint | e) EChart
+addMarkPoint :: forall e. MarkPoint -> EChart -> Eff (addMarkPointECharts :: ADD_MARKPOINT | e) EChart
 ```
 
 
@@ -2499,6 +3017,13 @@ newtype EvolutionDetail
 
 ``` purescript
 instance evoDetailEncodeJson :: EncodeJson EvolutionDetail
+```
+
+
+#### `evoDetailDecodeJson`
+
+``` purescript
+instance evoDetailDecodeJson :: DecodeJson EvolutionDetail
 ```
 
 
@@ -2531,6 +3056,13 @@ instance evoEncodeJson :: EncodeJson Evolution
 ```
 
 
+#### `evoDecodeJson`
+
+``` purescript
+instance evoDecodeJson :: DecodeJson Evolution
+```
+
+
 #### `OneEventRec`
 
 ``` purescript
@@ -2557,6 +3089,13 @@ oneEventDefault :: OneEventRec
 
 ``` purescript
 instance oneEventEncodeJson :: EncodeJson OneEvent
+```
+
+
+#### `oneEventDecodeJson`
+
+``` purescript
+instance oneEventDecodeJson :: DecodeJson OneEvent
 ```
 
 
@@ -2592,6 +3131,13 @@ instance forceCategoryEncodeJson :: EncodeJson ForceCategory
 ```
 
 
+#### `forceCategoryDecodeJson`
+
+``` purescript
+instance forceCategoryDecodeJson :: DecodeJson ForceCategory
+```
+
+
 #### `NodeRec`
 
 ``` purescript
@@ -2621,6 +3167,13 @@ instance nodeEncodeJson :: EncodeJson Node
 ```
 
 
+#### `nodeDecodeJson`
+
+``` purescript
+instance nodeDecodeJson :: DecodeJson Node
+```
+
+
 #### `LinkEnd`
 
 ``` purescript
@@ -2634,6 +3187,13 @@ data LinkEnd
 
 ``` purescript
 instance linkEndEncodeJson :: EncodeJson LinkEnd
+```
+
+
+#### `linkEndDecodeJson`
+
+``` purescript
+instance linkEndDecodeJson :: DecodeJson LinkEnd
 ```
 
 
@@ -2656,6 +3216,13 @@ newtype Link
 
 ``` purescript
 instance linkEncodeJson :: EncodeJson Link
+```
+
+
+#### `linkDecodeJson`
+
+``` purescript
+instance linkDecodeJson :: DecodeJson Link
 ```
 
 
@@ -2698,6 +3265,13 @@ instance pointerEncodeJson :: EncodeJson Pointer
 ```
 
 
+#### `pointerDecodeJson`
+
+``` purescript
+instance pointerDecodeJson :: DecodeJson Pointer
+```
+
+
 #### `SplitLineRec`
 
 ``` purescript
@@ -2724,6 +3298,13 @@ splitLineDefault :: SplitLineRec
 
 ``` purescript
 instance splitLineEncodeJson :: EncodeJson SplitLine
+```
+
+
+#### `splitLineDecodeJson`
+
+``` purescript
+instance splitLineDecodeJson :: DecodeJson SplitLine
 ```
 
 
@@ -2756,6 +3337,13 @@ instance gaugeDetailEncodeJson :: EncodeJson GaugeDetail
 ```
 
 
+#### `gaugeDetailDecodeJson`
+
+``` purescript
+instance gaugeDetailDecodeJson :: DecodeJson GaugeDetail
+```
+
+
 
 ## Module ECharts.Style.Area
 
@@ -2771,6 +3359,13 @@ newtype AreaStyle
 
 ``` purescript
 instance areaStyleEncodeJson :: EncodeJson AreaStyle
+```
+
+
+#### `areaStyleDecodeJson`
+
+``` purescript
+instance areaStyleDecodeJson :: DecodeJson AreaStyle
 ```
 
 
@@ -2796,6 +3391,13 @@ newtype CheckpointStyle
 
 ``` purescript
 instance checkpointStyleEncodeJson :: EncodeJson CheckpointStyle
+```
+
+
+#### `checkpointStyleDecodeJson`
+
+``` purescript
+instance checkpointStyleDecodeJson :: DecodeJson CheckpointStyle
 ```
 
 
@@ -2831,6 +3433,13 @@ instance chordStyleJson :: EncodeJson ChordStyle
 ```
 
 
+#### `chordStyleDecodeJson`
+
+``` purescript
+instance chordStyleDecodeJson :: DecodeJson ChordStyle
+```
+
+
 #### `chordStyleDefault`
 
 ``` purescript
@@ -2863,6 +3472,13 @@ instance itemLabelEncodeJson :: EncodeJson ItemLabel
 ```
 
 
+#### `itemLabelDecodeJson`
+
+``` purescript
+instance itemLabelDecodeJson :: DecodeJson ItemLabel
+```
+
+
 #### `itemLabelDefault`
 
 ``` purescript
@@ -2889,6 +3505,13 @@ newtype ItemLabelLine
 
 ``` purescript
 instance itemLabelLineEncodeJson :: EncodeJson ItemLabelLine
+```
+
+
+#### `itemLabelLineDecodeJson`
+
+``` purescript
+instance itemLabelLineDecodeJson :: DecodeJson ItemLabelLine
 ```
 
 
@@ -2928,6 +3551,13 @@ instance istyleEncodeJson :: EncodeJson IStyle
 ```
 
 
+#### `istyleDecodeJson`
+
+``` purescript
+instance istyleDecodeJson :: DecodeJson IStyle
+```
+
+
 #### `ItemStyleRec`
 
 ``` purescript
@@ -2947,6 +3577,13 @@ newtype ItemStyle
 
 ``` purescript
 instance itemStyleEncodeJson :: EncodeJson ItemStyle
+```
+
+
+#### `itemStyleDecodeJson`
+
+``` purescript
+instance itemStyleDecodeJson :: DecodeJson ItemStyle
 ```
 
 
@@ -2977,6 +3614,13 @@ instance linetypeEncodeJson :: EncodeJson LineType
 ```
 
 
+#### `linetypeDecodeJson`
+
+``` purescript
+instance linetypeDecodeJson :: DecodeJson LineType
+```
+
+
 #### `LineStyleRec`
 
 ``` purescript
@@ -2996,6 +3640,13 @@ newtype LineStyle
 
 ``` purescript
 instance lineStyleEncodeJson :: EncodeJson LineStyle
+```
+
+
+#### `lineStyleDecodeJson`
+
+``` purescript
+instance lineStyleDecodeJson :: DecodeJson LineStyle
 ```
 
 
@@ -3025,6 +3676,13 @@ instance linkTypeEncodeJson :: EncodeJson LinkType
 ```
 
 
+#### `linkTypeDecodeJson`
+
+``` purescript
+instance linkTypeDecodeJson :: DecodeJson LinkType
+```
+
+
 #### `LinkStyleRec`
 
 ``` purescript
@@ -3044,6 +3702,13 @@ newtype LinkStyle
 
 ``` purescript
 instance linkStyleEncodeJson :: EncodeJson LinkStyle
+```
+
+
+#### `linkStyleDecodeJson`
+
+``` purescript
+instance linkStyleDecodeJson :: DecodeJson LinkStyle
 ```
 
 
@@ -3076,6 +3741,13 @@ newtype NodeStyle
 
 ``` purescript
 instance nodeStyleEncodeJson :: EncodeJson NodeStyle
+```
+
+
+#### `nodeStyleDecodeJson`
+
+``` purescript
+instance nodeStyleDecodeJson :: DecodeJson NodeStyle
 ```
 
 
@@ -3120,6 +3792,13 @@ instance textBaselineEncodeJson :: EncodeJson TextBaseline
 ```
 
 
+#### `textBaselineDecodeJson`
+
+``` purescript
+instance textBaselineDecodeJson :: DecodeJson TextBaseline
+```
+
+
 #### `FontStyle`
 
 ``` purescript
@@ -3134,6 +3813,13 @@ data FontStyle
 
 ``` purescript
 instance fontStyleEncodeJson :: EncodeJson FontStyle
+```
+
+
+#### `fontStyleDecodeJson`
+
+``` purescript
+instance fontStyleDecodeJson :: DecodeJson FontStyle
 ```
 
 
@@ -3164,6 +3850,13 @@ instance fontWeightEncodeJson :: EncodeJson FontWeight
 ```
 
 
+#### `fontWeightDecodeJson`
+
+``` purescript
+instance fontWeightDecodeJson :: DecodeJson FontWeight
+```
+
+
 #### `TextStyleRec`
 
 ``` purescript
@@ -3183,6 +3876,13 @@ newtype TextStyle
 
 ``` purescript
 instance textStyleEncodeJson :: EncodeJson TextStyle
+```
+
+
+#### `textStyleDecodeJson`
+
+``` purescript
+instance textStyleDecodeJson :: DecodeJson TextStyle
 ```
 
 

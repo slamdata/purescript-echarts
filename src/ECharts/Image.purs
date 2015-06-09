@@ -9,6 +9,8 @@ import Control.Monad.Eff
 import Data.Function
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
+import Data.Either
 
 import ECharts.Chart 
 import ECharts.Effects
@@ -23,6 +25,13 @@ imgStr img = case img of
 instance encodeImg :: EncodeJson ImgType where
   encodeJson = encodeJson <<< imgStr
 
+instance decodeImg :: DecodeJson ImgType where
+  decodeJson j = do
+    str <- decodeJson j
+    case str of
+      "png" -> pure PNG
+      "jpeg" -> pure JPEG
+      _ -> Left "incorrect img type"
 
 
 
@@ -34,7 +43,7 @@ function getDataURLImpl(imgType, chart) {
 }
 """ :: forall e. Fn2 String EChart (Eff e String)
 
-getDataURL :: forall e. ImgType -> EChart -> Eff (image::ImageMaking|e) String
+getDataURL :: forall e. ImgType -> EChart -> Eff (image::IMAGE_MAKING|e) String
 getDataURL img chart = runFn2 getDataURLImpl (imgStr img) chart
 
 
@@ -46,5 +55,5 @@ function getImageImpl(imgType, chart) {
 }
 """ :: forall e. Fn2 String EChart (Eff e Node)
 
-getImage :: forall e. ImgType -> EChart -> Eff (dom::DOM, image::ImageMaking|e) Node
+getImage :: forall e. ImgType -> EChart -> Eff (dom::DOM, image::IMAGE_MAKING|e) Node
 getImage img chart = runFn2 getImageImpl (imgStr img) chart

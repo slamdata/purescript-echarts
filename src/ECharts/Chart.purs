@@ -39,10 +39,10 @@ function initImpl(node, theme) {
     return echarts.init(node, theme);
   };
 }
-""" :: forall e. Fn2 HTMLElement Json (Eff (dom :: DOM, echartInit :: EChartInit|e) EChart)
+""" :: forall e. Fn2 HTMLElement Json (Eff (dom :: DOM, echartInit :: ECHARTS_INIT|e) EChart)
 
 init :: forall e.  Maybe Theme -> HTMLElement ->
-        Eff (dom :: DOM, echartInit :: EChartInit|e) EChart
+        Eff (dom :: DOM, echartInit :: ECHARTS_INIT|e) EChart
 init theme dom = 
   runFn2 initImpl dom (encodeJson theme)
 
@@ -56,7 +56,7 @@ function setThemeImpl(args, chart) {
 """ :: forall e. Fn2 Json EChart (Eff e EChart)
 
 setTheme :: forall e. Theme -> EChart ->
-            Eff (dom :: DOM, echartTheme :: EChartThemeSet|e) EChart
+            Eff (dom :: DOM, echartTheme :: ECHARTS_THEME_SET|e) EChart
 setTheme theme chart = do
   runFn2 setThemeImpl (encodeJson theme) chart
 
@@ -76,7 +76,7 @@ function resize(chart) {
     return chart.resize();
   };
 }
-""" :: forall e. EChart -> Eff (dom :: DOM, echartResize :: EChartResize|e) Unit
+""" :: forall e. EChart -> Eff (dom :: DOM, echartResize :: ECHARTS_RESIZE|e) Unit
 
 
 foreign import refresh """
@@ -85,7 +85,7 @@ function refresh(chart) {
     return chart.refresh();
   };
 }
-""" :: forall e. EChart -> Eff (dom :: DOM, echartRefresh :: EChartRefresh|e) Unit
+""" :: forall e. EChart -> Eff (dom :: DOM, echartRefresh :: ECHARTS_REFRESH|e) Unit
 
 
 foreign import clear """
@@ -94,7 +94,7 @@ function clear(chart) {
     return chart.clear();
   };
 }
-""" :: forall e. EChart -> Eff (dom :: DOM, echartClear :: EChartClear|e) Unit
+""" :: forall e. EChart -> Eff (dom :: DOM, echartClear :: ECHARTS_CLEAR|e) Unit
 
 
 foreign import dispose """
@@ -103,4 +103,4 @@ function dispose() {
     return chart.dispose();
   };
 }
-""" :: forall e. EChart -> Eff (dom :: DOM, echartDispose :: EChartDispose|e) Unit
+""" :: forall e. EChart -> Eff (dom :: DOM, echartDispose :: ECHARTS_DISPOSE|e) Unit

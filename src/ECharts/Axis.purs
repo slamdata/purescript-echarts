@@ -2,10 +2,13 @@ module ECharts.Axis where
 
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 import Data.Tuple
 import Data.StrMap
 import Data.Maybe
+import Data.Either
+import Control.Alt ((<|>))
 
 import ECharts.Common
 import ECharts.Coords
@@ -30,6 +33,13 @@ instance axisLineStyleEncodeJson :: EncodeJson AxisLineStyle where
     "width" := a.width
     ]
 
+instance axisLineStyleDecodeJson :: DecodeJson AxisLineStyle where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- {color: _, width: _} <$> (o .? "color") <*> (o .? "width")
+    pure $ AxisLineStyle r
+
+
 axisLineStyleDefault :: AxisLineStyleRec
 axisLineStyleDefault = {
   color: Nothing,
@@ -51,6 +61,17 @@ instance axisLineEncodeJson :: EncodeJson AxisLine where
     "lineStyle" := a.lineStyle,
     "onZero" := a.onZero
     ]
+
+instance axisLineDecodeJson :: DecodeJson AxisLine where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { show: _
+         , lineStyle: _
+         , onZero: _} <$>
+         (o .? "show") <*>
+         (o .? "lineStyle") <*>
+         (o .? "onZero")
+    pure $ AxisLine r
 
 axisLineDefault :: AxisLineRec                            
 axisLineDefault = {
@@ -82,6 +103,26 @@ instance axisTickEncodeJson :: EncodeJson AxisTick where
     "onGap" := a.onGap,
     "inside" := a.inside
     ]
+
+instance axisTickDecodeJson :: DecodeJson AxisTick where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { show: _
+         , splitNumber: _
+         , length: _
+         , lineStyle: _
+         , interval: _
+         , onGap: _
+         , inside: _ } <$>
+         (o .? "show") <*>
+         (o .? "splitNumber") <*>
+         (o .? "length") <*>
+         (o .? "lineStyle") <*>
+         (o .? "interval") <*>
+         (o .? "onGap") <*>
+         (o .? "interval")
+    pure $ AxisTick r
+         
                             
 axisTickDefault :: AxisTickRec
 axisTickDefault = {
@@ -116,6 +157,25 @@ instance axisLabelEncodeJson :: EncodeJson AxisLabel  where
     "margin" := a.margin,
     "clickable" := a.clickable
     ]
+
+instance axisLabelDecodeJson :: DecodeJson AxisLabel where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { show: _
+         , formatter: _
+         , textStyle: _
+         , interval: _
+         , rotate: _
+         , margin: _
+         , clickable: _ } <$>
+         (o .? "show") <*>
+         (o .? "formatter") <*>
+         (o .? "textStyle") <*>
+         (o .? "interval") <*>
+         (o .? "rotate") <*>
+         (o .? "margin") <*>
+         (o .? "clickable")
+    pure $ AxisLabel r
                              
 axisLabelDefault :: AxisLabelRec
 axisLabelDefault = {
@@ -134,6 +194,14 @@ instance axisesEncodeJson :: EncodeJson Axises where
   encodeJson (OneAxis axis) = encodeJson axis
   encodeJson (TwoAxises axis axis2) = encodeJson [axis, axis2]
 
+instance axisesDecodeJson :: DecodeJson Axises where
+  decodeJson j =
+    (do arr <- decodeJson j
+        case arr of
+          a:b:[] -> pure $ TwoAxises a b
+          _ -> Left "incorrect axises") <|>
+    (OneAxis <$> decodeJson j)
+
 type AxisSplitLineRec = {
     show :: Maybe Boolean,
     onGap :: Maybe Boolean,
@@ -150,6 +218,17 @@ instance axisSplitLineEncodeJson :: EncodeJson AxisSplitLine where
       "onGap" := obj.onGap,
       "lineStyle" := obj.lineStyle
     ]
+
+instance axisSplitLineDecodeJson :: DecodeJson AxisSplitLine where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { show: _
+         , onGap: _
+         , lineStyle: _ } <$>
+         (o .? "show") <*>
+         (o .? "onGap") <*>
+         (o .? "lineStyle")
+    pure $ AxisSplitLine r
 
 axisSplitLineDefault :: AxisSplitLineRec
 axisSplitLineDefault = {
@@ -177,6 +256,18 @@ instance axisSplitAreaEncodeJson :: EncodeJson AxisSplitArea where
       "areaStyle" := obj.areaStyle
     ]
 
+instance axisSplitAreaDecodeJson :: DecodeJson AxisSplitArea where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { show: _
+         , onGap: _
+         , areaStyle: _ } <$>
+         (o .? "show") <*>
+         (o .? "onGap") <*>
+         (o .? "areaStyle")
+    pure $ AxisSplitArea r
+          
+
 axisSplitAreaDefault :: AxisSplitAreaRec
 axisSplitAreaDefault = {
   show: Nothing,
@@ -192,6 +283,15 @@ instance axisTypeEncodeJson :: EncodeJson AxisType where
     ValueAxis -> "value"
     TimeAxis -> "time"
 
+instance axisTypeDecodeJson :: DecodeJson AxisType where
+  decodeJson j = do
+    str <- decodeJson j
+    case str of
+      "category" -> pure CategoryAxis
+      "value" -> pure ValueAxis
+      "time" -> pure TimeAxis
+      _ -> Left "incorrect axis type"
+
 
 data AxisPosition = LeftAxis | RightAxis | TopAxis | BottomAxis
 instance axisPositionEncodeJson :: EncodeJson AxisPosition where
@@ -201,12 +301,31 @@ instance axisPositionEncodeJson :: EncodeJson AxisPosition where
     TopAxis -> "top"
     BottomAxis -> "bottom"
 
+instance axisPositionDecodeJson :: DecodeJson AxisPosition where
+  decodeJson j = do
+    str <- decodeJson j
+    case str of
+      "left" -> pure LeftAxis
+      "right" -> pure RightAxis
+      "top" -> pure TopAxis
+      "bottom" -> pure BottomAxis
+      _ -> Left "incorrect axis position"
+
 
 data AxisNameLocation = Start | End
 instance axisNameLocationEncodeJson :: EncodeJson AxisNameLocation where
   encodeJson a = encodeJson $ case a of
     Start -> "start"
     End -> "end"
+
+instance axisNameLocationDecodeJson :: DecodeJson AxisNameLocation where
+  decodeJson j = do
+    str <- decodeJson j
+    case str of
+      "start" -> pure Start
+      "end" -> pure End
+      _ -> Left "incorrect axis name location"
+      
 
 
 type CustomAxisDataRec = {
@@ -225,12 +344,29 @@ instance axisDataEncodeJson :: EncodeJson AxisData where
       "textStyle" := obj.textStyle
     ]
 
+instance axisDataDecodeJson :: DecodeJson AxisData where
+  decodeJson j =
+    (CommonAxisData <$> decodeJson j) <|>
+    (do o <- decodeJson j
+        r <- {value: _, textStyle: _} <$> (o .? "value") <*> (o .? "textStyle")
+        pure $ CustomAxisData r)
+
+
+
 data AxisBoundaryGap = CatBoundaryGap Boolean
                    | ValueBoundaryGap Number Number
 
 instance axisBoundaryGapEncodeJson :: EncodeJson AxisBoundaryGap where
   encodeJson (CatBoundaryGap bool) = encodeJson bool
   encodeJson (ValueBoundaryGap num1 num2) = encodeJson [num1, num2]
+
+instance axisBoundaryGapDecodeJson :: DecodeJson AxisBoundaryGap where
+  decodeJson j =
+    (CatBoundaryGap <$> decodeJson j) <|>
+    (do arr <- decodeJson j
+        case arr of
+          a:b:[] -> pure $ ValueBoundaryGap a b
+          _ -> Left "incorrect axis boundary gap")
 
 
 type AxisRec = {
@@ -298,6 +434,45 @@ instance axisEncJson :: EncodeJson Axis where
       "data" := obj.data
     ]
 
+instance axisDecJson :: DecodeJson Axis where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { "type": _
+         , show: _
+         , position: _
+         , name: _
+         , nameLocation: _
+         , nameTextStyle: _
+         , boundaryGap: _
+         , min: _
+         , max: _
+         , scale: _
+         , splitNumber: _
+         , axisLine: _
+         , axisTick: _
+         , axisLabel: _
+         , splitLine: _
+         , splitArea: _
+         , "data": _ } <$>
+         (o .? "type") <*>
+         (o .? "show") <*>
+         (o .? "position") <*>
+         (o .? "name") <*>
+         (o .? "nameLocation") <*>
+         (o .? "nameTextStyle") <*>
+         (o .? "boundaryGap") <*>
+         (o .? "min") <*>
+         (o .? "max") <*>
+         (o .? "scale") <*>
+         (o .? "splitNumber") <*>
+         (o .? "axisLine") <*>
+         (o .? "axisTick") <*>
+         (o .? "axisLabel") <*>
+         (o .? "splitLine") <*>
+         (o .? "splitArea") <*>
+         (o .? "data")
+    pure $ Axis r
+
 
 type PolarNameRec = {
     show :: Maybe Boolean,
@@ -316,6 +491,17 @@ instance polarNameEncode :: EncodeJson PolarName where
       "textStyle" := obj.textStyle
     ]
 
+instance polarNameDecodeJson :: DecodeJson PolarName where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { show: _
+         , formatter: _
+         , textStyle: _ } <$>
+         (o .? "show") <*>
+         (o .? "formatter") <*>
+         (o .? "textStyle")
+    pure $ PolarName r
+
 polarNameDefault :: PolarNameRec
 polarNameDefault = {
   show: Nothing,
@@ -329,6 +515,14 @@ instance polarTypeEncode :: EncodeJson PolarType where
   encodeJson a = encodeJson $ case a of
     PolarPolygon -> "polygon"
     PolarCircle -> "circle"
+
+instance polarTypeDecodeJson :: DecodeJson PolarType where
+  decodeJson j = do
+    str <- decodeJson j
+    case str of
+      "polygon" -> pure PolarPolygon
+      "circle" -> pure PolarCircle
+      _ -> Left "incorrect polar type"
 
 
 type IndicatorRec = {
@@ -349,6 +543,22 @@ instance indicatorEncodeJson :: EncodeJson Indicator where
       "max" := obj.max,
       "axisLabel" := obj.axisLabel
     ]
+
+instance indicatorDecodeJson :: DecodeJson Indicator where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { text: _
+         , min: _
+         , max: _
+         , axisLabel: _ } <$>
+         (o .? "text") <*>
+         (o .? "min") <*>
+         (o .? "max") <*>
+         (o .? "axisLabel")
+    pure $ Indicator r
+         
+
+    
 indicatorDefault :: IndicatorRec
 indicatorDefault = {
   text: Nothing,
@@ -393,6 +603,39 @@ instance polarEncodeJson :: EncodeJson Polar where
       "type" := obj.type,
       "indicator" := obj.indicator
     ]
+
+instance polarDecodeJson :: DecodeJson Polar where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { center: _
+         , radius: _
+         , startAngle: _
+         , splitNumber: _
+         , name: _
+         , boundaryGap: _
+         , scale: _
+         , axisLine: _
+         , axisLabel: _
+         , splitLine: _
+         , splitArea: _
+         , "type": _
+         , indicator: _ } <$>
+         (o .? "center") <*>
+         (o .? "radius") <*>
+         (o .? "startAngle") <*>
+         (o .? "splitNumber") <*>
+         (o .? "name") <*>
+         (o .? "boundaryGap") <*>
+         (o .? "scale") <*>
+         (o .? "axisLine") <*>
+         (o .? "axisLabel") <*>
+         (o .? "splitLine") <*>
+         (o .? "splitArea") <*>
+         (o .? "type") <*>
+         (o .? "indicator")
+    pure $ Polar r
+
+
 
 polarDefault :: PolarRec
 polarDefault = {

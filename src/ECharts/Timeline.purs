@@ -1,9 +1,11 @@
 module ECharts.Timeline where
 
 import Data.Maybe
+import Data.Either
 import Data.StrMap
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 import ECharts.Style.Item
 import ECharts.Style.Checkpoint
@@ -20,6 +22,14 @@ instance timelineTypeEncodeJson :: EncodeJson TimelineType where
     TimelineTime -> "time"
     TimelineNumber -> "number"
 
+instance timelineTypeDecodeJson :: DecodeJson TimelineType where
+  decodeJson j = do
+    str <- decodeJson j
+    case str of
+      "time" -> pure TimelineTime
+      "number" -> pure TimelineNumber
+      _ -> Left "incorrect timeline"
+
 data TimelineControlPosition = TCPLeft | TCPRight | TCPNone
 
 instance timelineControlPositionEncodeJson :: EncodeJson TimelineControlPosition where
@@ -28,6 +38,15 @@ instance timelineControlPositionEncodeJson :: EncodeJson TimelineControlPosition
     TCPRight -> "right"
     TCPLeft -> "left"
                                       
+instance timelineControlPositionDecodeJson :: DecodeJson TimelineControlPosition where
+  decodeJson j = do
+    str <- decodeJson j
+    case str of
+      "none" -> pure TCPNone
+      "right" -> pure TCPRight
+      "left" -> pure TCPLeft
+      _ -> Left "incorrect timeline control position" 
+
 
 type TimelineRec = {
     show :: Maybe Boolean,
@@ -92,6 +111,65 @@ instance timelineEncodeJson :: EncodeJson Timeline where
       "currentIndex" := obj.currentIndex,
       "data" := obj.data
     ]
+
+instance timelineDecodeJson :: DecodeJson Timeline where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { show: _
+         , "type": _
+         , notMerge: _
+         , realtime: _
+         , x: _
+         , x2: _ 
+         , y: _
+         , y2: _
+         , width: _
+         , height: _
+         , backgroundColor: _
+         , borderWidth: _
+         , borderColor: _
+         , padding: _
+         , controlPosition: _
+         , autoPlay: _
+         , loop: _
+         , playInterval: _
+         , lineStyle: _
+         , label: _
+         , checkpointStyle: _
+         , controlStyle:  _
+         , symbol: _
+         , symbolSize: _
+         , currentIndex: _
+         , "data": _ } <$>
+         (o .? "show") <*>
+         (o .? "type") <*>
+         (o .? "notMerge") <*>
+         (o .? "realtime") <*>
+         (o .? "x") <*>
+         (o .? "x2") <*>
+         (o .? "y") <*>
+         (o .? "y2") <*>
+         (o .? "width") <*>
+         (o .? "height") <*>
+         (o .? "backgroundColor") <*>
+         (o .? "borderWidth") <*>
+         (o .? "borderColor") <*>
+         (o .? "padding") <*>
+         (o .? "controlPosition") <*>
+         (o .? "autoPlay") <*>
+         (o .? "loop") <*>
+         (o .? "playInterval") <*>
+         (o .? "lineStyle") <*>
+         (o .? "label") <*>
+         (o .? "checkpointStyle") <*>
+         (o .? "controlStyle") <*>
+         (o .? "symbol") <*>
+         (o .? "symbolSize") <*>
+         (o .? "currentIndex") <*>
+         (o .? "data")
+    pure $ Timeline r
+
+    
 timelineDefault :: TimelineRec
 timelineDefault = {
   show: Nothing,

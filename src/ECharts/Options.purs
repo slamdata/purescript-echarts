@@ -10,6 +10,7 @@ import Data.Maybe
 import Data.Function
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 import Data.StrMap (fromList)
 
@@ -91,6 +92,48 @@ instance optionsEncodeJson :: EncodeJson Option where
       "polar" := opts.polar
     ]
 
+instance optionsDecodeJson :: DecodeJson Option where
+  decodeJson json = do
+    obj <- decodeJson json
+    r <- { backgroundColor: _
+         , color: _
+         , renderAsImage: _
+         , calculable: _
+         , animation: _
+         , series: _
+         , timeline: _
+         , tooltip: _
+         , toolbox: _
+         , title: _
+         , legend: _
+         , dataRange: _
+         , dataZoom: _
+         , roamController: _
+         , grid: _
+         , xAxis: _
+         , yAxis: _
+         , polar: _ } <$>
+         (obj .? "backgroundColor") <*>
+         (obj .? "color") <*>
+         (obj .? "renderAsImage") <*>
+         (obj .? "calculable") <*>
+         (obj .? "animation") <*>
+         (obj .? "series") <*>
+         (obj .? "timeline") <*>
+         (obj .? "tooltip") <*>
+         (obj .? "toolbox") <*>
+         (obj .? "title") <*>
+         (obj .? "legend") <*>
+         (obj .? "dataRange") <*>
+         (obj .? "dataZoom") <*>
+         (obj .? "roamController") <*>
+         (obj .? "grid") <*>
+         (obj .? "xAxis") <*>
+         (obj .? "yAxis") <*>
+         (obj .? "polar")
+    pure $ Option r
+         
+
 optionDefault :: OptionRec
 optionDefault = {
   backgroundColor: Nothing,
@@ -120,13 +163,13 @@ function setOptionImpl(option, notMerge, chart) {
   };
 }
 """ :: forall e.
-       Fn3 Json Boolean EChart (Eff (echartSetOption::EChartOptionSet|e) EChart)
+       Fn3 Json Boolean EChart (Eff (echartSetOption::ECHARTS_OPTION_SET|e) EChart)
 
 setOption :: forall e.
              Option ->
              Boolean ->
              EChart ->
-             Eff (echartSetOption::EChartOptionSet|e) EChart
+             Eff (echartSetOption::ECHARTS_OPTION_SET|e) EChart
 setOption opts notMerge chart = runFn3 setOptionImpl 
                                 (unnull <<< encodeJson $ opts) notMerge chart
 
