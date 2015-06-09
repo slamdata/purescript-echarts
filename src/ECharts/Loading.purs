@@ -68,10 +68,10 @@ function showLoadingImpl(json, chart) {
     return chart.showLoading(json);
   };
 }
-""" :: forall e a. Fn2 Json EChart (Eff (showLoadingECharts::LoadingShow|e) EChart)
+""" :: forall e a. Fn2 Json EChart (Eff (showLoadingECharts::LOADING_SHOW|e) EChart)
 
 showLoading :: forall e. LoadingOption -> EChart ->
-               Eff (showLoadingECharts::LoadingShow|e) EChart
+               Eff (showLoadingECharts::LOADING_SHOW|e) EChart
 showLoading opts chart =
   runFn2 showLoadingImpl (unnull (encodeJson opts)) chart
 
@@ -84,7 +84,7 @@ function hideLoading(chart) {
     return chart.hideLoading();
   };
 }
-""" :: forall e. EChart -> Eff (hideLoadingECharts::LoadingHide|e) EChart
+""" :: forall e. EChart -> Eff (hideLoadingECharts::LOADING_HIDE|e) EChart
 
 loadingOptionDefault :: LoadingOptionRec
 loadingOptionDefault =

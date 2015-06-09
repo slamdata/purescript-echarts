@@ -2,7 +2,9 @@ module ECharts.Style.Text where
 
 import Data.Array (concat)
 import Data.Maybe
+import Data.Either
 import Data.Argonaut.Core
+import Data.Argonaut.Decode
 import Data.Argonaut.Encode
 import Data.Argonaut.Combinators
 import qualified Data.StrMap as M
@@ -25,6 +27,15 @@ instance textBaselineEncodeJson :: EncodeJson TextBaseline where
     TBLBottom -> "bottom"
     TBLMiddle -> "middle"
 
+instance textBaselineDecodeJson :: DecodeJson TextBaseline where
+  decodeJson j = do
+    str <- decodeJson j
+    case str of
+      "top" -> pure TBLTop
+      "bottom" -> pure TBLBottom
+      "middle" -> pure TBLMiddle
+      _ -> Left "incorrect text base line" 
+
 data FontStyle = FSNormal | FSItalic | FSOblique
 instance fontStyleEncodeJson :: EncodeJson FontStyle where
   encodeJson a = fromString $ case a of 
@@ -32,7 +43,15 @@ instance fontStyleEncodeJson :: EncodeJson FontStyle where
     FSItalic -> "italic"
     FSOblique -> "oblique"
 
-    
+instance fontStyleDecodeJson :: DecodeJson FontStyle where
+  decodeJson j = do
+    str <- decodeJson j
+    case str of
+      "normal" -> pure FSNormal
+      "italic" -> pure FSItalic
+      "oblique" -> pure FSOblique
+      _ -> Left "incorrect font style"
+
 data FontWeight = FWNormal
                 | FWBold
                 | FWBolder
@@ -64,6 +83,25 @@ instance fontWeightEncodeJson :: EncodeJson FontWeight where
     FW900 -> "900"
 
 
+instance fontWeightDecodeJson :: DecodeJson FontWeight where
+  decodeJson j = do
+    str <- decodeJson j
+    case str of
+      "normal" -> pure FWNormal
+      "bold" -> pure FWBold
+      "bolder" -> pure FWBolder
+      "lighter" -> pure FWLighter
+      "100" -> pure FW100
+      "200" -> pure FW200
+      "300" -> pure FW300
+      "400" -> pure FW400
+      "500" -> pure FW500
+      "600" -> pure FW600
+      "700" -> pure FW700
+      "800" -> pure FW800
+      "900" -> pure FW900
+      _ -> Left "incorrect font weight"
+
 type TextStyleRec = {
     color :: Maybe Color,
     decoration :: Maybe Decoration,
@@ -89,6 +127,27 @@ instance textStyleEncodeJson :: EncodeJson TextStyle where
       "fontStyle" := ts.fontStyle,
       "fontWeight" := ts.fontWeight
     ]
+
+instance textStyleDecodeJson :: DecodeJson TextStyle where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { color: _
+         , decoration: _
+         , align: _
+         , baseline: _
+         , fontFamily: _
+         , fontSize: _
+         , fontStyle: _
+         , fontWeight: _ } <$>
+         (o .? "color") <*>
+         (o .? "decoration") <*>
+         (o .? "align") <*>
+         (o .? "baseline") <*>
+         (o .? "fontFamily") <*>
+         (o .? "fontSize") <*>
+         (o .? "fontStyle") <*>
+         (o .? "fontWeight")
+    pure $ TextStyle r
 
 textStyleDefault :: TextStyleRec
 textStyleDefault =

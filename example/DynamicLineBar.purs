@@ -8,6 +8,7 @@ import Data.Maybe
 import Data.Array hiding (init)
 import Data.String.Regex
 import Data.Date
+import Data.Time
 import Data.Traversable
 import Data.Foldable
 import Utils (precise, getElementById)
@@ -57,7 +58,7 @@ xTimeAxis = do
                     replace onlyDigRgx  "" <$> 
                     toLocaleTimeString <$>
                     toJSDate <$>
-                    fromEpochMilliseconds (start - i * 2000)
+                    fromEpochMilliseconds (start - (Milliseconds (i * 2000)))
 
   return $ mapfn <$> (1..10)
 

@@ -23,6 +23,7 @@ import Data.StrMap (fromList, StrMap (..))
 import Data.Tuple
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 
 type MarkLineRec = {
@@ -50,6 +51,27 @@ instance mlEncodeJson :: EncodeJson MarkLine where
       "data" := ml.data,
       "itemStyle" := ml.itemStyle
     ]
+
+instance mlDecodeJson :: DecodeJson MarkLine where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { symbol: _
+         , symbolSize: _
+         , symbolRotate: _
+         , effect: _
+         , geoCoord: _
+         , "data": _
+         , itemStyle: _ } <$>
+         (o .? "symbol") <*>
+         (o .? "symbolSize") <*>
+         (o .? "symbolRotate") <*>
+         (o .? "effect") <*>
+         (o .? "geoCoord") <*>
+         (o .? "data") <*>
+         (o .? "itemStyle")
+    pure $ MarkLine r
+           
+
 markLineDefault :: MarkLineRec
 markLineDefault =
   {
@@ -69,11 +91,11 @@ function addMarkLineImpl(ml, chart) {
     return chart.addMarkLine(ml);
   };
 }
-""" :: forall e. Fn2 Json EChart (Eff (addMarkLineECharts::AddMarkLine|e) EChart)
+""" :: forall e. Fn2 Json EChart (Eff (addMarkLineECharts::ADD_MARKLINE|e) EChart)
 
 
 addMarkLine :: forall e a. MarkLine  -> EChart -> 
-               Eff (addMarkLineECharts::AddMarkLine|e) EChart
+               Eff (addMarkLineECharts::ADD_MARKLINE|e) EChart
 addMarkLine ml chart = runFn2 addMarkLineImpl (encodeJson ml) chart
 
 
@@ -86,9 +108,9 @@ function delMarkLineImpl(idx, name, chart) {
   };
 }
 """ :: forall e. Fn3 Number String EChart
-       (Eff (removeMarkLine::RemoveMarkLine|e) EChart)
+       (Eff (removeMarkLine::REMOVE_MARKLINE|e) EChart)
 
 delMarkLine :: forall e. Number -> String -> EChart -> 
-               Eff (removeMarkLine::RemoveMarkLine|e) EChart
+               Eff (removeMarkLine::REMOVE_MARKLINE|e) EChart
 delMarkLine idx name chart = runFn3 delMarkLineImpl idx name chart
 

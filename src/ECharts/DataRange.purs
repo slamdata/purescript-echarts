@@ -2,6 +2,7 @@ module ECharts.DataRange where
 
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 import Data.Maybe
 import Data.StrMap (fromList)
@@ -70,6 +71,57 @@ instance dataRangeEncodeJson :: EncodeJson DataRange where
       "text" := obj.text,
       "textStyle" := obj.textStyle
     ]
+
+instance dataRangeDecodeJson :: DecodeJson DataRange where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { show: _
+         , orient: _
+         , x: _
+         , y: _
+         , backgroundColor: _
+         , borderColor: _
+         , borderWidth: _
+         , padding: _
+         , itemGap: _
+         , itemWidth: _
+         , itemHeight: _
+         , min: _
+         , max: _
+         , precision: _
+         , splitNumber: _
+         , selectedMode: _
+         , calculable: _
+         , hoverLink: _
+         , realtime: _
+         , color: _
+         , formatter: _
+         , text: _
+         , textStyle: _ } <$>
+         (o .? "show") <*>
+         (o .? "orient") <*>
+         (o .? "x") <*>
+         (o .? "y") <*>
+         (o .? "backgroundColor") <*>
+         (o .? "borderColor") <*>
+         (o .? "borderWidth") <*>
+         (o .? "padding") <*>
+         (o .? "itemGap") <*>
+         (o .? "itemWidth") <*>
+         (o .? "itemHeight") <*>
+         (o .? "min") <*>
+         (o .? "max") <*>
+         (o .? "precision") <*>
+         (o .? "splitNumber") <*>
+         (o .? "selectedMode") <*>
+         (o .? "calculable") <*>
+         (o .? "hoverLink") <*>
+         (o .? "realtime") <*>
+         (o .? "color") <*>
+         (o .? "formatter") <*>
+         (o .? "text") <*>
+         (o .? "textStyle")
+    pure $ DataRange r
 
 dataRangeDefault :: DataRangeRec
 dataRangeDefault = {

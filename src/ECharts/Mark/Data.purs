@@ -5,6 +5,7 @@ import Data.StrMap (fromList, StrMap (..))
 import Data.Tuple
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 
 type MarkPointDataRec = {
@@ -31,6 +32,27 @@ instance mpDataEncodeJson :: EncodeJson MarkPointData where
       "yAxis" := mp.yAxis,
       "type" := mp.type
     ]
+
+instance mpDataDecodeJson :: DecodeJson MarkPointData where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { name: _
+         , value: _
+         , x: _
+         , y: _
+         , xAxis: _
+         , yAxis: _
+         , "type": _ } <$>
+         (o .? "name") <*>
+         (o .? "value") <*>
+         (o .? "x") <*>
+         (o .? "y") <*>
+         (o .? "xAxis") <*>
+         (o .? "yAxis") <*>
+         (o .? "type")
+    pure $ MarkPointData r
+           
+    
 markPointDataDefault :: MarkPointDataRec
 markPointDataDefault =
   {

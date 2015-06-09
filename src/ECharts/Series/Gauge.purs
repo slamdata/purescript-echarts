@@ -5,6 +5,7 @@ import Data.Function
 import Data.Maybe
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 import Data.Tuple
 import Data.StrMap
@@ -39,6 +40,17 @@ instance pointerEncodeJson :: EncodeJson Pointer where
     "color" := p.color
     ]
 
+instance pointerDecodeJson :: DecodeJson Pointer where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { length: _
+         , width: _
+         , color: _ } <$>
+         (o .? "length") <*>
+         (o .? "width") <*>
+         (o .? "color")
+    pure $ Pointer r 
+
 type SplitLineRec = {
     show :: Maybe Boolean,
     length :: Maybe Number,
@@ -60,6 +72,18 @@ instance splitLineEncodeJson :: EncodeJson SplitLine where
     "length" := sl.length,
     "lineStyle" := sl.lineStyle
     ]
+
+instance splitLineDecodeJson :: DecodeJson SplitLine where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { show: _
+         , length: _
+         , lineStyle: _ } <$>
+         (o .? "show") <*>
+         (o .? "length") <*>
+         (o .? "lineStyle")
+    pure $ SplitLine r
+
 
 type GaugeDetailRec = {
     show :: Maybe Boolean,
@@ -101,3 +125,27 @@ instance gaugeDetailEncodeJson :: EncodeJson GaugeDetail where
     "formatter" := gd.formatter,
     "textStyle" := gd.textStyle
     ]
+
+
+instance gaugeDetailDecodeJson :: DecodeJson GaugeDetail where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { show: _
+         , backgroundColor: _
+         , borderWidth: _
+         , borderColor: _
+         , width: _
+         , height: _
+         , offsetCenter: _
+         , formatter: _
+         , textStyle: _ } <$>
+         (o .? "show") <*>
+         (o .? "backgroundColor") <*>
+         (o .? "borderWidth") <*>
+         (o .? "borderColor") <*>
+         (o .? "width") <*>
+         (o .? "height") <*>
+         (o .? "offsetCenter") <*>
+         (o .? "formatter") <*>
+         (o .? "textStyle")
+    pure $ GaugeDetail r

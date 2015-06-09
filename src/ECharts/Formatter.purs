@@ -8,6 +8,7 @@ import Data.StrMap (fromList, StrMap (..))
 import Data.Tuple
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 
 
@@ -44,5 +45,6 @@ instance formatterEncodeJson :: EncodeJson Formatter where
   encodeJson (Template str) = encodeJson str
   encodeJson (FormatFunc func) = func2json $ effArrToFn func
 
-
+instance formatterDecodeJson :: DecodeJson Formatter where
+  decodeJson json = Template <$> decodeJson json
 

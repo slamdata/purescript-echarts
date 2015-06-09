@@ -13,8 +13,10 @@ module ECharts.Tooltip (
 
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 import Data.Maybe
+import Data.Either
 import Data.StrMap
 import Data.Function
 
@@ -32,6 +34,15 @@ instance tooltipTriggerEncodeJson :: EncodeJson TooltipTrigger where
   encodeJson TriggerItem = encodeJson "item"
   encodeJson TriggerAxis = encodeJson "axis"
 
+instance tooltipTriggerDecodeJson :: DecodeJson TooltipTrigger where
+  decodeJson json = do
+    str <- decodeJson json
+    case str of
+      "item" -> pure TriggerItem
+      "axis" -> pure TriggerAxis
+      _ -> Left $ "incorrect tooltip trigger"
+
+
 
 foreign import func2json """
 function func2json(fn) {
@@ -44,6 +55,9 @@ instance tooltipPositionEncodeJson :: EncodeJson TooltipPosition where
   encodeJson (Fixed nums) = encodeJson nums
   encodeJson (FuncPos func) = func2json $ mkFn1 func
 
+instance tooltipPositionDecodeJson :: DecodeJson TooltipPosition where
+  decodeJson nums = Fixed <$> decodeJson nums
+
 
 data TooltipAxisPointerType =
   LinePointer | CrossPointer | ShadowPointer | NonePointer
@@ -54,6 +68,15 @@ instance tooltipAxisPointerTypeEncodeJson :: EncodeJson TooltipAxisPointerType w
     ShadowPointer -> "shadow"
     NonePointer -> "none"
 
+instance tooltiopAxisPointerTypeDecodeJson :: DecodeJson TooltipAxisPointerType where
+  decodeJson json = do
+    str <- decodeJson json
+    case str of
+      "line" -> pure LinePointer
+      "cross" -> pure CrossPointer
+      "shadow" -> pure ShadowPointer
+      "none" -> pure NonePointer
+      _ -> Left "incorrect tooltip axis pointer type"
 
 type TooltipAxisPointerRec = {
     "type" :: Maybe TooltipAxisPointerType,
@@ -73,6 +96,19 @@ instance tooltipAxisPointerEncodeJson :: EncodeJson TooltipAxisPointer where
       "crossStyle" := obj.crossStyle,
       "shadowStyle" := obj.shadowStyle
     ]
+
+instance tooltipAxisPointerDecodeJson :: DecodeJson TooltipAxisPointer where
+  decodeJson json = do
+    o <- decodeJson json
+    r <- { "type": _
+         , lineStyle: _
+         , crossStyle: _
+         , shadowStyle: _ } <$>
+         (o .? "type") <*>
+         (o .? "lineStyle") <*>
+         (o .? "crossStyle") <*>
+         (o .? "shadowStyle")
+    pure $ TooltipAxisPointer r
 tooltipAxisPointerDefault :: TooltipAxisPointerRec
 tooltipAxisPointerDefault = {
   "type": Nothing,
@@ -127,6 +163,47 @@ instance tooltipEncodeJson :: EncodeJson Tooltip where
       "textStyle" := obj.textStyle,
       "enterable" := obj.enterable
     ]
+
+
+instance tooltipDecodeJson :: DecodeJson Tooltip where
+  decodeJson json = do
+    o <- decodeJson json
+    r <- { show: _
+         , showContent: _
+         , trigger: _
+         , position: _
+         , formatter: _
+         , islandFormatter: _
+         , showDelay: _
+         , hideDelay: _
+         , transitionDuration: _
+         , backgroundColor: _
+         , borderColor: _
+         , borderRadius: _
+         , borderWidth: _
+         , padding: _
+         , axisPointer: _
+         , textStyle: _
+         , enterable: _ } <$>
+         (o .? "show") <*>
+         (o .? "showContent") <*>
+         (o .? "trigger") <*>
+         (o .? "position") <*>
+         (o .? "formatter") <*>
+         (o .? "islandFormatter") <*>
+         (o .? "showDelay") <*>
+         (o .? "hideDelay") <*>
+         (o .? "transitionDuration") <*>
+         (o .? "backgroundColor") <*>
+         (o .? "borderColor") <*>
+         (o .? "borderRadius") <*>
+         (o .? "borderWidth") <*>
+         (o .? "padding") <*>
+         (o .? "axisPointer") <*>
+         (o .? "textStyle") <*>
+         (o .? "enterable")
+    pure $ Tooltip r
+         
 
 tooltipDefault :: TooltipRec
 tooltipDefault = {

@@ -4,6 +4,7 @@ import Data.Maybe
 import Data.StrMap
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 import ECharts.Symbol
 import ECharts.Color
@@ -30,6 +31,21 @@ instance checkpointStyleEncodeJson :: EncodeJson CheckpointStyle where
       "borderColor" := obj.borderColor,
       "label" := obj.label
     ]
+instance checkpointStyleDecodeJson :: DecodeJson CheckpointStyle where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { symbol: _
+         , symbolSize: _
+         , color: _
+         , borderColor: _
+         , label: _ } <$>
+         (o .? "symbol") <*>
+         (o .? "symbolSize") <*>
+         (o .? "color") <*>
+         (o .? "borderColor") <*>
+         (o .? "label")
+    pure $ CheckpointStyle r
+    
 checkpointStyleDefault :: CheckpointStyleRec
 checkpointStyleDefault = {
   symbol: Nothing,

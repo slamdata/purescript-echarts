@@ -4,6 +4,7 @@ import Data.Maybe
 import Data.StrMap (fromList)
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 
 import ECharts.Common
@@ -38,6 +39,29 @@ instance gridEncodeJson :: EncodeJson Grid where
       "borderWidth" := obj.borderWidth,
       "borderColor" := obj.borderColor
     ]
+
+instance gridDecodeJson :: DecodeJson Grid where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { x: _
+         , y: _
+         , x2: _
+         , y2: _
+         , width: _
+         , height: _
+         , backgroundColor: _
+         , borderWidth: _
+         , borderColor: _ } <$>
+         (o .? "x") <*>
+         (o .? "y") <*>
+         (o .? "x2") <*>
+         (o .? "y2") <*>
+         (o .? "width") <*>
+         (o .? "height") <*>
+         (o .? "backgroundColor") <*>
+         (o .? "borderWidth") <*>
+         (o .? "borderColor")
+    pure $ Grid r
 
 gridDefault :: GridRec
 gridDefault = {

@@ -7,7 +7,7 @@ import ECharts.Chart
 import Control.Monad.Eff
 import ECharts.Effects
 
-newtype Connection = Connection (forall eff. Eff (disconnect::Disconnect|eff) Unit)
+newtype Connection = Connection (forall eff. Eff (disconnect::DISCONNECT|eff) Unit)
 
 foreign import connectImpl """
 function connectImpl(target, source) {
@@ -18,9 +18,9 @@ function connectImpl(target, source) {
     };
   };
 }
-""" :: forall e. Fn2 EChart EChart (Eff (connect::Connect|e) Connection)
+""" :: forall e. Fn2 EChart EChart (Eff (connect::CONNECT|e) Connection)
 
-connect :: forall e. EChart -> EChart -> Eff (connect::Connect|e) Connection
+connect :: forall e. EChart -> EChart -> Eff (connect::CONNECT|e) Connection
 connect target source = do
   runFn2 connectImpl target source
     

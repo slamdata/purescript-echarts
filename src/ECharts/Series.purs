@@ -33,8 +33,10 @@ module ECharts.Series (
 import Control.Monad.Eff
 import Data.Function
 import Data.Maybe
+import Data.Either
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 import Data.Tuple
 import Data.StrMap
@@ -203,6 +205,28 @@ lineRecEncode r = [
   "legendHoverLink" := r.legendHoverLink
   ]
 
+decodeLineRec :: JObject -> Either String LineSeriesRec
+decodeLineRec obj =
+  { "data": _
+  , stack: _
+  , xAxisIndex: _
+  , yAxisIndex: _
+  , symbol: _
+  , symbolSize: _
+  , symbolRotate: _
+  , showAllSymbol: _
+  , smooth: _
+  , legendHoverLink: _ } <$>
+  (obj .? "data") <*>
+  (obj .? "stack") <*>
+  (obj .? "xAxisIndex") <*>
+  (obj .? "yAxisIndex") <*>
+  (obj .? "symbol") <*>
+  (obj .? "symbolSize") <*>
+  (obj .? "symbolRotate") <*>
+  (obj .? "showAllSymbol") <*>
+  (obj .? "smooth") <*>
+  (obj .? "legendHoverLink")
 
 type BarSeriesRec = {
   "data" ::Maybe [ItemData],
@@ -243,6 +267,29 @@ barRecEncode r = [
   "legendHoverLink" := r.legendHoverLink
   ]
 
+decodeBarRec :: JObject -> Either String BarSeriesRec
+decodeBarRec obj =
+  { "data": _
+  , stack: _
+  , xAxisIndex: _
+  , yAxisIndex: _
+  , barGap: _
+  , barCategoryGap: _
+  , barMinHeight: _
+  , barWidth: _
+  , barMaxWidth: _
+  , legendHoverLink: _ } <$>
+  (obj .? "data") <*>
+  (obj .? "stack") <*>
+  (obj .? "xAxisIndex") <*>
+  (obj .? "yAxisIndex") <*>
+  (obj .? "barGap") <*>
+  (obj .? "barCategoryGap") <*>
+  (obj .? "barMinHeight") <*>
+  (obj .? "barWidth") <*>
+  (obj .? "barMaxWidth") <*>
+  (obj .? "legendHoverLink")
+
 
 type ScatterSeriesRec = {
   "data" ::Maybe [ItemData],
@@ -281,6 +328,29 @@ scatterRecEncode r = [
   "legendHoverLink" := r.legendHoverLink
   ]
 
+decodeScatterSeriesRec :: JObject -> Either String ScatterSeriesRec
+decodeScatterSeriesRec o =
+  { "data": _
+  , xAxisIndex: _
+  , yAxisIndex: _
+  , symbol: _
+  , symbolSize: _
+  , symbolRotate: _
+  , large: _
+  , largeThreshold: _
+  , legendHoverLink: _ } <$>
+  (o .? "data") <*>
+  (o .? "xAxisIndex") <*>
+  (o .? "yAxisIndex") <*>
+  (o .? "symbol") <*>
+  (o .? "symbolSize") <*>
+  (o .? "symbolRotate") <*>
+  (o .? "large") <*>
+  (o .? "largeThreshold") <*>
+  (o .? "legendHoverLink") 
+    
+
+
 type CandlestickSeriesRec = {
   "data" ::Maybe [ItemData],
   xAxisIndex :: Maybe Number,
@@ -307,6 +377,21 @@ candlestickRecEncode r = [
   "barWidth" := r.barWidth,
   "barMaxWidth" := r.barMaxWidth
   ]
+
+decodeCandleStickSeries :: JObject -> Either String CandlestickSeriesRec
+decodeCandleStickSeries o =
+  { "data": _
+  , xAxisIndex: _
+  , yAxisIndex: _
+  , barMinHeight: _
+  , barWidth: _
+  , barMaxWidth: _ } <$>
+  (o .? "data") <*>
+  (o .? "xAxisIndex") <*>
+  (o .? "yAxisIndex") <*>
+  (o .? "barMinHeight") <*>
+  (o .? "barWidth") <*>
+  (o .? "barMaxWidth")
                                  
 type PieSeriesRec = {
   "data" ::Maybe [ItemData],
@@ -348,6 +433,29 @@ pieRecEncode r = [
   "legendHoverLink" := r.legendHoverLink
   ]
 
+decodePieSeriesRec :: JObject -> Either String PieSeriesRec
+decodePieSeriesRec o =
+  { "data": _
+  , center: _
+  , radius: _
+  , startAngle: _
+  , minAngle: _
+  , clockWise: _
+  , roseType: _
+  , selectedOffset: _
+  , selectedMode: _
+  , legendHoverLink: _ } <$>
+  (o .? "data") <*>
+  (o .? "center") <*>
+  (o .? "radius") <*>
+  (o .? "startAngle") <*>
+  (o .? "minAngle") <*>
+  (o .? "clockWise") <*>
+  (o .? "roseType") <*>
+  (o .? "selectedOffset") <*>
+  (o .? "selectedMode") <*>
+  (o .? "legendHoverLink")
+
                  
 type RadarSeriesRec = {
   "data" ::Maybe [ItemData],
@@ -377,6 +485,21 @@ radarRecEncode r = [
   "symbolRotate" := r.symbolRotate,
   "legendHoverLink" := r.legendHoverLink
   ]
+
+decodeRadarSeriesRec :: JObject -> Either String RadarSeriesRec
+decodeRadarSeriesRec o =
+  { "data": _
+  , polarIndex: _
+  , symbol: _
+  , symbolSize: _
+  , symbolRotate: _
+  , legendHoverLink: _ } <$>
+  (o .? "data") <*>
+  (o .? "polarIndex") <*>
+  (o .? "symbol" ) <*>
+  (o .? "symbolSize") <*>
+  (o .? "symbolRotate") <*>
+  (o .? "legendHoverLink") 
 
 type ChordSeriesRec = {
   nodes :: Maybe [Node],
@@ -435,6 +558,42 @@ chordRecEncode r = [
   "sortSub" := r.sortSub,
   "clockWise" := r.clockWise
   ]
+
+decodeChordSeriesRec :: JObject -> Either String ChordSeriesRec
+decodeChordSeriesRec o =
+  { nodes: _
+  , categories: _
+  , links: _
+  , matrix: _
+  , "data": _
+  , ribbonType: _
+  , symbol: _
+  , symbolSize: _
+  , minRadius: _
+  , maxRadius: _
+  , showScale: _
+  , showScaleText: _
+  , padding: _
+  , sort: _
+  , sortSub: _
+  , clockWise: _ } <$>
+  (o .? "nodes") <*>
+  (o .? "categories") <*>
+  (o .? "links") <*>
+  (o .? "matrix") <*>
+  (o .? "data") <*>
+  (o .? "ribbonType") <*>
+  (o .? "symbol") <*>
+  (o .? "symbolSize") <*>
+  (o .? "minRadius") <*>
+  (o .? "maxRadius") <*>
+  (o .? "showScale") <*>
+  (o .? "showScaleText") <*>
+  (o .? "padding") <*>
+  (o .? "sort") <*>
+  (o .? "sortSub") <*>
+  (o .? "clockWise")
+  
 
 type ForceSeriesRec = {
   categories :: Maybe [ForceCategory],
@@ -502,6 +661,47 @@ forceRecEncode r = [
   "steps" := r.steps,
   "ribbonType" := r.ribbonType
   ]
+
+decodeForceSeriesRec :: JObject -> Either String ForceSeriesRec
+decodeForceSeriesRec o =
+  { categories: _
+  , nodes: _
+  , links: _
+  , matrix: _
+  , center: _
+  , size: _
+  , minRadius: _
+  , maxRadius: _
+  , symbol: _
+  , symbolSize: _
+  , linkSymbol: _
+  , linkSymbolSize: _
+  , scaling: _
+  , gravity: _
+  , draggable: _
+  , large: _
+  , useWorker: _
+  , steps: _
+  , ribbonType: _} <$>
+  (o .? "categories") <*>
+  (o .? "nodes") <*>
+  (o .? "links") <*>
+  (o .? "matrix") <*>
+  (o .? "center") <*>
+  (o .? "size") <*>
+  (o .? "minRadius") <*>
+  (o .? "maxRadius") <*>
+  (o .? "symbol") <*>
+  (o .? "symbolSize") <*>
+  (o .? "linkSymbol") <*>
+  (o .? "linkSymbolSize") <*>
+  (o .? "scaling") <*>
+  (o .? "gravity") <*>
+  (o .? "draggable") <*>
+  (o .? "large") <*>
+  (o .? "useWorker") <*>
+  (o .? "steps") <*>
+  (o .? "ribbonType")
                       
 type MapSeriesRec = {
   "data" ::Maybe [ItemData],
@@ -554,6 +754,38 @@ mapRecEncode r = [
   "textFixed" := r.textFixed,
   "geoCoord" := r.geoCoord
   ]
+
+
+decodeMapSeriesRec :: JObject -> Either String MapSeriesRec
+decodeMapSeriesRec o =
+  { "data": _
+  , selectedMode: _
+  , mapType: _
+  , hoverable: _
+  , dataRangeHoverLink: _
+  , mapLocation: _
+  , mapValueCalculation: _
+  , mapValuePrecision: _
+  , showLegendSymbol: _
+  , roam: _
+  , scaleLimit: _
+  , nameMap: _
+  , textFixed: _
+  , geoCoord: _ } <$>
+  (o .? "data") <*>
+  (o .? "selectedMode") <*>
+  (o .? "mapType") <*>
+  (o .? "hoverable") <*>
+  (o .? "dataRangeHoverLink") <*>
+  (o .? "mapLocation") <*>
+  (o .? "mapValueCalculation") <*>
+  (o .? "mapValuePrecision") <*>
+  (o .? "showLegendSymbol") <*>
+  (o .? "roam") <*>
+  (o .? "scaleLimit") <*>
+  (o .? "nameMap") <*>
+  (o .? "textFixed") <*>
+  (o .? "geoCoord")
 
 type GaugeSeriesRec = {
   "data" ::Maybe [ItemData],
@@ -615,6 +847,43 @@ gaugeRecEncode r = [
   "legendHoverLink" := r.legendHoverLink,
   "axisLabel" := r.axisLabel
   ]
+
+decodeGaugeSeriesRec :: JObject -> Either String GaugeSeriesRec
+decodeGaugeSeriesRec o =
+  { "data": _
+  , center: _
+  , radius: _
+  , startAngle: _
+  , endAngle: _
+  , min: _
+  , max: _
+  , precision: _
+  , splitNumber: _
+  , axisLine: _
+  , axisTick: _
+  , splitLine: _
+  , title: _
+  , detail: _
+  , pointer: _
+  , legendHoverLink: _
+  , axisLabel: _ } <$>
+  (o .? "data") <*>
+  (o .? "center") <*>
+  (o .? "radius") <*>
+  (o .? "startAngle") <*>
+  (o .? "endAngle") <*>
+  (o .? "min") <*>
+  (o .? "max") <*>
+  (o .? "precision") <*>
+  (o .? "splitNumber") <*>
+  (o .? "axisLine") <*>
+  (o .? "axisTick") <*>
+  (o .? "splitLine") <*>
+  (o .? "title") <*>
+  (o .? "detail") <*>
+  (o .? "pointer") <*>
+  (o .? "legendHoverLink") <*>
+  (o .? "axisLabel")
                       
 type FunnelSeriesRec = {
   "data" ::Maybe [ItemData],
@@ -670,6 +939,39 @@ funnelRecEncode r = [
   "sort" := r.sort,
   "legendHoverLink" := r.legendHoverLink
   ]
+
+decodeFunnelSeriesRec :: JObject -> Either String FunnelSeriesRec
+decodeFunnelSeriesRec o =
+  { "data": _
+  , x: _
+  , x2: _
+  , y: _
+  , y2: _
+  , width: _
+  , height: _
+  , funnelAlign: _
+  , min: _
+  , max: _
+  , minSize: _
+  , maxSize: _
+  , gap: _
+  , sort: _
+  , legendHoverLink: _ } <$>
+  (o .? "data") <*>
+  (o .? "x") <*>
+  (o .? "x2") <*>
+  (o .? "y") <*>
+  (o .? "y2") <*>
+  (o .? "width") <*>
+  (o .? "height") <*>
+  (o .? "funnelAlign") <*>
+  (o .? "min") <*>
+  (o .? "max") <*>
+  (o .? "minSize") <*>
+  (o .? "maxSize") <*>
+  (o .? "gap") <*>
+  (o .? "sort") <*>
+  (o .? "legendHoverLink")
                        
 type EventRiverSeriesRec = {
   eventList :: Maybe [OneEvent],
@@ -692,6 +994,17 @@ eventRiverRecEncode r = [
   "weight" := r.weight,
   "legendHoverLink" := r.legendHoverLink
   ]
+
+decodeEventRiverSeriesRec :: JObject -> Either String EventRiverSeriesRec
+decodeEventRiverSeriesRec o =
+  { eventList: _
+  , xAxisIndex: _
+  , weight: _
+  , legendHoverLink: _ } <$>
+  (o .? "eventList") <*>
+  (o .? "xAxisIndex") <*>
+  (o .? "weight") <*>
+  (o .? "legendHoverLink")
 
 specialForSeries :: Series -> [JAssoc]
 specialForSeries series =
@@ -717,7 +1030,39 @@ instance encodeSeries :: EncodeJson Series where
       typeForSeries series,
       specialForSeries series
     ]
-  
+
+
+instance decodeSeries :: DecodeJson Series where
+  decodeJson json = do
+    obj <- decodeJson json
+    u <- { name: _
+         , tooltip: _
+         , clickable: _
+         , itemStyle: _
+         , markPoint: _
+         , markLine: _ } <$>
+         (obj .? "name") <*>
+         (obj .? "tooltip") <*>
+         (obj .? "clickable") <*>
+         (obj .? "itemStyle") <*>
+         (obj .? "markPoint") <*>
+         (obj .? "markLine")
+    ty <- obj .? "type"
+    case ty of
+      "line" -> LineSeries <$> ({common: u, lineSeries: _} <$> decodeLineRec obj)
+      "bar" -> BarSeries <$> ({common: u, barSeries: _} <$> decodeBarRec obj)
+      "scatter" -> ScatterSeries <$> ({common:u, scatterSeries: _} <$> decodeScatterSeriesRec obj)
+      "k" -> CandlestickSeries <$> ({common:u, candlestickSeries: _} <$> decodeCandleStickSeries obj)
+      "pie" -> PieSeries <$> ({common: u, pieSeries: _} <$> decodePieSeriesRec obj)
+      "radar" -> RadarSeries <$> ({common: u, radarSeries: _} <$> decodeRadarSeriesRec obj)
+      "chord" -> ChordSeries <$> ({common: u, chordSeries: _} <$> decodeChordSeriesRec obj)
+      "force" -> ForceSeries <$> ({common: u, forceSeries: _} <$> decodeForceSeriesRec obj)
+      "map" -> MapSeries <$> ({common: u, mapSeries: _} <$> decodeMapSeriesRec obj)
+      "gauge" -> GaugeSeries <$> ({common: u, gaugeSeries: _} <$> decodeGaugeSeriesRec obj)
+      "funnel" -> FunnelSeries <$> ({common: u, funnelSeries: _} <$> decodeFunnelSeriesRec obj)
+      "eventRiver" -> EventRiverSeries <$> ({common: u, eventRiverSeries: _} <$> decodeEventRiverSeriesRec obj)
+      
+
 foreign import setSeriesImpl """
 function setSeriesImpl(series, notMerge, chart) {
   return function() {

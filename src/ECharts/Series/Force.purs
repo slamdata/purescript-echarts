@@ -1,10 +1,12 @@
 module ECharts.Series.Force where
 
 import Control.Monad.Eff
+import Control.Alt ((<|>))
 import Data.Function
 import Data.Maybe
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 import Data.Tuple
 import Data.StrMap
@@ -43,6 +45,20 @@ instance forceCategoryEncodeJson :: EncodeJson ForceCategory where
      "symbolSize" := fc.symbolSize,
      "itemStyle" := fc.itemStyle
      ]
+instance forceCategoryDecodeJson :: DecodeJson ForceCategory where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { name: _
+         , symbol: _
+         , symbolSize: _
+         , itemStyle: _ } <$>
+         (o .? "name") <*>
+         (o .? "symbol") <*>
+         (o .? "symbolSize") <*>
+         (o .? "itemStyle")
+    pure $ ForceCategory r
+           
+
 
 type NodeRec = {
     name :: Maybe String,
@@ -94,11 +110,44 @@ instance nodeEncodeJson :: EncodeJson Node where
     "category" := n.category
     ]
 
+instance nodeDecodeJson :: DecodeJson Node where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { name: _
+         , label: _
+         , value: _
+         , ignore: _
+         , symbol: _
+         , symbolSize: _
+         , itemStyle: _
+         , initial: _
+         , fixX: _
+         , fixY: _
+         , draggable: _
+         , category: _ } <$>
+         (o .? "name") <*>
+         (o .? "label") <*>
+         (o .? "value") <*>
+         (o .? "ignore") <*>
+         (o .? "symbol") <*>
+         (o .? "symbolSize") <*>
+         (o .? "itemStyle") <*>
+         (o .? "initial") <*>
+         (o .? "fixX") <*>
+         (o .? "fixY") <*>
+         (o .? "draggable") <*>
+         (o .? "category")
+    pure $ Node r
+
 data LinkEnd = Name String | Index Number
 
 instance linkEndEncodeJson :: EncodeJson LinkEnd where
   encodeJson (Name name) = encodeJson name
   encodeJson (Index id) = encodeJson id 
+
+instance linkEndDecodeJson :: DecodeJson LinkEnd where
+  decodeJson j =
+    (Name <$> decodeJson j) <|> (Index <$> decodeJson j)
 
 type LinkRec = {
     source :: LinkEnd,
@@ -117,6 +166,19 @@ instance linkEncodeJson :: EncodeJson Link where
     "weight" := link.weight,
     "itemStyle" := link.itemStyle
     ]
+
+instance linkDecodeJson :: DecodeJson Link where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { source: _
+         , target: _
+         , weight: _
+         , itemStyle: _ } <$>
+         (o .? "source") <*>
+         (o .? "target") <*>
+         (o .? "weight") <*>
+         (o .? "itemStyle")
+    pure $ Link r
 
 type Matrix = [[Number]]
 

@@ -19,7 +19,7 @@ data EventType = Refresh | Restore | Resize | Click | DoubleClick | Hover
 
 type EventParam = Json
 
-newtype Sub = Sub (forall eff. Eff (unlisten :: Unlisten|eff) Unit)
+newtype Sub = Sub (forall eff. Eff (unlisten :: UNLISTEN|eff) Unit)
 
 eventStr :: EventType -> String
 eventStr event = case event of 
@@ -57,12 +57,12 @@ function listenImpl(event, effHandler, chart) {
 }
 """ :: forall e.
        Fn3 String
-           (EventParam -> Eff (listen::Listen|e) Unit) 
+           (EventParam -> Eff (listen::LISTEN|e) Unit) 
            EChart 
-           (Eff (listen::Listen|e) Sub)
+           (Eff (listen::LISTEN|e) Sub)
 
 listen :: forall e.
           EventType ->
-          (EventParam -> Eff (listen :: Listen|e) Unit) -> 
-          EChart -> Eff (listen :: Listen|e) Sub
+          (EventParam -> Eff (listen :: LISTEN|e) Unit) -> 
+          EChart -> Eff (listen :: LISTEN|e) Sub
 listen eventName handler chart = runFn3 listenImpl (eventStr eventName) handler chart

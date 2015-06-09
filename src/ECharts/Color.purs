@@ -8,6 +8,7 @@ module ECharts.Color (
 import Data.Function
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 
 import ECharts.Item.Value
 import ECharts.Utils
@@ -39,3 +40,6 @@ instance calculableColorEncodeJson :: EncodeJson CalculableColor where
   encodeJson cc = case cc of
     SimpleColor color -> encodeJson color
     ColorFunc func -> func2json $ mkFn1 func
+
+instance calculableColorDecodeJson :: DecodeJson CalculableColor where
+  decodeJson j = SimpleColor <$> decodeJson j

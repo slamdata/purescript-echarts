@@ -4,6 +4,7 @@ import Data.Maybe
 import Data.StrMap 
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 
 import ECharts.Color
@@ -27,6 +28,13 @@ instance legendItemEncodeJson :: EncodeJson LegendItem where
       "icon" := obj.icon,
       "textStyle" := obj.textStyle
     ]
+
+instance legendItemDecodeJson :: DecodeJson LegendItem where
+  decodeJson j = do
+    o <- decodeJson j
+    name <- (o .? "name")
+    r <- {icon: _, textStyle: _} <$> (o .? "icon") <*> (o .? "textStyle")
+    pure $ LegendItem name r 
 
 legendItemDefault :: String -> LegendItem
 legendItemDefault name = LegendItem name {icon: Nothing, textStyle: Nothing}
@@ -93,3 +101,41 @@ instance legendEncodeJson :: EncodeJson Legend where
       "selected" := obj.selected,
       "data" := obj."data"
     ]
+
+instance legendDecodeJson :: DecodeJson Legend where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { show: _
+         , orient: _
+         , x: _
+         , y: _
+         , backgroundColor: _
+         , borderColor: _
+         , borderWidth: _
+         , padding: _
+         , itemGap: _
+         , itemHeight: _
+         , itemWidth: _
+         , textStyle: _
+         , formatter: _
+         , selectedMode: _
+         , selected: _
+         , "data": _ } <$>
+         (o .? "show") <*>
+         (o .? "orient") <*>
+         (o .? "x") <*>
+         (o .? "y") <*>
+         (o .? "backgroundColor") <*>
+         (o .? "borderColor") <*>
+         (o .? "borderWidth") <*>
+         (o .? "padding") <*>
+         (o .? "itemGap") <*>
+         (o .? "itemHeight") <*>
+         (o .? "itemWidth") <*>
+         (o .? "textStyle") <*>
+         (o .? "formatter") <*>
+         (o .? "selectedMode") <*>
+         (o .? "selected") <*>
+         (o .? "data")
+    pure $ Legend r
+         

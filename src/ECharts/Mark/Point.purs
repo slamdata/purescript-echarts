@@ -21,6 +21,7 @@ import Data.StrMap (fromList, StrMap (..))
 import Data.Tuple
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 
 type MarkPointRec = {
@@ -47,6 +48,23 @@ instance markPointEncodeJson :: EncodeJson MarkPoint where
       "geoCoord" := mp.geoCoord
     ]
 
+instance markPointDecodeJson :: DecodeJson MarkPoint where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- { symbol: _
+         , symbolSize: _
+         , large: _
+         , effect: _
+         , "data": _
+         , geoCoord: _ } <$>
+         (o .? "symbol") <*>
+         (o .? "symbolSize") <*>
+         (o .? "large") <*>
+         (o .? "effect") <*>
+         (o .? "data") <*>
+         (o .? "geoCoord")
+    pure $ MarkPoint r
+
 markPointDefault :: MarkPointRec
 markPointDefault =
   {
@@ -65,10 +83,10 @@ function delMarkPointImpl(idx, name, chart) {
   };
 }
 """ :: forall e. Fn3 Number String EChart
-       (Eff (removeMarkPointECharts::RemoveMarkPoint|e) EChart)
+       (Eff (removeMarkPointECharts::REMOVE_MARKPOINT|e) EChart)
 
 delMarkPoint :: forall e. Number -> String -> EChart -> 
-                (Eff (removeMarkPointECharts::RemoveMarkPoint|e) EChart)
+                (Eff (removeMarkPointECharts::REMOVE_MARKPOINT|e) EChart)
 delMarkPoint idx name chart = runFn3 delMarkPointImpl idx name chart 
   
 foreign import addMarkPointImpl """
@@ -77,8 +95,8 @@ function addMarkPointImpl(mp, chart) {
     return chart.addMarkPoint(mp);
   };
 }
-""" :: forall e. Fn2 Json EChart (Eff (addMarkPointECharts::AddMarkPoint|e) EChart)
+""" :: forall e. Fn2 Json EChart (Eff (addMarkPointECharts::ADD_MARKPOINT|e) EChart)
 
 addMarkPoint :: forall e. MarkPoint -> EChart -> 
-                (Eff (addMarkPointECharts::AddMarkPoint|e) EChart)
+                (Eff (addMarkPointECharts::ADD_MARKPOINT|e) EChart)
 addMarkPoint mp chart = runFn2 addMarkPointImpl (encodeJson mp) chart

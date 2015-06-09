@@ -2,9 +2,12 @@ module ECharts.Coords where
 
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 
 import Data.Maybe
+import Data.Either
+import Control.Alt ((<|>))
 import Data.StrMap (fromList)
 
 data XPos = XLeft
@@ -17,6 +20,17 @@ instance xPosEncodeJson :: EncodeJson XPos where
   encodeJson XRight = fromString "right"
   encodeJson XCenter = fromString "center"
   encodeJson (X num) = fromNumber num
+
+instance xPosDecodeJson :: DecodeJson XPos where
+  decodeJson j =
+    (do str <- decodeJson j
+        case str of
+          "left" -> pure XLeft
+          "right" -> pure XRight
+          "center" -> pure XCenter
+          _ -> Left "incorrect x pos") <|>
+    (X <$> decodeJson j)
+
 
 
 data YPos = YTop
@@ -31,6 +45,15 @@ instance yPosEncodeJson :: EncodeJson YPos where
     YCenter -> fromString "center"
     Y num -> fromNumber num
 
+instance yPosDecodeJson :: DecodeJson YPos where
+  decodeJson j =
+    (do str <- decodeJson j
+        case str of
+          "top" -> pure YTop
+          "bottom" -> pure YBottom
+          "center" -> pure YCenter
+          _ -> Left "incorrect y pos") <|>
+    (Y <$> decodeJson j)
 
 data LabelPosition = LPOuter | LPInner | LPTop | LPRight | LPLeft | LPBottom
                    | LPInside
@@ -50,6 +73,22 @@ instance labelPositionEncodeJson :: EncodeJson LabelPosition where
     LPInsideTop -> "insideTop"
     LPInsideBottom -> "insideBottom"
 
+instance labelPositionDecodeJson :: DecodeJson LabelPosition where
+  decodeJson j = do
+    str <- decodeJson j
+    case str of
+      "outer" -> pure LPOuter
+      "inner" -> pure LPInner
+      "top" -> pure LPTop
+      "right" -> pure LPRight
+      "left" -> pure LPLeft
+      "bottom" -> pure LPBottom
+      "inside" -> pure LPInside
+      "insideLeft" -> pure LPInsideLeft
+      "insideRight" -> pure LPInsideRight
+      "insideTop" -> pure LPInsideTop
+      "insideBottom" -> pure LPInsideBottom
+
 
 data HorizontalAlign = HAlignLeft
                      | HAlignRight
@@ -60,6 +99,16 @@ instance textAlignEncodeJson :: EncodeJson HorizontalAlign where
     HAlignLeft -> "left"
     HAlignRight -> "right"
     HAlignCenter -> "center"
+
+
+instance textAlignDecodeJson :: DecodeJson HorizontalAlign where
+  decodeJson j = do
+    str <- decodeJson j
+    case str of
+      "left" -> pure HAlignLeft
+      "right" -> pure HAlignRight
+      "center" -> pure HAlignCenter
+      _ -> Left "incorrect text align"
 
 
 type LocationRec = {
@@ -75,8 +124,22 @@ instance locationEncodeJson :: EncodeJson Location where
     "y" := xy.y
     ]
 
+instance locationDecodeJson :: DecodeJson Location where
+  decodeJson j = do
+    o <- decodeJson j
+    r <- {x: _, y: _} <$> (o .? "x") <*> (o .? "y")
+    pure $ Location r
+
 data Orient = Horizontal | Vertical
 instance orientEncodeJson :: EncodeJson Orient where
   encodeJson a = encodeJson $ case a of
     Horizontal -> "horizontal"
     Vertical -> "vertical"
+
+instance orientDecodeJson :: DecodeJson Orient where
+  decodeJson j = do
+    str <- decodeJson j
+    case str of
+      "horizontal" -> pure Horizontal
+      "vertical" -> pure Vertical
+      _ -> Left "incorrect orient"
