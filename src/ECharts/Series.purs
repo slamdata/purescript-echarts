@@ -29,7 +29,7 @@ module ECharts.Series (
   eventRiverSeriesDefault
   ) where 
 
-
+import Prelude
 import Control.Monad.Eff
 import Data.Function
 import Data.Maybe
@@ -38,9 +38,10 @@ import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
-import Data.Tuple
-import Data.StrMap
+import Data.Tuple (Tuple(..))
+import Data.StrMap hiding (toList)
 import Data.Array (concat)
+import Data.List (toList)
 
 import ECharts.Common
 import ECharts.Coords
@@ -102,7 +103,7 @@ data Series = LineSeries
             | EventRiverSeries
               {common :: UniversalSeriesRec, eventRiverSeries :: EventRiverSeriesRec}
 
-typeForSeries :: Series -> [JAssoc]
+typeForSeries :: Series -> Array JAssoc
 typeForSeries series =
   ["type" := getType series] where
     getType s = case s of
@@ -138,7 +139,7 @@ universalSeriesDefault = {
   markPoint: Nothing,
   markLine: Nothing
   }
-universalRecEncode :: UniversalSeriesRec -> [JAssoc]
+universalRecEncode :: UniversalSeriesRec -> Array JAssoc
 universalRecEncode r =
    [
     "name" := r.name,
@@ -148,7 +149,7 @@ universalRecEncode r =
     "markPoint" := r.markPoint,
     "markLine" := r.markLine
     ]
-universalForSeries :: Series -> [JAssoc]
+universalForSeries :: Series -> Array JAssoc
 universalForSeries series =
   universalRecEncode $ case series of
     LineSeries {common = u} -> u
@@ -167,7 +168,7 @@ universalForSeries series =
 
 
 type LineSeriesRec = {
-  "data" ::Maybe [ItemData],
+  "data" ::Maybe (Array ItemData),
   stack :: Maybe String,
   xAxisIndex :: Maybe Number,
   yAxisIndex :: Maybe Number,
@@ -191,7 +192,7 @@ lineSeriesDefault  = {
   smooth: Nothing,
   legendHoverLink: Nothing
   }
-lineRecEncode :: LineSeriesRec -> [JAssoc]
+lineRecEncode :: LineSeriesRec -> (Array JAssoc)
 lineRecEncode r = [
   "data" := r.data,
   "stack" := r.stack,
@@ -229,7 +230,7 @@ decodeLineRec obj =
   (obj .? "legendHoverLink")
 
 type BarSeriesRec = {
-  "data" ::Maybe [ItemData],
+  "data" ::Maybe (Array ItemData),
   stack :: Maybe String,
   xAxisIndex :: Maybe Number,
   yAxisIndex :: Maybe Number,
@@ -253,7 +254,7 @@ barSeriesDefault = {
   barMaxWidth: Nothing,
   legendHoverLink: Nothing
   }
-barRecEncode :: BarSeriesRec -> [JAssoc]
+barRecEncode :: BarSeriesRec -> Array JAssoc
 barRecEncode r = [
   "data" := r.data,
   "stack" := r.stack,
@@ -292,7 +293,7 @@ decodeBarRec obj =
 
 
 type ScatterSeriesRec = {
-  "data" ::Maybe [ItemData],
+  "data" ::Maybe (Array ItemData),
   xAxisIndex :: Maybe Number,
   yAxisIndex :: Maybe Number,
   symbol :: Maybe Symbol,
@@ -315,7 +316,7 @@ scatterSeriesDefault = {
   legendHoverLink: Nothing
   }
 
-scatterRecEncode :: ScatterSeriesRec -> [JAssoc]
+scatterRecEncode :: ScatterSeriesRec -> Array JAssoc
 scatterRecEncode r = [
   "data" := r.data,
   "xAxisIndex" := r.xAxisIndex,
@@ -352,7 +353,7 @@ decodeScatterSeriesRec o =
 
 
 type CandlestickSeriesRec = {
-  "data" ::Maybe [ItemData],
+  "data" ::Maybe (Array ItemData),
   xAxisIndex :: Maybe Number,
   yAxisIndex :: Maybe Number,
   barMinHeight :: Maybe Number,
@@ -368,7 +369,7 @@ candlestickSeriesDefault = {
   barWidth: Nothing,
   barMaxWidth: Nothing
   }
-candlestickRecEncode :: CandlestickSeriesRec -> [JAssoc]
+candlestickRecEncode :: CandlestickSeriesRec -> Array JAssoc
 candlestickRecEncode r = [
   "data" := r.data,
   "xAxisIndex" := r.xAxisIndex,
@@ -394,7 +395,7 @@ decodeCandleStickSeries o =
   (o .? "barMaxWidth")
                                  
 type PieSeriesRec = {
-  "data" ::Maybe [ItemData],
+  "data" ::Maybe (Array ItemData),
   center :: Maybe Center,
   radius :: Maybe Radius,
   startAngle :: Maybe Number,
@@ -419,7 +420,7 @@ pieSeriesDefault = {
   legendHoverLink: Nothing
   }
 
-pieRecEncode :: PieSeriesRec -> [JAssoc]
+pieRecEncode :: PieSeriesRec -> Array JAssoc
 pieRecEncode r = [
   "data" := r.data,
   "center" := r.center,
@@ -458,7 +459,7 @@ decodePieSeriesRec o =
 
                  
 type RadarSeriesRec = {
-  "data" ::Maybe [ItemData],
+  "data" ::Maybe (Array ItemData),
 
   polarIndex :: Maybe Number,
   symbol :: Maybe Symbol,
@@ -476,7 +477,7 @@ radarSeriesDefault = {
   symbolRotate: Nothing,
   legendHoverLink: Nothing
   }
-radarRecEncode :: RadarSeriesRec -> [JAssoc]
+radarRecEncode :: RadarSeriesRec -> Array JAssoc
 radarRecEncode r = [
   "data" := r.data,
   "polarIndex" := r.polarIndex,
@@ -502,12 +503,12 @@ decodeRadarSeriesRec o =
   (o .? "legendHoverLink") 
 
 type ChordSeriesRec = {
-  nodes :: Maybe [Node],
-  categories :: Maybe [ForceCategory],
-  links :: Maybe [Link],
+  nodes :: Maybe (Array Node),
+  categories :: Maybe (Array ForceCategory),
+  links :: Maybe (Array Link),
   matrix :: Maybe Matrix,
 
-  "data" ::Maybe [ItemData],
+  "data" ::Maybe (Array ItemData),
   ribbonType :: Maybe Boolean,
   symbol :: Maybe Symbol,
   symbolSize :: Maybe SymbolSize,
@@ -539,7 +540,7 @@ chordSeriesDefault = {
   sortSub: Nothing,
   clockWise: Nothing
   }
-chordRecEncode :: ChordSeriesRec -> [JAssoc]
+chordRecEncode :: ChordSeriesRec -> Array JAssoc
 chordRecEncode r = [
   "nodes" := r.nodes,
   "categories" := r.categories,
@@ -596,9 +597,9 @@ decodeChordSeriesRec o =
   
 
 type ForceSeriesRec = {
-  categories :: Maybe [ForceCategory],
-  nodes :: Maybe [Node],
-  links :: Maybe [Link],
+  categories :: Maybe (Array ForceCategory),
+  nodes :: Maybe (Array Node),
+  links :: Maybe (Array Link),
   matrix :: Maybe Matrix,
 
   center :: Maybe Center,
@@ -639,7 +640,7 @@ forceSeriesDefault = {
   steps: Nothing,
   ribbonType: Nothing
   }
-forceRecEncode :: ForceSeriesRec -> [JAssoc]
+forceRecEncode :: ForceSeriesRec -> Array JAssoc
 forceRecEncode r = [
   "categories" := r.categories,
   "nodes" := r.nodes,
@@ -704,7 +705,7 @@ decodeForceSeriesRec o =
   (o .? "ribbonType")
                       
 type MapSeriesRec = {
-  "data" ::Maybe [ItemData],
+  "data" ::Maybe (Array ItemData),
   
   selectedMode :: Maybe SelectedMode,
   mapType :: Maybe String,
@@ -737,7 +738,7 @@ mapSeriesDefault = {
   textFixed: Nothing,
   geoCoord: Nothing
   }
-mapRecEncode :: MapSeriesRec -> [JAssoc]
+mapRecEncode :: MapSeriesRec -> Array JAssoc
 mapRecEncode r = [
   "data" := r.data,
   "selectedMode" := r.selectedMode,
@@ -788,7 +789,7 @@ decodeMapSeriesRec o =
   (o .? "geoCoord")
 
 type GaugeSeriesRec = {
-  "data" ::Maybe [ItemData],
+  "data" ::Maybe (Array ItemData),
 
   center :: Maybe (Tuple Number Number),
   radius :: Maybe Radius,
@@ -827,7 +828,7 @@ gaugeSeriesDefault = {
   legendHoverLink: Nothing,
   axisLabel: Nothing
   }
-gaugeRecEncode :: GaugeSeriesRec -> [JAssoc]
+gaugeRecEncode :: GaugeSeriesRec -> Array JAssoc
 gaugeRecEncode r = [
   "data" := r.data,
   "center" := r.center,
@@ -886,7 +887,7 @@ decodeGaugeSeriesRec o =
   (o .? "axisLabel")
                       
 type FunnelSeriesRec = {
-  "data" ::Maybe [ItemData],
+  "data" ::Maybe (Array ItemData),
 
   x :: Maybe PercentOrPixel,
   x2 :: Maybe PercentOrPixel,
@@ -921,7 +922,7 @@ funnelSeriesDefault = {
   sort: Nothing,
   legendHoverLink: Nothing
   }
-funnelRecEncode :: FunnelSeriesRec -> [JAssoc]
+funnelRecEncode :: FunnelSeriesRec -> Array JAssoc
 funnelRecEncode r = [
   "data" := r.data,
   "x" := r.x,
@@ -974,7 +975,7 @@ decodeFunnelSeriesRec o =
   (o .? "legendHoverLink")
                        
 type EventRiverSeriesRec = {
-  eventList :: Maybe [OneEvent],
+  eventList :: Maybe (Array OneEvent),
 
   xAxisIndex :: Maybe Number,
   weight :: Maybe Number,
@@ -987,7 +988,7 @@ eventRiverSeriesDefault = {
   weight: Nothing,
   legendHoverLink: Nothing
   }
-eventRiverRecEncode :: EventRiverSeriesRec -> [JAssoc]
+eventRiverRecEncode :: EventRiverSeriesRec -> Array JAssoc
 eventRiverRecEncode r = [
   "eventList" := r.eventList,
   "xAxisIndex" := r.xAxisIndex,
@@ -1006,7 +1007,7 @@ decodeEventRiverSeriesRec o =
   (o .? "weight") <*>
   (o .? "legendHoverLink")
 
-specialForSeries :: Series -> [JAssoc]
+specialForSeries :: Series -> Array JAssoc
 specialForSeries series =
   case series of
     LineSeries {lineSeries = s} -> lineRecEncode s
@@ -1024,7 +1025,7 @@ specialForSeries series =
 
 instance encodeSeries :: EncodeJson Series where
   encodeJson series =
-    fromObject $ fromList $ concat
+    fromObject $ fromList $ toList $ concat
     [
       universalForSeries series,
       typeForSeries series,
@@ -1063,14 +1064,8 @@ instance decodeSeries :: DecodeJson Series where
       "eventRiver" -> EventRiverSeries <$> ({common: u, eventRiverSeries: _} <$> decodeEventRiverSeriesRec obj)
       
 
-foreign import setSeriesImpl """
-function setSeriesImpl(series, notMerge, chart) {
-  return function() {
-    return chart.setSeries(series, notMerge);
-  };
-}
-""" :: forall e. Fn3 [Json] Boolean EChart (Eff e EChart)
+foreign import setSeriesImpl :: forall e. Fn3 (Array Json) Boolean EChart (Eff e EChart)
 
-setSeries :: forall e. [Series] -> Boolean -> EChart -> Eff e EChart
+setSeries :: forall e. Array Series -> Boolean -> EChart -> Eff e EChart
 setSeries series merge chart =
   runFn3 setSeriesImpl (unnull <<< encodeJson <$> series) merge chart

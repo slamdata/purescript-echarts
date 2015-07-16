@@ -3,6 +3,7 @@ module ECharts.Formatter(
   Formatter(..)
   ) where
 
+import Prelude
 import Data.Maybe
 import Data.StrMap (fromList, StrMap (..))
 import Data.Tuple
@@ -24,22 +25,12 @@ type FormatParams = Json
 
 data Formatter =
   Template String
-  | FormatFunc (forall eff . [FormatParams] -> Eff eff String)
+  | FormatFunc (forall eff. Array FormatParams -> Eff eff String)
 
 
-foreign import func2json """
-function func2json(fn) {
-  return fn;
-}
-""" :: forall a. a -> Json
+foreign import func2json :: forall a. a -> Json
 
-foreign import effArrToFn """
-function effArrToFn(arr) {
-  return function(x) {
-    arr(x)();
-  };
-}
-""" :: forall eff a b. (a -> Eff eff b) -> Fn1 a b
+foreign import effArrToFn :: forall eff a b. (a -> Eff eff b) -> Fn1 a b
                 
 instance formatterEncodeJson :: EncodeJson Formatter where
   encodeJson (Template str) = encodeJson str

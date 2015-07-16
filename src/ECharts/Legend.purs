@@ -1,11 +1,13 @@
 module ECharts.Legend where
 
+import Prelude
 import Data.Maybe
-import Data.StrMap 
+import Data.StrMap hiding (toList)
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
+import Data.List (toList)
 
 import ECharts.Color
 import ECharts.Common
@@ -22,7 +24,7 @@ data LegendItem = LegendItem String LegendItemRec
 
 instance legendItemEncodeJson :: EncodeJson LegendItem where
   encodeJson (LegendItem name obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "name" := name,
       "icon" := obj.icon,
@@ -55,7 +57,7 @@ type LegendRec = {
     formatter :: Maybe Formatter,
     selectedMode :: Maybe SelectedMode,
     selected :: Maybe (StrMap Boolean),
-    "data" :: Maybe [LegendItem]
+    "data" :: Maybe (Array LegendItem)
     }
 
 
@@ -82,7 +84,7 @@ legendDefault = {
 
 instance legendEncodeJson :: EncodeJson Legend where
   encodeJson (Legend obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "show" := obj.show,
       "orient" := obj.orient,

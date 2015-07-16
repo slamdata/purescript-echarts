@@ -4,12 +4,14 @@ module ECharts.AddData (
   addData
   ) where
 
+import Prelude
 import Control.Monad.Eff
 import Data.Function
 import Data.Maybe
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Combinators
+
 
 import ECharts.Chart
 import ECharts.Item.Data
@@ -39,13 +41,7 @@ instance additionalDataEncodeJson :: EncodeJson AdditionalData where
     ]
 
 
-foreign import addDataImpl """
-function addDataImpl(data, chart) {
-  return function() {
-    return chart.addData.apply(chart, data);
-  };
-}
-""" :: forall e. Fn2 Json EChart (Eff (dataAdd::ADD_DATA|e) EChart)
+foreign import addDataImpl :: forall e. Fn2 Json EChart (Eff (dataAdd::ADD_DATA|e) EChart)
 
 addData :: forall e. AdditionalData -> EChart -> Eff (dataAdd::ADD_DATA|e) EChart
 addData d chart = runFn2 addDataImpl (encodeJson d) chart

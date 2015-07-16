@@ -1,9 +1,10 @@
 module Loading where
 
-import Debug.Trace (trace)
-import Data.Array hiding (init)
+import Prelude
+import Control.Monad.Eff.Console (print)
+import Data.Array hiding (init, zip)
 import Data.Maybe
-import Data.Tuple hiding (zip)
+import Data.Tuple 
 import Control.Monad.Eff
 import Control.Monad.Eff.Random
 
@@ -28,12 +29,12 @@ import ECharts.Style.Text
 import qualified ECharts.DataZoom as Zoom
 import qualified ECharts.Loading as L
 
-import Signal hiding (map)
+import Signal (runSignal, (~>), Signal(), foldp)
 import Signal.Time
 
 simpleData = Value <<< Simple
 
-allEffects :: [L.LoadingEffect]
+allEffects :: Array L.LoadingEffect
 allEffects = [L.Spin, L.Bar, L.Ring, L.Whirling, L.DynamicLine, L.Bubble]
 
 effect :: L.LoadingEffect -> L.LoadingOption
@@ -41,7 +42,7 @@ effect eff = L.LoadingOption $
   L.loadingOptionDefault{
     text = Just $ "effect",
     effect = Just eff,
-    textStyle = Just $ TextStyle $ textStyleDefault {fontSize = Just 20}
+    textStyle = Just $ TextStyle $ textStyleDefault {fontSize = Just 20.0}
   }
 
 series true = [
@@ -123,7 +124,7 @@ options i = Option $ optionDefault {
   yAxis = Just $ OneAxis $ Axis axisDefault {
     "type" = Just ValueAxis
     },
-  series = Just $ Just <$> (series (i % 2 == 0))
+  series = Just $ Just <$> (series (i `mod` 2.0 == 0.0))
   }
 
 data ChartSignal a = StartLoading L.LoadingOption | StopLoading a
@@ -145,13 +146,13 @@ dataStream =
                 Tuple eff i ->
                   return $ StartLoading (effect eff))
   (return $ StartLoading (effect L.Spin))
-  (every 2000)
+  (every 2000.0)
 
   
 loading id = do
   mbEl <- getElementById id
   case mbEl of
-    Nothing -> trace "incorrect id in loading"
+    Nothing -> print "incorrect id in loading"
     Just el -> do
       chart <- init Nothing el
 

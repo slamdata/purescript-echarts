@@ -1,5 +1,6 @@
 module ECharts.Common where
 
+import Prelude
 import Control.Alt ((<|>))
 import Data.Argonaut.Core
 import Data.Argonaut.Combinators
@@ -7,6 +8,8 @@ import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Maybe
 import Data.Either
+import Data.Array ((!!))
+import Data.List (toList)
 
 import qualified Data.String as S
 import Data.Function
@@ -26,9 +29,12 @@ instance cornerJsonEncode :: (EncodeJson a) => EncodeJson (Corner a) where
 instance cornerJsonDecode :: (DecodeJson a) => DecodeJson (Corner a) where
   decodeJson json =
     (do arr <- decodeJson json
-        case arr of
-          a:b:c:d:[] -> pure $ Corners a b c d
-          _ -> Left "incorrect corners")
+        maybe (Left "incorrect corners") Right $ do
+          a <- arr !! 0
+          b <- arr !! 1
+          c <- arr !! 2
+          d <- arr !! 3
+          pure $ Corners a b c d)
     <|>
     (AllCorners <$> decodeJson json)
 
@@ -41,7 +47,7 @@ instance percentOrPixelEncodeJson :: EncodeJson PercentOrPixel where
 instance percentOrPixelDecodeJson :: DecodeJson PercentOrPixel where
   decodeJson json =
     (do str <- decodeJson json
-        if ((S.lastIndexOf "%" str) == (S.length str) - 1) &&
+        if ((S.lastIndexOf "%" str) == (Just $ (S.length str) - 1)) &&
            (not $ isNaN $ readInt 10 str)
           then pure $ Percent (readInt 10 str)
           else Left "incorrect percent")
@@ -131,7 +137,7 @@ type MinMaxRec = {
 newtype MinMax = MinMax MinMaxRec
 
 instance minMaxEncodeJson :: EncodeJson MinMax where
-  encodeJson (MinMax mm) = fromObject $ M.fromList $ [
+  encodeJson (MinMax mm) = fromObject $ M.fromList $ toList $ [
     "min" := mm.min,
     "max" := mm.max
     ]
@@ -155,9 +161,10 @@ instance radiusDecodeJson :: DecodeJson Radius where
   decodeJson j =
     (R <$> decodeJson j) <|>
     (do arr <- decodeJson j
-        case arr of
-          i:o:[] -> pure $ Rs {inner:i, outer:o}
-          _ -> Left "incorrect radius")
+        maybe (Left "incorrect radius") Right do
+          i <- arr !! 0
+          o <- arr !! 1
+          pure $ Rs {inner: i, outer: o})
 
 data Sort = NoSort | Asc | Desc
 instance sortEncodeJson :: EncodeJson Sort where

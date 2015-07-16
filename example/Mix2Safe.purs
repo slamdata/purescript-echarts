@@ -1,5 +1,7 @@
 module Mix2Safe where
-import Debug.Trace (trace)
+
+import Prelude
+import Control.Monad.Eff.Console (print)
 import Control.Monad.Eff
 import Utils
 
@@ -22,12 +24,12 @@ import ECharts.Style.Item
 
 
 simpleData = Value <<< Simple
-series :: [Series]
+series :: Array Series
 series = [
   BarSeries {
      common: universalSeriesDefault {name = Just "direct access"},
      barSeries: barSeriesDefault {
-       "data" = Just $ simpleData <$> [320, 332, 301, 334, 390, 330, 320],
+       "data" = Just $ simpleData <$> [320.0, 332.0, 301.0, 334.0, 390.0, 330.0, 320.0],
        stack = Just "total"
        }
      },
@@ -37,7 +39,7 @@ series = [
        tooltip = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem}
        },
     barSeries: barSeriesDefault {
-      "data" = Just $ simpleData <$> [120, 132, 101, 134, 90, 230, 210],
+      "data" = Just $ simpleData <$> [120.0, 132.0, 101.0, 134.0, 90.0, 230.0, 210.0],
       stack = Just "total"
       }
     },
@@ -47,7 +49,7 @@ series = [
        tooltip = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem}
        },
     barSeries: barSeriesDefault {
-      "data" = Just $ simpleData <$> [220, 182, 191, 234, 290, 330, 310]
+      "data" = Just $ simpleData <$> [220.0, 182.0, 191.0, 234.0, 290.0, 330.0, 310.0]
       }
     },
   BarSeries {
@@ -56,7 +58,7 @@ series = [
        tooltip = Just $ Tooltip $ tooltipDefault {trigger = Just TriggerItem}
        },
     barSeries: barSeriesDefault {
-      "data" = Just $ simpleData <$> [150, 232, 201, 154, 190, 330, 410]
+      "data" = Just $ simpleData <$> [150.0, 232.0, 201.0, 154.0, 190.0, 330.0, 410.0]
       }
     },
   LineSeries {
@@ -65,7 +67,7 @@ series = [
        },
     lineSeries: lineSeriesDefault {
       "data" = Just $ simpleData <$>
-               [862, 1018, 964, 1026, 1679, 1600, 1570]
+               [862.0, 1018.0, 964.0, 1026.0, 1679.0, 1600.0, 1570.0]
       }
     },
   PieSeries {
@@ -76,7 +78,7 @@ series = [
          normal: Just $ IStyle $ istyleDefault {
            labelLine = Just $ ItemLabelLine {
               show: Just true,
-              length: Just 20,
+              length: Just 20.0,
               lineStyle: Nothing
               }
            }
@@ -87,19 +89,19 @@ series = [
          }
        },
     pieSeries: pieSeriesDefault {
-      radius = Just $ Rs {inner: (Pixel 0), outer: (Pixel 50)},
-      center = Just $ Tuple (Percent 160) (Percent 130),
+      radius = Just $ Rs {inner: (Pixel 0.0), outer: (Pixel 50.0)},
+      center = Just $ Tuple (Percent 160.0) (Percent 130.0),
       "data" = Just $ Dat <$> [
-         (dataDefault (Simple 1047)) {
+         (dataDefault (Simple 1047.0)) {
             name = Just "Baidu"
             },
-         (dataDefault (Simple 264)) {
+         (dataDefault (Simple 264.0)) {
            name = Just "Google"
            },
-         (dataDefault (Simple 145)) {
+         (dataDefault (Simple 145.0)) {
            name = Just "Bing"
            },
-         (dataDefault (Simple 102)) {
+         (dataDefault (Simple 102.0)) {
            name = Just "other"
            }
          ]
@@ -183,7 +185,7 @@ options = Option $ optionDefault {
 mix2safe id = do
   mbEl <- getElementById id
   case mbEl of
-    Nothing -> trace "incorrect id in mix2safe"
+    Nothing -> print "incorrect id in mix2safe"
     Just el -> init Nothing el >>= setOption options true >>= \_ -> return unit
 
 

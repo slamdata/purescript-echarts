@@ -11,14 +11,16 @@ module ECharts.Tooltip (
   tooltipDefault
   ) where
 
+import Prelude
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 import Data.Maybe
 import Data.Either
-import Data.StrMap
+import Data.StrMap hiding (toList)
 import Data.Function
+import Data.List (toList)
 
 import ECharts.Common
 import ECharts.Coords
@@ -43,14 +45,10 @@ instance tooltipTriggerDecodeJson :: DecodeJson TooltipTrigger where
       _ -> Left $ "incorrect tooltip trigger"
 
 
+foreign import func2json :: forall a. a -> Json 
 
-foreign import func2json """
-function func2json(fn) {
-  return fn;
-}
-""" :: forall a. a -> Json
 
-data TooltipPosition = Fixed [Number] | FuncPos ([Number] -> [Number])
+data TooltipPosition = Fixed (Array Number) | FuncPos (Array Number -> Array Number)
 instance tooltipPositionEncodeJson :: EncodeJson TooltipPosition where
   encodeJson (Fixed nums) = encodeJson nums
   encodeJson (FuncPos func) = func2json $ mkFn1 func
@@ -89,7 +87,7 @@ newtype TooltipAxisPointer = TooltipAxisPointer TooltipAxisPointerRec
 
 instance tooltipAxisPointerEncodeJson :: EncodeJson TooltipAxisPointer where
   encodeJson (TooltipAxisPointer obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "type" := obj.type,
       "lineStyle" := obj.lineStyle,
@@ -143,7 +141,7 @@ newtype Tooltip = Tooltip TooltipRec
 
 instance tooltipEncodeJson :: EncodeJson Tooltip where
   encodeJson (Tooltip obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "show" := obj.show,
       "showContent" := obj.showContent,

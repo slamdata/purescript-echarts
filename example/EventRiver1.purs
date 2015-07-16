@@ -1,6 +1,7 @@
 module EventRiver1 where
 
-import Debug.Trace 
+import Prelude
+import Control.Monad.Eff.Console
 import Data.Maybe
 import qualified Data.Date as D
 import Utils
@@ -55,46 +56,46 @@ options dateDefault = Option $ optionDefault {
           name = Just "first"
           },
        eventRiverSeries: eventRiverSeriesDefault {
-         weight = Just 123,
+         weight = Just 123.0,
          eventList = Just [
            OneEvent {
               name: Just "river1",
-              weight: Just 123,
+              weight: Just 123.0,
               evolution: Just [
                 Evolution {
                    time: fromMaybe dateDefault $ D.fromString "2014-05-01",
-                   value: 14,
+                   value: 14.0,
                    detail: Nothing
                    },
                 Evolution {
                   time: fromMaybe dateDefault $ D.fromString "2014-05-02",
-                  value: 34,
+                  value: 34.0,
                   detail: Nothing
                   },
                 Evolution {
                   time: fromMaybe dateDefault $ D.fromString "2014-05-03",
-                  value: 60,
+                  value: 60.0,
                   detail: Nothing
                   }
                 ]
               },
            OneEvent {
              name: Just "river2",
-             weight: Just 123,
+             weight: Just 123.0,
              evolution: Just [
                Evolution {
                   time: fromMaybe dateDefault $ D.fromString "2014-05-02",
-                  value: 10,
+                  value: 10.0,
                   detail: Nothing
                   },
                Evolution {
                  time: fromMaybe dateDefault $ D.fromString "2014-05-03",
-                 value:  34,
+                 value:  34.0,
                  detail: Nothing
                  },
                Evolution {
                  time: fromMaybe dateDefault $ D.fromString "2014-05-05",
-                 value:  40,
+                 value:  40.0,
                  detail: Nothing
                  }
                ]
@@ -108,25 +109,25 @@ options dateDefault = Option $ optionDefault {
          name = Just "second"
          },
       eventRiverSeries: eventRiverSeriesDefault {
-        weight = Just 123,
+        weight = Just 123.0,
         eventList = Just [
           OneEvent {
              name: Just "Apec",
-             weight: Just 123,
+             weight: Just 123.0,
              evolution: Just [
                Evolution {
                   time: fromMaybe dateDefault $ D.fromString "2014-05-06",
-                  value: 14,
+                  value: 14.0,
                   detail: Nothing
                   },
                Evolution {
                  time: fromMaybe dateDefault $ D.fromString "2014-05-08",
-                 value:  12,
+                 value:  12.0,
                  detail: Nothing
                  },
                Evolution {
                  time: fromMaybe dateDefault $ D.fromString "2014-05-10",
-                 value:  14,
+                 value:  14.0,
                  detail: Nothing
                  }
                ]
@@ -143,7 +144,7 @@ options dateDefault = Option $ optionDefault {
 eventRiver id = do
   mbEl <- getElementById id
   case mbEl of
-    Nothing -> trace "incorrect id in event river"
+    Nothing -> log "incorrect id in event river"
     Just el -> do
       d <- D.now
       chart <- init Nothing el >>= setOption (options d) true

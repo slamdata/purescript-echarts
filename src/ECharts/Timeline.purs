@@ -1,8 +1,9 @@
 module ECharts.Timeline where
 
+import Prelude
 import Data.Maybe
 import Data.Either
-import Data.StrMap
+import Data.StrMap hiding (toList)
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
@@ -14,6 +15,7 @@ import ECharts.Symbol
 import ECharts.Color
 import ECharts.Axis
 import ECharts.Common
+import Data.List (toList)
 
 data TimelineType = TimelineTime | TimelineNumber
 
@@ -74,7 +76,7 @@ type TimelineRec = {
     symbol :: Maybe Symbol,
     symbolSize :: Maybe SymbolSize,
     currentIndex :: Maybe Number,
-    "data" ::Maybe [String]
+    "data" ::Maybe (Array String)
     }
 
 newtype Timeline = Timeline TimelineRec
@@ -82,7 +84,7 @@ newtype Timeline = Timeline TimelineRec
 
 instance timelineEncodeJson :: EncodeJson Timeline where
   encodeJson (Timeline obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "show" := obj.show,
       "type" := obj.type,

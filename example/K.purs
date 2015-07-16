@@ -1,6 +1,7 @@
 module K where
 
-import Debug.Trace (trace)
+import Prelude 
+import Control.Monad.Eff.Console (print)
 import Data.Array hiding (init)
 import Data.Tuple
 import Data.Tuple.Nested
@@ -27,7 +28,7 @@ options = Option $ optionDefault {
      },
   yAxis = Just $ OneAxis $ Axis axisDefault {
     "type" = Just ValueAxis,
-    min = Just 2200,
+    min = Just 2200.0,
     scale = Just true
     },
   series = Just $ Just <$> [
@@ -36,7 +37,7 @@ options = Option $ optionDefault {
        candlestickSeries: candlestickSeriesDefault{
          "data" = Just $ [
             simpleDat 2320.26 2302.6 2287.3 2362.94,
-            simpleDat 2300 2291.3 2288.26 2308.38,
+            simpleDat 2300.0 2291.3 2288.26 2308.38,
             simpleDat 2295.35 2346.5 2295.35 2346.92,
             simpleDat 2347.22 2358.98 2337.35 2363.8,
             simpleDat 2360.75 2382.48 2347.89 2383.76
@@ -50,5 +51,5 @@ options = Option $ optionDefault {
 k id = do
   mbEl <- getElementById id
   case mbEl of
-    Nothing -> trace "incorrect id in k"
+    Nothing -> print "incorrect id in k"
     Just el -> init Nothing el >>= setOption options true >>= \_ -> return unit

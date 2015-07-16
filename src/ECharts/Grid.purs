@@ -1,11 +1,13 @@
 module ECharts.Grid where
 
+import Prelude
 import Data.Maybe
 import Data.StrMap (fromList)
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
+import Data.List (toList)
 
 import ECharts.Common
 import ECharts.Color
@@ -27,7 +29,7 @@ newtype Grid = Grid GridRec
 
 instance gridEncodeJson :: EncodeJson Grid where
   encodeJson (Grid obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList 
     [
       "x" := obj.x,
       "y" := obj.y,

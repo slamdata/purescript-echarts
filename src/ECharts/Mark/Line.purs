@@ -6,7 +6,7 @@ module ECharts.Mark.Line (
   delMarkLine
   ) where
 
-
+import Prelude
 import ECharts.Chart
 import ECharts.Common
 import ECharts.Mark.Effect
@@ -21,6 +21,7 @@ import Data.Function
 
 import Data.StrMap (fromList, StrMap (..))
 import Data.Tuple
+import Data.List (toList)
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
@@ -31,8 +32,8 @@ type MarkLineRec = {
     symbolSize :: Maybe DoubleSymbolSize,
     symbolRotate :: Maybe (Tuple Number Number),
     effect :: Maybe MarkPointEffect,
-    geoCoord :: Maybe [GeoCoord],
-    "data" :: Maybe [Tuple MarkPointData MarkPointData],
+    geoCoord :: Maybe (Array GeoCoord),
+    "data" :: Maybe (Array (Tuple MarkPointData MarkPointData)),
     itemStyle :: Maybe ItemStyle
   }
 
@@ -41,7 +42,7 @@ newtype MarkLine = MarkLine MarkLineRec
 
 instance mlEncodeJson :: EncodeJson MarkLine where
   encodeJson (MarkLine ml) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "symbol" := ml.symbol,
       "symbolSize" := ml.symbolSize,
@@ -85,13 +86,7 @@ markLineDefault =
   }
 
 
-foreign import addMarkLineImpl """
-function addMarkLineImpl(ml, chart) {
-  return function() {
-    return chart.addMarkLine(ml);
-  };
-}
-""" :: forall e. Fn2 Json EChart (Eff (addMarkLineECharts::ADD_MARKLINE|e) EChart)
+foreign import addMarkLineImpl :: forall e. Fn2 Json EChart (Eff (addMarkLineECharts::ADD_MARKLINE|e) EChart)
 
 
 addMarkLine :: forall e a. MarkLine  -> EChart -> 
@@ -101,13 +96,7 @@ addMarkLine ml chart = runFn2 addMarkLineImpl (encodeJson ml) chart
 
 
 
-foreign import delMarkLineImpl """
-function delMarkLineImpl(idx, name, chart) {
-  return function() {
-    return chart.delMarkLine(idx, name);
-  };
-}
-""" :: forall e. Fn3 Number String EChart
+foreign import delMarkLineImpl :: forall e. Fn3 Number String EChart
        (Eff (removeMarkLine::REMOVE_MARKLINE|e) EChart)
 
 delMarkLine :: forall e. Number -> String -> EChart -> 

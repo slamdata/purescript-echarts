@@ -5,6 +5,7 @@ module ECharts.Color (
   CalculableColor(..)
   ) where
 
+import Prelude
 import Data.Function
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
@@ -15,11 +16,7 @@ import ECharts.Utils
 
 type Color = String
 
-foreign import func2json """
-function func2json(fn) {
-  return fn;
-}
-""" :: forall a. a -> Json
+foreign import func2json :: forall a. a -> Json
 
 type ColorFuncParamRec = {
     seriesIndex :: Number,

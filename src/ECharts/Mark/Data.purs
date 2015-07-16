@@ -1,5 +1,6 @@
 module ECharts.Mark.Data where
 
+import Prelude
 import Data.Maybe
 import Data.StrMap (fromList, StrMap (..))
 import Data.Tuple
@@ -7,6 +8,7 @@ import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
+import Data.List (toList)
 
 type MarkPointDataRec = {
     name :: Maybe String,
@@ -22,7 +24,7 @@ newtype MarkPointData = MarkPointData MarkPointDataRec
    
 instance mpDataEncodeJson :: EncodeJson MarkPointData where
   encodeJson (MarkPointData mp) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "name" := mp.name,
       "value" := mp.value,

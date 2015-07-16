@@ -9,14 +9,16 @@ module ECharts.Series.EventRiver (
   oneEventDefault
   ) where 
 
+import Prelude
 import Data.Maybe
 import Data.Either
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
-import Data.Tuple
-import Data.StrMap
+import Data.Tuple (Tuple(..))
+import Data.StrMap hiding (toList)
+import Data.List (toList)
 import Data.Date (Date(..), JSDate(), toJSDate, fromStringStrict)
 
 
@@ -44,7 +46,7 @@ newtype EvolutionDetail = EvolutionDetail EvolutionDetailRec
    
 
 instance evoDetailEncodeJson :: EncodeJson EvolutionDetail where
-  encodeJson (EvolutionDetail e) = fromObject $ fromList $ [
+  encodeJson (EvolutionDetail e) = fromObject $ fromList $ toList [
     "link" := e.link,
     "text" := e.text,
     "img" := e.img
@@ -77,17 +79,13 @@ type EvolutionRec = {
 
 newtype Evolution = Evolution EvolutionRec
 
-foreign import jsDateToJson """
-function jsDateToJson(date) {
-  return date;
-}
-""" :: JSDate -> Json 
+foreign import jsDateToJson :: JSDate -> Json 
 
 dateToJson :: Date -> Json
 dateToJson = jsDateToJson <<< toJSDate
 
 instance evoEncodeJson :: EncodeJson Evolution where
-  encodeJson (Evolution e) = fromObject $ fromList $ [
+  encodeJson (Evolution e) = fromObject $ fromList $ toList [
     "time" := dateToJson e.time,
     "value" := e.value,
     "detail" := e.detail
@@ -108,7 +106,7 @@ instance evoDecodeJson :: DecodeJson Evolution where
 type OneEventRec = {
     name :: Maybe String,
     weight :: Maybe Number,
-    evolution :: Maybe [Evolution]
+    evolution :: Maybe (Array Evolution)
     }
 
 newtype OneEvent = OneEvent OneEventRec
@@ -121,7 +119,7 @@ oneEventDefault = {
   }
 
 instance oneEventEncodeJson :: EncodeJson OneEvent where
-  encodeJson (OneEvent oe) = fromObject $ fromList $ [
+  encodeJson (OneEvent oe) = fromObject $ fromList $ toList [
     "name" := oe.name,
     "weight" := oe.weight,
     "evolution" := oe.evolution

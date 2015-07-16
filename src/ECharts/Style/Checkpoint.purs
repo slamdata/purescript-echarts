@@ -1,7 +1,9 @@
 module ECharts.Style.Checkpoint where
 
+import Prelude
 import Data.Maybe
-import Data.StrMap
+import Data.StrMap hiding (toList)
+import Data.List (toList)
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
@@ -23,7 +25,7 @@ newtype CheckpointStyle = CheckpointStyle CheckpointStyleRec
 
 instance checkpointStyleEncodeJson :: EncodeJson CheckpointStyle where
   encodeJson (CheckpointStyle obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "symbol" := obj.symbol,
       "symbolSize" := obj.symbolSize,

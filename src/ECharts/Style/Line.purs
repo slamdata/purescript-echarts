@@ -1,8 +1,10 @@
 module ECharts.Style.Line where
 
+import Prelude
 import Data.Maybe
 import Data.Either
 import Data.StrMap (fromList, StrMap (..))
+import Data.List (toList)
 import Data.Tuple
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
@@ -44,7 +46,7 @@ newtype LineStyle = LineStyle LineStyleRec
 
 instance lineStyleEncodeJson :: EncodeJson LineStyle where
   encodeJson (LineStyle ls) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "color" := ls.color,
       "type" := ls.type,

@@ -1,12 +1,14 @@
 module ECharts.RoamController where
 
+import Prelude
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 
 import Data.Maybe
-import Data.StrMap
+import Data.StrMap (fromList, StrMap())
+import Data.List (toList)
 
 import ECharts.Coords
 import ECharts.Color
@@ -32,7 +34,7 @@ newtype RoamController = RoamController RoamControllerRec
    
 instance roamControllerEncodeJson :: EncodeJson RoamController where
   encodeJson (RoamController obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "show" := obj.show,
       "x" := obj.x,

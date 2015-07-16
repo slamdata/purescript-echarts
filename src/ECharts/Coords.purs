@@ -1,5 +1,6 @@
 module ECharts.Coords where
 
+import Prelude
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
@@ -9,6 +10,7 @@ import Data.Maybe
 import Data.Either
 import Control.Alt ((<|>))
 import Data.StrMap (fromList)
+import Data.List (toList)
 
 data XPos = XLeft
           | XRight
@@ -119,7 +121,7 @@ type LocationRec = {
 newtype Location = Location LocationRec
 
 instance locationEncodeJson :: EncodeJson Location where
-  encodeJson (Location xy) = fromObject $ fromList $ [
+  encodeJson (Location xy) = fromObject $ fromList $ toList [
     "x" := xy.x,
     "y" := xy.y
     ]

@@ -1,12 +1,14 @@
 module ECharts.Toolbox where
 
+import Prelude
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 import Data.Maybe
+import Data.List (toList)
 import Data.Either
-import Data.StrMap
+import Data.StrMap hiding (toList)
 import ECharts.Color
 import ECharts.Coords
 import ECharts.Common
@@ -25,7 +27,7 @@ type ToolboxRec = {
     padding :: Maybe (Corner Number),
     itemGap :: Maybe Number,
     itemSize :: Maybe Number,
-    color :: Maybe [Color],
+    color :: Maybe (Array Color),
     disableColor :: Maybe Color,
     effectiveColor :: Maybe Color,
     showTitle :: Maybe Boolean,
@@ -59,7 +61,7 @@ toolboxDefault =
 
 instance toolboxEncodeJson :: EncodeJson Toolbox where
   encodeJson (Toolbox obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "show" := obj.show,
       "orient" := obj.orient,
@@ -129,7 +131,7 @@ newtype Feature = Feature FeatureRec
 
 instance featureEncodeJson :: EncodeJson Feature where
   encodeJson (Feature obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList 
     [
       "mark" := obj.mark,
       "dataZoom" := obj.dataZoom,
@@ -171,7 +173,7 @@ type SaveAsImageFeatureRec = {
     show :: Maybe Boolean,
     title :: Maybe String,
     "type" :: Maybe ImgType,
-    lang :: Maybe [String]
+    lang :: Maybe (Array String)
     }
 
 newtype SaveAsImageFeature = SaveAsImageFeature SaveAsImageFeatureRec
@@ -179,7 +181,7 @@ newtype SaveAsImageFeature = SaveAsImageFeature SaveAsImageFeatureRec
 
 instance saveAsImageEncodeJson :: EncodeJson SaveAsImageFeature where
   encodeJson (SaveAsImageFeature obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "show" := obj.show,
       "title" := obj.title,
@@ -218,7 +220,7 @@ newtype RestoreFeature = RestoreFeature RestoreFeatureRec
 
 instance restoreFeatureEncodeJson :: EncodeJson RestoreFeature where
   encodeJson (RestoreFeature obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList 
     [
       "show" := obj.show,
       "title" := obj.title
@@ -245,7 +247,7 @@ newtype DataZoomFeatureTitle = DataZoomFeatureTitle DataZoomFeatureTitleRec
 
 instance datazoomTitleEncodeJson :: EncodeJson DataZoomFeatureTitle where
   encodeJson (DataZoomFeatureTitle obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList $ 
     [
       "dataZoom" := obj.dataZoom,
       "dataZoomReset" := obj.dataZoomReset
@@ -272,7 +274,7 @@ dataZoomFeatureDefault = {
   
 instance dataZoomFeatureEncodeJson :: EncodeJson DataZoomFeature where
   encodeJson (DataZoomFeature obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList $ 
     [
       "show" := obj.show,
       "title" := obj.title
@@ -288,7 +290,7 @@ type DataViewFeatureRec = {
     show :: Maybe Boolean,
     title :: Maybe String,
     readOnly :: Maybe Boolean,
-    lang :: Maybe [String]
+    lang :: Maybe (Array String)
     }
 newtype DataViewFeature = DataViewFeature DataViewFeatureRec
 
@@ -302,7 +304,7 @@ dataViewFeatureDefault = {
 
 instance dataViewFeatureEncodeJson :: EncodeJson DataViewFeature where
   encodeJson (DataViewFeature obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "show" := obj.show,
       "title" := obj.title,
@@ -334,7 +336,7 @@ newtype MarkFeatureTitle = MarkFeatureTitle MarkFeatureTitleRec
 
 instance mftitleEncodeJson :: EncodeJson MarkFeatureTitle where
   encodeJson (MarkFeatureTitle obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "mark" := obj.mark,
       "markUndo" := obj.markUndo,
@@ -363,7 +365,7 @@ newtype MarkFeature = MarkFeature MarkFeatureRec
 
 instance markFeatureEncodeJson :: EncodeJson MarkFeature where
   encodeJson (MarkFeature obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList 
     [
       "show" := obj.show,
       "title" := obj.title,
@@ -421,7 +423,7 @@ type MagicTypeFeatureRec = {
     show :: Maybe Boolean,
     title :: Maybe (StrMap String),
     option :: Maybe Json,
-    "type" :: Maybe [MagicType]
+    "type" :: Maybe (Array MagicType)
     }
 
 newtype MagicTypeFeature = MagicTypeFeature MagicTypeFeatureRec
@@ -436,7 +438,7 @@ magicTypeFeatureDefault = {
 
 instance magicTypeFeatureEncodeJson :: EncodeJson MagicTypeFeature where
   encodeJson (MagicTypeFeature obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "show" := obj.show,
       "title" := obj.title,

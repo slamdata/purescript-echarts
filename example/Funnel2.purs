@@ -1,5 +1,7 @@
 module Funnel2 where
-import Debug.Trace (trace)
+
+import Prelude
+import Control.Monad.Eff.Console (print)
 import Data.Tuple.Nested
 import Data.Maybe
 import Utils
@@ -20,10 +22,10 @@ options = Option $ optionDefault {
         common: universalSeriesDefault,
         funnelSeries: funnelSeriesDefault {
           "data" = Just $  [
-             simpleDat 60 "foo",
-             simpleDat 80 "bar",
-             simpleDat 12 "baz",
-             simpleDat 123 "quux"
+             simpleDat 60.0 "foo",
+             simpleDat 80.0 "bar",
+             simpleDat 12.0 "baz",
+             simpleDat 123.0 "quux"
              ],
           sort = Just Asc
           }
@@ -35,7 +37,7 @@ options = Option $ optionDefault {
 funnel2 id = do
   mbEl <- getElementById id
   case mbEl of
-    Nothing -> trace "incorrect id in funnel2"
+    Nothing -> print "incorrect id in funnel2"
     Just el -> init Nothing el >>= setOption options true >>= \_ -> return unit
 
 

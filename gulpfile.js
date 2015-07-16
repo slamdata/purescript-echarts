@@ -11,117 +11,132 @@ var gulp = require('gulp')
 require("./gulp/serve.js")();
 require("./gulp/runner.js")("runner", "Main");
 
-var paths = {
-    src: 'src/**/*.purs',
-    bowerSrc: [
-      'bower_components/purescript-*/src/**/*.purs',
-      'bower_components/purescript-*/src/**/*.purs.hs'
-    ],
-    dest: '',
-    docs: {
-        'all': {
-            dest: 'MODULES.md',
-            src: [
-              'src/**/*.purs'
-            ]
-        }
-    },
-    example: ['example/**/*.purs',
-              "example/bower_components/purescript-*/src/**/*.purs"],
-    test: 'test/**/*.purs'
-};
+var sources = [
+    'src/**/*.purs',
+    'bower_components/purescript-*/src/**/*.purs'
+];
 
-var options = {
-    test: {
-        main: 'Test.Main',
-        output: 'output/test.js'
+var foreigns = [
+    'src/**/*.js',
+    'bower_components/purescript-*/src/**/*.js'
+];
+
+var exampleSources = [
+    'example/**/*.purs',
+    'example/bower_components/purescript-*/src/**/*.purs'
+];
+
+var exampleForeigns = [
+    'example/**/*.js',
+    'example/bower_components/purescript-*/src/**.js'
+];
+
+
+gulp.task('docs', function() {
+    var modules = [
+        "AddData",
+        "Axis",
+        "Chart",
+        "Color",
+        "Common",
+        "Connect",
+        "Coords",
+        "DataRange",
+        "DataZoom",
+        "Effects",
+        "Events",
+        "Formatter",
+        "Grid",
+        "Image",
+        "Item.Data",
+        "Item.Value",
+        "Legend",
+        "Loading",
+        "Mark.Data",
+        "Mark.Effect",
+        "Mark.Line",
+        "Mark.Point",
+        "Options",
+        "RoamController",
+        "Series",
+        "Series.EventRiver",
+        "Series.Force",
+        "Series.Gauge",
+        "Style.Area",
+        "Style.Checkpoint",
+        "Style.Chord",
+        "Style.Item",
+        "Style.Line",
+        "Style.Link",
+        "Style.Node",
+        "Style.Text",
+        "Symbol",
+        "Timeline",
+        "Title",
+        "Toolbox",
+        "Tooltip",
+        "Utils"
+    ];
+    var docgen = {};
+    for (var i = 0; i < modules.length; i++) {
+        docgen["ECharts." + modules[i]] = "docs/Echarts/" + modules[i] + ".md";
     }
-};
-
-function handleError(source) {
-    source.on("error", function(e) {
-        console.error("\u0007");
-        console.error(e.message);
-        source.end();
+    return purescript.pscDocs({
+        src: sources,
+        docgen: docgen
     });
-}
-
-
-function docs (target) {
-    return function() {
-        var docgen = purescript.pscDocs();
-        handleError(docgen);
-
-        return gulp.src(paths.docs[target].src)
-            .pipe(docgen)
-            .pipe(gulp.dest(paths.docs[target].dest));
-    };
-}
-gulp.task('docs', docs('all'));
-
-gulp.task("make-prod", function() {
-    var psc = purescript.psc({
-        output: "build.js",
-        modules: ["Main"],
-        main: "Main"
-    });
-    handleError(psc);
-    return gulp.src(
-        [paths.src].concat(paths.example).concat(paths.bowerSrc)
-    ).pipe(psc).pipe(gulp.dest("public"));
 });
 
-gulp.task("concat-prod", function() {
+gulp.task("lib", function() {
+    return purescript.psc({
+        src: sources,
+        ffi: foreigns
+    });
+});
+
+gulp.task("make", ["runner"], function() {
+    return purescript.psc({
+        src: sources.concat(exampleSources),
+        ffi: foreigns.concat(exampleForeigns),
+        output: "output"
+    });
+});
+
+gulp.task("bundle", ["make"], function() {
+    return purescript.pscBundle({
+        src: "output/**/*.js",
+        main: "Main",
+        output: "dist/main.js"
+    });
+});
+
+
+gulp.task("browserify", ["bundle"], function() {
+    gulp.src("dist/main.js")
+        .pipe(browserify({}))
+        .pipe(rename("dist/build.js"))
+        .pipe(gulp.dest("."));
+});
+
+gulp.task("concat", ["browserify"], function() {
     gulp.src(["bower_components/echarts/build/source/echarts-all.js",
-              "public/build.js"])
+              "dist/build.js"])
         .pipe(concat("build.js"))
         .pipe(gulp.dest("public"));
 });
             
 
-gulp.task("prod", function(cb) {
-    sequence("make-prod", "concat-prod", cb);
-});
-          
-
-gulp.task("make-dev", function() {
-    var psc = purescript.pscMake({
-        output: "dist/node_modules"
-    });
-    handleError(psc);
-    return gulp.src(
-        [paths.src].concat(paths.example).concat(paths.bowerSrc)
-    ).pipe(psc);
-});
-
-gulp.task("bundle-dev", function() {
-    gulp.src("dist/main.js")
-        .pipe(browserify({}))
-        .pipe(rename("build.js"))
-        .pipe(gulp.dest("public"));
-});
-
-gulp.task('compile-dev', function(cb) {
-    sequence('runner', 'make-dev', 'bundle-dev', cb);
-});
-
-gulp.task("watch-dev", function() {
-    gulp.watch([paths.src, paths.example], ['compile-dev', 'docs']);
-});
-
-
-
-gulp.task("dev", ['compile-dev', 'docs', 'serve', 'watch-dev']);
-
 gulp.task('psci', function() {
-    gulp.src([paths.src].concat(paths.example).concat(paths.bowerSrc))
-        .pipe(purescript.dotPsci({}));
+    return purescript.psci({
+        src: sources,
+        ffi: foreigns
+    }).pipe(gulp.dest("."));
 });
 
 
 
 gulp.task("default", function() {
-    sequence("prod", "docs", "serve", function() {
+    sequence("concat", "docs", "serve", function() {
         console.log("**************************************************");
         console.log(" To see examples navigate to http://localhost:5050");
         console.log("**************************************************");

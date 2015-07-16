@@ -1,6 +1,8 @@
 module ECharts.Style.Item where
 
+import Prelude
 import Data.Maybe
+import Data.List (toList)
 import Data.Either
 import Data.StrMap (fromList, StrMap (..))
 import Data.Tuple
@@ -34,7 +36,7 @@ newtype ItemLabel = ItemLabel ItemLabelRec
 
 instance itemLabelEncodeJson :: EncodeJson ItemLabel where
   encodeJson (ItemLabel il) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList $ 
     [
       "show" := il.show,
       "position" := il.position,
@@ -83,7 +85,7 @@ newtype ItemLabelLine = ItemLabelLine ItemLabelLineRec
 
 instance itemLabelLineEncodeJson :: EncodeJson ItemLabelLine where
   encodeJson (ItemLabelLine ill) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList $ 
     [
       "show" := ill.show,
       "length" := ill.length,
@@ -147,7 +149,7 @@ istyleDefault =
 
 instance istyleEncodeJson :: EncodeJson IStyle where
   encodeJson (IStyle is) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "color" := is.color,
       "borderColor" := is.borderColor,
@@ -206,7 +208,7 @@ newtype ItemStyle = ItemStyle ItemStyleRec
 
 instance itemStyleEncodeJson :: EncodeJson ItemStyle where
   encodeJson (ItemStyle is) =
-    fromObject $ fromList ["normal" := is.normal, "emphasis" := is.emphasis]
+    fromObject $ fromList $ toList ["normal" := is.normal, "emphasis" := is.emphasis]
 
 instance itemStyleDecodeJson :: DecodeJson ItemStyle where
   decodeJson j = do
