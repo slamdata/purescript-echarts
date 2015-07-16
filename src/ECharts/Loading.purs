@@ -7,6 +7,7 @@ module ECharts.Loading (
   hideLoading
   ) where 
 
+import Prelude
 import ECharts.Common
 import ECharts.Coords
 import ECharts.Chart
@@ -20,6 +21,7 @@ import Data.Maybe
 import Data.Tuple.Nested
 import qualified Data.StrMap as M
 import Control.Monad.Eff
+import Data.List (toList)
 
 import Data.Argonaut.Core
 import Data.Argonaut.Combinators
@@ -51,7 +53,7 @@ newtype LoadingOption = LoadingOption LoadingOptionRec
    
 instance showLoadingOptions :: EncodeJson LoadingOption where
   encodeJson (LoadingOption options) =
-    fromObject $ M.fromList [
+    fromObject $ M.fromList $ toList [
       "text" := options.text,
       "x" := options.x,
       "y" := options.y,
@@ -62,13 +64,7 @@ instance showLoadingOptions :: EncodeJson LoadingOption where
       ]
 
 
-foreign import showLoadingImpl """
-function showLoadingImpl(json, chart) {
-  return function() {
-    return chart.showLoading(json);
-  };
-}
-""" :: forall e a. Fn2 Json EChart (Eff (showLoadingECharts::LOADING_SHOW|e) EChart)
+foreign import showLoadingImpl :: forall e a. Fn2 Json EChart (Eff (showLoadingECharts::LOADING_SHOW|e) EChart)
 
 showLoading :: forall e. LoadingOption -> EChart ->
                Eff (showLoadingECharts::LOADING_SHOW|e) EChart
@@ -78,13 +74,7 @@ showLoading opts chart =
 
 
 
-foreign import hideLoading """
-function hideLoading(chart) {
-  return function() {
-    return chart.hideLoading();
-  };
-}
-""" :: forall e. EChart -> Eff (hideLoadingECharts::LOADING_HIDE|e) EChart
+foreign import hideLoading :: forall e. EChart -> Eff (hideLoadingECharts::LOADING_HIDE|e) EChart
 
 loadingOptionDefault :: LoadingOptionRec
 loadingOptionDefault =

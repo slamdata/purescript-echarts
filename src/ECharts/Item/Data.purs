@@ -1,5 +1,6 @@
 module ECharts.Item.Data where
 
+import Prelude
 import Control.Alt ((<|>))
 import Data.Maybe
 import Data.Argonaut.Core
@@ -7,6 +8,7 @@ import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 import Data.StrMap (fromList)
+import Data.List (toList)
 
 import ECharts.Item.Value
 import ECharts.Tooltip
@@ -28,7 +30,7 @@ data ItemData = Value ItemValue
 instance itemDataEncodeJson :: EncodeJson ItemData where
   encodeJson (Value val) = encodeJson val
   encodeJson (Dat conf) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "value" := conf.value,
       "name" := conf.name,
@@ -37,7 +39,7 @@ instance itemDataEncodeJson :: EncodeJson ItemData where
       "selected" := conf.selected
     ]
   encodeJson (Label name) =
-    fromObject $ fromList $ 
+    fromObject $ fromList $ toList
     ["name" := name]
 
 instance itemDataDecodeJson :: DecodeJson ItemData where

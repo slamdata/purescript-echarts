@@ -1,6 +1,7 @@
 module Events where
 
-import Debug.Trace (trace, Trace())
+import Prelude
+import Control.Monad.Eff.Console (print, CONSOLE())
 import Math hiding (log)
 import Data.Array hiding (init)
 import Data.Maybe 
@@ -28,17 +29,17 @@ import qualified  ECharts.DataZoom as Zoom
 
 simpleData = Value <<< Simple
 
-lineData :: Eff _ [Number]
+lineData :: Eff _ (Array Number)
 lineData = do 
-  lst <- randomLst 30
-  return $ (\x -> round $ x * 30 + 30 ) <$> lst
+  lst <- randomLst 30.0
+  return $ (\x -> round $ x * 30.0 + 30.0 ) <$> lst
 
-barData :: Eff _ [Number]
+barData :: Eff _ (Array Number)
 barData = do
-  lst <- randomLst 30
-  return $ (\x -> round $ x * 10) <$> lst
+  lst <- randomLst 30.0
+  return $ (\x -> round $ x * 10.0) <$> lst
 
-options_ :: [Number] -> [Number] -> Option
+options_ :: Array Number -> Array Number -> Option
 options_ line bar = Option $ optionDefault {
   tooltip = Just $ Tooltip tooltipDefault {trigger = Just TriggerAxis},
   legend = Just $ Legend legendDefault {
@@ -69,8 +70,8 @@ options_ line bar = Option $ optionDefault {
   dataZoom = Just $ Zoom.DataZoom $ Zoom.dataZoomDefault {
     show = Just true,
     realtime = Just true,
-    start = Just 40,
-    end = Just 60
+    start = Just 40.0,
+    end = Just 60.0
     },
   xAxis = Just $ OneAxis $ Axis $ axisDefault {
     "type" = Just CategoryAxis,
@@ -97,31 +98,23 @@ options = do
   bar <- barData
   return $ options_ line bar
 
-
-foreign import log """
-function log(a) {
-  return function() {
-    console.log(a);
-  };
-}
-
-""" :: forall a e. a -> Eff (trace::Trace|e) Unit
+foreign import log :: forall a e. a -> Eff e Unit
 
 
 subscribe chart = do 
   let sub = \et hndl -> listen et hndl chart
-  sub Click log
-  sub DoubleClick log
-  sub DataZoom log
-  sub LegendSelected log
-  sub MagicTypeChanged log
-  sub DataViewChanged log
+  sub ClickEvent log
+  sub DoubleClickEvent log
+  sub DataZoomEvent log
+  sub LegendSelectedEvent log
+  sub MagicTypeChangedEvent log
+  sub DataViewChangedEvent log
 
 
 events id = do
   mbEl <- getElementById id 
   case mbEl of
-    Nothing -> trace "incorrect id in events"
+    Nothing -> print "incorrect id in events"
     Just el -> do 
       opts <- options
       chart <- init Nothing el

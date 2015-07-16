@@ -1,5 +1,7 @@
 module Radar3 where
-import Debug.Trace (trace)
+
+import Prelude
+import Control.Monad.Eff.Console (print)
 import Data.Tuple.Nested
 import Data.Array hiding (init)
 
@@ -21,12 +23,12 @@ datPair val name =
 option = Option $ optionDefault {
   polar = Just $ [Polar polarDefault {
      indicator = Just [
-        indicator "sales" 6000,
-        indicator "Administration" 16000,
-        indicator "IT" 30000,
-        indicator "Development" 52000,
-        indicator "Customer Support" 38000,
-        indicator "Marketing" 25000
+        indicator "sales" 6000.0,
+        indicator "Administration" 16000.0,
+        indicator "IT" 30000.0,
+        indicator "Development" 52000.0,
+        indicator "Customer Support" 38000.0,
+        indicator "Marketing" 25000.0
         ]
      }],
   series = Just $ Just <$> [
@@ -34,8 +36,8 @@ option = Option $ optionDefault {
        common: universalSeriesDefault{name = Just "budget vs spending"},
        radarSeries: radarSeriesDefault{
          "data" = Just [
-            datPair [4300, 10000, 28000, 35000, 50000, 19000] "Allocated",
-            datPair [5000, 14000, 28000, 31000, 42000, 21000] "Actual"
+            datPair [4300.0, 10000.0, 28000.0, 35000.0, 50000.0, 19000.0] "Allocated",
+            datPair [5000.0, 14000.0, 28000.0, 31000.0, 42000.0, 21000.0] "Actual"
             ]
          }
        }
@@ -45,6 +47,6 @@ option = Option $ optionDefault {
 radar3 id = do
   mbEl <- getElementById id
   case mbEl of
-    Nothing -> trace "incorrect id in radar3"
+    Nothing -> print "incorrect id in radar3"
     Just el -> init Nothing el >>= setOption option true >>= \_ -> return unit
 

@@ -1,11 +1,12 @@
 module DynamicLineBar where
 
-import Debug.Trace 
+import Prelude
 import Data.Tuple.Nested
 import Control.Monad.Eff
+import Control.Monad.Eff.Console (print)
 import Control.Monad.Eff.Random
 import Data.Maybe
-import Data.Array hiding (init)
+import Data.Array hiding (init, zip)
 import Data.String.Regex
 import Data.Date
 import Data.Time
@@ -13,7 +14,8 @@ import Data.Traversable
 import Data.Foldable
 import Utils (precise, getElementById)
 import Math (round)
-import Data.Tuple hiding (zip)
+import Data.Tuple
+import Data.Int (toNumber, fromNumber)
 
 
 import ECharts.Chart
@@ -36,20 +38,16 @@ import qualified ECharts.DataZoom as Zoom
 import ECharts.Style.Text
 import ECharts.Coords
 
-import Signal hiding (map)
+import Signal (runSignal, (~>))
 import Signal.Time (every)
-
 
 onlyDigRgx :: Regex
 onlyDigRgx = regex "^\\D*"  {global: false, ignoreCase: false,
                             multiline: false, sticky: false,
                             unicode: false}
 
-foreign import toLocaleTimeString """
-function toLocaleTimeString(date) {
-  return date.toLocaleTimeString();
-}
-""" :: JSDate -> String
+
+foreign import toLocaleTimeString :: JSDate -> String
 
 xTimeAxis = do
   curTime <- now
@@ -65,14 +63,14 @@ xTimeAxis = do
 data2 = do
   let mapfn = \i -> do
         rnd <- random
-        return $ precise 1 $  rnd * 10 + 5 
-  sequence $ mapfn <$> (1..10)
+        return $ precise 1.0 $  rnd * 10.0 + 5.0
+  sequence $ (mapfn <<< toNumber) <$> (1..10)
 
 data1 = do
   let mapfn = \i -> do
         rnd <- random
-        return $ round (rnd * 1000)
-  sequence $ mapfn <$> (1..10)
+        return $ round (rnd * 1000.0)
+  sequence $ (toNumber >>> mapfn) <$> (1..10)
 
 simpleData = Value <<< Simple
 
@@ -108,8 +106,8 @@ options_ xAxis d1 d2 = Option $ optionDefault {
      },
     dataZoom = Just $ Zoom.DataZoom $ Zoom.dataZoomDefault {
       show = Just true,
-      start = Just 0,
-      end = Just 100
+      start = Just 0.0,
+      end = Just 100.0
       },
     xAxis = Just $ TwoAxises
               (Axis axisDefault {
@@ -144,8 +142,8 @@ options_ xAxis d1 d2 = Option $ optionDefault {
             name = Just "pre-order queue"
             },
          barSeries: barSeriesDefault {
-           xAxisIndex = Just 1,
-           yAxisIndex = Just 1,
+           xAxisIndex = Just 1.0,
+           yAxisIndex = Just 1.0,
            "data" = Just $ simpleData <$> d1
            }
          },
@@ -170,12 +168,13 @@ options = do
   
 
 dataStream =
-  every 2000 ~> const do
+  every 2000.0 ~> const do
     rnd1 <- random
     rnd2 <- random
     rnd3 <- random
-    let lastData = precise 1 $
-                   rnd1 * if round ((rnd2 * 10) % 2) == 0 then 1 else -1
+    let lastData = precise 1.0 $
+                   rnd1 * if round ((rnd2 * 10.0) `mod` 2.0) == 0.0
+                          then 1.0 else -1.0
     curTime <- now 
     let axisData = 
                    replace onlyDigRgx  "" $ 
@@ -184,14 +183,14 @@ dataStream =
 
 
     let firstData = AdditionalData {
-          idx: 0,
-          datum: Value $ Simple $ round (rnd3 * 1000),
+          idx: 0.0,
+          datum: Value $ Simple $ round (rnd3 * 1000.0),
           isHead: true,
           dataGrow: false,
           additionalData: (Nothing :: Maybe String)
           }
     let sndData = AdditionalData {
-          idx: 1,
+          idx: 1.0,
           datum: Value $ Simple $ lastData,
           isHead: false,
           dataGrow: false,
@@ -203,7 +202,7 @@ dataStream =
 dynamicLineBar id = do
   mbEl <- getElementById id
   case mbEl of
-    Nothing -> trace "Inocrrect id in dymaniclinebar"
+    Nothing -> print "Inocrrect id in dymaniclinebar"
     Just el -> do
       opts <- options
       chart <- init Nothing el >>= setOption opts true
@@ -211,4 +210,3 @@ dynamicLineBar id = do
         content <- effContent
         sequence_ $ (flip addData) chart <$> content
 
-  

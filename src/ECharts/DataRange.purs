@@ -1,5 +1,6 @@
 module ECharts.DataRange where
 
+import Prelude
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
@@ -7,6 +8,7 @@ import Data.Argonaut.Combinators
 import Data.Maybe
 import Data.StrMap (fromList)
 import Data.Tuple
+import Data.List (toList)
 
 import ECharts.Color
 import ECharts.Coords
@@ -34,7 +36,7 @@ type DataRangeRec = {
     calculable :: Maybe Boolean,
     hoverLink :: Maybe Boolean,
     realtime :: Maybe Boolean,
-    color :: Maybe [Color],
+    color :: Maybe (Array Color),
     formatter :: Maybe Formatter,
     text :: Maybe (Tuple String String),
     textStyle :: Maybe TextStyle
@@ -45,7 +47,7 @@ newtype DataRange = DataRange DataRangeRec
 
 instance dataRangeEncodeJson :: EncodeJson DataRange where
   encodeJson (DataRange obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList $ 
     [
       "show" := obj.show,
       "orient" := obj.orient,

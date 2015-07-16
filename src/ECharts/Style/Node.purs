@@ -1,7 +1,9 @@
 module ECharts.Style.Node where
 
+import Prelude
 import Data.Maybe
 import Data.StrMap (fromList, StrMap (..))
+import Data.List (toList)
 import Data.Tuple
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
@@ -22,7 +24,7 @@ newtype NodeStyle = NodeStyle NodeStyleRec
 
 instance nodeStyleEncodeJson :: EncodeJson NodeStyle where
   encodeJson (NodeStyle ns) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "color" := ns.color,
       "borderColor" := ns.borderColor,

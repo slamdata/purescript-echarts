@@ -5,6 +5,7 @@ module ECharts.Options (
   setOption
   ) where
 
+import Prelude
 import Control.Monad.Eff
 import Data.Maybe
 import Data.Function
@@ -13,6 +14,7 @@ import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 import Data.StrMap (fromList)
+import Data.List (toList)
 
 import ECharts.Chart
 import ECharts.Color
@@ -42,7 +44,7 @@ import ECharts.Effects
 
 type OptionRec = {
     backgroundColor :: Maybe Color,
-    color :: Maybe [Color],
+    color :: Maybe (Array Color),
     renderAsImage :: Maybe Boolean,
     calculable :: Maybe Boolean,
     animation :: Maybe Boolean,
@@ -58,9 +60,9 @@ type OptionRec = {
     grid :: Maybe Grid,
     xAxis :: Maybe Axises,
     yAxis :: Maybe Axises,
-    polar :: Maybe [Polar],
+    polar :: Maybe (Array Polar),
 
-    series :: Maybe [Maybe Series]
+    series :: Maybe (Array (Maybe Series))
     }
 
 newtype Option = Option OptionRec
@@ -68,7 +70,7 @@ newtype Option = Option OptionRec
 
 instance optionsEncodeJson :: EncodeJson Option where
   encodeJson (Option opts) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "backgroundColor" := opts.backgroundColor,
       "color" := opts.color,
@@ -156,13 +158,7 @@ optionDefault = {
   polar: Nothing
   }
 
-foreign import setOptionImpl """
-function setOptionImpl(option, notMerge, chart) {
-  return function() {
-    return chart.setOption(option, notMerge);
-  };
-}
-""" :: forall e.
+foreign import setOptionImpl :: forall e.
        Fn3 Json Boolean EChart (Eff (echartSetOption::ECHARTS_OPTION_SET|e) EChart)
 
 setOption :: forall e.

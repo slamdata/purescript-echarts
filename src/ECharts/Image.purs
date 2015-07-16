@@ -3,7 +3,7 @@ module ECharts.Image (
   getDataURL,
   getImage
   ) where 
-
+import Prelude
 import DOM
 import Control.Monad.Eff
 import Data.Function
@@ -33,27 +33,13 @@ instance decodeImg :: DecodeJson ImgType where
       "jpeg" -> pure JPEG
       _ -> Left "incorrect img type"
 
-
-
-foreign import getDataURLImpl """
-function getDataURLImpl(imgType, chart) {
-  return function() {
-    return chart.getDataURL(imgType);
-  };
-}
-""" :: forall e. Fn2 String EChart (Eff e String)
+foreign import getDataURLImpl :: forall e. Fn2 String EChart (Eff e String)
 
 getDataURL :: forall e. ImgType -> EChart -> Eff (image::IMAGE_MAKING|e) String
 getDataURL img chart = runFn2 getDataURLImpl (imgStr img) chart
 
 
-foreign import getImageImpl """
-function getImageImpl(imgType, chart) {
-  return function( ){
-    return chart.getImage(imgType);
-  };
-}
-""" :: forall e. Fn2 String EChart (Eff e Node)
+foreign import getImageImpl :: forall e. Fn2 String EChart (Eff e Node)
 
 getImage :: forall e. ImgType -> EChart -> Eff (dom::DOM, image::IMAGE_MAKING|e) Node
 getImage img chart = runFn2 getImageImpl (imgStr img) chart

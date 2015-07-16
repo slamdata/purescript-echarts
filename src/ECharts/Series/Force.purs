@@ -1,5 +1,6 @@
 module ECharts.Series.Force where
 
+import Prelude
 import Control.Monad.Eff
 import Control.Alt ((<|>))
 import Data.Function
@@ -8,8 +9,9 @@ import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
-import Data.Tuple
-import Data.StrMap
+import Data.Tuple (Tuple(..))
+import Data.StrMap hiding (toList)
+import Data.List (toList)
 
 import ECharts.Common
 import ECharts.Coords
@@ -39,7 +41,7 @@ forceCategoryDefault = {
   }
 
 instance forceCategoryEncodeJson :: EncodeJson ForceCategory where
-   encodeJson (ForceCategory fc) = fromObject $ fromList $ [
+   encodeJson (ForceCategory fc) = fromObject $ fromList $ toList [
      "name" := fc.name,
      "symbol" := fc.symbol,
      "symbolSize" := fc.symbolSize,
@@ -95,7 +97,7 @@ nodeDefault value = {
   }
 
 instance nodeEncodeJson :: EncodeJson Node where
-  encodeJson (Node n) = fromObject $ fromList $ [
+  encodeJson (Node n) = fromObject $ fromList $ toList [
     "name" := n.name,
     "label" := n.label,
     "value" := n.value,
@@ -160,7 +162,7 @@ newtype Link = Link LinkRec
 
 
 instance linkEncodeJson :: EncodeJson Link where
-  encodeJson (Link link) = fromObject $ fromList $ [
+  encodeJson (Link link) = fromObject $ fromList $ toList [
     "source" := link.source,
     "target" := link.target,
     "weight" := link.weight,
@@ -180,5 +182,5 @@ instance linkDecodeJson :: DecodeJson Link where
          (o .? "itemStyle")
     pure $ Link r
 
-type Matrix = [[Number]]
+type Matrix = Array (Array Number)
 

@@ -1,12 +1,14 @@
 module ECharts.Title where
 
+import Prelude
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 import Data.Maybe
 import Data.Either 
-import Data.StrMap
+import Data.StrMap hiding (toList)
+import Data.List (toList)
 
 import ECharts.Color
 import ECharts.Coords
@@ -52,7 +54,7 @@ newtype Title = Title TitleRec
 
 instance titleEncodeJson :: EncodeJson Title where
   encodeJson (Title obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList $ 
     [
       "text" := obj.text,
       "link" := obj.link,

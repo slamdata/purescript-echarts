@@ -1,6 +1,7 @@
 module Gauge4 where
 
-import Debug.Trace (trace)
+import Prelude
+import Control.Monad.Eff.Console (print)
 import Control.Monad.Eff
 import Control.Monad.Eff.Random
 import Data.Tuple.Nested
@@ -20,9 +21,9 @@ import ECharts.Series.Gauge
 import ECharts.Formatter
 
 gaugeValueSignal =
-  every 2000 ~> const do
+  every 2000.0 ~> const do
     fst <- random
-    return $ precise 2 (fst * 100)
+    return $ precise 2.0 (fst * 100.0)
 
 options_ val = Option $ optionDefault {
   series = Just $ Just <$> [
@@ -43,14 +44,11 @@ options = gaugeValueSignal ~> \g -> do
   gv <- g
   return $ options_ gv
 
-foreign import log """
-function log(a) {return function() {console.log(a);}}
-""" :: forall a e. a -> Eff e Unit
 
 gauge4 id = do
   mbEl <- getElementById id
   case mbEl of
-    Nothing -> trace "incorrect id in gauge4"
+    Nothing -> print "incorrect id in gauge4"
     Just el -> do
       chart <- init Nothing el
       runSignal $ options ~> \opts -> do

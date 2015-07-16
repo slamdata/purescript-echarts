@@ -1,14 +1,17 @@
 module ECharts.Axis where
 
+import Prelude
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
-import Data.Tuple
-import Data.StrMap
+import Data.Tuple (Tuple(..))
+import Data.StrMap hiding (toList)
 import Data.Maybe
 import Data.Either
+import Data.Array ((!!))
 import Control.Alt ((<|>))
+import Data.List (toList)
 
 import ECharts.Common
 import ECharts.Coords
@@ -21,14 +24,15 @@ import ECharts.Formatter
 
 
 type AxisLineStyleRec = {
-    color :: Maybe [Tuple Number Color],
+    color :: Maybe (Array (Tuple Number Color)),
     width :: Maybe Number
     }
 
 newtype AxisLineStyle = AxisLineStyle AxisLineStyleRec
 
 instance axisLineStyleEncodeJson :: EncodeJson AxisLineStyle where
-  encodeJson (AxisLineStyle a) = fromObject $ fromList $ [
+  encodeJson (AxisLineStyle a) =
+    fromObject $ fromList $ toList [
     "color" := a.color,
     "width" := a.width
     ]
@@ -56,7 +60,7 @@ type AxisLineRec = {
 newtype AxisLine = AxisLine AxisLineRec
    
 instance axisLineEncodeJson :: EncodeJson AxisLine where
-  encodeJson (AxisLine a) = fromObject $ fromList $ [
+  encodeJson (AxisLine a) = fromObject $ fromList $ toList [
     "show" := a.show,
     "lineStyle" := a.lineStyle,
     "onZero" := a.onZero
@@ -94,7 +98,7 @@ type AxisTickRec = {
 newtype AxisTick = AxisTick AxisTickRec
    
 instance axisTickEncodeJson :: EncodeJson AxisTick where
-  encodeJson (AxisTick a) = fromObject $ fromList $ [
+  encodeJson (AxisTick a) = fromObject $ fromList $ toList [
     "show" := a.show,
     "splitNumber" := a.splitNumber,
     "length" := a.length,
@@ -148,7 +152,7 @@ type AxisLabelRec =  {
 newtype AxisLabel = AxisLabel AxisLabelRec
   
 instance axisLabelEncodeJson :: EncodeJson AxisLabel  where
-  encodeJson (AxisLabel a) = fromObject $ fromList $ [
+  encodeJson (AxisLabel a) = fromObject $ fromList $ toList [
     "show" := a.show,
     "formatter" := a.formatter,
     "textStyle" := a.textStyle,
@@ -197,9 +201,10 @@ instance axisesEncodeJson :: EncodeJson Axises where
 instance axisesDecodeJson :: DecodeJson Axises where
   decodeJson j =
     (do arr <- decodeJson j
-        case arr of
-          a:b:[] -> pure $ TwoAxises a b
-          _ -> Left "incorrect axises") <|>
+        maybe (Left "incorrect axises") Right do
+          a <- arr !! 0
+          b <- arr !! 1
+          pure $ TwoAxises a b) <|>
     (OneAxis <$> decodeJson j)
 
 type AxisSplitLineRec = {
@@ -212,7 +217,7 @@ newtype AxisSplitLine = AxisSplitLine AxisSplitLineRec
    
 instance axisSplitLineEncodeJson :: EncodeJson AxisSplitLine where
   encodeJson (AxisSplitLine obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "show" := obj.show,
       "onGap" := obj.onGap,
@@ -249,7 +254,7 @@ newtype AxisSplitArea = AxisSplitArea AxisSplitAreaRec
   
 instance axisSplitAreaEncodeJson :: EncodeJson AxisSplitArea where
   encodeJson (AxisSplitArea obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "show" := obj.show,
       "onGap" := obj.onGap,
@@ -338,7 +343,7 @@ data AxisData = CommonAxisData String
 instance axisDataEncodeJson :: EncodeJson AxisData where
   encodeJson (CommonAxisData name) = fromString name
   encodeJson (CustomAxisData obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList $ 
     [
       "value" := obj.value,
       "textStyle" := obj.textStyle
@@ -364,10 +369,10 @@ instance axisBoundaryGapDecodeJson :: DecodeJson AxisBoundaryGap where
   decodeJson j =
     (CatBoundaryGap <$> decodeJson j) <|>
     (do arr <- decodeJson j
-        case arr of
-          a:b:[] -> pure $ ValueBoundaryGap a b
-          _ -> Left "incorrect axis boundary gap")
-
+        maybe (Left "incorrect axis boundary gap") Right do
+          a <- arr !! 0
+          b <- arr !! 1
+          pure $ ValueBoundaryGap a b)
 
 type AxisRec = {
     "type" :: Maybe AxisType,
@@ -386,7 +391,7 @@ type AxisRec = {
     axisLabel :: Maybe AxisLabel,
     splitLine :: Maybe AxisSplitLine,
     splitArea :: Maybe AxisSplitArea,
-    "data" :: Maybe [AxisData]
+    "data" :: Maybe (Array AxisData)
     }
 
 newtype Axis = Axis AxisRec
@@ -413,7 +418,7 @@ axisDefault = {
   }
 instance axisEncJson :: EncodeJson Axis where
   encodeJson (Axis obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "type" := obj.type,
       "show" := obj.show,
@@ -484,7 +489,7 @@ newtype PolarName = PolarName PolarNameRec
    
 instance polarNameEncode :: EncodeJson PolarName where
   encodeJson (PolarName obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "show" := obj.show,
       "formatter" := obj.formatter,
@@ -536,7 +541,7 @@ newtype Indicator = Indicator IndicatorRec
 
 instance indicatorEncodeJson :: EncodeJson Indicator where
   encodeJson (Indicator obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "text" := obj.text,
       "min" := obj.min,
@@ -580,14 +585,14 @@ type PolarRec =  {
     splitLine :: Maybe AxisSplitLine,
     splitArea :: Maybe AxisSplitArea,
     "type" :: Maybe PolarType,
-    indicator :: Maybe [Indicator]
+    indicator :: Maybe (Array Indicator)
     }
 
 newtype Polar = Polar PolarRec
 
 instance polarEncodeJson :: EncodeJson Polar where
   encodeJson (Polar obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "center" := obj.center,
       "radius" := obj.radius,

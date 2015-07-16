@@ -4,6 +4,7 @@ module ECharts.Symbol (
   DoubleSymbolSize(..)
   ) where
 
+import Prelude
 import Data.Argonaut.Core
 import Data.Argonaut.Combinators
 import Data.Argonaut.Encode
@@ -18,11 +19,7 @@ import ECharts.Item.Data
 import ECharts.Item.Value
 
 
-foreign import func2json """
-function func2json(fn) {
-  return fn;
-}
-""" :: forall a. a -> Json
+foreign import func2json :: forall a. a -> Json
 
 data Symbol = Circle | Rectangle | Triangle | Diamond | EmptyCircle | EmptyRectangle
             | EmptyTriangle | EmptyDiamond 

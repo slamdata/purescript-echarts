@@ -1,5 +1,6 @@
 module ECharts.Style.Text where
 
+import Prelude
 import Data.Array (concat)
 import Data.Maybe
 import Data.Either
@@ -7,6 +8,7 @@ import Data.Argonaut.Core
 import Data.Argonaut.Decode
 import Data.Argonaut.Encode
 import Data.Argonaut.Combinators
+import Data.List (toList)
 import qualified Data.StrMap as M
 
 
@@ -117,7 +119,7 @@ newtype TextStyle = TextStyle TextStyleRec
 
 instance textStyleEncodeJson :: EncodeJson TextStyle where
   encodeJson (TextStyle ts) =
-    fromObject $ M.fromList [
+    fromObject $ M.fromList $ toList [
       "color" := ts.color,
       "decoration" := ts.decoration,
       "align" := ts.align,

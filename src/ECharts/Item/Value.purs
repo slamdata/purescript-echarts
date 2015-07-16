@@ -1,5 +1,6 @@
 module ECharts.Item.Value where
 
+import Prelude
 import Data.Maybe
 import Data.Array (length)
 import Data.Either (Either(..))
@@ -8,13 +9,14 @@ import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Combinators
 import Data.Argonaut.Decode
+import Data.List (toList, fromList, List(..))
 
 type XYRRec = {x :: Number, y :: Number, r :: Maybe Number}
 type HLOCRec = {h :: Number, l :: Number, o :: Number, c :: Number}
 
 data ItemValue = None
                | Simple Number
-               | Many [Number]
+               | Many (Array Number)
                | XYR XYRRec
                | HLOC HLOCRec
 
@@ -31,11 +33,11 @@ instance itemValueEncodeJson :: EncodeJson ItemValue where
 instance itemValueDecodeJson :: DecodeJson ItemValue where
   decodeJson json =
     (do arr <- decodeJson json
-        case arr of 
-          o:c:l:h:[] -> pure $ HLOC {h: h, l: l, o: o, c: c}
-          x:y:r:[] -> pure $ XYR {x: x, y: y, r: Just r}
-          x:y:[] -> pure $ XYR {x: x, y: y, r: Nothing}
-          nums -> pure $ Many nums
+        case toList (arr :: Array Number) of
+          (Cons o (Cons c (Cons l (Cons h _)))) -> pure $ HLOC {h: h, l: l, o: o, c: c}
+          (Cons x (Cons y (Cons r Nil))) -> pure $ XYR {x: x, y: y, r: Just r}
+          (Cons x (Cons y Nil)) -> pure $ XYR {x: x, y: y, r: Nothing}
+          nums -> pure $ Many (fromList nums)
     ) <|>
     (Simple <$> decodeJson json)  <|>
     (if decodeJson json == Right "-"

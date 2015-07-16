@@ -1,5 +1,6 @@
 module Main where
 
+import Prelude
 import Utils
 import Line4 (line4)
 import Scatter3 (scatter3)
@@ -28,7 +29,6 @@ main = onLoad $ do
   gauge4 "gauge4"
   funnel2 "funnel2"
   eventRiver "event-river"
-
   
   dynamicLineBar "dynamic-line-bar"
   loading "loading"

@@ -1,5 +1,6 @@
 module ECharts.Series.Gauge where
 
+import Prelude 
 import Control.Monad.Eff
 import Data.Function
 import Data.Maybe
@@ -7,8 +8,9 @@ import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
-import Data.Tuple
-import Data.StrMap
+import Data.Tuple (Tuple(..))
+import Data.StrMap hiding (toList)
+import Data.List (toList)
 
 import ECharts.Common
 import ECharts.Coords
@@ -34,7 +36,7 @@ pointerDefault = {
   }
 
 instance pointerEncodeJson :: EncodeJson Pointer where
-  encodeJson (Pointer p) = fromObject $ fromList $ [
+  encodeJson (Pointer p) = fromObject $ fromList $ toList [
     "length" := p.length,
     "width" := p.width,
     "color" := p.color
@@ -67,7 +69,7 @@ splitLineDefault = {
   }
 
 instance splitLineEncodeJson :: EncodeJson SplitLine where
-  encodeJson (SplitLine sl) = fromObject $ fromList $ [
+  encodeJson (SplitLine sl) = fromObject $ fromList $ toList [
     "show" := sl.show,
     "length" := sl.length,
     "lineStyle" := sl.lineStyle
@@ -114,7 +116,7 @@ gaugeDetailDefault = {
 
 
 instance gaugeDetailEncodeJson :: EncodeJson GaugeDetail where
-  encodeJson (GaugeDetail gd) = fromObject $ fromList $ [
+  encodeJson (GaugeDetail gd) = fromObject $ fromList $ toList [
     "show" := gd.show,
     "backgroundColor" := gd.backgroundColor,
     "borderWidth" := gd.borderWidth,

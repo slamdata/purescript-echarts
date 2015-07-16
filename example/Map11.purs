@@ -1,10 +1,12 @@
 module Map11 where
 
-import Debug.Trace (trace)
+import Prelude
+import Control.Monad.Eff.Console (print)
 import Data.Tuple.Nested
 import Data.Maybe
 import Data.StrMap (fromList)
 import Data.Tuple
+import Data.List (toList)
 
 import Utils
 import Control.Monad.Eff
@@ -39,7 +41,7 @@ option = Option $ optionDefault {
           markPoint = Just $
             MarkPoint $ markPointDefault {
               "data" = Just $ nameValue <$> [
-                 {name: "trololo", value: 123}
+                 {name: "trololo", value: 123.0}
                  ]
               }
             
@@ -49,8 +51,8 @@ option = Option $ optionDefault {
        mapSeries: mapSeriesDefault{
          "data" = Just [],
          mapType = Just "china",
-         geoCoord = Just $ fromList [
-           Tuple "trololo" (Tuple 121 43)
+         geoCoord = Just $ fromList $ toList [
+           Tuple "trololo" (Tuple 121.0 43.0)
            ]
          }
        }
@@ -59,7 +61,7 @@ option = Option $ optionDefault {
 map11 id = do
   mbEl <- getElementById id
   case mbEl of
-    Nothing -> trace "incorrect id in map11"
+    Nothing -> print "incorrect id in map11"
     Just el -> init Nothing el >>= setOption option true >>= \_ -> return unit
 
 

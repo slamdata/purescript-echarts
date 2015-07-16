@@ -1,5 +1,6 @@
 module ECharts.DataZoom where
 
+import Prelude
 import Data.Argonaut.Core
 import Data.Argonaut.Combinators
 import Data.Argonaut.Encode
@@ -8,6 +9,7 @@ import Data.Maybe
 import Data.StrMap (fromList)
 import ECharts.Color
 import ECharts.Coords
+import Data.List (toList)
 
 type DataZoomRec = {
     show :: Maybe Boolean,
@@ -20,8 +22,8 @@ type DataZoomRec = {
     dataBackgroundColor :: Maybe Color,
     fillerColor :: Maybe Color,
     handleColor :: Maybe Color,
-    xAxisIndex :: Maybe [Number],
-    yAxisIndex :: Maybe [Number],
+    xAxisIndex :: Maybe (Array Number),
+    yAxisIndex :: Maybe (Array Number),
     start :: Maybe Number,
     end :: Maybe Number,
     showDetail :: Maybe Boolean,
@@ -34,7 +36,7 @@ newtype DataZoom = DataZoom DataZoomRec
 
 instance dataZoomEncodeJson :: EncodeJson DataZoom where
   encodeJson (DataZoom obj) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList $ 
     [
       "show" := obj.show,
       "orient" := obj.orient,

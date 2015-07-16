@@ -6,6 +6,7 @@ module ECharts.Mark.Point (
   delMarkPoint
   ) where
 
+import Prelude
 import ECharts.Chart
 import ECharts.Common
 import ECharts.Symbol
@@ -18,6 +19,7 @@ import Control.Monad.Eff
 import Data.Function
 
 import Data.StrMap (fromList, StrMap (..))
+import Data.List (toList)
 import Data.Tuple
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
@@ -29,7 +31,7 @@ type MarkPointRec = {
     symbolSize :: Maybe SymbolSize,
     large :: Maybe Boolean,
     effect :: Maybe MarkPointEffect,
-    "data" :: Maybe [MarkPointData],
+    "data" :: Maybe (Array MarkPointData),
     geoCoord:: Maybe (StrMap (Tuple Number Number))
   }
 
@@ -38,7 +40,7 @@ newtype MarkPoint = MarkPoint MarkPointRec
 
 instance markPointEncodeJson :: EncodeJson MarkPoint where
   encodeJson (MarkPoint mp) =
-    fromObject $ fromList $
+    fromObject $ fromList $ toList
     [
       "symbol" := mp.symbol,
       "symbolSize" := mp.symbolSize,
@@ -76,26 +78,14 @@ markPointDefault =
     geoCoord: Nothing
   }
 
-foreign import delMarkPointImpl """
-function delMarkPointImpl(idx, name, chart) {
-  return function() {
-    return chart.delMarkPoint(idx, name);
-  };
-}
-""" :: forall e. Fn3 Number String EChart
+foreign import delMarkPointImpl :: forall e. Fn3 Number String EChart
        (Eff (removeMarkPointECharts::REMOVE_MARKPOINT|e) EChart)
 
 delMarkPoint :: forall e. Number -> String -> EChart -> 
                 (Eff (removeMarkPointECharts::REMOVE_MARKPOINT|e) EChart)
 delMarkPoint idx name chart = runFn3 delMarkPointImpl idx name chart 
   
-foreign import addMarkPointImpl """
-function addMarkPointImpl(mp, chart) {
-  return function() {
-    return chart.addMarkPoint(mp);
-  };
-}
-""" :: forall e. Fn2 Json EChart (Eff (addMarkPointECharts::ADD_MARKPOINT|e) EChart)
+foreign import addMarkPointImpl :: forall e. Fn2 Json EChart (Eff (addMarkPointECharts::ADD_MARKPOINT|e) EChart)
 
 addMarkPoint :: forall e. MarkPoint -> EChart -> 
                 (Eff (addMarkPointECharts::ADD_MARKPOINT|e) EChart)

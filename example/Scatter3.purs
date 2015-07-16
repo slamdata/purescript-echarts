@@ -1,6 +1,7 @@
 module Scatter3 where
 
-import Debug.Trace (trace)
+import Prelude
+import Control.Monad.Eff.Console (print)
 import Control.Monad.Eff
 import Control.Monad.Eff.Random
 import Data.Tuple
@@ -22,20 +23,20 @@ showIt = {show: true}
 
 
 sinData = do 
-  randomIs <- U.randomLst 10000
-  randomXs <- U.randomLst 10000
-  let randoms = zipWith (\i x -> Tuple (U.precise 3 $ i * 10) x)  randomIs randomXs
+  randomIs <- U.randomLst 10000.0
+  randomXs <- U.randomLst 10000.0
+  let randoms = zipWith (\i x -> Tuple (U.precise 3.0 $ i * 10.0) x)  randomIs randomXs
 
   let mapfn = \(Tuple i rnd) ->
-    Tuple i (U.precise 3 $ sin i - i * (if i % 2 > 0 then 0.1 else -0.1) * rnd)
+    Tuple i (U.precise 3.0 $ sin i - i * (if i `mod` 2.0 > 0.0 then 0.1 else -0.1) * rnd)
   return $ mapfn <$> randoms
 
 cosData = do
-  randomIs <- U.randomLst 10000
-  randomXs <- U.randomLst 10000
-  let randoms = zipWith (\i x -> Tuple (U.precise 3 $ i * 10) x)  randomIs randomXs
+  randomIs <- U.randomLst 10000.0
+  randomXs <- U.randomLst 10000.0
+  let randoms = zipWith (\i x -> Tuple (U.precise 3.0 $ i * 10.0) x)  randomIs randomXs
   let mapfn = \(Tuple i rnd) -> 
-        Tuple i (U.precise 3 $ cos i - i * (if i % 2 > 0 then 0.1 else -0.1) * rnd)
+        Tuple i (U.precise 3.0 $ cos i - i * (if i % 2.0 > 0.0 then 0.1 else -0.1) * rnd)
   return $ mapfn <$> randoms
 
 simpleData (Tuple a b) = Value $ XYR {
@@ -76,7 +77,7 @@ options = do
 scatter3 id = do
   mbEl <- U.getElementById id
   case mbEl  of
-    Nothing -> trace "incorrect id in scatter3"
+    Nothing -> print "incorrect id in scatter3"
     Just el -> do
       opts <- options
       init Nothing el >>= setOption opts true >>= \_ -> return unit

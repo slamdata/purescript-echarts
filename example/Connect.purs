@@ -1,6 +1,7 @@
 module Connect where
 
-import Debug.Trace
+import Prelude
+import Control.Monad.Eff.Console
 import Data.Tuple
 import Utils
 import Data.Maybe
@@ -49,14 +50,14 @@ options1 = Option $ optionDefault {
           name = Just "access to the source."
           },
        pieSeries: pieSeriesDefault {
-         radius = Just $ R (Percent 55),
-         center = Just $ Tuple (Percent 50) (Pixel 225),
+         radius = Just $ R (Percent 55.0),
+         center = Just $ Tuple (Percent 50.0) (Pixel 225.0),
          "data" = Just $ [
-           Dat $ (dataDefault $ Simple 335) {name = Just "direct access"},
-           Dat $ (dataDefault $ Simple 310) {name = Just "email marketing"},
-           Dat $ (dataDefault $ Simple 234) {name = Just "affiliate advertising"},
-           Dat $ (dataDefault $ Simple 135) {name = Just "video ads"},
-           Dat $ (dataDefault $ Simple 158) {name = Just "search engine"}
+           Dat $ (dataDefault $ Simple 335.0) {name = Just "direct access"},
+           Dat $ (dataDefault $ Simple 310.0) {name = Just "email marketing"},
+           Dat $ (dataDefault $ Simple 234.0) {name = Just "affiliate advertising"},
+           Dat $ (dataDefault $ Simple 135.0) {name = Just "video ads"},
+           Dat $ (dataDefault $ Simple 158.0) {name = Just "search engine"}
            ]
 
          }
@@ -106,7 +107,7 @@ options2 = Option $ optionDefault {
       show = Just true
       }
     },
-  grid = Just $ Grid gridDefault {x2 = Just $ Pixel 40},
+  grid = Just $ Grid gridDefault {x2 = Just $ Pixel 40.0},
   series = Just $ Just <$> [
     BarSeries {
        common: universalSeriesDefault {
@@ -114,7 +115,7 @@ options2 = Option $ optionDefault {
           },
        barSeries: barSeriesDefault {
          stack = Just "total",
-         "data" = Just $ simpleData <$> [320, 332, 301, 334, 390, 330, 320]
+         "data" = Just $ simpleData <$> [320.0, 332.0, 301.0, 334.0, 390.0, 330.0, 320.0]
          }
        },
     BarSeries {
@@ -123,7 +124,7 @@ options2 = Option $ optionDefault {
          },
       barSeries: barSeriesDefault {
         stack = Just "email marketing",
-        "data" = Just $ simpleData <$> [120, 132, 101, 134, 90, 230, 210]
+        "data" = Just $ simpleData <$> [120.0, 132.0, 101.0, 134.0, 90.0, 230.0, 210.0]
         }
       },
     BarSeries {
@@ -132,7 +133,7 @@ options2 = Option $ optionDefault {
          },
       barSeries: barSeriesDefault {
         stack = Just "total",
-        "data" = Just $ simpleData <$> [220, 182, 191, 234, 290, 330, 310]
+        "data" = Just $ simpleData <$> [220.0, 182.0, 191.0, 234.0, 290.0, 330.0, 310.0]
         }
       },
     BarSeries {
@@ -141,7 +142,7 @@ options2 = Option $ optionDefault {
          },
       barSeries: barSeriesDefault {
         stack = Just "total",
-        "data" = Just $ simpleData <$> [150, 232, 201, 154, 190, 330, 410]
+        "data" = Just $ simpleData <$> [150.0, 232.0, 201.0, 154.0, 190.0, 330.0, 410.0]
         }
       },
     BarSeries {
@@ -150,13 +151,13 @@ options2 = Option $ optionDefault {
          },
       barSeries: barSeriesDefault {
         stack = Just "total",
-        "data" = Just $ simpleData <$> [820, 932, 901, 934, 1290, 1330, 1320]
+        "data" = Just $ simpleData <$> [820.0, 932.0, 901.0, 934.0, 1290.0, 1330.0, 1320.0]
         }
       }
     ]
   }
            
-bind first second = do
+conn first second = do
   connect first second
   connect second first
 
@@ -166,11 +167,11 @@ connectM firstId secondId = do
   mbElSnd <- getElementById secondId
   
   case Tuple mbElFst mbElSnd  of
-    Tuple Nothing _ -> trace "incorrect first id in connect"
-    Tuple _ Nothing -> trace "incorrect second id in connect"
+    Tuple Nothing _ -> log "incorrect first id in connect"
+    Tuple _ Nothing -> log "incorrect second id in connect"
     Tuple (Just first) (Just second) -> do
       fst <- init Nothing first >>= setOption options1 true
       snd <- init Nothing second >>= setOption options2 true
-      bind fst snd
+      conn fst snd
       return unit
 

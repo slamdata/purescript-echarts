@@ -1,10 +1,10 @@
 module Chord2 where
 
-import Debug.Trace (trace)
+import Prelude
+import Control.Monad.Eff.Console (log)
 import Data.Array hiding (init)
 import Data.String (indexOf, replace)
 import Data.Tuple.Nested
-import Data.Argonaut
 import Data.Either
 import Data.Maybe 
 import qualified Data.StrMap as M
@@ -40,10 +40,10 @@ options = Option $ optionDefault {
             Label "group4"
             ],
           matrix = Just $  [
-            [11975,  5871, 8916, 2868],
-            [ 1951, 10048, 2060, 6171],
-            [ 8010, 16145, 8090, 8045],
-            [ 1013,   990,  940, 6907]
+            [11975.0,  5871.0, 8916.0, 2868.0],
+            [ 1951.0, 10048.0, 2060.0, 6171.0],
+            [ 8010.0, 16145.0, 8090.0, 8045.0],
+            [ 1013.0,   990.0,  940.0, 6907.0]
             ]
           }
         }
@@ -53,5 +53,5 @@ options = Option $ optionDefault {
 chord2 id = do
   mbEl <- getElementById id
   case mbEl of
-    Nothing -> trace "Incorrect id in chord 2"
+    Nothing -> log "Incorrect id in chord 2"
     Just el -> init Nothing el >>= setOption options true >>= \_ -> return unit
