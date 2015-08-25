@@ -13,9 +13,9 @@ module ECharts.Chart (
 
 import DOM
 import Prelude
-import Data.Maybe 
+import Data.Maybe
 import Data.Function
-import Data.DOM.Simple.Types (HTMLElement())
+import DOM.HTML.Types (HTMLElement())
 import Control.Monad.Eff
 
 import Data.Argonaut.Core
@@ -36,7 +36,7 @@ foreign import initImpl :: forall e. Fn2 HTMLElement Json (Eff (dom :: DOM, echa
 
 init :: forall e.  Maybe Theme -> HTMLElement ->
         Eff (dom :: DOM, echartInit :: ECHARTS_INIT|e) EChart
-init theme dom = 
+init theme dom =
   runFn2 initImpl dom (encodeJson theme)
 
 

@@ -2,9 +2,10 @@ module ECharts.Image (
   ImgType(..),
   getDataURL,
   getImage
-  ) where 
+  ) where
 import Prelude
 import DOM
+import DOM.Node.Types
 import Control.Monad.Eff
 import Data.Function
 import Data.Argonaut.Core
@@ -12,7 +13,7 @@ import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Either
 
-import ECharts.Chart 
+import ECharts.Chart
 import ECharts.Effects
 
 

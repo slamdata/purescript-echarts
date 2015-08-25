@@ -40,7 +40,7 @@ type EFNode =
     initial :: Tuple Number Number,
     fixY :: Boolean,
     fixX :: Boolean,
-    category :: Int 
+    category :: Int
   }
 
 
@@ -55,7 +55,7 @@ foreign import clientHeight :: forall e. String -> Eff e Number
 
 data MockData = MockData (Array EFNode) (Array EFLink)
 
-randomInRange :: Number -> Number -> Eff _ Number 
+randomInRange :: Number -> Number -> Eff _ Number
 randomInRange min max = do
   x <- random
   pure $ (max - min) * x + min
@@ -68,7 +68,7 @@ createRootNode depth = do
   rValue <- randomInRange constMinRadius constMaxRadius
   let x = width / 2.0 + (0.5 - rnd) * 200.0
   let y = (height - 20.0) * toNumber depth / (toNumber constMaxDepth + 1.0) + 20.0
-  
+
   pure { name: "ROOT_NODE"
        , value:  rValue
        , id: "root"
@@ -79,20 +79,20 @@ createRootNode depth = do
        , category: 2
        }
 
-    
+
 createNodeWithIndex :: forall e. String -> Int -> Eff (random :: RANDOM|e) EFNode
-createNodeWithIndex idx depth = 
+createNodeWithIndex idx depth =
   _{ id = idx
    , name = "NODE_" <> idx
    , category = if depth == constMaxDepth
                 then 1
                 else 0
    } <$> createRootNode depth
-               
+
 
 mkChild :: forall e. EFNode -> String ->
            Eff (random::RANDOM|e) (Tuple EFNode EFLink)
-mkChild node idx = do 
+mkChild node idx = do
   child <- createNodeWithIndex idx (node.depth + one)
   let link = {source: node.name, target: child.name, weight: 1.0}
   return $ Tuple child link
@@ -104,7 +104,7 @@ mkChildren node = do
     mkChild node $ node.id <> ":" <> show i
 
 forceMockThreeDataI :: Array (Tuple EFNode EFLink) -> MockData ->
-                       Int -> Eff _ MockData 
+                       Int -> Eff _ MockData
 forceMockThreeDataI current accum 0 = return accum
 forceMockThreeDataI current accum n = do
   let nextAccum = foldl (\(MockData nodes links) (Tuple node link) ->
@@ -120,7 +120,7 @@ forceMockThreeData = do
   children <- mkChildren root
   forceMockThreeDataI children (MockData [root] []) constMaxDepth
 
-nodes :: Eff _ _ 
+nodes :: Eff _ _
 nodes = return []
 links :: Eff _ _
 links = return []
@@ -148,7 +148,7 @@ itemColor color = Just $ ItemStyle itemStyleDefault {
      }
   }
 
-mkOptions nodes links = Option $ optionDefault {
+mkOptions nodes' links' = Option $ optionDefault {
   series = Just $ Just <$> [
      ForceSeries {
         common: universalSeriesDefault{
@@ -170,25 +170,25 @@ mkOptions nodes links = Option $ optionDefault {
               itemStyle = itemColor "#af0000"
               }
             ],
-          nodes = Just $ nodeNormalize <$> nodes,
-          links = Just $ linkNormalize <$> links,
+          nodes = Just $ nodeNormalize <$> nodes',
+          links = Just $ linkNormalize <$> links',
           minRadius = Just constMinRadius,
           maxRadius = Just constMaxRadius
           }
-        
+
         }
      ]
   }
 
-  
+
 
 
 options :: forall e. Eff (random::RANDOM|e) _
 options = do
-  mockdata <- forceMockThreeData 
+  mockdata <- forceMockThreeData
   case mockdata of
-    MockData nodes links -> do
-      return $ mkOptions nodes links
+    MockData nodes' links' -> do
+      return $ mkOptions nodes' links'
 
 force4 id = do
   mbEl <- getElementById id
@@ -198,4 +198,4 @@ force4 id = do
       opts <- options
       chart <- init Nothing el >>= setOption opts true
       return unit
-      
+

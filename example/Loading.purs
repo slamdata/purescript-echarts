@@ -4,7 +4,7 @@ import Prelude
 import Control.Monad.Eff.Console (print)
 import Data.Array hiding (init, zip)
 import Data.Maybe
-import Data.Tuple 
+import Data.Tuple
 import Control.Monad.Eff
 import Control.Monad.Eff.Random
 
@@ -38,7 +38,7 @@ allEffects :: Array L.LoadingEffect
 allEffects = [L.Spin, L.Bar, L.Ring, L.Whirling, L.DynamicLine, L.Bubble]
 
 effect :: L.LoadingEffect -> L.LoadingOption
-effect eff = L.LoadingOption $ 
+effect eff = L.LoadingOption $
   L.loadingOptionDefault{
     text = Just $ "effect",
     effect = Just eff,
@@ -60,7 +60,7 @@ series true = [
        name = Just "second"
        },
     lineSeries: lineSeriesDefault {
-      "data" = Just $ simpleData <$> [2.6, 5.9, 9.0, 
+      "data" = Just $ simpleData <$> [2.6, 5.9, 9.0,
                                       26.4, 28.7, 70.7, 175.6, 182.2, 48.7,
                                       18.8, 6.0, 2.3]
       }
@@ -81,7 +81,7 @@ series false = [
        name = Just "second"
        },
     barSeries: barSeriesDefault {
-      "data" = Just $ simpleData <$> [2.6, 5.9, 9.0, 
+      "data" = Just $ simpleData <$> [2.6, 5.9, 9.0,
                                       26.4, 28.7, 70.7, 175.6, 182.2, 48.7,
                                       18.8, 6.0, 2.3]
       }
@@ -130,7 +130,7 @@ options i = Option $ optionDefault {
 data ChartSignal a = StartLoading L.LoadingOption | StopLoading a
 
 
-dataStream :: Signal (Eff _ (ChartSignal _))
+dataStream :: forall eff. Signal (Eff (random :: Control.Monad.Eff.Random.RANDOM | eff) (ChartSignal Option))
 dataStream =
   foldp (\_ curstateE -> do
           curstate <- curstateE
@@ -138,7 +138,7 @@ dataStream =
             StartLoading _ -> do
               effAndI <- randomInList allEffects
               case effAndI of
-                Tuple eff i -> 
+                Tuple eff i ->
                   return $ StopLoading $ options i
             StopLoading _ -> do
               effAndI <- randomInList allEffects
@@ -148,7 +148,7 @@ dataStream =
   (return $ StartLoading (effect L.Spin))
   (every 2000.0)
 
-  
+
 loading id = do
   mbEl <- getElementById id
   case mbEl of
@@ -161,6 +161,6 @@ loading id = do
         case content of
           StartLoading loadOptions -> L.showLoading loadOptions chart
                                       >>= \_ -> return unit
-          StopLoading options -> 
-            setOption options true chart >>= L.hideLoading
+          StopLoading options' ->
+            setOption options' true chart >>= L.hideLoading
             >>= \_ -> return unit

@@ -52,11 +52,11 @@ foreign import toLocaleTimeString :: JSDate -> String
 xTimeAxis = do
   curTime <- now
   let start = toEpochMilliseconds curTime
-  let mapfn = \i -> fromMaybe "" $ 
-                    replace onlyDigRgx  "" <$> 
+  let mapfn = \i -> fromMaybe "" $
+                    replace onlyDigRgx  "" <$>
                     toLocaleTimeString <$>
                     toJSDate <$>
-                    fromEpochMilliseconds (start - (Milliseconds (i * 2000)))
+                    fromEpochMilliseconds (start - (Milliseconds (toNumber i * 2000.0)))
 
   return $ mapfn <$> (1..10)
 
@@ -165,7 +165,7 @@ options = do
   d1 <- data1
   d2 <- data2
   return $ options_ xAxs d1 d2
-  
+
 
 dataStream =
   every 2000.0 ~> const do
@@ -175,10 +175,10 @@ dataStream =
     let lastData = precise 1.0 $
                    rnd1 * if round ((rnd2 * 10.0) `mod` 2.0) == 0.0
                           then 1.0 else -1.0
-    curTime <- now 
-    let axisData = 
-                   replace onlyDigRgx  "" $ 
-                   toLocaleTimeString $ 
+    curTime <- now
+    let axisData =
+                   replace onlyDigRgx  "" $
+                   toLocaleTimeString $
                    toJSDate curTime
 
 
