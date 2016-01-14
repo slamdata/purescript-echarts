@@ -17,8 +17,8 @@ data ItemData
 
 ##### Instances
 ``` purescript
-instance itemDataEncodeJson :: EncodeJson ItemData
-instance itemDataDecodeJson :: DecodeJson ItemData
+EncodeJson ItemData
+DecodeJson ItemData
 ```
 
 #### `dataDefault`

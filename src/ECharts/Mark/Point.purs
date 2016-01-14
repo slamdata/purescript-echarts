@@ -8,7 +8,6 @@ module ECharts.Mark.Point (
 
 import Prelude
 import ECharts.Chart
-import ECharts.Common
 import ECharts.Symbol
 import ECharts.Mark.Effect
 import ECharts.Mark.Data
@@ -18,7 +17,7 @@ import Data.Maybe
 import Control.Monad.Eff
 import Data.Function
 
-import Data.StrMap (fromList, StrMap (..))
+import Data.StrMap (fromList, StrMap ())
 import Data.List (toList)
 import Data.Tuple
 import Data.Argonaut.Core
@@ -36,7 +35,7 @@ type MarkPointRec = {
   }
 
 newtype MarkPoint = MarkPoint MarkPointRec
-   
+
 
 instance markPointEncodeJson :: EncodeJson MarkPoint where
   encodeJson (MarkPoint mp) =
@@ -81,12 +80,12 @@ markPointDefault =
 foreign import delMarkPointImpl :: forall e. Fn3 Number String EChart
        (Eff (removeMarkPointECharts::REMOVE_MARKPOINT|e) EChart)
 
-delMarkPoint :: forall e. Number -> String -> EChart -> 
+delMarkPoint :: forall e. Number -> String -> EChart ->
                 (Eff (removeMarkPointECharts::REMOVE_MARKPOINT|e) EChart)
-delMarkPoint idx name chart = runFn3 delMarkPointImpl idx name chart 
-  
+delMarkPoint idx name chart = runFn3 delMarkPointImpl idx name chart
+
 foreign import addMarkPointImpl :: forall e. Fn2 Json EChart (Eff (addMarkPointECharts::ADD_MARKPOINT|e) EChart)
 
-addMarkPoint :: forall e. MarkPoint -> EChart -> 
+addMarkPoint :: forall e. MarkPoint -> EChart ->
                 (Eff (addMarkPointECharts::ADD_MARKPOINT|e) EChart)
 addMarkPoint mp chart = runFn2 addMarkPointImpl (encodeJson mp) chart

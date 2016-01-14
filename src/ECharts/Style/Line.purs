@@ -3,9 +3,8 @@ module ECharts.Style.Line where
 import Prelude
 import Data.Maybe
 import Data.Either
-import Data.StrMap (fromList, StrMap (..))
+import Data.StrMap (fromList)
 import Data.List (toList)
-import Data.Tuple
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
@@ -21,7 +20,7 @@ instance linetypeEncodeJson :: EncodeJson LineType where
   encodeJson a = fromString $ case a of
     Solid -> "solid"
     Dotted -> "dotted"
-    Dashed -> "dashed"    
+    Dashed -> "dashed"
 
 instance linetypeDecodeJson :: DecodeJson LineType where
   decodeJson j = do
@@ -34,7 +33,7 @@ instance linetypeDecodeJson :: DecodeJson LineType where
 
 type LineStyleRec = {
     color :: Maybe Color,
-    "type" :: Maybe LineType, 
+    "type" :: Maybe LineType,
     width :: Maybe Number,
     shadowColor :: Maybe Color,
     shadowOffsetX :: Maybe Number,

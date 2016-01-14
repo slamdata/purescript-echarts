@@ -44,9 +44,9 @@ option = Option $ optionDefault {
                  {name: "trololo", value: 123.0}
                  ]
               }
-            
+
           },
-       
+
 
        mapSeries: mapSeriesDefault{
          "data" = Just [],

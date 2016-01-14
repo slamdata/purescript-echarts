@@ -10,8 +10,8 @@ data TooltipTrigger
 
 ##### Instances
 ``` purescript
-instance tooltipTriggerEncodeJson :: EncodeJson TooltipTrigger
-instance tooltipTriggerDecodeJson :: DecodeJson TooltipTrigger
+EncodeJson TooltipTrigger
+DecodeJson TooltipTrigger
 ```
 
 #### `TooltipPosition`
@@ -24,8 +24,8 @@ data TooltipPosition
 
 ##### Instances
 ``` purescript
-instance tooltipPositionEncodeJson :: EncodeJson TooltipPosition
-instance tooltipPositionDecodeJson :: DecodeJson TooltipPosition
+EncodeJson TooltipPosition
+DecodeJson TooltipPosition
 ```
 
 #### `TooltipAxisPointerType`
@@ -40,8 +40,8 @@ data TooltipAxisPointerType
 
 ##### Instances
 ``` purescript
-instance tooltipAxisPointerTypeEncodeJson :: EncodeJson TooltipAxisPointerType
-instance tooltiopAxisPointerTypeDecodeJson :: DecodeJson TooltipAxisPointerType
+EncodeJson TooltipAxisPointerType
+DecodeJson TooltipAxisPointerType
 ```
 
 #### `TooltipAxisPointerRec`
@@ -59,8 +59,8 @@ newtype TooltipAxisPointer
 
 ##### Instances
 ``` purescript
-instance tooltipAxisPointerEncodeJson :: EncodeJson TooltipAxisPointer
-instance tooltipAxisPointerDecodeJson :: DecodeJson TooltipAxisPointer
+EncodeJson TooltipAxisPointer
+DecodeJson TooltipAxisPointer
 ```
 
 #### `tooltipAxisPointerDefault`
@@ -84,8 +84,8 @@ newtype Tooltip
 
 ##### Instances
 ``` purescript
-instance tooltipEncodeJson :: EncodeJson Tooltip
-instance tooltipDecodeJson :: DecodeJson Tooltip
+EncodeJson Tooltip
+DecodeJson Tooltip
 ```
 
 #### `tooltipDefault`

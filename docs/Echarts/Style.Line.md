@@ -11,8 +11,8 @@ data LineType
 
 ##### Instances
 ``` purescript
-instance linetypeEncodeJson :: EncodeJson LineType
-instance linetypeDecodeJson :: DecodeJson LineType
+EncodeJson LineType
+DecodeJson LineType
 ```
 
 #### `LineStyleRec`
@@ -30,8 +30,8 @@ newtype LineStyle
 
 ##### Instances
 ``` purescript
-instance lineStyleEncodeJson :: EncodeJson LineStyle
-instance lineStyleDecodeJson :: DecodeJson LineStyle
+EncodeJson LineStyle
+DecodeJson LineStyle
 ```
 
 #### `lineStyleDefault`

@@ -2,8 +2,7 @@ module ECharts.Mark.Data where
 
 import Prelude
 import Data.Maybe
-import Data.StrMap (fromList, StrMap (..))
-import Data.Tuple
+import Data.StrMap (fromList)
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
@@ -21,7 +20,7 @@ type MarkPointDataRec = {
   }
 
 newtype MarkPointData = MarkPointData MarkPointDataRec
-   
+
 instance mpDataEncodeJson :: EncodeJson MarkPointData where
   encodeJson (MarkPointData mp) =
     fromObject $ fromList $ toList
@@ -53,8 +52,8 @@ instance mpDataDecodeJson :: DecodeJson MarkPointData where
          (o .? "yAxis") <*>
          (o .? "type")
     pure $ MarkPointData r
-           
-    
+
+
 markPointDataDefault :: MarkPointDataRec
 markPointDataDefault =
   {

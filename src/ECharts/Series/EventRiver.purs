@@ -7,7 +7,7 @@ module ECharts.Series.EventRiver (
   OneEvent(..),
   OneEventRec(),
   oneEventDefault
-  ) where 
+  ) where
 
 import Prelude
 import Data.Maybe
@@ -16,25 +16,10 @@ import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
-import Data.Tuple (Tuple(..))
 import Data.StrMap hiding (toList)
 import Data.List (toList)
-import Data.Date (Date(..), JSDate(), toJSDate, fromStringStrict)
+import Data.Date (Date(), JSDate(), toJSDate, fromStringStrict)
 
-
-import ECharts.Common
-import ECharts.Coords
-import ECharts.Chart
-import ECharts.Tooltip
-import ECharts.Style.Item
-import ECharts.Mark.Line
-import ECharts.Mark.Point
-import ECharts.Item.Data
-import ECharts.Symbol
-import ECharts.Series.Force
-import ECharts.Series.Gauge
-import ECharts.Axis
-import ECharts.Title
 
 type EvolutionDetailRec = {
     link :: Maybe String,
@@ -43,7 +28,7 @@ type EvolutionDetailRec = {
     }
 
 newtype EvolutionDetail = EvolutionDetail EvolutionDetailRec
-   
+
 
 instance evoDetailEncodeJson :: EncodeJson EvolutionDetail where
   encodeJson (EvolutionDetail e) = fromObject $ fromList $ toList [
@@ -61,9 +46,9 @@ instance evoDetailDecodeJson :: DecodeJson EvolutionDetail where
          (o .? "link") <*>
          (o .? "text") <*>
          (o .? "img")
-    pure $ EvolutionDetail r 
+    pure $ EvolutionDetail r
 
-                                   
+
 evolutionDetailDefault :: EvolutionDetailRec
 evolutionDetailDefault = {
   link: Nothing,
@@ -79,7 +64,7 @@ type EvolutionRec = {
 
 newtype Evolution = Evolution EvolutionRec
 
-foreign import jsDateToJson :: JSDate -> Json 
+foreign import jsDateToJson :: JSDate -> Json
 
 dateToJson :: Date -> Json
 dateToJson = jsDateToJson <<< toJSDate
@@ -95,7 +80,7 @@ instance evoDecodeJson :: DecodeJson Evolution where
   decodeJson j = do
     o <- decodeJson j
     t <- o .? "time"
-    time <- maybe (Left "incorrect time") Right $ fromStringStrict t 
+    time <- maybe (Left "incorrect time") Right $ fromStringStrict t
     r <- { time: time
          , value: _
          , detail: _ } <$>
@@ -110,7 +95,7 @@ type OneEventRec = {
     }
 
 newtype OneEvent = OneEvent OneEventRec
-   
+
 oneEventDefault :: OneEventRec
 oneEventDefault = {
   name: Nothing,

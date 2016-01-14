@@ -1,7 +1,6 @@
 module ECharts.Style.Text where
 
 import Prelude
-import Data.Array (concat)
 import Data.Maybe
 import Data.Either
 import Data.Argonaut.Core
@@ -12,7 +11,6 @@ import Data.List (toList)
 import qualified Data.StrMap as M
 
 
-import ECharts.Common
 import ECharts.Color
 import ECharts.Coords
 
@@ -24,7 +22,7 @@ data TextBaseline = TBLTop
                   | TBLMiddle
 
 instance textBaselineEncodeJson :: EncodeJson TextBaseline where
-  encodeJson a = fromString $ case a of 
+  encodeJson a = fromString $ case a of
     TBLTop -> "top"
     TBLBottom -> "bottom"
     TBLMiddle -> "middle"
@@ -36,11 +34,11 @@ instance textBaselineDecodeJson :: DecodeJson TextBaseline where
       "top" -> pure TBLTop
       "bottom" -> pure TBLBottom
       "middle" -> pure TBLMiddle
-      _ -> Left "incorrect text base line" 
+      _ -> Left "incorrect text base line"
 
 data FontStyle = FSNormal | FSItalic | FSOblique
 instance fontStyleEncodeJson :: EncodeJson FontStyle where
-  encodeJson a = fromString $ case a of 
+  encodeJson a = fromString $ case a of
     FSNormal -> "normal"
     FSItalic -> "italic"
     FSOblique -> "oblique"
@@ -69,7 +67,7 @@ data FontWeight = FWNormal
                 | FW900
 
 instance fontWeightEncodeJson :: EncodeJson FontWeight where
-  encodeJson a = fromString $ case a of 
+  encodeJson a = fromString $ case a of
     FWNormal -> "normal"
     FWBold -> "bold"
     FWBolder -> "bolder"

@@ -32,11 +32,11 @@ type DataZoomRec = {
     }
 
 newtype DataZoom = DataZoom DataZoomRec
-   
+
 
 instance dataZoomEncodeJson :: EncodeJson DataZoom where
   encodeJson (DataZoom obj) =
-    fromObject $ fromList $ toList $ 
+    fromObject $ fromList $ toList $
     [
       "show" := obj.show,
       "orient" := obj.orient,

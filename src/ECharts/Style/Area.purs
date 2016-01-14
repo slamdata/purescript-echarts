@@ -1,9 +1,7 @@
 module ECharts.Style.Area where
 
 import Prelude
-import Data.Maybe
-import Data.StrMap (fromList, StrMap (..))
-import Data.Tuple
+import Data.StrMap (fromList)
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
@@ -25,4 +23,4 @@ instance areaStyleEncodeJson :: EncodeJson AreaStyle where
 instance areaStyleDecodeJson :: DecodeJson AreaStyle where
   decodeJson j = do
     o <- decodeJson j
-    AreaStyle <$> (o .? "color") 
+    AreaStyle <$> (o .? "color")

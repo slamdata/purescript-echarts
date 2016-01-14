@@ -1,6 +1,6 @@
 module K where
 
-import Prelude 
+import Prelude
 import Control.Monad.Eff.Console (print)
 import Data.Array hiding (init)
 import Data.Tuple

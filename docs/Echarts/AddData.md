@@ -15,7 +15,7 @@ newtype AdditionalData
 
 ##### Instances
 ``` purescript
-instance additionalDataEncodeJson :: EncodeJson AdditionalData
+EncodeJson AdditionalData
 ```
 
 #### `addData`

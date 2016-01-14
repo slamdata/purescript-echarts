@@ -15,8 +15,8 @@ newtype ChordStyle
 
 ##### Instances
 ``` purescript
-instance chordStyleJson :: EncodeJson ChordStyle
-instance chordStyleDecodeJson :: DecodeJson ChordStyle
+EncodeJson ChordStyle
+DecodeJson ChordStyle
 ```
 
 #### `chordStyleDefault`

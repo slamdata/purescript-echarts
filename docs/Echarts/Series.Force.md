@@ -15,8 +15,8 @@ newtype ForceCategory
 
 ##### Instances
 ``` purescript
-instance forceCategoryEncodeJson :: EncodeJson ForceCategory
-instance forceCategoryDecodeJson :: DecodeJson ForceCategory
+EncodeJson ForceCategory
+DecodeJson ForceCategory
 ```
 
 #### `forceCategoryDefault`
@@ -40,8 +40,8 @@ newtype Node
 
 ##### Instances
 ``` purescript
-instance nodeEncodeJson :: EncodeJson Node
-instance nodeDecodeJson :: DecodeJson Node
+EncodeJson Node
+DecodeJson Node
 ```
 
 #### `nodeDefault`
@@ -60,8 +60,8 @@ data LinkEnd
 
 ##### Instances
 ``` purescript
-instance linkEndEncodeJson :: EncodeJson LinkEnd
-instance linkEndDecodeJson :: DecodeJson LinkEnd
+EncodeJson LinkEnd
+DecodeJson LinkEnd
 ```
 
 #### `LinkRec`
@@ -79,8 +79,8 @@ newtype Link
 
 ##### Instances
 ``` purescript
-instance linkEncodeJson :: EncodeJson Link
-instance linkDecodeJson :: DecodeJson Link
+EncodeJson Link
+DecodeJson Link
 ```
 
 #### `Matrix`

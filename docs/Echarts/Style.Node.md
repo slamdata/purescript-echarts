@@ -15,8 +15,8 @@ newtype NodeStyle
 
 ##### Instances
 ``` purescript
-instance nodeStyleEncodeJson :: EncodeJson NodeStyle
-instance nodeStyleDecodeJson :: DecodeJson NodeStyle
+EncodeJson NodeStyle
+DecodeJson NodeStyle
 ```
 
 #### `nodeStyleDefault`

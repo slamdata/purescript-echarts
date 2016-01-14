@@ -43,11 +43,11 @@ type DataRangeRec = {
     }
 
 newtype DataRange = DataRange DataRangeRec
-   
+
 
 instance dataRangeEncodeJson :: EncodeJson DataRange where
   encodeJson (DataRange obj) =
-    fromObject $ fromList $ toList $ 
+    fromObject $ fromList $ toList $
     [
       "show" := obj.show,
       "orient" := obj.orient,

@@ -25,11 +25,11 @@ type GridRec = {
     }
 
 newtype Grid = Grid GridRec
-   
+
 
 instance gridEncodeJson :: EncodeJson Grid where
   encodeJson (Grid obj) =
-    fromObject $ fromList $ toList 
+    fromObject $ fromList $ toList
     [
       "x" := obj.x,
       "y" := obj.y,

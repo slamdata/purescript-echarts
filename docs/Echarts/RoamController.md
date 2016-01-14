@@ -15,8 +15,8 @@ newtype RoamController
 
 ##### Instances
 ``` purescript
-instance roamControllerEncodeJson :: EncodeJson RoamController
-instance roamControllerDecodeJson :: DecodeJson RoamController
+EncodeJson RoamController
+DecodeJson RoamController
 ```
 
 #### `roamControllerDefault`

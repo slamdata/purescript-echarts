@@ -57,7 +57,7 @@ toolboxDefault =
     textStyle: Nothing,
     feature: Nothing
   }
-  
+
 
 instance toolboxEncodeJson :: EncodeJson Toolbox where
   encodeJson (Toolbox obj) =
@@ -131,7 +131,7 @@ newtype Feature = Feature FeatureRec
 
 instance featureEncodeJson :: EncodeJson Feature where
   encodeJson (Feature obj) =
-    fromObject $ fromList $ toList 
+    fromObject $ fromList $ toList
     [
       "mark" := obj.mark,
       "dataZoom" := obj.dataZoom,
@@ -158,7 +158,7 @@ instance featureDecodeJson :: DecodeJson Feature where
          (o .? "saveAsImage")
     pure $ Feature r
 
-    
+
 featureDefault :: FeatureRec
 featureDefault = {
   mark: Nothing,
@@ -220,7 +220,7 @@ newtype RestoreFeature = RestoreFeature RestoreFeatureRec
 
 instance restoreFeatureEncodeJson :: EncodeJson RestoreFeature where
   encodeJson (RestoreFeature obj) =
-    fromObject $ fromList $ toList 
+    fromObject $ fromList $ toList
     [
       "show" := obj.show,
       "title" := obj.title
@@ -247,7 +247,7 @@ newtype DataZoomFeatureTitle = DataZoomFeatureTitle DataZoomFeatureTitleRec
 
 instance datazoomTitleEncodeJson :: EncodeJson DataZoomFeatureTitle where
   encodeJson (DataZoomFeatureTitle obj) =
-    fromObject $ fromList $ toList $ 
+    fromObject $ fromList $ toList $
     [
       "dataZoom" := obj.dataZoom,
       "dataZoomReset" := obj.dataZoomReset
@@ -257,7 +257,7 @@ instance datazoomTitleDecodeJson :: DecodeJson DataZoomFeatureTitle where
   decodeJson j = do
     o <- decodeJson j
     r <- {dataZoom: _ , dataZoomReset: _ } <$> (o .? "dataZoom") <*> (o .? "dataZoomReset")
-    pure $ DataZoomFeatureTitle r 
+    pure $ DataZoomFeatureTitle r
 
 type DataZoomFeatureRec = {
     show :: Maybe Boolean,
@@ -271,10 +271,10 @@ dataZoomFeatureDefault = {
   show: Nothing,
   title: Nothing
   }
-  
+
 instance dataZoomFeatureEncodeJson :: EncodeJson DataZoomFeature where
   encodeJson (DataZoomFeature obj) =
-    fromObject $ fromList $ toList $ 
+    fromObject $ fromList $ toList $
     [
       "show" := obj.show,
       "title" := obj.title
@@ -284,7 +284,7 @@ instance dataZoomFeatureDecodeJson :: DecodeJson DataZoomFeature where
   decodeJson j = do
     o <- decodeJson j
     r <- {show: _ , title: _} <$> (o .? "show") <*> (o .? "title")
-    pure $ DataZoomFeature r 
+    pure $ DataZoomFeature r
 
 type DataViewFeatureRec = {
     show :: Maybe Boolean,
@@ -352,7 +352,7 @@ instance mftitleDecodeJson :: DecodeJson MarkFeatureTitle where
          (o .? "mark") <*>
          (o .? "markUndo") <*>
          (o .? "markClear")
-    pure $ MarkFeatureTitle r 
+    pure $ MarkFeatureTitle r
 
 type MarkFeatureRec = {
     show :: Maybe Boolean,
@@ -365,7 +365,7 @@ newtype MarkFeature = MarkFeature MarkFeatureRec
 
 instance markFeatureEncodeJson :: EncodeJson MarkFeature where
   encodeJson (MarkFeature obj) =
-    fromObject $ fromList $ toList 
+    fromObject $ fromList $ toList
     [
       "show" := obj.show,
       "title" := obj.title,
@@ -381,8 +381,8 @@ instance markFeatureDecodeJson :: DecodeJson MarkFeature where
          (o .? "show") <*>
          (o .? "title") <*>
          (o .? "lineStyle")
-    pure $ MarkFeature r 
-    
+    pure $ MarkFeature r
+
 markFeatureDefault :: MarkFeatureRec
 markFeatureDefault = {
   show: Nothing,
@@ -416,7 +416,7 @@ instance magicTypeDecodeJson :: DecodeJson MagicType where
       "chord" -> pure MagicChord
       "pie" -> pure MagicPie
       "funnel" -> pure MagicFunnel
-      _ -> Left "incorrect magic type" 
+      _ -> Left "incorrect magic type"
 
 
 type MagicTypeFeatureRec = {

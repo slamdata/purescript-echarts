@@ -10,8 +10,8 @@ data LinkType
 
 ##### Instances
 ``` purescript
-instance linkTypeEncodeJson :: EncodeJson LinkType
-instance linkTypeDecodeJson :: DecodeJson LinkType
+EncodeJson LinkType
+DecodeJson LinkType
 ```
 
 #### `LinkStyleRec`
@@ -29,8 +29,8 @@ newtype LinkStyle
 
 ##### Instances
 ``` purescript
-instance linkStyleEncodeJson :: EncodeJson LinkStyle
-instance linkStyleDecodeJson :: DecodeJson LinkStyle
+EncodeJson LinkStyle
+DecodeJson LinkStyle
 ```
 
 #### `linkStyleDefault`

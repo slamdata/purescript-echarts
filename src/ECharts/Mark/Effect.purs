@@ -6,8 +6,7 @@ import Data.Argonaut.Core
 import Data.Argonaut.Combinators
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
-import Data.StrMap (fromList, StrMap(..))
-import ECharts.Common
+import Data.StrMap (fromList)
 import ECharts.Color
 import Data.List (toList)
 
@@ -21,7 +20,7 @@ type MarkPointEffectRec = {
   }
 
 newtype MarkPointEffect = MarkPointEffect MarkPointEffectRec
- 
+
 instance mpEffectEncodeJson :: EncodeJson MarkPointEffect where
   encodeJson (MarkPointEffect cfg) =
     fromObject $ fromList $ toList

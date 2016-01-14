@@ -15,8 +15,8 @@ newtype Option
 
 ##### Instances
 ``` purescript
-instance optionsEncodeJson :: EncodeJson Option
-instance optionsDecodeJson :: DecodeJson Option
+EncodeJson Option
+DecodeJson Option
 ```
 
 #### `optionDefault`

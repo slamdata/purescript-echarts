@@ -22,7 +22,7 @@ data Theme
 
 ##### Instances
 ``` purescript
-instance themeEncodeJson :: EncodeJson Theme
+EncodeJson Theme
 ```
 
 #### `init`

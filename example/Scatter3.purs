@@ -22,7 +22,7 @@ import qualified Utils as U
 showIt = {show: true}
 
 
-sinData = do 
+sinData = do
   randomIs <- U.randomLst 10000.0
   randomXs <- U.randomLst 10000.0
   let randoms = zipWith (\i x -> Tuple (U.precise 3.0 $ i * 10.0) x)  randomIs randomXs
@@ -35,7 +35,7 @@ cosData = do
   randomIs <- U.randomLst 10000.0
   randomXs <- U.randomLst 10000.0
   let randoms = zipWith (\i x -> Tuple (U.precise 3.0 $ i * 10.0) x)  randomIs randomXs
-  let mapfn = \(Tuple i rnd) -> 
+  let mapfn = \(Tuple i rnd) ->
         Tuple i (U.precise 3.0 $ cos i - i * (if i % 2.0 > 0.0 then 0.1 else -0.1) * rnd)
   return $ mapfn <$> randoms
 
@@ -45,7 +45,7 @@ simpleData (Tuple a b) = Value $ XYR {
   r: Nothing
   }
 
-options :: Eff _ _ 
+options :: Eff _ _
 options = do
   sines <- sinData
   coses <- cosData

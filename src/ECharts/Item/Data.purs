@@ -43,7 +43,7 @@ instance itemDataEncodeJson :: EncodeJson ItemData where
     ["name" := name]
 
 instance itemDataDecodeJson :: DecodeJson ItemData where
-  decodeJson json = 
+  decodeJson json =
     (do obj <- decodeJson json
         val <- obj .? "value"
         name <- obj .? "name"
@@ -63,7 +63,7 @@ instance itemDataDecodeJson :: DecodeJson ItemData where
     (Label <$> (decodeJson json >>= (.? "name")))
     <|>
     (Value <$> (decodeJson json))
-    
+
 
 
 dataDefault :: ItemValue -> ItemDataDatRec

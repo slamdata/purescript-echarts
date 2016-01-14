@@ -15,8 +15,8 @@ data LegendItem
 
 ##### Instances
 ``` purescript
-instance legendItemEncodeJson :: EncodeJson LegendItem
-instance legendItemDecodeJson :: DecodeJson LegendItem
+EncodeJson LegendItem
+DecodeJson LegendItem
 ```
 
 #### `legendItemDefault`
@@ -40,8 +40,8 @@ newtype Legend
 
 ##### Instances
 ``` purescript
-instance legendEncodeJson :: EncodeJson Legend
-instance legendDecodeJson :: DecodeJson Legend
+EncodeJson Legend
+DecodeJson Legend
 ```
 
 #### `legendDefault`

@@ -15,8 +15,8 @@ newtype Pointer
 
 ##### Instances
 ``` purescript
-instance pointerEncodeJson :: EncodeJson Pointer
-instance pointerDecodeJson :: DecodeJson Pointer
+EncodeJson Pointer
+DecodeJson Pointer
 ```
 
 #### `pointerDefault`
@@ -40,8 +40,8 @@ newtype SplitLine
 
 ##### Instances
 ``` purescript
-instance splitLineEncodeJson :: EncodeJson SplitLine
-instance splitLineDecodeJson :: DecodeJson SplitLine
+EncodeJson SplitLine
+DecodeJson SplitLine
 ```
 
 #### `splitLineDefault`
@@ -65,8 +65,8 @@ newtype GaugeDetail
 
 ##### Instances
 ``` purescript
-instance gaugeDetailEncodeJson :: EncodeJson GaugeDetail
-instance gaugeDetailDecodeJson :: DecodeJson GaugeDetail
+EncodeJson GaugeDetail
+DecodeJson GaugeDetail
 ```
 
 #### `gaugeDetailDefault`

@@ -15,8 +15,8 @@ newtype MarkPointData
 
 ##### Instances
 ``` purescript
-instance mpDataEncodeJson :: EncodeJson MarkPointData
-instance mpDataDecodeJson :: DecodeJson MarkPointData
+EncodeJson MarkPointData
+DecodeJson MarkPointData
 ```
 
 #### `markPointDataDefault`

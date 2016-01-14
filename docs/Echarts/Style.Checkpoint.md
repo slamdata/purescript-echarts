@@ -15,8 +15,8 @@ newtype CheckpointStyle
 
 ##### Instances
 ``` purescript
-instance checkpointStyleEncodeJson :: EncodeJson CheckpointStyle
-instance checkpointStyleDecodeJson :: DecodeJson CheckpointStyle
+EncodeJson CheckpointStyle
+DecodeJson CheckpointStyle
 ```
 
 #### `checkpointStyleDefault`

@@ -4,14 +4,15 @@
   "devDependencies": {
     "ecstatic": "^0.5.8",
     "express": "^4.11.0",
-    "gulp": "^3.8.10",
+    "gulp": "^3.9.0",
     "gulp-browserify": "^0.5.1",
     "gulp-concat": "^2.4.3",
     "gulp-jsvalidate": "^1.0.1",
     "gulp-livereload": "^3.4.0",
-    "gulp-purescript": "^0.6.0",
+    "gulp-purescript": "^0.8.0",
     "gulp-rename": "^1.2.0",
     "gulp-run": "^1.6.6",
+    "gulp-trimlines": "^1.0.0",
     "run-sequence": "^1.0.2"
   }
 }

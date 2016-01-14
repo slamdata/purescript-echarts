@@ -4,12 +4,12 @@ import Prelude
 import Control.Monad.Eff.Console (print, CONSOLE())
 import Math hiding (log)
 import Data.Array hiding (init)
-import Data.Maybe 
+import Data.Maybe
 
 import Control.Monad.Eff
 import Control.Monad.Eff.Random
 
-import Utils 
+import Utils
 
 import ECharts.Chart
 import ECharts.Events
@@ -30,7 +30,7 @@ import qualified  ECharts.DataZoom as Zoom
 simpleData = Value <<< Simple
 
 lineData :: Eff _ (Array Number)
-lineData = do 
+lineData = do
   lst <- randomLst 30.0
   return $ (\x -> round $ x * 30.0 + 30.0 ) <$> lst
 
@@ -76,7 +76,7 @@ options_ line bar = Option $ optionDefault {
   xAxis = Just $ OneAxis $ Axis $ axisDefault {
     "type" = Just CategoryAxis,
     boundaryGap = Just $ CatBoundaryGap true,
-    "data" = Just $ (\i -> CommonAxisData $ "2013-03-" <> show i) <$> (1..30) 
+    "data" = Just $ (\i -> CommonAxisData $ "2013-03-" <> show i) <$> (1..30)
     },
   yAxis = Just $ OneAxis $ Axis $ axisDefault {"type" = Just ValueAxis},
   series = Just $ Just <$> [
@@ -92,7 +92,7 @@ options_ line bar = Option $ optionDefault {
   }
 
 
-options :: Eff _ _ 
+options :: Eff _ _
 options = do
   line <- lineData
   bar <- barData
@@ -101,7 +101,7 @@ options = do
 foreign import log :: forall a e. a -> Eff e Unit
 
 
-subscribe chart = do 
+subscribe chart = do
   let sub = \et hndl -> listen et hndl chart
   sub ClickEvent log
   sub DoubleClickEvent log
@@ -112,14 +112,14 @@ subscribe chart = do
 
 
 events id = do
-  mbEl <- getElementById id 
+  mbEl <- getElementById id
   case mbEl of
     Nothing -> print "incorrect id in events"
-    Just el -> do 
+    Just el -> do
       opts <- options
       chart <- init Nothing el
                >>= setOption opts true
-  
+
       subscribe chart
       return unit
 

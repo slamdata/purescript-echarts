@@ -15,8 +15,8 @@ newtype MarkLine
 
 ##### Instances
 ``` purescript
-instance mlEncodeJson :: EncodeJson MarkLine
-instance mlDecodeJson :: DecodeJson MarkLine
+EncodeJson MarkLine
+DecodeJson MarkLine
 ```
 
 #### `markLineDefault`

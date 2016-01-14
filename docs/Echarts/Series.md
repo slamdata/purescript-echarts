@@ -20,8 +20,8 @@ data Series
 
 ##### Instances
 ``` purescript
-instance encodeSeries :: EncodeJson Series
-instance decodeSeries :: DecodeJson Series
+EncodeJson Series
+DecodeJson Series
 ```
 
 #### `UniversalSeriesRec`

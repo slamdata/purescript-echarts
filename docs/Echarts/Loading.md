@@ -14,7 +14,7 @@ data LoadingEffect
 
 ##### Instances
 ``` purescript
-instance loadingEffectEncodeJson :: EncodeJson LoadingEffect
+EncodeJson LoadingEffect
 ```
 
 #### `LoadingOptionRec`
@@ -32,7 +32,7 @@ newtype LoadingOption
 
 ##### Instances
 ``` purescript
-instance showLoadingOptions :: EncodeJson LoadingOption
+EncodeJson LoadingOption
 ```
 
 #### `showLoading`

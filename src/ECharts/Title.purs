@@ -6,7 +6,7 @@ import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 import Data.Maybe
-import Data.Either 
+import Data.Either
 import Data.StrMap hiding (toList)
 import Data.List (toList)
 
@@ -54,7 +54,7 @@ newtype Title = Title TitleRec
 
 instance titleEncodeJson :: EncodeJson Title where
   encodeJson (Title obj) =
-    fromObject $ fromList $ toList $ 
+    fromObject $ fromList $ toList $
     [
       "text" := obj.text,
       "link" := obj.link,
@@ -110,7 +110,7 @@ instance titleDecodeJson :: DecodeJson Title where
          (o .? "textStyle") <*>
          (o .? "subtextStyle")
     pure $ Title r
-             
+
 
 
 titleDefault :: TitleRec

@@ -32,7 +32,7 @@ options = Option $ optionDefault {
         }
      ]
   }
-                    
+
 
 funnel2 id = do
   mbEl <- getElementById id

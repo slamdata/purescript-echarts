@@ -10,8 +10,8 @@ data LinkTarget
 
 ##### Instances
 ``` purescript
-instance linkTargetEncodeJson :: EncodeJson LinkTarget
-instance linkTargetDecodeJson :: DecodeJson LinkTarget
+EncodeJson LinkTarget
+DecodeJson LinkTarget
 ```
 
 #### `TitleRec`
@@ -29,8 +29,8 @@ newtype Title
 
 ##### Instances
 ``` purescript
-instance titleEncodeJson :: EncodeJson Title
-instance titleDecodeJson :: DecodeJson Title
+EncodeJson Title
+DecodeJson Title
 ```
 
 #### `titleDefault`

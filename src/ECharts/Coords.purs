@@ -16,7 +16,7 @@ data XPos = XLeft
           | XRight
           | XCenter
           | X Number
-            
+
 instance xPosEncodeJson :: EncodeJson XPos where
   encodeJson XLeft = fromString "left"
   encodeJson XRight = fromString "right"
@@ -39,7 +39,7 @@ data YPos = YTop
           | YBottom
           | YCenter
           | Y Number
-            
+
 instance yPosEncodeJson :: EncodeJson YPos where
   encodeJson ypos = case ypos of
     YTop -> fromString "top"
@@ -62,7 +62,7 @@ data LabelPosition = LPOuter | LPInner | LPTop | LPRight | LPLeft | LPBottom
                    | LPInsideLeft | LPInsideRight | LPInsideTop | LPInsideBottom
 
 instance labelPositionEncodeJson :: EncodeJson LabelPosition where
-  encodeJson a = encodeJson $ case a of 
+  encodeJson a = encodeJson $ case a of
     LPOuter -> "outer"
     LPInner -> "inner"
     LPTop -> "top"
@@ -90,6 +90,7 @@ instance labelPositionDecodeJson :: DecodeJson LabelPosition where
       "insideRight" -> pure LPInsideRight
       "insideTop" -> pure LPInsideTop
       "insideBottom" -> pure LPInsideBottom
+      _ -> Left "Invalid LabelPosition"
 
 
 data HorizontalAlign = HAlignLeft
@@ -97,7 +98,7 @@ data HorizontalAlign = HAlignLeft
                      | HAlignCenter
 
 instance textAlignEncodeJson :: EncodeJson HorizontalAlign where
-  encodeJson a = fromString $ case a of 
+  encodeJson a = fromString $ case a of
     HAlignLeft -> "left"
     HAlignRight -> "right"
     HAlignCenter -> "center"

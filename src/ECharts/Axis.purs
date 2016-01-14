@@ -5,7 +5,7 @@ import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
-import Data.Tuple (Tuple(..))
+import Data.Tuple (Tuple())
 import Data.StrMap hiding (toList)
 import Data.Maybe
 import Data.Either
@@ -14,12 +14,10 @@ import Control.Alt ((<|>))
 import Data.List (toList)
 
 import ECharts.Common
-import ECharts.Coords
 import ECharts.Color
 import ECharts.Style.Line
 import ECharts.Style.Text
 import ECharts.Style.Area
-import ECharts.Symbol
 import ECharts.Formatter
 
 
@@ -58,7 +56,7 @@ type AxisLineRec = {
     }
 
 newtype AxisLine = AxisLine AxisLineRec
-   
+
 instance axisLineEncodeJson :: EncodeJson AxisLine where
   encodeJson (AxisLine a) = fromObject $ fromList $ toList [
     "show" := a.show,
@@ -77,7 +75,7 @@ instance axisLineDecodeJson :: DecodeJson AxisLine where
          (o .? "onZero")
     pure $ AxisLine r
 
-axisLineDefault :: AxisLineRec                            
+axisLineDefault :: AxisLineRec
 axisLineDefault = {
   show: Nothing,
   onZero: Nothing,
@@ -96,7 +94,7 @@ type AxisTickRec = {
     }
 
 newtype AxisTick = AxisTick AxisTickRec
-   
+
 instance axisTickEncodeJson :: EncodeJson AxisTick where
   encodeJson (AxisTick a) = fromObject $ fromList $ toList [
     "show" := a.show,
@@ -126,8 +124,8 @@ instance axisTickDecodeJson :: DecodeJson AxisTick where
          (o .? "onGap") <*>
          (o .? "interval")
     pure $ AxisTick r
-         
-                            
+
+
 axisTickDefault :: AxisTickRec
 axisTickDefault = {
   show: Nothing,
@@ -150,7 +148,7 @@ type AxisLabelRec =  {
     }
 
 newtype AxisLabel = AxisLabel AxisLabelRec
-  
+
 instance axisLabelEncodeJson :: EncodeJson AxisLabel  where
   encodeJson (AxisLabel a) = fromObject $ fromList $ toList [
     "show" := a.show,
@@ -180,7 +178,7 @@ instance axisLabelDecodeJson :: DecodeJson AxisLabel where
          (o .? "margin") <*>
          (o .? "clickable")
     pure $ AxisLabel r
-                             
+
 axisLabelDefault :: AxisLabelRec
 axisLabelDefault = {
   show: Nothing,
@@ -214,7 +212,7 @@ type AxisSplitLineRec = {
     }
 
 newtype AxisSplitLine = AxisSplitLine AxisSplitLineRec
-   
+
 instance axisSplitLineEncodeJson :: EncodeJson AxisSplitLine where
   encodeJson (AxisSplitLine obj) =
     fromObject $ fromList $ toList
@@ -251,7 +249,7 @@ type AxisSplitAreaRec =  {
 
 
 newtype AxisSplitArea = AxisSplitArea AxisSplitAreaRec
-  
+
 instance axisSplitAreaEncodeJson :: EncodeJson AxisSplitArea where
   encodeJson (AxisSplitArea obj) =
     fromObject $ fromList $ toList
@@ -271,7 +269,7 @@ instance axisSplitAreaDecodeJson :: DecodeJson AxisSplitArea where
          (o .? "onGap") <*>
          (o .? "areaStyle")
     pure $ AxisSplitArea r
-          
+
 
 axisSplitAreaDefault :: AxisSplitAreaRec
 axisSplitAreaDefault = {
@@ -280,7 +278,7 @@ axisSplitAreaDefault = {
   areaStyle: Nothing
   }
 
-  
+
 data AxisType = CategoryAxis | ValueAxis | TimeAxis
 instance axisTypeEncodeJson :: EncodeJson AxisType where
   encodeJson a = encodeJson $ case a of
@@ -330,7 +328,7 @@ instance axisNameLocationDecodeJson :: DecodeJson AxisNameLocation where
       "start" -> pure Start
       "end" -> pure End
       _ -> Left "incorrect axis name location"
-      
+
 
 
 type CustomAxisDataRec = {
@@ -343,7 +341,7 @@ data AxisData = CommonAxisData String
 instance axisDataEncodeJson :: EncodeJson AxisData where
   encodeJson (CommonAxisData name) = fromString name
   encodeJson (CustomAxisData obj) =
-    fromObject $ fromList $ toList $ 
+    fromObject $ fromList $ toList $
     [
       "value" := obj.value,
       "textStyle" := obj.textStyle
@@ -486,7 +484,7 @@ type PolarNameRec = {
     }
 
 newtype PolarName = PolarName PolarNameRec
-   
+
 instance polarNameEncode :: EncodeJson PolarName where
   encodeJson (PolarName obj) =
     fromObject $ fromList $ toList
@@ -561,9 +559,9 @@ instance indicatorDecodeJson :: DecodeJson Indicator where
          (o .? "max") <*>
          (o .? "axisLabel")
     pure $ Indicator r
-         
 
-    
+
+
 indicatorDefault :: IndicatorRec
 indicatorDefault = {
   text: Nothing,

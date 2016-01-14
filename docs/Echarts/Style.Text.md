@@ -23,8 +23,8 @@ data TextBaseline
 
 ##### Instances
 ``` purescript
-instance textBaselineEncodeJson :: EncodeJson TextBaseline
-instance textBaselineDecodeJson :: DecodeJson TextBaseline
+EncodeJson TextBaseline
+DecodeJson TextBaseline
 ```
 
 #### `FontStyle`
@@ -38,8 +38,8 @@ data FontStyle
 
 ##### Instances
 ``` purescript
-instance fontStyleEncodeJson :: EncodeJson FontStyle
-instance fontStyleDecodeJson :: DecodeJson FontStyle
+EncodeJson FontStyle
+DecodeJson FontStyle
 ```
 
 #### `FontWeight`
@@ -63,8 +63,8 @@ data FontWeight
 
 ##### Instances
 ``` purescript
-instance fontWeightEncodeJson :: EncodeJson FontWeight
-instance fontWeightDecodeJson :: DecodeJson FontWeight
+EncodeJson FontWeight
+DecodeJson FontWeight
 ```
 
 #### `TextStyleRec`
@@ -82,8 +82,8 @@ newtype TextStyle
 
 ##### Instances
 ``` purescript
-instance textStyleEncodeJson :: EncodeJson TextStyle
-instance textStyleDecodeJson :: DecodeJson TextStyle
+EncodeJson TextStyle
+DecodeJson TextStyle
 ```
 
 #### `textStyleDefault`

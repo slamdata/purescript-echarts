@@ -29,8 +29,8 @@ data CalculableColor
 
 ##### Instances
 ``` purescript
-instance calculableColorEncodeJson :: EncodeJson CalculableColor
-instance calculableColorDecodeJson :: DecodeJson CalculableColor
+EncodeJson CalculableColor
+DecodeJson CalculableColor
 ```
 
 

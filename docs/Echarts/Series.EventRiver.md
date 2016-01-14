@@ -15,8 +15,8 @@ newtype EvolutionDetail
 
 ##### Instances
 ``` purescript
-instance evoDetailEncodeJson :: EncodeJson EvolutionDetail
-instance evoDetailDecodeJson :: DecodeJson EvolutionDetail
+EncodeJson EvolutionDetail
+DecodeJson EvolutionDetail
 ```
 
 #### `evolutionDetailDefault`
@@ -40,8 +40,8 @@ newtype Evolution
 
 ##### Instances
 ``` purescript
-instance evoEncodeJson :: EncodeJson Evolution
-instance evoDecodeJson :: DecodeJson Evolution
+EncodeJson Evolution
+DecodeJson Evolution
 ```
 
 #### `OneEventRec`
@@ -59,8 +59,8 @@ newtype OneEvent
 
 ##### Instances
 ``` purescript
-instance oneEventEncodeJson :: EncodeJson OneEvent
-instance oneEventDecodeJson :: DecodeJson OneEvent
+EncodeJson OneEvent
+DecodeJson OneEvent
 ```
 
 #### `oneEventDefault`

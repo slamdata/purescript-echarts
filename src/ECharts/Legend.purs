@@ -36,7 +36,7 @@ instance legendItemDecodeJson :: DecodeJson LegendItem where
     o <- decodeJson j
     name <- (o .? "name")
     r <- {icon: _, textStyle: _} <$> (o .? "icon") <*> (o .? "textStyle")
-    pure $ LegendItem name r 
+    pure $ LegendItem name r
 
 legendItemDefault :: String -> LegendItem
 legendItemDefault name = LegendItem name {icon: Nothing, textStyle: Nothing}
@@ -140,4 +140,4 @@ instance legendDecodeJson :: DecodeJson Legend where
          (o .? "selected") <*>
          (o .? "data")
     pure $ Legend r
-         
+

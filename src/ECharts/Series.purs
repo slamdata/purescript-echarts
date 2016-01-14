@@ -27,7 +27,7 @@ module ECharts.Series (
   gaugeSeriesDefault,
   funnelSeriesDefault,
   eventRiverSeriesDefault
-  ) where 
+  ) where
 
 import Prelude
 import Control.Monad.Eff
@@ -38,7 +38,7 @@ import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
-import Data.Tuple (Tuple(..))
+import Data.Tuple (Tuple())
 import Data.StrMap hiding (toList)
 import Data.Array (concat)
 import Data.List (toList)
@@ -64,7 +64,7 @@ data ChartType = Line | Bar | Scatter | Candlestick | Pie | Radar
                | Chord | Force | Map | Gauge | Funnel | EventRiver
 
 instance chartTypeEncodeJson :: EncodeJson ChartType where
-  encodeJson a = fromString $ case a of 
+  encodeJson a = fromString $ case a of
     Line -> "line"
     Bar -> "bar"
     Scatter -> "scatter"
@@ -84,7 +84,7 @@ data Series = LineSeries
               {common :: UniversalSeriesRec, barSeries ::  BarSeriesRec}
             | ScatterSeries
               {common :: UniversalSeriesRec, scatterSeries :: ScatterSeriesRec}
-            | CandlestickSeries 
+            | CandlestickSeries
               {common :: UniversalSeriesRec, candlestickSeries :: CandlestickSeriesRec}
             | PieSeries
               {common :: UniversalSeriesRec, pieSeries ::  PieSeriesRec}
@@ -348,8 +348,8 @@ decodeScatterSeriesRec o =
   (o .? "symbolRotate") <*>
   (o .? "large") <*>
   (o .? "largeThreshold") <*>
-  (o .? "legendHoverLink") 
-    
+  (o .? "legendHoverLink")
+
 
 
 type CandlestickSeriesRec = {
@@ -393,7 +393,7 @@ decodeCandleStickSeries o =
   (o .? "barMinHeight") <*>
   (o .? "barWidth") <*>
   (o .? "barMaxWidth")
-                                 
+
 type PieSeriesRec = {
   "data" ::Maybe (Array ItemData),
   center :: Maybe Center,
@@ -457,7 +457,7 @@ decodePieSeriesRec o =
   (o .? "selectedMode") <*>
   (o .? "legendHoverLink")
 
-                 
+
 type RadarSeriesRec = {
   "data" ::Maybe (Array ItemData),
 
@@ -500,7 +500,7 @@ decodeRadarSeriesRec o =
   (o .? "symbol" ) <*>
   (o .? "symbolSize") <*>
   (o .? "symbolRotate") <*>
-  (o .? "legendHoverLink") 
+  (o .? "legendHoverLink")
 
 type ChordSeriesRec = {
   nodes :: Maybe (Array Node),
@@ -594,7 +594,7 @@ decodeChordSeriesRec o =
   (o .? "sort") <*>
   (o .? "sortSub") <*>
   (o .? "clockWise")
-  
+
 
 type ForceSeriesRec = {
   categories :: Maybe (Array ForceCategory),
@@ -703,10 +703,10 @@ decodeForceSeriesRec o =
   (o .? "useWorker") <*>
   (o .? "steps") <*>
   (o .? "ribbonType")
-                      
+
 type MapSeriesRec = {
   "data" ::Maybe (Array ItemData),
-  
+
   selectedMode :: Maybe SelectedMode,
   mapType :: Maybe String,
   hoverable :: Maybe Boolean,
@@ -885,7 +885,7 @@ decodeGaugeSeriesRec o =
   (o .? "pointer") <*>
   (o .? "legendHoverLink") <*>
   (o .? "axisLabel")
-                      
+
 type FunnelSeriesRec = {
   "data" ::Maybe (Array ItemData),
 
@@ -904,7 +904,7 @@ type FunnelSeriesRec = {
   sort :: Maybe Sort,
   legendHoverLink :: Maybe Boolean
   }
-funnelSeriesDefault :: FunnelSeriesRec 
+funnelSeriesDefault :: FunnelSeriesRec
 funnelSeriesDefault = {
   "data": Nothing,
   x: Nothing,
@@ -973,7 +973,7 @@ decodeFunnelSeriesRec o =
   (o .? "gap") <*>
   (o .? "sort") <*>
   (o .? "legendHoverLink")
-                       
+
 type EventRiverSeriesRec = {
   eventList :: Maybe (Array OneEvent),
 
@@ -1062,7 +1062,8 @@ instance decodeSeries :: DecodeJson Series where
       "gauge" -> GaugeSeries <$> ({common: u, gaugeSeries: _} <$> decodeGaugeSeriesRec obj)
       "funnel" -> FunnelSeries <$> ({common: u, funnelSeries: _} <$> decodeFunnelSeriesRec obj)
       "eventRiver" -> EventRiverSeries <$> ({common: u, eventRiverSeries: _} <$> decodeEventRiverSeriesRec obj)
-      
+      _ -> Left "Invalid Series"
+
 
 foreign import setSeriesImpl :: forall e. Fn3 (Array Json) Boolean EChart (Eff e EChart)
 

@@ -10,7 +10,6 @@ import Data.Function
 import Data.Maybe
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
-import Data.Argonaut.Combinators
 
 
 import ECharts.Chart
@@ -18,7 +17,7 @@ import ECharts.Item.Data
 import ECharts.Effects
 
 
-type AdditionalDataRec = 
+type AdditionalDataRec =
   {
     idx :: Number,
     datum :: ItemData,
