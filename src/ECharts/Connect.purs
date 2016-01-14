@@ -14,5 +14,5 @@ foreign import connectImpl :: forall e. Fn2 EChart EChart (Eff (connect::CONNECT
 connect :: forall e. EChart -> EChart -> Eff (connect::CONNECT|e) Connection
 connect target source = do
   runFn2 connectImpl target source
-    
+
 

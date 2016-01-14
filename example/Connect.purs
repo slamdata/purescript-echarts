@@ -156,7 +156,7 @@ options2 = Option $ optionDefault {
       }
     ]
   }
-           
+
 conn first second = do
   connect first second
   connect second first
@@ -165,7 +165,7 @@ conn first second = do
 connectM firstId secondId = do
   mbElFst <- getElementById firstId
   mbElSnd <- getElementById secondId
-  
+
   case Tuple mbElFst mbElSnd  of
     Tuple Nothing _ -> log "incorrect first id in connect"
     Tuple _ Nothing -> log "incorrect second id in connect"

@@ -1,23 +1,19 @@
 module ECharts.Series.Gauge where
 
-import Prelude 
-import Control.Monad.Eff
-import Data.Function
+import Prelude
 import Data.Maybe
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
-import Data.Tuple (Tuple(..))
+import Data.Tuple (Tuple())
 import Data.StrMap hiding (toList)
 import Data.List (toList)
 
 import ECharts.Common
-import ECharts.Coords
 import ECharts.Color
 import ECharts.Style.Line
 import ECharts.Style.Text
-import ECharts.Symbol
 import ECharts.Formatter
 
 type PointerRec = {
@@ -25,7 +21,7 @@ type PointerRec = {
     width :: Maybe Number,
     color :: Maybe Color
     }
-  
+
 newtype Pointer = Pointer PointerRec
 
 pointerDefault :: PointerRec
@@ -51,7 +47,7 @@ instance pointerDecodeJson :: DecodeJson Pointer where
          (o .? "length") <*>
          (o .? "width") <*>
          (o .? "color")
-    pure $ Pointer r 
+    pure $ Pointer r
 
 type SplitLineRec = {
     show :: Maybe Boolean,
@@ -100,7 +96,7 @@ type GaugeDetailRec = {
     }
 
 newtype GaugeDetail = GaugeDetail GaugeDetailRec
-   
+
 gaugeDetailDefault :: GaugeDetailRec
 gaugeDetailDefault = {
   show: Nothing,

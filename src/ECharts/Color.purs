@@ -12,7 +12,6 @@ import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 
 import ECharts.Item.Value
-import ECharts.Utils
 
 type Color = String
 

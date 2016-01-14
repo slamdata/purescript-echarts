@@ -2,12 +2,11 @@ module ECharts.Style.Chord where
 
 import Prelude
 import Data.Maybe
-import Data.StrMap (fromList, StrMap (..))
+import Data.StrMap (fromList)
 import Data.List (toList)
-import Data.Tuple
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
-import Data.Argonaut.Decode 
+import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 
 
@@ -21,7 +20,7 @@ type ChordStyleRec = {
   }
 
 newtype ChordStyle = ChordStyle ChordStyleRec
-   
+
 
 
 instance chordStyleJson :: EncodeJson ChordStyle where

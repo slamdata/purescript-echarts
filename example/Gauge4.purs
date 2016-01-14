@@ -55,4 +55,4 @@ gauge4 id = do
         os <- opts
         setOption os true chart
         return unit
-           
+

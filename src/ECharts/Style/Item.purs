@@ -3,9 +3,7 @@ module ECharts.Style.Item where
 import Prelude
 import Data.Maybe
 import Data.List (toList)
-import Data.Either
-import Data.StrMap (fromList, StrMap (..))
-import Data.Tuple
+import Data.StrMap (fromList)
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
@@ -36,7 +34,7 @@ newtype ItemLabel = ItemLabel ItemLabelRec
 
 instance itemLabelEncodeJson :: EncodeJson ItemLabel where
   encodeJson (ItemLabel il) =
-    fromObject $ fromList $ toList $ 
+    fromObject $ fromList $ toList $
     [
       "show" := il.show,
       "position" := il.position,
@@ -63,7 +61,7 @@ instance itemLabelDecodeJson :: DecodeJson ItemLabel where
          (o .? "rotate")
     pure $ ItemLabel r
 
-    
+
 itemLabelDefault :: ItemLabelRec
 itemLabelDefault = {
   show: Nothing,
@@ -85,7 +83,7 @@ newtype ItemLabelLine = ItemLabelLine ItemLabelLineRec
 
 instance itemLabelLineEncodeJson :: EncodeJson ItemLabelLine where
   encodeJson (ItemLabelLine ill) =
-    fromObject $ fromList $ toList $ 
+    fromObject $ fromList $ toList $
     [
       "show" := ill.show,
       "length" := ill.length,
@@ -101,8 +99,8 @@ instance itemLabelLineDecodeJson :: DecodeJson ItemLabelLine where
          (o .? "show") <*>
          (o .? "length") <*>
          (o .? "lineStyle")
-    pure $ ItemLabelLine r 
-  
+    pure $ ItemLabelLine r
+
 itemLabelLineDefault :: ItemLabelLineRec
 itemLabelLineDefault = {
   show: Nothing,

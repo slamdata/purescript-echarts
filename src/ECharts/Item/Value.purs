@@ -2,12 +2,9 @@ module ECharts.Item.Value where
 
 import Prelude
 import Data.Maybe
-import Data.Array (length)
 import Data.Either (Either(..))
 import Control.Alt ((<|>))
-import Data.Argonaut.Core
 import Data.Argonaut.Encode
-import Data.Argonaut.Combinators
 import Data.Argonaut.Decode
 import Data.List (toList, fromList, List(..))
 
@@ -29,7 +26,7 @@ instance itemValueEncodeJson :: EncodeJson ItemValue where
                                  [encodeJson x, encodeJson y, encodeJson r]
     HLOC {h = h, l = l, o = o, c = c} -> encodeJson [o, c, l, h]
 
-  
+
 instance itemValueDecodeJson :: DecodeJson ItemValue where
   decodeJson json =
     (do arr <- decodeJson json

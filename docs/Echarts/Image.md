@@ -10,8 +10,8 @@ data ImgType
 
 ##### Instances
 ``` purescript
-instance encodeImg :: EncodeJson ImgType
-instance decodeImg :: DecodeJson ImgType
+EncodeJson ImgType
+DecodeJson ImgType
 ```
 
 #### `getDataURL`

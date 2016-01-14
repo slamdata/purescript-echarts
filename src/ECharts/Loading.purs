@@ -5,20 +5,17 @@ module ECharts.Loading (
   loadingOptionDefault,
   showLoading,
   hideLoading
-  ) where 
+  ) where
 
 import Prelude
-import ECharts.Common
 import ECharts.Coords
 import ECharts.Chart
 import ECharts.Style.Text
 import ECharts.Effects
 import ECharts.Utils
 
-import Data.Array (concat)
 import Data.Function
 import Data.Maybe
-import Data.Tuple.Nested
 import qualified Data.StrMap as M
 import Control.Monad.Eff
 import Data.List (toList)
@@ -37,7 +34,7 @@ instance loadingEffectEncodeJson :: EncodeJson LoadingEffect where
     Ring -> "ring"
     Whirling -> "whirling"
     DynamicLine -> "dynamicLine"
-    Bubble -> "bubble"    
+    Bubble -> "bubble"
 
 type LoadingOptionRec = {
     text :: Maybe String,
@@ -50,7 +47,7 @@ type LoadingOptionRec = {
     }
 
 newtype LoadingOption = LoadingOption LoadingOptionRec
-   
+
 instance showLoadingOptions :: EncodeJson LoadingOption where
   encodeJson (LoadingOption options) =
     fromObject $ M.fromList $ toList [
@@ -64,7 +61,7 @@ instance showLoadingOptions :: EncodeJson LoadingOption where
       ]
 
 
-foreign import showLoadingImpl :: forall e a. Fn2 Json EChart (Eff (showLoadingECharts::LOADING_SHOW|e) EChart)
+foreign import showLoadingImpl :: forall e. Fn2 Json EChart (Eff (showLoadingECharts::LOADING_SHOW|e) EChart)
 
 showLoading :: forall e. LoadingOption -> EChart ->
                Eff (showLoadingECharts::LOADING_SHOW|e) EChart

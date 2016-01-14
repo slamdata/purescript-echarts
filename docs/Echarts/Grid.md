@@ -15,8 +15,8 @@ newtype Grid
 
 ##### Instances
 ``` purescript
-instance gridEncodeJson :: EncodeJson Grid
-instance gridDecodeJson :: DecodeJson Grid
+EncodeJson Grid
+DecodeJson Grid
 ```
 
 #### `gridDefault`

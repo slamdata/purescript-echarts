@@ -16,8 +16,8 @@ data Corner a
 
 ##### Instances
 ``` purescript
-instance cornerJsonEncode :: (EncodeJson a) => EncodeJson (Corner a)
-instance cornerJsonDecode :: (DecodeJson a) => DecodeJson (Corner a)
+(EncodeJson a) => EncodeJson (Corner a)
+(DecodeJson a) => DecodeJson (Corner a)
 ```
 
 #### `PercentOrPixel`
@@ -30,8 +30,8 @@ data PercentOrPixel
 
 ##### Instances
 ``` purescript
-instance percentOrPixelEncodeJson :: EncodeJson PercentOrPixel
-instance percentOrPixelDecodeJson :: DecodeJson PercentOrPixel
+EncodeJson PercentOrPixel
+DecodeJson PercentOrPixel
 ```
 
 #### `RoseType`
@@ -44,8 +44,8 @@ data RoseType
 
 ##### Instances
 ``` purescript
-instance roseTypeEncodeJson :: EncodeJson RoseType
-instance roseTypeDecodeJson :: DecodeJson RoseType
+EncodeJson RoseType
+DecodeJson RoseType
 ```
 
 #### `SelectedMode`
@@ -59,8 +59,8 @@ data SelectedMode
 
 ##### Instances
 ``` purescript
-instance selModeEncodeJson :: EncodeJson SelectedMode
-instance selModeDecodeJson :: DecodeJson SelectedMode
+EncodeJson SelectedMode
+DecodeJson SelectedMode
 ```
 
 #### `MapValueCalculation`
@@ -73,8 +73,8 @@ data MapValueCalculation
 
 ##### Instances
 ``` purescript
-instance mapValueCalculationEncodeJson :: EncodeJson MapValueCalculation
-instance mapValueCalculationDecodeJson :: DecodeJson MapValueCalculation
+EncodeJson MapValueCalculation
+DecodeJson MapValueCalculation
 ```
 
 #### `Roam`
@@ -89,8 +89,8 @@ data Roam
 
 ##### Instances
 ``` purescript
-instance roamEncodeJson :: EncodeJson Roam
-instance roamDecodeJson :: DecodeJson Roam
+EncodeJson Roam
+DecodeJson Roam
 ```
 
 #### `MinMaxRec`
@@ -108,8 +108,8 @@ newtype MinMax
 
 ##### Instances
 ``` purescript
-instance minMaxEncodeJson :: EncodeJson MinMax
-instance minMaxDecodeJson :: DecodeJson MinMax
+EncodeJson MinMax
+DecodeJson MinMax
 ```
 
 #### `Center`
@@ -134,8 +134,8 @@ data Radius
 
 ##### Instances
 ``` purescript
-instance radiusEncodeJson :: EncodeJson Radius
-instance radiusDecodeJson :: DecodeJson Radius
+EncodeJson Radius
+DecodeJson Radius
 ```
 
 #### `Sort`
@@ -149,8 +149,8 @@ data Sort
 
 ##### Instances
 ``` purescript
-instance sortEncodeJson :: EncodeJson Sort
-instance sortDecodeJson :: DecodeJson Sort
+EncodeJson Sort
+DecodeJson Sort
 ```
 
 #### `Interval`
@@ -163,8 +163,8 @@ data Interval
 
 ##### Instances
 ``` purescript
-instance intervalEncodeJson :: EncodeJson Interval
-instance intervalDecodeJson :: DecodeJson Interval
+EncodeJson Interval
+DecodeJson Interval
 ```
 
 

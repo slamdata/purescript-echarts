@@ -133,14 +133,14 @@ options dateDefault = Option $ optionDefault {
                ]
              }
           ]
-        
+
         }
       }
 
     ]
   }
 
-                    
+
 eventRiver id = do
   mbEl <- getElementById id
   case mbEl of
@@ -148,5 +148,5 @@ eventRiver id = do
     Just el -> do
       d <- D.now
       chart <- init Nothing el >>= setOption (options d) true
-  
+
       return unit

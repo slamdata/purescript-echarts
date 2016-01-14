@@ -5,8 +5,9 @@ var gulp = require('gulp')
 , run = require('gulp-run')
 , sequence = require('run-sequence')
 , jsValidate = require('gulp-jsvalidate')
+, trimlines = require("gulp-trimlines")
 , rename = require('gulp-rename')
-; 
+;
 
 require("./gulp/serve.js")();
 require("./gulp/runner.js")("runner", "Main");
@@ -94,6 +95,13 @@ gulp.task("lib", function() {
     });
 });
 
+gulp.task("trim-whitespace", function () {
+  var options = { leading: false };
+  return gulp.src(sources.concat(exampleSources), {base: "./"})
+            .pipe(trimlines(options))
+            .pipe(gulp.dest("."));
+});
+
 gulp.task("make", ["runner"], function() {
     return purescript.psc({
         src: sources.concat(exampleSources),
@@ -124,7 +132,7 @@ gulp.task("concat", ["browserify"], function() {
         .pipe(concat("build.js"))
         .pipe(gulp.dest("public"));
 });
-            
+
 
 gulp.task('psci', function() {
     return purescript.psci({

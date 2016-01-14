@@ -9,8 +9,8 @@ newtype AreaStyle
 
 ##### Instances
 ``` purescript
-instance areaStyleEncodeJson :: EncodeJson AreaStyle
-instance areaStyleDecodeJson :: DecodeJson AreaStyle
+EncodeJson AreaStyle
+DecodeJson AreaStyle
 ```
 
 

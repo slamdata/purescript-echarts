@@ -31,7 +31,7 @@ type RoamControllerRec = {
     }
 
 newtype RoamController = RoamController RoamControllerRec
-   
+
 instance roamControllerEncodeJson :: EncodeJson RoamController where
   encodeJson (RoamController obj) =
     fromObject $ fromList $ toList
@@ -81,7 +81,7 @@ instance roamControllerDecodeJson :: DecodeJson RoamController where
          (o .? "step") <*>
          (o .? "mapTypeControl")
     pure $ RoamController r
-    
+
 roamControllerDefault :: RoamControllerRec
 roamControllerDefault = {
   show: Nothing,

@@ -21,7 +21,7 @@ type CheckpointStyleRec = {
     }
 
 newtype CheckpointStyle = CheckpointStyle CheckpointStyleRec
-   
+
 
 instance checkpointStyleEncodeJson :: EncodeJson CheckpointStyle where
   encodeJson (CheckpointStyle obj) =
@@ -47,7 +47,7 @@ instance checkpointStyleDecodeJson :: DecodeJson CheckpointStyle where
          (o .? "borderColor") <*>
          (o .? "label")
     pure $ CheckpointStyle r
-    
+
 checkpointStyleDefault :: CheckpointStyleRec
 checkpointStyleDefault = {
   symbol: Nothing,

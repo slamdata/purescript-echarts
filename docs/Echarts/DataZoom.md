@@ -15,8 +15,8 @@ newtype DataZoom
 
 ##### Instances
 ``` purescript
-instance dataZoomEncodeJson :: EncodeJson DataZoom
-instance dataZoomDecodeJson :: DecodeJson DataZoom
+EncodeJson DataZoom
+DecodeJson DataZoom
 ```
 
 #### `dataZoomDefault`

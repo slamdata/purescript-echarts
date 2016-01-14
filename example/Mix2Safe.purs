@@ -109,10 +109,10 @@ series = [
 
       }
     }
-  
+
   ]
-         
-         
+
+
 options :: Option
 options = Option $ optionDefault {
   tooltip = Just $ Tooltip tooltipDefault {trigger = Just TriggerAxis},
@@ -162,7 +162,7 @@ options = Option $ optionDefault {
               "Google",
               "must be",
               "other"]
-             
+
     },
   xAxis = Just $ OneAxis $ Axis $ axisDefault {
     "type" = Just CategoryAxis,
@@ -178,7 +178,7 @@ options = Option $ optionDefault {
      position = Just RightAxis
      },
    series = Just $ Just <$> series
-  
+
    }
 
 

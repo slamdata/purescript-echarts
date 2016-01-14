@@ -36,7 +36,7 @@ import ECharts.Effects
      Option{series = Just [Nothing,
         Just $ SomeSeries
                  universalSeriesDefault{tooltip = Just myTooltip}
-                 someSeriesDefault 
+                 someSeriesDefault
        }
    It will erase all series data if we use [] as zero in updating
    i.e. legend.
@@ -66,7 +66,7 @@ type OptionRec = {
     }
 
 newtype Option = Option OptionRec
-   
+
 
 instance optionsEncodeJson :: EncodeJson Option where
   encodeJson (Option opts) =
@@ -77,7 +77,7 @@ instance optionsEncodeJson :: EncodeJson Option where
       "renderAsImage" := opts.renderAsImage,
       "calculable" := opts.calculable,
       "animation" := opts.animation,
-      
+
       "series" := opts.series,
 
       "timeline" := opts.timeline,
@@ -134,7 +134,7 @@ instance optionsDecodeJson :: DecodeJson Option where
          (obj .? "yAxis") <*>
          (obj .? "polar")
     pure $ Option r
-         
+
 
 optionDefault :: OptionRec
 optionDefault = {
@@ -166,6 +166,6 @@ setOption :: forall e.
              Boolean ->
              EChart ->
              Eff (echartSetOption::ECHARTS_OPTION_SET|e) EChart
-setOption opts notMerge chart = runFn3 setOptionImpl 
+setOption opts notMerge chart = runFn3 setOptionImpl
                                 (unnull <<< encodeJson $ opts) notMerge chart
 

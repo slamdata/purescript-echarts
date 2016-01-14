@@ -15,8 +15,8 @@ newtype ItemLabel
 
 ##### Instances
 ``` purescript
-instance itemLabelEncodeJson :: EncodeJson ItemLabel
-instance itemLabelDecodeJson :: DecodeJson ItemLabel
+EncodeJson ItemLabel
+DecodeJson ItemLabel
 ```
 
 #### `itemLabelDefault`
@@ -40,8 +40,8 @@ newtype ItemLabelLine
 
 ##### Instances
 ``` purescript
-instance itemLabelLineEncodeJson :: EncodeJson ItemLabelLine
-instance itemLabelLineDecodeJson :: DecodeJson ItemLabelLine
+EncodeJson ItemLabelLine
+DecodeJson ItemLabelLine
 ```
 
 #### `itemLabelLineDefault`
@@ -65,8 +65,8 @@ newtype IStyle
 
 ##### Instances
 ``` purescript
-instance istyleEncodeJson :: EncodeJson IStyle
-instance istyleDecodeJson :: DecodeJson IStyle
+EncodeJson IStyle
+DecodeJson IStyle
 ```
 
 #### `istyleDefault`
@@ -90,8 +90,8 @@ newtype ItemStyle
 
 ##### Instances
 ``` purescript
-instance itemStyleEncodeJson :: EncodeJson ItemStyle
-instance itemStyleDecodeJson :: DecodeJson ItemStyle
+EncodeJson ItemStyle
+DecodeJson ItemStyle
 ```
 
 #### `itemStyleDefault`

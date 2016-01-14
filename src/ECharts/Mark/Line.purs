@@ -19,7 +19,7 @@ import Data.Maybe
 import Control.Monad.Eff
 import Data.Function
 
-import Data.StrMap (fromList, StrMap (..))
+import Data.StrMap (fromList)
 import Data.Tuple
 import Data.List (toList)
 import Data.Argonaut.Core
@@ -38,7 +38,7 @@ type MarkLineRec = {
   }
 
 newtype MarkLine = MarkLine MarkLineRec
-   
+
 
 instance mlEncodeJson :: EncodeJson MarkLine where
   encodeJson (MarkLine ml) =
@@ -71,7 +71,7 @@ instance mlDecodeJson :: DecodeJson MarkLine where
          (o .? "data") <*>
          (o .? "itemStyle")
     pure $ MarkLine r
-           
+
 
 markLineDefault :: MarkLineRec
 markLineDefault =
@@ -89,7 +89,7 @@ markLineDefault =
 foreign import addMarkLineImpl :: forall e. Fn2 Json EChart (Eff (addMarkLineECharts::ADD_MARKLINE|e) EChart)
 
 
-addMarkLine :: forall e a. MarkLine  -> EChart -> 
+addMarkLine :: forall e. MarkLine  -> EChart ->
                Eff (addMarkLineECharts::ADD_MARKLINE|e) EChart
 addMarkLine ml chart = runFn2 addMarkLineImpl (encodeJson ml) chart
 
@@ -99,7 +99,7 @@ addMarkLine ml chart = runFn2 addMarkLineImpl (encodeJson ml) chart
 foreign import delMarkLineImpl :: forall e. Fn3 Number String EChart
        (Eff (removeMarkLine::REMOVE_MARKLINE|e) EChart)
 
-delMarkLine :: forall e. Number -> String -> EChart -> 
+delMarkLine :: forall e. Number -> String -> EChart ->
                Eff (removeMarkLine::REMOVE_MARKLINE|e) EChart
 delMarkLine idx name chart = runFn3 delMarkLineImpl idx name chart
 

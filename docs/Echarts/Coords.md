@@ -12,8 +12,8 @@ data XPos
 
 ##### Instances
 ``` purescript
-instance xPosEncodeJson :: EncodeJson XPos
-instance xPosDecodeJson :: DecodeJson XPos
+EncodeJson XPos
+DecodeJson XPos
 ```
 
 #### `YPos`
@@ -28,8 +28,8 @@ data YPos
 
 ##### Instances
 ``` purescript
-instance yPosEncodeJson :: EncodeJson YPos
-instance yPosDecodeJson :: DecodeJson YPos
+EncodeJson YPos
+DecodeJson YPos
 ```
 
 #### `LabelPosition`
@@ -51,8 +51,8 @@ data LabelPosition
 
 ##### Instances
 ``` purescript
-instance labelPositionEncodeJson :: EncodeJson LabelPosition
-instance labelPositionDecodeJson :: DecodeJson LabelPosition
+EncodeJson LabelPosition
+DecodeJson LabelPosition
 ```
 
 #### `HorizontalAlign`
@@ -66,8 +66,8 @@ data HorizontalAlign
 
 ##### Instances
 ``` purescript
-instance textAlignEncodeJson :: EncodeJson HorizontalAlign
-instance textAlignDecodeJson :: DecodeJson HorizontalAlign
+EncodeJson HorizontalAlign
+DecodeJson HorizontalAlign
 ```
 
 #### `LocationRec`
@@ -85,8 +85,8 @@ newtype Location
 
 ##### Instances
 ``` purescript
-instance locationEncodeJson :: EncodeJson Location
-instance locationDecodeJson :: DecodeJson Location
+EncodeJson Location
+DecodeJson Location
 ```
 
 #### `Orient`
@@ -99,8 +99,8 @@ data Orient
 
 ##### Instances
 ``` purescript
-instance orientEncodeJson :: EncodeJson Orient
-instance orientDecodeJson :: DecodeJson Orient
+EncodeJson Orient
+DecodeJson Orient
 ```
 
 

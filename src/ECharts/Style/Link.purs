@@ -3,9 +3,8 @@ module ECharts.Style.Link where
 import Prelude
 import Data.Maybe
 import Data.Either
-import Data.StrMap (fromList, StrMap (..))
+import Data.StrMap (fromList)
 import Data.List (toList)
-import Data.Tuple
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
@@ -17,7 +16,7 @@ import ECharts.Color
 data LinkType = LTCurve | LTLine
 
 instance linkTypeEncodeJson :: EncodeJson LinkType where
-  encodeJson a = fromString $ case a of 
+  encodeJson a = fromString $ case a of
     LTCurve -> "curve"
     LTLine -> "line"
 
@@ -42,14 +41,14 @@ newtype LinkStyle = LinkStyle LinkStyleRec
 
 instance linkStyleEncodeJson :: EncodeJson LinkStyle where
   encodeJson (LinkStyle ls) =
-    fromObject $ fromList $ toList 
+    fromObject $ fromList $ toList
     [
       "type" := ls.type,
       "color" := ls.color,
       "width" := ls.width
     ]
 
-instance linkStyleDecodeJson :: DecodeJson LinkStyle where 
+instance linkStyleDecodeJson :: DecodeJson LinkStyle where
   decodeJson j = do
     o <- decodeJson j
     r <- { "type": _

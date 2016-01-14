@@ -25,8 +25,8 @@ data ItemValue
 
 ##### Instances
 ``` purescript
-instance itemValueEncodeJson :: EncodeJson ItemValue
-instance itemValueDecodeJson :: DecodeJson ItemValue
+EncodeJson ItemValue
+DecodeJson ItemValue
 ```
 
 

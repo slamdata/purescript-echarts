@@ -16,8 +16,8 @@ data Formatter
 
 ##### Instances
 ``` purescript
-instance formatterEncodeJson :: EncodeJson Formatter
-instance formatterDecodeJson :: DecodeJson Formatter
+EncodeJson Formatter
+DecodeJson Formatter
 ```
 
 

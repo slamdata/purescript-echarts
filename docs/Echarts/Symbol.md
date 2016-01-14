@@ -16,8 +16,8 @@ data Symbol
 
 ##### Instances
 ``` purescript
-instance encodeJsonSymbol :: EncodeJson Symbol
-instance symbolDecodeJson :: DecodeJson Symbol
+EncodeJson Symbol
+DecodeJson Symbol
 ```
 
 #### `SymbolSize`
@@ -30,8 +30,8 @@ data SymbolSize
 
 ##### Instances
 ``` purescript
-instance symbolSizeEncodeJson :: EncodeJson SymbolSize
-instance symbolSizeDecodeJson :: DecodeJson SymbolSize
+EncodeJson SymbolSize
+DecodeJson SymbolSize
 ```
 
 #### `DoubleSymbolSize`
@@ -44,8 +44,8 @@ data DoubleSymbolSize
 
 ##### Instances
 ``` purescript
-instance dblSymbolSizeEncodeJson :: EncodeJson DoubleSymbolSize
-instance dblSymbolSizeDecodeJson :: DecodeJson DoubleSymbolSize
+EncodeJson DoubleSymbolSize
+DecodeJson DoubleSymbolSize
 ```
 
 

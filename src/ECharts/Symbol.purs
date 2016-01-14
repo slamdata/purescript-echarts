@@ -6,26 +6,23 @@ module ECharts.Symbol (
 
 import Prelude
 import Data.Argonaut.Core
-import Data.Argonaut.Combinators
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
-import Data.Maybe
 import Data.Either
 
 import Data.Function
 import Data.Tuple
 
-import ECharts.Item.Data
 import ECharts.Item.Value
 
 
 foreign import func2json :: forall a. a -> Json
 
 data Symbol = Circle | Rectangle | Triangle | Diamond | EmptyCircle | EmptyRectangle
-            | EmptyTriangle | EmptyDiamond 
+            | EmptyTriangle | EmptyDiamond
 
 instance encodeJsonSymbol :: EncodeJson Symbol where
-  encodeJson a = fromString $ case a of 
+  encodeJson a = fromString $ case a of
     Circle -> "circle"
     Rectangle -> "rectangle"
     Triangle -> "triangle"
@@ -48,7 +45,7 @@ instance symbolDecodeJson :: DecodeJson Symbol where
       "emptyTriangle" -> pure EmptyTriangle
       "emptyDiamond" -> pure EmptyDiamond
       _ -> Left "incorrect symbol"
-    
+
 
 data SymbolSize = Size Number | Func (ItemValue -> Number)
 

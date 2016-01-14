@@ -6,9 +6,9 @@ import Data.Array hiding (init)
 import Data.String (indexOf, replace)
 import Data.Tuple.Nested
 import Data.Either
-import Data.Maybe 
+import Data.Maybe
 import qualified Data.StrMap as M
-import Control.Alt 
+import Control.Alt
 
 
 import ECharts.Chart

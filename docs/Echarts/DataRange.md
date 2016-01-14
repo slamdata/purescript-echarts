@@ -15,8 +15,8 @@ newtype DataRange
 
 ##### Instances
 ``` purescript
-instance dataRangeEncodeJson :: EncodeJson DataRange
-instance dataRangeDecodeJson :: DecodeJson DataRange
+EncodeJson DataRange
+DecodeJson DataRange
 ```
 
 #### `dataRangeDefault`

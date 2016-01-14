@@ -15,8 +15,8 @@ newtype MarkPointEffect
 
 ##### Instances
 ``` purescript
-instance mpEffectEncodeJson :: EncodeJson MarkPointEffect
-instance mpEffectDecodeJson :: DecodeJson MarkPointEffect
+EncodeJson MarkPointEffect
+DecodeJson MarkPointEffect
 ```
 
 #### `markPointEffectDefault`

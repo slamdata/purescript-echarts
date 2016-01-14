@@ -6,7 +6,7 @@ module ECharts.Tooltip (
   TooltipAxisPointerRec(),
   Tooltip(..),
   TooltipRec(),
-  
+
   tooltipAxisPointerDefault,
   tooltipDefault
   ) where
@@ -23,13 +23,11 @@ import Data.Function
 import Data.List (toList)
 
 import ECharts.Common
-import ECharts.Coords
 import ECharts.Color
 import ECharts.Style.Text
 import ECharts.Style.Line
 import ECharts.Style.Area
 import ECharts.Formatter
-import ECharts.Utils
 
 data TooltipTrigger = TriggerItem | TriggerAxis
 instance tooltipTriggerEncodeJson :: EncodeJson TooltipTrigger where
@@ -45,7 +43,7 @@ instance tooltipTriggerDecodeJson :: DecodeJson TooltipTrigger where
       _ -> Left $ "incorrect tooltip trigger"
 
 
-foreign import func2json :: forall a. a -> Json 
+foreign import func2json :: forall a. a -> Json
 
 
 data TooltipPosition = Fixed (Array Number) | FuncPos (Array Number -> Array Number)
@@ -201,7 +199,7 @@ instance tooltipDecodeJson :: DecodeJson Tooltip where
          (o .? "textStyle") <*>
          (o .? "enterable")
     pure $ Tooltip r
-         
+
 
 tooltipDefault :: TooltipRec
 tooltipDefault = {

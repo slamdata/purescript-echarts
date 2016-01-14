@@ -36,7 +36,7 @@ type EventParam = Json
 newtype Sub = Sub (forall eff. Eff (unlisten :: UNLISTEN|eff) Unit)
 
 eventStr :: EventType -> String
-eventStr event = case event of 
+eventStr event = case event of
   RefreshEvent -> "refresh"
   RestoreEvent -> "restore"
   ResizeEvent -> "resize"
@@ -54,17 +54,17 @@ eventStr event = case event of
   DataViewChangedEvent -> "dataViewChanged"
   MapRoamEvent -> "mapRoam"
   MagicTypeChangedEvent -> "magicTypeChanged"
-  
-                 
+
+
 
 foreign import listenImpl :: forall e.
                              Fn3 String
-                             (EventParam -> Eff (listen::LISTEN|e) Unit) 
-                             EChart 
+                             (EventParam -> Eff (listen::LISTEN|e) Unit)
+                             EChart
                              (Eff (listen::LISTEN|e) Sub)
 
 listen :: forall e.
           EventType ->
-          (EventParam -> Eff (listen :: LISTEN|e) Unit) -> 
+          (EventParam -> Eff (listen :: LISTEN|e) Unit) ->
           EChart -> Eff (listen :: LISTEN|e) Sub
 listen eventName handler chart = runFn3 listenImpl (eventStr eventName) handler chart

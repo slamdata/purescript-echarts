@@ -15,8 +15,8 @@ newtype MarkPoint
 
 ##### Instances
 ``` purescript
-instance markPointEncodeJson :: EncodeJson MarkPoint
-instance markPointDecodeJson :: DecodeJson MarkPoint
+EncodeJson MarkPoint
+DecodeJson MarkPoint
 ```
 
 #### `markPointDefault`

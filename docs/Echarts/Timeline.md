@@ -10,8 +10,8 @@ data TimelineType
 
 ##### Instances
 ``` purescript
-instance timelineTypeEncodeJson :: EncodeJson TimelineType
-instance timelineTypeDecodeJson :: DecodeJson TimelineType
+EncodeJson TimelineType
+DecodeJson TimelineType
 ```
 
 #### `TimelineControlPosition`
@@ -25,8 +25,8 @@ data TimelineControlPosition
 
 ##### Instances
 ``` purescript
-instance timelineControlPositionEncodeJson :: EncodeJson TimelineControlPosition
-instance timelineControlPositionDecodeJson :: DecodeJson TimelineControlPosition
+EncodeJson TimelineControlPosition
+DecodeJson TimelineControlPosition
 ```
 
 #### `TimelineRec`
@@ -44,8 +44,8 @@ newtype Timeline
 
 ##### Instances
 ``` purescript
-instance timelineEncodeJson :: EncodeJson Timeline
-instance timelineDecodeJson :: DecodeJson Timeline
+EncodeJson Timeline
+DecodeJson Timeline
 ```
 
 #### `timelineDefault`

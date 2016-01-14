@@ -18,7 +18,7 @@ foreign import data DISCONNECT :: !
 foreign import data LISTEN :: !
 foreign import data UNLISTEN :: !
 
-foreign import data IMAGE_MAKING :: !                    
+foreign import data IMAGE_MAKING :: !
 
 foreign import data LOADING_SHOW :: !
 foreign import data LOADING_HIDE :: !

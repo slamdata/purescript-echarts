@@ -39,7 +39,7 @@ instance timelineControlPositionEncodeJson :: EncodeJson TimelineControlPosition
     TCPNone -> "none"
     TCPRight -> "right"
     TCPLeft -> "left"
-                                      
+
 instance timelineControlPositionDecodeJson :: DecodeJson TimelineControlPosition where
   decodeJson j = do
     str <- decodeJson j
@@ -47,7 +47,7 @@ instance timelineControlPositionDecodeJson :: DecodeJson TimelineControlPosition
       "none" -> pure TCPNone
       "right" -> pure TCPRight
       "left" -> pure TCPLeft
-      _ -> Left "incorrect timeline control position" 
+      _ -> Left "incorrect timeline control position"
 
 
 type TimelineRec = {
@@ -122,7 +122,7 @@ instance timelineDecodeJson :: DecodeJson Timeline where
          , notMerge: _
          , realtime: _
          , x: _
-         , x2: _ 
+         , x2: _
          , y: _
          , y2: _
          , width: _
@@ -171,7 +171,7 @@ instance timelineDecodeJson :: DecodeJson Timeline where
          (o .? "data")
     pure $ Timeline r
 
-    
+
 timelineDefault :: TimelineRec
 timelineDefault = {
   show: Nothing,

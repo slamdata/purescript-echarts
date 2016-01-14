@@ -2,9 +2,8 @@ module ECharts.Style.Node where
 
 import Prelude
 import Data.Maybe
-import Data.StrMap (fromList, StrMap (..))
+import Data.StrMap (fromList)
 import Data.List (toList)
-import Data.Tuple
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode

@@ -15,8 +15,8 @@ newtype Toolbox
 
 ##### Instances
 ``` purescript
-instance toolboxEncodeJson :: EncodeJson Toolbox
-instance toolboxDecodeJson :: DecodeJson Toolbox
+EncodeJson Toolbox
+DecodeJson Toolbox
 ```
 
 #### `toolboxDefault`
@@ -40,8 +40,8 @@ newtype Feature
 
 ##### Instances
 ``` purescript
-instance featureEncodeJson :: EncodeJson Feature
-instance featureDecodeJson :: DecodeJson Feature
+EncodeJson Feature
+DecodeJson Feature
 ```
 
 #### `featureDefault`
@@ -65,8 +65,8 @@ newtype SaveAsImageFeature
 
 ##### Instances
 ``` purescript
-instance saveAsImageEncodeJson :: EncodeJson SaveAsImageFeature
-instance saveAsImageDecodeJson :: DecodeJson SaveAsImageFeature
+EncodeJson SaveAsImageFeature
+DecodeJson SaveAsImageFeature
 ```
 
 #### `saveAsImageFeatureDefault`
@@ -90,8 +90,8 @@ newtype RestoreFeature
 
 ##### Instances
 ``` purescript
-instance restoreFeatureEncodeJson :: EncodeJson RestoreFeature
-instance restoreFeatureDecodeJson :: DecodeJson RestoreFeature
+EncodeJson RestoreFeature
+DecodeJson RestoreFeature
 ```
 
 #### `restoreFeatureDefault`
@@ -115,8 +115,8 @@ newtype DataZoomFeatureTitle
 
 ##### Instances
 ``` purescript
-instance datazoomTitleEncodeJson :: EncodeJson DataZoomFeatureTitle
-instance datazoomTitleDecodeJson :: DecodeJson DataZoomFeatureTitle
+EncodeJson DataZoomFeatureTitle
+DecodeJson DataZoomFeatureTitle
 ```
 
 #### `DataZoomFeatureRec`
@@ -134,8 +134,8 @@ newtype DataZoomFeature
 
 ##### Instances
 ``` purescript
-instance dataZoomFeatureEncodeJson :: EncodeJson DataZoomFeature
-instance dataZoomFeatureDecodeJson :: DecodeJson DataZoomFeature
+EncodeJson DataZoomFeature
+DecodeJson DataZoomFeature
 ```
 
 #### `dataZoomFeatureDefault`
@@ -159,8 +159,8 @@ newtype DataViewFeature
 
 ##### Instances
 ``` purescript
-instance dataViewFeatureEncodeJson :: EncodeJson DataViewFeature
-instance dataViewFeatureDecodeJson :: DecodeJson DataViewFeature
+EncodeJson DataViewFeature
+DecodeJson DataViewFeature
 ```
 
 #### `dataViewFeatureDefault`
@@ -184,8 +184,8 @@ newtype MarkFeatureTitle
 
 ##### Instances
 ``` purescript
-instance mftitleEncodeJson :: EncodeJson MarkFeatureTitle
-instance mftitleDecodeJson :: DecodeJson MarkFeatureTitle
+EncodeJson MarkFeatureTitle
+DecodeJson MarkFeatureTitle
 ```
 
 #### `MarkFeatureRec`
@@ -203,8 +203,8 @@ newtype MarkFeature
 
 ##### Instances
 ``` purescript
-instance markFeatureEncodeJson :: EncodeJson MarkFeature
-instance markFeatureDecodeJson :: DecodeJson MarkFeature
+EncodeJson MarkFeature
+DecodeJson MarkFeature
 ```
 
 #### `markFeatureDefault`
@@ -229,8 +229,8 @@ data MagicType
 
 ##### Instances
 ``` purescript
-instance magicTypeEncodeJson :: EncodeJson MagicType
-instance magicTypeDecodeJson :: DecodeJson MagicType
+EncodeJson MagicType
+DecodeJson MagicType
 ```
 
 #### `MagicTypeFeatureRec`
@@ -248,8 +248,8 @@ newtype MagicTypeFeature
 
 ##### Instances
 ``` purescript
-instance magicTypeFeatureEncodeJson :: EncodeJson MagicTypeFeature
-instance magicTypeFeatureDecodeJson :: DecodeJson MagicTypeFeature
+EncodeJson MagicTypeFeature
+DecodeJson MagicTypeFeature
 ```
 
 #### `magicTypeFeatureDefault`

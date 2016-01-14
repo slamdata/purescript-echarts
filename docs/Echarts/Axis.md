@@ -15,8 +15,8 @@ newtype AxisLineStyle
 
 ##### Instances
 ``` purescript
-instance axisLineStyleEncodeJson :: EncodeJson AxisLineStyle
-instance axisLineStyleDecodeJson :: DecodeJson AxisLineStyle
+EncodeJson AxisLineStyle
+DecodeJson AxisLineStyle
 ```
 
 #### `axisLineStyleDefault`
@@ -40,8 +40,8 @@ newtype AxisLine
 
 ##### Instances
 ``` purescript
-instance axisLineEncodeJson :: EncodeJson AxisLine
-instance axisLineDecodeJson :: DecodeJson AxisLine
+EncodeJson AxisLine
+DecodeJson AxisLine
 ```
 
 #### `axisLineDefault`
@@ -65,8 +65,8 @@ newtype AxisTick
 
 ##### Instances
 ``` purescript
-instance axisTickEncodeJson :: EncodeJson AxisTick
-instance axisTickDecodeJson :: DecodeJson AxisTick
+EncodeJson AxisTick
+DecodeJson AxisTick
 ```
 
 #### `axisTickDefault`
@@ -90,8 +90,8 @@ newtype AxisLabel
 
 ##### Instances
 ``` purescript
-instance axisLabelEncodeJson :: EncodeJson AxisLabel
-instance axisLabelDecodeJson :: DecodeJson AxisLabel
+EncodeJson AxisLabel
+DecodeJson AxisLabel
 ```
 
 #### `axisLabelDefault`
@@ -110,8 +110,8 @@ data Axises
 
 ##### Instances
 ``` purescript
-instance axisesEncodeJson :: EncodeJson Axises
-instance axisesDecodeJson :: DecodeJson Axises
+EncodeJson Axises
+DecodeJson Axises
 ```
 
 #### `AxisSplitLineRec`
@@ -129,8 +129,8 @@ newtype AxisSplitLine
 
 ##### Instances
 ``` purescript
-instance axisSplitLineEncodeJson :: EncodeJson AxisSplitLine
-instance axisSplitLineDecodeJson :: DecodeJson AxisSplitLine
+EncodeJson AxisSplitLine
+DecodeJson AxisSplitLine
 ```
 
 #### `axisSplitLineDefault`
@@ -154,8 +154,8 @@ newtype AxisSplitArea
 
 ##### Instances
 ``` purescript
-instance axisSplitAreaEncodeJson :: EncodeJson AxisSplitArea
-instance axisSplitAreaDecodeJson :: DecodeJson AxisSplitArea
+EncodeJson AxisSplitArea
+DecodeJson AxisSplitArea
 ```
 
 #### `axisSplitAreaDefault`
@@ -175,8 +175,8 @@ data AxisType
 
 ##### Instances
 ``` purescript
-instance axisTypeEncodeJson :: EncodeJson AxisType
-instance axisTypeDecodeJson :: DecodeJson AxisType
+EncodeJson AxisType
+DecodeJson AxisType
 ```
 
 #### `AxisPosition`
@@ -191,8 +191,8 @@ data AxisPosition
 
 ##### Instances
 ``` purescript
-instance axisPositionEncodeJson :: EncodeJson AxisPosition
-instance axisPositionDecodeJson :: DecodeJson AxisPosition
+EncodeJson AxisPosition
+DecodeJson AxisPosition
 ```
 
 #### `AxisNameLocation`
@@ -205,8 +205,8 @@ data AxisNameLocation
 
 ##### Instances
 ``` purescript
-instance axisNameLocationEncodeJson :: EncodeJson AxisNameLocation
-instance axisNameLocationDecodeJson :: DecodeJson AxisNameLocation
+EncodeJson AxisNameLocation
+DecodeJson AxisNameLocation
 ```
 
 #### `CustomAxisDataRec`
@@ -225,8 +225,8 @@ data AxisData
 
 ##### Instances
 ``` purescript
-instance axisDataEncodeJson :: EncodeJson AxisData
-instance axisDataDecodeJson :: DecodeJson AxisData
+EncodeJson AxisData
+DecodeJson AxisData
 ```
 
 #### `AxisBoundaryGap`
@@ -239,8 +239,8 @@ data AxisBoundaryGap
 
 ##### Instances
 ``` purescript
-instance axisBoundaryGapEncodeJson :: EncodeJson AxisBoundaryGap
-instance axisBoundaryGapDecodeJson :: DecodeJson AxisBoundaryGap
+EncodeJson AxisBoundaryGap
+DecodeJson AxisBoundaryGap
 ```
 
 #### `AxisRec`
@@ -258,8 +258,8 @@ newtype Axis
 
 ##### Instances
 ``` purescript
-instance axisEncJson :: EncodeJson Axis
-instance axisDecJson :: DecodeJson Axis
+EncodeJson Axis
+DecodeJson Axis
 ```
 
 #### `axisDefault`
@@ -283,8 +283,8 @@ newtype PolarName
 
 ##### Instances
 ``` purescript
-instance polarNameEncode :: EncodeJson PolarName
-instance polarNameDecodeJson :: DecodeJson PolarName
+EncodeJson PolarName
+DecodeJson PolarName
 ```
 
 #### `polarNameDefault`
@@ -303,8 +303,8 @@ data PolarType
 
 ##### Instances
 ``` purescript
-instance polarTypeEncode :: EncodeJson PolarType
-instance polarTypeDecodeJson :: DecodeJson PolarType
+EncodeJson PolarType
+DecodeJson PolarType
 ```
 
 #### `IndicatorRec`
@@ -322,8 +322,8 @@ newtype Indicator
 
 ##### Instances
 ``` purescript
-instance indicatorEncodeJson :: EncodeJson Indicator
-instance indicatorDecodeJson :: DecodeJson Indicator
+EncodeJson Indicator
+DecodeJson Indicator
 ```
 
 #### `indicatorDefault`
@@ -347,8 +347,8 @@ newtype Polar
 
 ##### Instances
 ``` purescript
-instance polarEncodeJson :: EncodeJson Polar
-instance polarDecodeJson :: DecodeJson Polar
+EncodeJson Polar
+DecodeJson Polar
 ```
 
 #### `polarDefault`

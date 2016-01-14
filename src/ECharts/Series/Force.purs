@@ -1,25 +1,17 @@
 module ECharts.Series.Force where
 
 import Prelude
-import Control.Monad.Eff
 import Control.Alt ((<|>))
-import Data.Function
 import Data.Maybe
 import Data.Argonaut.Core
 import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
-import Data.Tuple (Tuple(..))
+import Data.Tuple (Tuple())
 import Data.StrMap hiding (toList)
 import Data.List (toList)
 
-import ECharts.Common
-import ECharts.Coords
-import ECharts.Tooltip
 import ECharts.Style.Item
-import ECharts.Mark.Line
-import ECharts.Mark.Point
-import ECharts.Item.Data
 import ECharts.Symbol
 import ECharts.Series.Force
 
@@ -31,7 +23,7 @@ type ForceCategoryRec = {
     }
 
 newtype ForceCategory = ForceCategory ForceCategoryRec
-   
+
 forceCategoryDefault :: ForceCategoryRec
 forceCategoryDefault = {
   name: Nothing,
@@ -59,7 +51,7 @@ instance forceCategoryDecodeJson :: DecodeJson ForceCategory where
          (o .? "symbolSize") <*>
          (o .? "itemStyle")
     pure $ ForceCategory r
-           
+
 
 
 type NodeRec = {
@@ -145,7 +137,7 @@ data LinkEnd = Name String | Index Number
 
 instance linkEndEncodeJson :: EncodeJson LinkEnd where
   encodeJson (Name name) = encodeJson name
-  encodeJson (Index id) = encodeJson id 
+  encodeJson (Index id) = encodeJson id
 
 instance linkEndDecodeJson :: DecodeJson LinkEnd where
   decodeJson j =
@@ -155,7 +147,7 @@ type LinkRec = {
     source :: LinkEnd,
     target :: LinkEnd,
     weight :: Number,
-    itemStyle :: Maybe ItemStyle 
+    itemStyle :: Maybe ItemStyle
     }
 
 newtype Link = Link LinkRec

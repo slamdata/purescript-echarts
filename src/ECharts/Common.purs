@@ -12,7 +12,6 @@ import Data.Array ((!!))
 import Data.List (toList)
 
 import qualified Data.String as S
-import Data.Function
 import Data.Tuple
 import qualified Data.StrMap as M
 import Global
@@ -89,7 +88,7 @@ instance selModeDecodeJson :: DecodeJson SelectedMode where
         if not fls
           then pure SelModeFalse
           else Left "incorrect select mode")
-          
+
 
 
 data MapValueCalculation = SumCalculation | AverageCalculation
@@ -127,7 +126,7 @@ instance roamDecodeJson :: DecodeJson Roam where
         if bl
           then pure Enable
           else pure Disable)
-          
+
 
 type MinMaxRec = {
   min :: Number,
