@@ -13,6 +13,7 @@
     "gulp-rename": "^1.2.0",
     "gulp-run": "^1.6.6",
     "gulp-trimlines": "^1.0.0",
+    "purescript": "^0.7.6",
     "run-sequence": "^1.0.2"
   }
 }
