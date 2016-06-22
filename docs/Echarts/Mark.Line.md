@@ -28,7 +28,7 @@ markLineDefault :: MarkLineRec
 #### `addMarkLine`
 
 ``` purescript
-addMarkLine :: forall e a. MarkLine -> EChart -> Eff (addMarkLineECharts :: ADD_MARKLINE | e) EChart
+addMarkLine :: forall e. MarkLine -> EChart -> Eff (addMarkLineECharts :: ADD_MARKLINE | e) EChart
 ```
 
 #### `delMarkLine`
