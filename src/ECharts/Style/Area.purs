@@ -7,20 +7,39 @@ import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 import Data.List (toList)
+import Data.Maybe
 
 import ECharts.Color
 
-newtype AreaStyle = AreaStyle Color
+
+type AreaStyleRec = {
+    color :: Maybe CalculableColor,
+    "type" :: Maybe String
+  }
+
+newtype AreaStyle = AreaStyle AreaStyleRec
+
+areaStyleDefault :: AreaStyleRec
+areaStyleDefault =
+  {
+    color: Nothing,
+    "type": Just "fill"
+  }
 
 instance areaStyleEncodeJson :: EncodeJson AreaStyle where
-  encodeJson (AreaStyle color) =
+  encodeJson (AreaStyle ars) =
     fromObject $ fromList $ toList
     [
-      "color" := color,
-      "type" := "fill"
+      "color" := ars.color,
+      "type" := ars."type"
     ]
 
 instance areaStyleDecodeJson :: DecodeJson AreaStyle where
   decodeJson j = do
     o <- decodeJson j
-    AreaStyle <$> (o .? "color")
+    r <- { color: _
+         , "type": _ } <$>
+         (o .? "color") <*>
+         (o .? "type")
+    pure $ AreaStyle r
+
