@@ -21,6 +21,7 @@ import Map11 (map11)
 import Mix2Safe (mix2safe)
 import Radar3 (radar3)
 import Scatter3 (scatter3)
+import AreaPlot (areaPlot)
 import Utils
 
 main = onLoad $ do
@@ -40,3 +41,4 @@ main = onLoad $ do
   events (ElementId "events")
   connectM (ElementId "connect1") (ElementId "connect2")
   mix2safe (ElementId "mix2safe")
+  areaPlot (ElementId "area-plot")
