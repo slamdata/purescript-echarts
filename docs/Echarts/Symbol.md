@@ -12,6 +12,7 @@ data Symbol
   | EmptyRectangle
   | EmptyTriangle
   | EmptyDiamond
+  | NoSymbol
 ```
 
 ##### Instances
