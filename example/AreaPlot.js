@@ -1,8 +1,6 @@
 // module AreaPlot
 
-
-exports.linearGradient = function() {
-  return zrender.tool.color.getLinearGradient(
-  	0, 100, 0, 400, 
-  	[[0, 'rgba(255,0,0,0.8)'],[0.8, 'rgba(255,255,255,0.1)']])
+exports.linearGradientColor = function(x0, y0, x1, y1, n0, c0, n1, c1) {
+  return (function() {
+  	return zrender.tool.color.getLinearGradient(x0, y0, x1, y1, [[n0, c0],[n1, c1]])})()
 };

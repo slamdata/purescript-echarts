@@ -5,6 +5,7 @@ import Control.Monad.Eff.Console (print)
 import Data.Tuple.Nested
 import Data.Tuple
 import Data.Maybe
+import Data.Function
 import Utils
 
 import ECharts.Chart
@@ -30,7 +31,13 @@ import Control.Monad.Eff (Eff())
 
 simpleData = Value <<< Simple
 
-foreign import linearGradient :: String -> Unit
+foreign import linearGradientColor :: forall eff. 
+  Fn8 Number Number Number Number Number String Number String (Eff eff Unit)
+
+linearGradientColorCurried :: forall eff. 
+  Number -> Number -> Number -> Number -> 
+  Number -> String -> Number -> String -> Eff eff Unit
+linearGradientColorCurried = runFn8 linearGradientColor
 
 options :: Option
 options = Option $ optionDefault {
@@ -110,7 +117,7 @@ options = Option $ optionDefault {
         name = Just "value",
         itemStyle = Just $ ItemStyle itemStyleDefault {
           normal = Just $ IStyle istyleDefault {
-            color = Just $ ForeignColorFunc linearGradient,
+            color = Just $ SimpleColor  "rgba(204,204,204,0.2)",
             areaStyle = Just $ AreaStyle areaStyleDefault
             }     
           }
@@ -127,16 +134,20 @@ options = Option $ optionDefault {
         name = Just "another value",
         itemStyle = Just $ ItemStyle itemStyleDefault {
           normal = Just $ IStyle istyleDefault {
-            color = Just $ SimpleColor "rgba(93,93,244,0.8)",
+            color = Just $ SimpleColor "rgba(255,0,0,0.8)",
             areaStyle = Just $ AreaStyle areaStyleDefault { 
-                color = Just $ ForeignColorFunc linearGradient
+                color = Just $ ForeignColorFunc (
+                  linearGradientColorCurried 
+                    0.0 200.0 0.0 600.0 
+                    0.0 "rgba(255,0,0,0.8)" 1.0 "rgba(255,255,255,0.1)")             
               }
             }     
           }
         },
       lineSeries: lineSeriesDefault {
-        showAllSymbol = Just false,
-        "data" = Just $ simpleData <$> [20.0, 82.0, 91.0, 34.0, 90.0, 30.0, 10.0, 90.0, 50.0]
+        symbol = Just $ NoSymbol,
+        smooth = Just true,
+        "data" = Just $ simpleData <$> [20.0, 82.0, 91.0, 34.0, 120.0, 30.0, 10.0, 90.0, 50.0]
         }
       }
   

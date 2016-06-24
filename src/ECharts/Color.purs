@@ -36,13 +36,16 @@ type ColorFuncParamRec = {
 newtype ColorFuncParam = ColorFuncParam ColorFuncParamRec
 
 -- ForeignColorFunc incoporates foreign javascript functions 
-data CalculableColor = SimpleColor Color | ColorFunc (String -> Color) | ForeignColorFunc (String -> Unit)
+data CalculableColor = 
+  SimpleColor Color 
+  | ColorFunc (String -> Color) 
+  | ForeignColorFunc (forall eff. Eff eff Unit)
 
 instance calculableColorEncodeJson :: EncodeJson CalculableColor where
   encodeJson cc = case cc of
     SimpleColor color -> encodeJson color
     ColorFunc func -> func2json $ mkFn1 func
-    ForeignColorFunc ffunc -> func2json $ mkFn1 ffunc
+    ForeignColorFunc ffunc -> func2json ffunc
 
 instance calculableColorDecodeJson :: DecodeJson CalculableColor where
   decodeJson j = SimpleColor <$> decodeJson j

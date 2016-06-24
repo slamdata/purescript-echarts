@@ -9,7 +9,7 @@ type Color = String
 #### `ColorFuncParamRec`
 
 ``` purescript
-type ColorFuncParamRec = { seriesIndex :: Maybe Number, series :: Maybe String, dataIndex :: Maybe Number, data :: { value :: Maybe ItemValue, name :: Maybe String } }
+type ColorFuncParamRec = { seriesIndex :: Number, series :: String, dataIndex :: Number, data :: { value :: ItemValue, name :: String } }
 ```
 
 #### `ColorFuncParam`
@@ -25,7 +25,7 @@ newtype ColorFuncParam
 data CalculableColor
   = SimpleColor Color
   | ColorFunc (String -> Color)
-  | ForeignColorFunc (String -> Unit)
+  | ForeignColorFunc (forall eff. Eff eff Unit)
 ```
 
 ##### Instances
