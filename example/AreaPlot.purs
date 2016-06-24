@@ -33,14 +33,16 @@ simpleData = Value <<< Simple
 
 foreign import linearGradientColor :: forall eff. 
   Fn8 Number Number Number Number Number String Number String (Eff eff Unit)
-
 foreign import numeralFormatter :: forall eff. String -> Eff eff Unit
-
+foreign import dateTimeFormatter :: forall eff. Fn2 String String (Eff eff Unit)
 
 linearGradientColorCurried :: forall eff. 
   Number -> Number -> Number -> Number -> 
   Number -> String -> Number -> String -> Eff eff Unit
 linearGradientColorCurried = runFn8 linearGradientColor
+
+dateTimeFormatterCurried :: forall eff. String -> String -> (Eff eff Unit)
+dateTimeFormatterCurried = runFn2 dateTimeFormatter
 
 options :: Option
 options = Option $ optionDefault {
@@ -92,6 +94,10 @@ options = Option $ optionDefault {
         color = Just "rgba(204,204,204,0.2)",
         width = Just 1.0
         }
+      },
+    axisLabel = Just $ AxisLabel axisLabelDefault {
+      formatter = Just $ ForeignFormatFunc (
+        dateTimeFormatterCurried "YYYY-MM-DD" "MMM DD" )
       },
     "data" = Just $ CommonAxisData <$>
              ["2014-01-01", "2014-01-02", "2014-01-03",

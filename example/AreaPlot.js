@@ -9,3 +9,7 @@ exports.linearGradientColor = function(x0, y0, x1, y1, n0, c0, n1, c1) {
 exports.numeralFormatter = function(f) {
   return function (v){return numeral(v).format(f)}
 };
+
+exports.dateTimeFormatter = function(fIn, fOut) {
+  return function (v){return moment(v, fIn).format(fOut)}
+};
