@@ -34,6 +34,9 @@ simpleData = Value <<< Simple
 foreign import linearGradientColor :: forall eff. 
   Fn8 Number Number Number Number Number String Number String (Eff eff Unit)
 
+foreign import numeralFormatter :: forall eff. String -> Eff eff Unit
+
+
 linearGradientColorCurried :: forall eff. 
   Number -> Number -> Number -> Number -> 
   Number -> String -> Number -> String -> Eff eff Unit
@@ -108,6 +111,9 @@ options = Option $ optionDefault {
         color = Just "rgba(204,204,204,0.2)",
         width = Just 1.0
         }
+      },
+    axisLabel = Just $ AxisLabel axisLabelDefault {
+      formatter = Just $ ForeignFormatFunc (numeralFormatter "0.0")
       }
     },
 
