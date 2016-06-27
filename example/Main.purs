@@ -23,6 +23,7 @@ import Radar3 (radar3)
 import Scatter3 (scatter3)
 import AreaPlot (areaPlot)
 import ConfidenceBand (confidenceBand)
+import PercentageArea (percentageArea)
 import Utils
 
 main = onLoad $ do
@@ -44,4 +45,5 @@ main = onLoad $ do
   mix2safe (ElementId "mix2safe")
   areaPlot (ElementId "area-plot")
   confidenceBand (ElementId "confidence-band")
-  
+  percentageArea (ElementId "percentage-area")
+
