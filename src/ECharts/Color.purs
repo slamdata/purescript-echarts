@@ -2,7 +2,8 @@ module ECharts.Color (
   Color(..),
   ColorFuncParamRec(),
   ColorFuncParam(..),
-  CalculableColor(..)
+  CalculableColor(..),
+  LinearGradient(..)
   ) where
 
 import Prelude
@@ -32,20 +33,21 @@ type ColorFuncParamRec = {
       }
   }
 
-
 newtype ColorFuncParam = ColorFuncParam ColorFuncParamRec
 
--- ForeignColorFunc incoporates foreign javascript functions 
+foreign import data LinearGradient :: *
+
+
 data CalculableColor = 
   SimpleColor Color 
   | ColorFunc (String -> Color) 
-  | ForeignColorFunc (forall eff. Eff eff Unit)
+  | GradientColor LinearGradient
 
 instance calculableColorEncodeJson :: EncodeJson CalculableColor where
   encodeJson cc = case cc of
     SimpleColor color -> encodeJson color
     ColorFunc func -> func2json $ mkFn1 func
-    ForeignColorFunc ffunc -> func2json ffunc
+    GradientColor gc -> func2json gc
 
 instance calculableColorDecodeJson :: DecodeJson CalculableColor where
   decodeJson j = SimpleColor <$> decodeJson j

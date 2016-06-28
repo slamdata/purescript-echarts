@@ -19,13 +19,19 @@ newtype ColorFuncParam
   = ColorFuncParam ColorFuncParamRec
 ```
 
+#### `LinearGradient`
+
+``` purescript
+data LinearGradient :: *
+```
+
 #### `CalculableColor`
 
 ``` purescript
 data CalculableColor
   = SimpleColor Color
   | ColorFunc (String -> Color)
-  | ForeignColorFunc (forall eff. Eff eff Unit)
+  | GradientColor LinearGradient
 ```
 
 ##### Instances

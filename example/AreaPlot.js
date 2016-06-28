@@ -1,9 +1,8 @@
 // module AreaPlot
 
-exports.linearGradientColor = function(x0, y0, x1, y1, n0, c0, n1, c1) {
-  return (function() {
-  	return zrender.tool.color.getLinearGradient(
-  		x0, y0, x1, y1, [[n0, c0],[n1, c1]])})()
+exports.linearGradientColor = function(a) {
+  return zrender.tool.color.getLinearGradient(
+  		a.x0, a.y0, a.x1, a.y1, [[a.s0, a.sc0],[a.s1, a.sc1]])
 };
 
 exports.numeralFormatter = function(f) {
@@ -13,3 +12,7 @@ exports.numeralFormatter = function(f) {
 exports.dateTimeFormatter = function(fIn, fOut) {
   return function (v){return moment(v, fIn).format(fOut)}
 };
+
+
+
+
