@@ -31,24 +31,32 @@ import Control.Monad.Eff (Eff())
 
 simpleData = Value <<< Simple
 
-foreign import linearGradientColor :: forall eff. 
-  Fn8 Number Number Number Number Number String Number String (Eff eff Unit)
+
 foreign import numeralFormatter :: forall eff. String -> Eff eff Unit
 foreign import dateTimeFormatter :: forall eff. Fn2 String String (Eff eff Unit)
 
-linearGradientColorCurried :: forall eff. 
-  Number -> Number -> Number -> Number -> 
-  Number -> String -> Number -> String -> Eff eff Unit
-linearGradientColorCurried = runFn8 linearGradientColor
-
 dateTimeFormatterCurried :: forall eff. String -> String -> (Eff eff Unit)
 dateTimeFormatterCurried = runFn2 dateTimeFormatter
+
+
+type LinearGradientInput = 
+  { x0 :: Number, y0 :: Number, x1 :: Number,  y1 :: Number, 
+    s0 :: Number, sc0 :: String, s1 :: Number, sc1 :: String  }
+
+linearGradientInputDefault :: LinearGradientInput
+linearGradientInputDefault = {
+  x0: 0.0, y0: 0.0, x1: 0.0, y1: 500.0,
+  s0: 0.0, sc0: "rgba(255,255,255,0.8)", s1: 1.0, sc1: "rgba(255,255,255,0.1)"}
+
+foreign import linearGradientColor :: LinearGradientInput -> LinearGradient
+
+
 
 options :: Option
 options = Option $ optionDefault {
   title = Just $ Title titleDefault {
     text = Just "Simple Area Plot",
-    subtext = Just "based on purescript-echarts",
+    subtext = Just "color area, gradient color function, axis label formatter",
     x = Just XCenter,
     textStyle = Just $ TextStyle textStyleDefault {
       fontFamily = Just "Palatino, Georgia, serif"
@@ -143,10 +151,10 @@ options = Option $ optionDefault {
           normal = Just $ IStyle istyleDefault {
             color = Just $ SimpleColor "rgba(255,0,0,0.8)",
             areaStyle = Just $ AreaStyle areaStyleDefault { 
-                color = Just $ ForeignColorFunc (
-                  linearGradientColorCurried 
-                    0.0 100.0 0.0 300.0 
-                    0.0 "rgba(255,0,0,0.8)" 1.0 "rgba(255,255,255,0.1)")             
+                color = Just $ GradientColor (
+                  linearGradientColor  $ linearGradientInputDefault {
+                    x0 = 0.0, y0= 100.0, x1 = 0.0, y1 = 300.0, 
+                    s0 = 0.0, sc0 = "rgba(255,0,0,0.8)", s1 = 1.0, sc1 = "rgba(255,255,255,0.1)"})           
               }
             }     
           }
