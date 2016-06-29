@@ -35,16 +35,6 @@ simpleData = Value <<< Simple
 
 foreign import numeralFormatter :: forall eff. String -> Eff eff Unit
 
-
-type LinearGradientInput = 
-  { x0 :: Number, y0 :: Number, x1 :: Number,  y1 :: Number, 
-    s0 :: Number, sc0 :: String, s1 :: Number, sc1 :: String  }
-
-linearGradientInputDefault :: LinearGradientInput
-linearGradientInputDefault = {
-  x0: 0.0, y0: 0.0, x1: 0.0, y1: 500.0,
-  s0: 0.0, sc0: "rgba(255,255,255,0.8)", s1: 1.0, sc1: "rgba(255,255,255,0.1)"}
-
 foreign import linearGradientColor :: LinearGradientInput -> LinearGradient
 
 
