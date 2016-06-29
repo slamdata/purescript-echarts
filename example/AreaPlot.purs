@@ -28,15 +28,12 @@ import ECharts.Color
 import ECharts.Title
 import ECharts.Symbol
 import Control.Monad.Eff (Eff())
+import ECharts.Utils
 
 simpleData = Value <<< Simple
 
 
 foreign import numeralFormatter :: forall eff. String -> Eff eff Unit
-foreign import dateTimeFormatter :: forall eff. Fn2 String String (Eff eff Unit)
-
-dateTimeFormatterCurried :: forall eff. String -> String -> (Eff eff Unit)
-dateTimeFormatterCurried = runFn2 dateTimeFormatter
 
 
 type LinearGradientInput = 
@@ -49,7 +46,6 @@ linearGradientInputDefault = {
   s0: 0.0, sc0: "rgba(255,255,255,0.8)", s1: 1.0, sc1: "rgba(255,255,255,0.1)"}
 
 foreign import linearGradientColor :: LinearGradientInput -> LinearGradient
-
 
 
 options :: Option
@@ -113,8 +109,7 @@ options = Option $ optionDefault {
         }
       },
     axisLabel = Just $ AxisLabel axisLabelDefault {
-      formatter = Just $ ForeignFormatFunc (
-        dateTimeFormatterCurried "YYYY-MM-DD" "MMM DD" ),
+      formatter = Just $ F (dateTimeFormatter "MMM-DD"),
       textStyle = Just $ TextStyle textStyleDefault {
         fontFamily = Just "Palatino, Georgia, serif"
         }

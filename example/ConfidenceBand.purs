@@ -28,18 +28,14 @@ import ECharts.Style.Area
 import ECharts.Color
 import ECharts.Title
 import ECharts.Symbol
+import ECharts.Utils
 import Control.Monad.Eff (Eff())
 
 simpleData = Value <<< Simple
 
 foreign import numeralFormatter :: forall eff. String -> Eff eff Unit
 foreign import numeralFormatterManipulation :: forall eff. Fn3 String Number Number (Eff eff Unit)
-foreign import dateTimeFormatter :: forall eff. Fn2 String String (Eff eff Unit)
 foreign import toolTipFomatter :: forall eff. (Eff eff Unit) -> (Eff eff Unit)
-
-
-dateTimeFormatterCurried :: forall eff. String -> String -> (Eff eff Unit)
-dateTimeFormatterCurried = runFn2 dateTimeFormatter
 
 numeralFormatterManipulationCurried :: forall eff. String -> Number -> Number -> (Eff eff Unit)
 numeralFormatterManipulationCurried = runFn3 numeralFormatterManipulation
@@ -97,8 +93,7 @@ options = Option $ optionDefault {
       show = Just false
       },
     axisLabel = Just $ AxisLabel axisLabelDefault {
-      formatter = Just $ ForeignFormatFunc (
-        dateTimeFormatterCurried "YYYY-MM-DD" "MMM DD" ),
+      formatter = Just $ F (dateTimeFormatter "MMM-DD"),
       textStyle = Just $ TextStyle textStyleDefault {
         fontFamily = Just "Palatino, Georgia, serif"
         }

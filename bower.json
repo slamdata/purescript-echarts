@@ -25,8 +25,7 @@
     "purescript-datetime": "^0.9.0",
     "purescript-dom": "^0.2.6",
     "purescript-globals": "^0.2.0",
-    "numeral": "1.5.3",
-    "moment": "2.13.0"
+    "numeral": "1.5.3"
   },
   "devDependencies": {
     "purescript-console": "^0.1.1",
