@@ -25,6 +25,18 @@ newtype ColorFuncParam
 data LinearGradient :: *
 ```
 
+#### `LinearGradientInput`
+
+``` purescript
+type LinearGradientInput = { x0 :: Number, y0 :: Number, x1 :: Number, y1 :: Number, s0 :: Number, sc0 :: String, s1 :: Number, sc1 :: String }
+```
+
+#### `linearGradientInputDefault`
+
+``` purescript
+linearGradientInputDefault :: LinearGradientInput
+```
+
 #### `CalculableColor`
 
 ``` purescript

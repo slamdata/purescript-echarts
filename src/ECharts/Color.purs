@@ -3,7 +3,9 @@ module ECharts.Color (
   ColorFuncParamRec(),
   ColorFuncParam(..),
   CalculableColor(..),
-  LinearGradient(..)
+  LinearGradient(..),
+  LinearGradientInput(),
+  linearGradientInputDefault
   ) where
 
 import Prelude
@@ -36,6 +38,15 @@ type ColorFuncParamRec = {
 newtype ColorFuncParam = ColorFuncParam ColorFuncParamRec
 
 foreign import data LinearGradient :: *
+
+type LinearGradientInput = 
+  { x0 :: Number, y0 :: Number, x1 :: Number,  y1 :: Number, 
+    s0 :: Number, sc0 :: String, s1 :: Number, sc1 :: String  }
+
+linearGradientInputDefault :: LinearGradientInput
+linearGradientInputDefault = {
+  x0: 0.0, y0: 0.0, x1: 0.0, y1: 0.0,
+  s0: 0.0, sc0: "rgba(255,255,255,0)", s1: 1.0, sc1: "rgba(255,255,255,0)"}
 
 
 data CalculableColor = 
