@@ -9,9 +9,6 @@ exports.numeralFormatter = function(f) {
   return function (v){return numeral(v).format(f)}
 };
 
-exports.dateTimeFormatter = function(fIn, fOut) {
-  return function (v){return moment(v, fIn).format(fOut)}
-};
 
 
 

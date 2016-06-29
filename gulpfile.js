@@ -129,7 +129,6 @@ gulp.task("browserify", ["bundle"], function() {
 gulp.task("concat", ["browserify"], function() {
     gulp.src(["bower_components/echarts/build/source/echarts-all.js",
               "bower_components/numeral/min/numeral.min.js",
-              "bower_components/moment/min/moment.min.js",
               "dist/build.js"])
         .pipe(concat("build.js"))
         .pipe(gulp.dest("public"));

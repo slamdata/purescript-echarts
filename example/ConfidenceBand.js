@@ -8,9 +8,6 @@ exports.numeralFormatterManipulation = function(f, a, m) {
   return function (v){return numeral(v).add(a).multiply(m).format(f)}
 };
 
-exports.dateTimeFormatter = function(fIn, fOut) {
-  return function (v){return moment(v, fIn).format(fOut)}
-};
 
 exports.toolTipFomatter = function(fn) {
 	return	function (params,ticket,callback) {

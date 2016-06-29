@@ -19,6 +19,7 @@ data Formatter =
   Template String
   | FormatFunc (forall eff. Array FormatParams -> Eff eff String)
   | ForeignFormatFunc (forall eff. Eff eff Unit)
+  | F (String -> String)
 
 
 
@@ -30,6 +31,8 @@ instance formatterEncodeJson :: EncodeJson Formatter where
   encodeJson (Template str) = encodeJson str
   encodeJson (FormatFunc func) = func2json $ effArrToFn func
   encodeJson (ForeignFormatFunc ffunc) = func2json ffunc
+  encodeJson (F f) = func2json f
+
 
 instance formatterDecodeJson :: DecodeJson Formatter where
   decodeJson json = Template <$> decodeJson json
