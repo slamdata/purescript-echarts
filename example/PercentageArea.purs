@@ -77,7 +77,7 @@ options :: Option
 options = Option $ optionDefault {
   title = Just $ Title titleDefault {
     text = Just "Percentage Area",
-    subtext = Just "percentage area",
+    subtext = Just "stacked areas, series anotation",
     x = Just XCenter,
     textStyle = Just $ TextStyle textStyleDefault {
       fontFamily = Just "Palatino, Georgia, serif"

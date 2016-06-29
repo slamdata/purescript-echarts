@@ -49,7 +49,7 @@ options :: Option
 options = Option $ optionDefault {
   title = Just $ Title titleDefault {
     text = Just "Confidence Band",
-    subtext = Just "confidence band",
+    subtext = Just "confidence band, tooltip formatter",
     x = Just XCenter,
     textStyle = Just $ TextStyle textStyleDefault {
       fontFamily = Just "Palatino, Georgia, serif"
