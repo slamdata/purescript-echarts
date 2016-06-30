@@ -33,8 +33,6 @@ import ECharts.Utils
 simpleData = Value <<< Simple
 
 
-foreign import numeralFormatter :: forall eff. String -> Eff eff Unit
-
 foreign import linearGradientColor :: LinearGradientInput -> LinearGradient
 
 
@@ -99,7 +97,7 @@ options = Option $ optionDefault {
         }
       },
     axisLabel = Just $ AxisLabel axisLabelDefault {
-      formatter = Just $ F (dateTimeFormatter "MMM-DD"),
+      formatter = Just $ StringFormatFunc (dateTimeFormatter "MMM-DD"),
       textStyle = Just $ TextStyle textStyleDefault {
         fontFamily = Just "Palatino, Georgia, serif"
         }
@@ -121,7 +119,7 @@ options = Option $ optionDefault {
         }
       },
     axisLabel = Just $ AxisLabel axisLabelDefault {
-      formatter = Just $ ForeignFormatFunc (numeralFormatter "0a"),
+      formatter = Just $ NumberFormatFunc (numeralFormatter "0.00e"),
       textStyle = Just $ TextStyle textStyleDefault {
         fontFamily = Just "Palatino, Georgia, serif"
         }

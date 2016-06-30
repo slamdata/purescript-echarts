@@ -33,12 +33,7 @@ import Control.Monad.Eff (Eff())
 
 simpleData = Value <<< Simple
 
-foreign import numeralFormatter :: forall eff. String -> Eff eff Unit
-foreign import numeralFormatterManipulation :: forall eff. Fn3 String Number Number (Eff eff Unit)
-foreign import toolTipFomatter :: forall eff. (Eff eff Unit) -> (Eff eff Unit)
-
-numeralFormatterManipulationCurried :: forall eff. String -> Number -> Number -> (Eff eff Unit)
-numeralFormatterManipulationCurried = runFn3 numeralFormatterManipulation
+foreign import toolTipFomatter :: (Number -> String) -> GenericFormatter
 
 
 options :: Option
@@ -53,8 +48,8 @@ options = Option $ optionDefault {
     },
   tooltip = Just $ Tooltip tooltipDefault {
     trigger = Just TriggerAxis,
-    formatter = Just $ ForeignFormatFunc (toolTipFomatter(
-      (numeralFormatterManipulationCurried "0.00" data_base 1.0))),
+    formatter = Just $ GenericFormatFunc (
+      toolTipFomatter $ (numeralFormatterWithValMnplt data_base 1.0 "0.00")),
     textStyle = Just $ TextStyle textStyleDefault {
       fontFamily = Just "Palatino, Georgia, serif",
       fontSize = Just 12.0
@@ -93,7 +88,7 @@ options = Option $ optionDefault {
       show = Just false
       },
     axisLabel = Just $ AxisLabel axisLabelDefault {
-      formatter = Just $ F (dateTimeFormatter "MMM-DD"),
+      formatter = Just $ StringFormatFunc (dateTimeFormatter "MMM-DD"),
       textStyle = Just $ TextStyle textStyleDefault {
         fontFamily = Just "Palatino, Georgia, serif"
         }
@@ -117,8 +112,8 @@ options = Option $ optionDefault {
         }
       },
     axisLabel = Just $ AxisLabel axisLabelDefault {
-      formatter = Just $ ForeignFormatFunc (
-        numeralFormatterManipulationCurried "0.00" data_base 1.0),
+      formatter = Just $ NumberFormatFunc (
+        numeralFormatterWithValMnplt data_base 1.0 "0.00"),
       textStyle = Just $ TextStyle textStyleDefault {
        fontFamily = Just "Palatino, Georgia, serif"
        }
@@ -158,7 +153,6 @@ options = Option $ optionDefault {
         symbol = Just $ NoSymbol,
         smooth = Just false,
         "data" = Just $ simpleData <$> ((\n->n-data_base) <$> data_l)
-        --,stack = Just $ "confidence-band"
         }
       },
     LineSeries {
@@ -178,13 +172,12 @@ options = Option $ optionDefault {
       lineSeries: lineSeriesDefault {
         symbol = Just $ NoSymbol,
         smooth = Just false,
-        --"data" = Just $ simpleData <$> zipWith (-) data_u data_l,
-        --stack = Just $ "confidence-band"
         "data" = Just $ simpleData <$>  ((\n->n-data_base) <$> data_u)
         }
       }
     ]
   }
+
 
 
 confidenceBand id = do
