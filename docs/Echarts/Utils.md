@@ -12,4 +12,16 @@ unnull :: Json -> Json
 dateTimeFormatter :: String -> String -> String
 ```
 
+#### `numeralFormatter`
+
+``` purescript
+numeralFormatter :: String -> Number -> String
+```
+
+#### `numeralFormatterWithValMnplt`
+
+``` purescript
+numeralFormatterWithValMnplt :: Number -> Number -> String -> Number -> String
+```
+
 
