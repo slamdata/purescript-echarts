@@ -1,12 +1,19 @@
 module ConfidenceBand where
 
+import DOM (DOM())
+import DOM.Node.Types (ElementId(..))
+
 import Prelude
-import Control.Monad.Eff.Console (print)
+import Control.Monad.Eff.Console (print, CONSOLE())
 import Data.Tuple.Nested
 import Data.Tuple
 import Data.Maybe
-import Data.Array (zipWith)
+import Data.Array (zipWith, head)
 import Data.Function
+import Data.Foldable
+import Data.Argonaut.Core
+import Data.Argonaut.Combinators ((.?))
+import Data.Either (Either(..), either)
 import Utils
 
 import ECharts.Chart
@@ -30,10 +37,51 @@ import ECharts.Title
 import ECharts.Symbol
 import ECharts.Utils
 import Control.Monad.Eff (Eff())
+import ECharts.Effects
+
 
 simpleData = Value <<< Simple
 
-foreign import toolTipFomatter :: (Number -> String) -> GenericFormatter
+
+toolTipFomatter :: (Number -> String) -> (Array FormatParams -> String) 
+toolTipFomatter func = formatter
+  where
+  formatter :: Array FormatParams -> String
+  formatter params =
+    (getName params) ++
+      (foldr (++) "" $ map (append "<br/>") $ 
+        zipWith (\a b -> a ++ ": " ++ b) (map getSeriesName params) (map getValues params))
+
+  getName :: Array FormatParams -> String 
+  getName params = case head params of
+    Just param -> fromMaybe "" (getStrField param "name")
+    _ -> ""
+
+  getSeriesName :: FormatParams -> String 
+  getSeriesName en = 
+    fromMaybe "" (getStrField en "seriesName")
+  
+  getValues :: FormatParams -> String 
+  getValues en = 
+    transform func (getNumField en "value")
+
+  transform :: (Number -> String) -> Maybe Number -> String
+  transform func num = case num of
+    Just n -> func n
+    _ -> ""
+
+  getStrField :: FormatParams -> String -> Maybe String
+  getStrField entry f = case (toObject entry) of
+    Just o -> hush $ o .? f
+    _ -> Just ""
+
+  getNumField :: FormatParams -> String -> Maybe Number
+  getNumField entry f = case (toObject entry) of
+    Just o -> hush $ o .? f
+    _ -> Nothing
+  
+  hush :: forall a b. Either a b -> Maybe b
+  hush = either (const Nothing) Just
 
 
 options :: Option
@@ -48,8 +96,8 @@ options = Option $ optionDefault {
     },
   tooltip = Just $ Tooltip tooltipDefault {
     trigger = Just TriggerAxis,
-    formatter = Just $ GenericFormatFunc (
-      toolTipFomatter $ (numeralFormatterWithValMnplt data_base 1.0 "0.00")),
+    formatter = Just $ FormatFuncNonEff $ 
+      toolTipFomatter (numeralFormatterWithValMnplt data_base 1.0 "0.00"),
     textStyle = Just $ TextStyle textStyleDefault {
       fontFamily = Just "Palatino, Georgia, serif",
       fontSize = Just 12.0
@@ -179,7 +227,14 @@ options = Option $ optionDefault {
   }
 
 
-
+confidenceBand :: forall eff. 
+  ElementId -> 
+  Eff ( echartSetOption :: ECHARTS_OPTION_SET
+        , echartInit :: ECHARTS_INIT
+        , console :: CONSOLE
+        , dom :: DOM
+        | eff
+        ) Unit
 confidenceBand id = do
   mbEl <- getElementById id
   case mbEl of
