@@ -329,13 +329,3 @@ numeralFormatterWithValMnplt add mul template =
 
   isZeroOrDot :: Char -> Boolean
   isZeroOrDot c = c == '0' || c == '.'
-
-
-
-
-  
-
-
-
-
-
