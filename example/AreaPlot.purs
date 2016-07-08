@@ -1,7 +1,10 @@
 module AreaPlot where
 
+import DOM (DOM())
+import DOM.Node.Types (ElementId(..))
+
 import Prelude
-import Control.Monad.Eff.Console (print)
+import Control.Monad.Eff.Console (print, CONSOLE())
 import Data.Tuple.Nested
 import Data.Tuple
 import Data.Maybe
@@ -29,6 +32,8 @@ import ECharts.Title
 import ECharts.Symbol
 import Control.Monad.Eff (Eff())
 import ECharts.Utils
+import ECharts.Effects
+
 
 simpleData = Value <<< Simple
 
@@ -151,7 +156,14 @@ options = Option $ optionDefault {
     ]
   }
 
-
+areaPlot :: forall eff. 
+  ElementId -> 
+  Eff ( echartSetOption :: ECHARTS_OPTION_SET
+        , echartInit :: ECHARTS_INIT
+        , console :: CONSOLE
+        , dom :: DOM
+        | eff
+        ) Unit
 areaPlot id = do
   mbEl <- getElementById id
   case mbEl of

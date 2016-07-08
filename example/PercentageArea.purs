@@ -1,7 +1,10 @@
 module PercentageArea where
 
+import DOM (DOM())
+import DOM.Node.Types (ElementId(..))
+
 import Prelude
-import Control.Monad.Eff.Console (print)
+import Control.Monad.Eff.Console (print, CONSOLE())
 import Data.Tuple.Nested
 import Data.Tuple
 import Data.Maybe
@@ -29,13 +32,13 @@ import ECharts.Color
 import ECharts.Title
 import ECharts.Symbol
 import Control.Monad.Eff (Eff())
+import ECharts.Effects
 
 simpleData = Value <<< Simple
 
-foreign import anotationFomatter :: forall eff. (Eff eff Unit)
 
-mkAnotationItem :: ItemValue -> ItemDataDatRec
-mkAnotationItem value =
+mkAnnotationItem :: ItemValue -> ItemDataDatRec
+mkAnnotationItem value =
   {
     value: value,
     name: Nothing,
@@ -60,24 +63,11 @@ mkAnotationItem value =
     selected: Nothing
   }
 
-fromJustArray :: forall a. Maybe (Array a) -> Array a
-fromJustArray arr = do
-  case arr of
-    Nothing -> []
-    Just arr ->  arr
-
-fromJustNumber :: Maybe Number -> Number
-fromJustNumber n = do
-  case n of
-    Nothing -> 0.0
-    Just n ->  n
-
-
 options :: Option
 options = Option $ optionDefault {
   title = Just $ Title titleDefault {
     text = Just "Percentage Area",
-    subtext = Just "stacked areas, series anotation",
+    subtext = Just "stacked areas, series annotation",
     x = Just XCenter,
     textStyle = Just $ TextStyle textStyleDefault {
       fontFamily = Just "Palatino, Georgia, serif"
@@ -167,8 +157,8 @@ options = Option $ optionDefault {
         symbolSize = Just $ Size 0.0,
         smooth = Just true,
         "data" = Just $ (cons
-          (Dat $ mkAnotationItem (Simple (fromJustNumber $ head age_under_30)))
-          (simpleData <$> (fromJustArray $ tail age_under_30))
+          (Dat $ mkAnnotationItem (Simple (fromMaybe zero $ head age_under_30)))
+          (simpleData <$> (fromMaybe [] $ tail age_under_30))
           ),
         stack = Just $ "percentage"
         }
@@ -190,8 +180,8 @@ options = Option $ optionDefault {
         symbolSize = Just $ Size 0.0,
         smooth = Just true,
         "data" = Just $ (cons
-          (Dat $ mkAnotationItem (Simple (fromJustNumber $ head age_30_39)))
-          (simpleData <$> (fromJustArray $ tail age_30_39))
+          (Dat $ mkAnnotationItem (Simple (fromMaybe zero $ head age_30_39)))
+          (simpleData <$> (fromMaybe [] $ tail age_30_39))
           ),
         stack = Just $ "percentage"
         }
@@ -213,8 +203,8 @@ options = Option $ optionDefault {
         symbolSize = Just $ Size 0.0,
         smooth = Just true,
         "data" = Just $ (cons
-          (Dat $ mkAnotationItem (Simple (fromJustNumber $ head age_40_49)))
-          (simpleData <$> (fromJustArray $ tail age_40_49))
+          (Dat $ mkAnnotationItem (Simple (fromMaybe zero $ head age_40_49)))
+          (simpleData <$> (fromMaybe [] $ tail age_40_49))
           ),
         stack = Just $ "percentage"
         }
@@ -236,8 +226,8 @@ options = Option $ optionDefault {
         symbolSize = Just $ Size 0.0,
         smooth = Just true,
         "data" = Just $ (cons
-          (Dat $ mkAnotationItem (Simple (fromJustNumber $ head age_50_59)))
-          (simpleData <$> (fromJustArray $ tail age_50_59))
+          (Dat $ mkAnnotationItem (Simple (fromMaybe zero $ head age_50_59)))
+          (simpleData <$> (fromMaybe [] $ tail age_50_59))
           ),
         stack = Just $ "percentage"
         }
@@ -259,8 +249,8 @@ options = Option $ optionDefault {
         symbolSize = Just $ Size 0.0,
         smooth = Just true,
         "data" = Just $ (cons
-          (Dat $ mkAnotationItem (Simple (fromJustNumber $ head age_60_64)))
-          (simpleData <$> (fromJustArray $ tail age_60_64))
+          (Dat $ mkAnnotationItem (Simple (fromMaybe zero $ head age_60_64)))
+          (simpleData <$> (fromMaybe [] $ tail age_60_64))
           ),
         stack = Just $ "percentage"
         }
@@ -268,7 +258,14 @@ options = Option $ optionDefault {
     ]
   }
 
-
+percentageArea :: forall eff. 
+  ElementId -> 
+  Eff ( echartSetOption :: ECHARTS_OPTION_SET
+        , echartInit :: ECHARTS_INIT
+        , console :: CONSOLE
+        , dom :: DOM
+        | eff
+        ) Unit
 percentageArea id = do
   mbEl <- getElementById id
   case mbEl of

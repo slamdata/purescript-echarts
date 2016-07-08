@@ -6,21 +6,15 @@
 type FormatParams = Json
 ```
 
-#### `GenericFormatter`
-
-``` purescript
-data GenericFormatter :: *
-```
-
 #### `Formatter`
 
 ``` purescript
 data Formatter
   = Template String
   | FormatFunc (forall eff. Array FormatParams -> Eff eff String)
+  | FormatFuncNonEff (Array FormatParams -> String)
   | StringFormatFunc (String -> String)
   | NumberFormatFunc (Number -> String)
-  | GenericFormatFunc GenericFormatter
 ```
 
 ##### Instances
