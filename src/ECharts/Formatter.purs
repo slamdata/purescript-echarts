@@ -17,8 +17,7 @@ type FormatParams = Json
 
 data Formatter =
   Template String
-  | FormatFunc (forall eff. Array FormatParams -> Eff eff String)
-  | FormatFuncNonEff (Array FormatParams-> String)
+  | FormatFunc (Array FormatParams -> String)
   | StringFormatFunc (String -> String)
   | NumberFormatFunc (Number -> String)
 
@@ -28,8 +27,7 @@ foreign import effArrToFn :: forall eff a b. (a -> Eff eff b) -> Fn1 a b
 
 instance formatterEncodeJson :: EncodeJson Formatter where
   encodeJson (Template str) = encodeJson str
-  encodeJson (FormatFunc func) = func2json $ effArrToFn func
-  encodeJson (FormatFuncNonEff func) = func2json func
+  encodeJson (FormatFunc func) = func2json $ func
   encodeJson (StringFormatFunc func) = func2json func
   encodeJson (NumberFormatFunc func) = func2json func
 

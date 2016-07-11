@@ -18,10 +18,4 @@ dateTimeFormatter :: String -> String -> String
 numeralFormatter :: String -> Number -> String
 ```
 
-#### `numeralFormatterWithValMnplt`
-
-``` purescript
-numeralFormatterWithValMnplt :: Number -> Number -> String -> Number -> String
-```
-
 

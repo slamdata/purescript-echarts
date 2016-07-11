@@ -96,8 +96,10 @@ options = Option $ optionDefault {
     },
   tooltip = Just $ Tooltip tooltipDefault {
     trigger = Just TriggerAxis,
-    formatter = Just $ FormatFuncNonEff $ 
-      toolTipFomatter (numeralFormatterWithValMnplt dataBase 1.0 "0.00"),
+    formatter = Just $ FormatFunc $ 
+      toolTipFomatter (
+        -- mul 1.0 to avoid some parse issue
+        (\x -> x * 1.0 + dataBase) >>> numeralFormatter "0.00"),
     textStyle = Just $ TextStyle textStyleDefault {
       fontFamily = Just "Palatino, Georgia, serif",
       fontSize = Just 12.0
@@ -161,7 +163,8 @@ options = Option $ optionDefault {
       },
     axisLabel = Just $ AxisLabel axisLabelDefault {
       formatter = Just $ NumberFormatFunc (
-        numeralFormatterWithValMnplt dataBase 1.0 "0.00"),
+        -- mul 1.0 to avoid some parse issue
+        (\x -> x * 1.0 + dataBase) >>> numeralFormatter "0.00e"),
       textStyle = Just $ TextStyle textStyleDefault {
        fontFamily = Just "Palatino, Georgia, serif"
        }
