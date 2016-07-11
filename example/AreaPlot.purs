@@ -102,7 +102,7 @@ options = Option $ optionDefault {
         }
       },
     axisLabel = Just $ AxisLabel axisLabelDefault {
-      formatter = Just $ StringFormatFunc (dateTimeFormatter "MMM-DD"),
+      formatter = Just $ StringFormatFunc (dateTimeFormatter "MM-DD"),
       textStyle = Just $ TextStyle textStyleDefault {
         fontFamily = Just "Palatino, Georgia, serif"
         }
@@ -124,7 +124,7 @@ options = Option $ optionDefault {
         }
       },
     axisLabel = Just $ AxisLabel axisLabelDefault {
-      formatter = Just $ NumberFormatFunc (numeralFormatter "0.00e"),
+      formatter = Just $ NumberFormatFunc (numeralFormatter "0.00a"),
       textStyle = Just $ TextStyle textStyleDefault {
         fontFamily = Just "Palatino, Georgia, serif"
         }

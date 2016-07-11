@@ -63,19 +63,7 @@ dateTimeFormatter template =
   converter_YYYYdMM dateTime = 
     case DT.fromString dateTime of
       Just dt -> replace ")" "" (replace "(Year " "" (show $ year dt)) ++ "-" ++
-        case month dt of
-          DT.January -> "01"
-          DT.February -> "02"
-          DT.March -> "03"
-          DT.April -> "04"
-          DT.May -> "05"
-          DT.June -> "06"
-          DT.July -> "07"
-          DT.August -> "08"
-          DT.September -> "09"
-          DT.October -> "10"
-          DT.November -> "11"
-          DT.December -> "12"
+        (monthNum $ month dt)
       _ -> dateTime
 
   converter_MMMdDD :: String -> String
@@ -88,21 +76,8 @@ dateTimeFormatter template =
   converter_MMdDD :: String -> String
   converter_MMdDD dateTime = 
     case DT.fromString dateTime of
-      Just dt ->
-        case month dt of
-          DT.January -> "01"
-          DT.February -> "02"
-          DT.March -> "03"
-          DT.April -> "04"
-          DT.May -> "05"
-          DT.June -> "06"
-          DT.July -> "07"
-          DT.August -> "08"
-          DT.September -> "09"
-          DT.October -> "10"
-          DT.November -> "11"
-          DT.December -> "12"
-        ++ "-" ++ (replace ")" "" (replace "(DayOfMonth " "" (show $ dayOfMonth dt)))
+      Just dt -> (monthNum $ month dt) ++ 
+      "-" ++ (replace ")" "" (replace "(DayOfMonth " "" (show $ dayOfMonth dt)))
       _ -> dateTime
 
   converter_YYYYdMMMdDD :: String -> String
@@ -117,20 +92,8 @@ dateTimeFormatter template =
   converter_YYYYdMMdDD dateTime = 
     case DT.fromString dateTime of
       Just dt -> replace ")" "" (replace "(Year " "" (show $ year dt)) ++ "-" ++
-        case month dt of
-          DT.January -> "01"
-          DT.February -> "02"
-          DT.March -> "03"
-          DT.April -> "04"
-          DT.May -> "05"
-          DT.June -> "06"
-          DT.July -> "07"
-          DT.August -> "08"
-          DT.September -> "09"
-          DT.October -> "10"
-          DT.November -> "11"
-          DT.December -> "12"
-        ++ "-" ++ (replace ")" "" (replace "(DayOfMonth " "" (show $ dayOfMonth dt)))
+        (monthNum $ month dt) ++ 
+        "-" ++ (replace ")" "" (replace "(DayOfMonth " "" (show $ dayOfMonth dt)))
       _ -> dateTime
 
   converter_MMMsDDsYYYY :: String -> String
@@ -140,6 +103,21 @@ dateTimeFormatter template =
       	(replace ")" "" (replace "(DayOfMonth " "" (show $ dayOfMonth dt))) ++ "/" ++
       	(replace ")" "" (replace "(Year " "" (show $ year dt))) 
       _ -> dateTime
+
+  monthNum :: DT.Month -> String
+  monthNum m = case m of
+    DT.January -> "01"
+    DT.February -> "02"
+    DT.March -> "03"
+    DT.April -> "04"
+    DT.May -> "05"
+    DT.June -> "06"
+    DT.July -> "07"
+    DT.August -> "08"
+    DT.September -> "09"
+    DT.October -> "10"
+    DT.November -> "11"
+    DT.December -> "12"
 
   doNothing :: String -> String
   doNothing dateTime = dateTime
@@ -164,16 +142,7 @@ Supported Templates:
 "0.00%": 1.12%
 -}
 numeralFormatter :: String -> (Number -> String)
-numeralFormatter template = numeralFormatterWithValMnplt 0.0 1.0 template
-
-
-{-
-This func can
-1) manipluate numerical values by adding and then multiplying
-2) format the manipulated value to a string according to some template
--}
-numeralFormatterWithValMnplt :: Number -> Number -> String -> (Number -> String)
-numeralFormatterWithValMnplt add mul template = 
+numeralFormatter template =
   case template of
     "0" -> converter_0
     "0.0" -> converter_0d0
@@ -193,136 +162,88 @@ numeralFormatterWithValMnplt add mul template =
   
   where
   converter_0 :: Number -> String
-  converter_0 num = show $ Int.round ((num * 1.0 + add) * mul)
+  converter_0 = precision 0 
   
   converter_0d0 :: Number -> String
-  converter_0d0 num = 
-    numStr ++ 
-    	fromCharArray (replicate (p - length (dropWhile isNotDot numStr) + 1) '0')
-    where 
-    p = 1
-    f = 10.0 `pow` Int.toNumber p
-    numStr = show (round (((num * 1.0 + add) * mul) * f) / f)
-  
+  converter_0d0 = precision 1
+    
   converter_0d00 :: Number -> String
-  converter_0d00 num = 
-    numStr ++ 
-    	fromCharArray (replicate (p - length (dropWhile isNotDot numStr) + 1) '0')
-    where 
-    p = 2
-    f = 10.0 `pow` Int.toNumber p
-    numStr = show (round (((num * 1.0 + add) * mul) * f) / f)
+  converter_0d00 = precision 2
 
   converter_0d000 :: Number -> String
-  converter_0d000 num = 
-    numStr ++ 
-    	fromCharArray (replicate (p - length (dropWhile isNotDot numStr) + 1) '0')
-    where 
-    p = 3
-    f = 10.0 `pow` Int.toNumber p
-    numStr = show (round (((num * 1.0 + add) * mul) * f) / f)
+  converter_0d000 = precision 3
   
   converter_0d0000 :: Number -> String
-  converter_0d0000 num = 
-    numStr ++ 
-    	fromCharArray (replicate (p - length (dropWhile isNotDot numStr) + 1) '0')
-    where 
-    p = 4
-    f = 10.0 `pow` Int.toNumber p
-    numStr = show (round (((num * 1.0 + add) * mul) * f) / f)
+  converter_0d0000 = precision 4
 
   converter_0e :: Number -> String
-  converter_0e num = case ((num * 1.0 + add) * mul) == 0.0 of
-  	true -> converter_0 ((num * 1.0 + add) * mul)
-  	false -> case d1 > d2 of
-  		true -> 
-  			(converter_0 (((num * 1.0 + add) * mul) / (10.0 `pow` Int.toNumber (d1-1)))) ++ 
-  				"e+" ++ show (d1-1)
-  		false ->
-  			(converter_0 (((num * 1.0 + add) * mul) * (10.0 `pow` Int.toNumber (d2-1)))) ++ 
-  				"e-" ++ show (d2-1)
-    where
-    numAbsStr = show (abs ((num * 1.0 + add) * mul))
-    d1 = length (takeWhile isNotDot numAbsStr)
-    d2 = length (takeWhile isZeroOrDot numAbsStr)
+  converter_0e = converter_e 0
 
   converter_0d0e :: Number -> String
-  converter_0d0e num = case ((num * 1.0 + add) * mul) == 0.0 of
-  	true -> converter_0d0 ((num * 1.0 + add) * mul)
-  	false -> case d1 > d2 of
-  		true -> 
-  			(converter_0d0 (((num * 1.0 + add) * mul) / (10.0 `pow` Int.toNumber (d1-1)))) ++ 
-  				"e+" ++ show (d1-1)
-  		false ->
-  			(converter_0d0 (((num * 1.0 + add) * mul) * (10.0 `pow` Int.toNumber (d2-1)))) ++ 
-  				"e-" ++ show (d2-1)
-    where
-    numAbsStr = show (abs ((num * 1.0 + add) * mul))
-    d1 = length (takeWhile isNotDot numAbsStr)
-    d2 = length (takeWhile isZeroOrDot numAbsStr)
+  converter_0d0e = converter_e 1
 
   converter_0d00e :: Number -> String
-  converter_0d00e num = case ((num * 1.0 + add) * mul) == 0.0 of
-  	true -> converter_0d00 ((num * 1.0 + add) * mul)
-  	false -> case d1 > d2 of
-  		true -> 
-  			(converter_0d00 (((num * 1.0 + add) * mul) / (10.0 `pow` Int.toNumber (d1-1)))) ++ 
-  				"e+" ++ show (d1-1)
-  		false ->
-  			(converter_0d00 (((num * 1.0 + add) * mul) * (10.0 `pow` Int.toNumber (d2-1)))) ++ 
-  				"e-" ++ show (d2-1)
+  converter_0d00e = converter_e 2
+
+  converter_0a :: Number -> String
+  converter_0a = converter_a 0
+
+  converter_0d0a :: Number -> String
+  converter_0d0a = converter_a 1
+
+  converter_0d00a :: Number -> String
+  converter_0d00a = converter_a 2
+
+  converter_0p :: Number -> String
+  converter_0p = converter_p 0
+
+  converter_0d0p :: Number -> String
+  converter_0d0p = converter_p 1
+
+  converter_0d00p :: Number -> String
+  converter_0d00p = converter_p 2
+
+  precision :: Int -> Number -> String
+  precision p num = case p of 
+    0 -> show $ Int.round num
+    _ -> numStr ++ 
+          fromCharArray (replicate (p - length (dropWhile isNotDot numStr) + 1) '0')
+      where 
+      f = 10.0 `pow` Int.toNumber p
+      numStr = show (round (num * f) / f)
+
+  converter_e :: Int -> Number -> String
+  converter_e p num = case num == 0.0 of
+    true -> precision p num
+    false -> case d1 > d2 of
+      true -> 
+        precision p (num / (10.0 `pow` Int.toNumber (d1-1))) ++ 
+          "e+" ++ show (d1-1)
+      false ->
+        precision p (num * (10.0 `pow` Int.toNumber (d2-1))) ++ 
+          "e-" ++ show (d2-1)
     where
-    numAbsStr = show (abs ((num * 1.0 + add) * mul))
+    numAbsStr = show $ abs num
     d1 = length (takeWhile isNotDot numAbsStr)
     d2 = length (takeWhile isZeroOrDot numAbsStr)
 
-  converter_0a :: Number -> String
-  converter_0a num = case (d - 1)/3 of
-    0 -> converter_0 ((num * 1.0 + add) * mul)
-    1 -> (converter_0 (((num * 1.0 + add) * mul)/(1000.0 `pow` 1.0))) ++ "K"
-    2 -> (converter_0 (((num * 1.0 + add) * mul)/(1000.0 `pow` 2.0))) ++ "M"
-    3 -> (converter_0 (((num * 1.0 + add) * mul)/(1000.0 `pow` 3.0))) ++ "B"
-    4 -> (converter_0 (((num * 1.0 + add) * mul)/(1000.0 `pow` 4.0))) ++ "T"
-    _ -> converter_0e ((num * 1.0 + add) * mul)
+  converter_a :: Int -> Number -> String
+  converter_a p num = case (d - 1)/3 of
+    0 -> precision p num
+    1 -> precision p (num/(1000.0 `pow` 1.0)) ++ "K"
+    2 -> precision p (num/(1000.0 `pow` 2.0)) ++ "M"
+    3 -> precision p (num/(1000.0 `pow` 3.0)) ++ "B"
+    4 -> precision p (num/(1000.0 `pow` 4.0)) ++ "T"
+    _ -> precision p num
     where
-    numAbsStr = show (abs ((num * 1.0 + add) * mul))
+    numAbsStr = show $ abs num
     d = length (takeWhile isNotDot numAbsStr)
 
-  converter_0d0a :: Number -> String
-  converter_0d0a num = case (d - 1)/3 of
-    0 -> converter_0d0 ((num * 1.0 + add) * mul)
-    1 -> (converter_0d0 (((num * 1.0 + add) * mul)/(1000.0 `pow` 1.0))) ++ "K"
-    2 -> (converter_0d0 (((num * 1.0 + add) * mul)/(1000.0 `pow` 2.0))) ++ "M"
-    3 -> (converter_0d0 (((num * 1.0 + add) * mul)/(1000.0 `pow` 3.0))) ++ "B"
-    4 -> (converter_0d0 (((num * 1.0 + add) * mul)/(1000.0 `pow` 4.0))) ++ "T"
-    _ -> converter_0d0e ((num * 1.0 + add) * mul)
-    where
-    numAbsStr = show (abs ((num * 1.0 + add) * mul))
-    d = length (takeWhile isNotDot numAbsStr)
-
-  converter_0d00a :: Number -> String
-  converter_0d00a num = case (d - 1)/3 of
-    0 -> converter_0d00 ((num * 1.0 + add) * mul)
-    1 -> (converter_0d00 (((num * 1.0 + add) * mul)/(1000.0 `pow` 1.0))) ++ "K"
-    2 -> (converter_0d00 (((num * 1.0 + add) * mul)/(1000.0 `pow` 2.0))) ++ "M"
-    3 -> (converter_0d00 (((num * 1.0 + add) * mul)/(1000.0 `pow` 3.0))) ++ "B"
-    4 -> (converter_0d00 (((num * 1.0 + add) * mul)/(1000.0 `pow` 4.0))) ++ "T"
-    _ -> converter_0d00e ((num * 1.0 + add) * mul)
-    where
-    numAbsStr = show (abs ((num * 1.0 + add) * mul))
-    d = length (takeWhile isNotDot numAbsStr)
-
-  converter_0p :: Number -> String
-  converter_0p num = (converter_0 $ ((num * 1.0 + add) * mul)*100.0) ++ "%"
-
-  converter_0d0p :: Number -> String
-  converter_0d0p num = (converter_0d0 $ ((num * 1.0 + add) * mul)*100.0) ++ "%"
-
-  converter_0d00p :: Number -> String
-  converter_0d00p num = (converter_0d00 $ ((num * 1.0 + add) * mul)*100.0) ++ "%"
+  converter_p :: Int -> Number -> String
+  converter_p p num = precision p (num * 100.0) ++ "%"
 
   doNothing :: Number -> String
-  doNothing num = show ((num * 1.0 + add) * mul)
+  doNothing num = show num
 
   isNotDot :: Char -> Boolean
   isNotDot c = c /= '.' 
