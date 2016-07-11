@@ -35,69 +35,69 @@ Supported Templates:
 dateTimeFormatter :: String -> (String -> String)
 dateTimeFormatter template = 
   case template of
-    "YYYY" -> converter_YYYY
-    "YYYY-MMM" -> converter_YYYYdMMM
-    "YYYY-MM" -> converter_YYYYdMM
-    "MMM-DD" -> converter_MMMdDD
-    "MM-DD" -> converter_MMdDD
-    "YYYY-MMM-DD" -> converter_YYYYdMMMdDD
-    "YYYY-MM-DD" -> converter_YYYYdMMdDD
-    "MMM/DD/YYYY" -> converter_MMMsDDsYYYY
+    "YYYY" -> formatAsYYYY
+    "YYYY-MMM" -> formatAsYYYYdMMM
+    "YYYY-MM" -> formatAsYYYYdMM
+    "MMM-DD" -> formatAsMMMdDD
+    "MM-DD" -> formatAsMMdDD
+    "YYYY-MMM-DD" -> formatAsYYYYdMMMdDD
+    "YYYY-MM-DD" -> formatAsYYYYdMMdDD
+    "MMM/DD/YYYY" -> formatAsMMMsDDsYYYY
     _ -> doNothing
   
   where
-  converter_YYYY :: String -> String
-  converter_YYYY dateTime = 
+  formatAsYYYY :: String -> String
+  formatAsYYYY dateTime = 
     case DT.fromString dateTime of
       Just dt -> replace ")" "" (replace "(Year " "" (show $ year dt))
       _ -> dateTime
 
-  converter_YYYYdMMM :: String -> String
-  converter_YYYYdMMM dateTime = 
+  formatAsYYYYdMMM :: String -> String
+  formatAsYYYYdMMM dateTime = 
     case DT.fromString dateTime of
       Just dt -> (replace ")" "" (replace "(Year " "" (show $ year dt))) ++ "-" ++
         (take 3 (show $ month dt))
       _ -> dateTime
 
-  converter_YYYYdMM :: String -> String
-  converter_YYYYdMM dateTime = 
+  formatAsYYYYdMM :: String -> String
+  formatAsYYYYdMM dateTime = 
     case DT.fromString dateTime of
       Just dt -> replace ")" "" (replace "(Year " "" (show $ year dt)) ++ "-" ++
         (monthNum $ month dt)
       _ -> dateTime
 
-  converter_MMMdDD :: String -> String
-  converter_MMMdDD dateTime = 
+  formatAsMMMdDD :: String -> String
+  formatAsMMMdDD dateTime = 
     case DT.fromString dateTime of
       Just dt -> (take 3 (show $ month dt)) ++ "-" ++
         (replace ")" "" (replace "(DayOfMonth " "" (show $ dayOfMonth dt)))
       _ -> dateTime
 
-  converter_MMdDD :: String -> String
-  converter_MMdDD dateTime = 
+  formatAsMMdDD :: String -> String
+  formatAsMMdDD dateTime = 
     case DT.fromString dateTime of
       Just dt -> (monthNum $ month dt) ++ 
       "-" ++ (replace ")" "" (replace "(DayOfMonth " "" (show $ dayOfMonth dt)))
       _ -> dateTime
 
-  converter_YYYYdMMMdDD :: String -> String
-  converter_YYYYdMMMdDD dateTime = 
+  formatAsYYYYdMMMdDD :: String -> String
+  formatAsYYYYdMMMdDD dateTime = 
     case DT.fromString dateTime of
       Just dt -> (replace ")" "" (replace "(Year " "" (show $ year dt))) ++ "-" ++
         (take 3 (show $ month dt)) ++ "-" ++
         (replace ")" "" (replace "(DayOfMonth " "" (show $ dayOfMonth dt)))
       _ -> dateTime
 
-  converter_YYYYdMMdDD :: String -> String
-  converter_YYYYdMMdDD dateTime = 
+  formatAsYYYYdMMdDD :: String -> String
+  formatAsYYYYdMMdDD dateTime = 
     case DT.fromString dateTime of
       Just dt -> replace ")" "" (replace "(Year " "" (show $ year dt)) ++ "-" ++
         (monthNum $ month dt) ++ 
         "-" ++ (replace ")" "" (replace "(DayOfMonth " "" (show $ dayOfMonth dt)))
       _ -> dateTime
 
-  converter_MMMsDDsYYYY :: String -> String
-  converter_MMMsDDsYYYY dateTime = 
+  formatAsMMMsDDsYYYY :: String -> String
+  formatAsMMMsDDsYYYY dateTime = 
     case DT.fromString dateTime of
       Just dt -> (take 3 (show $ month dt)) ++ "/" ++
       	(replace ")" "" (replace "(DayOfMonth " "" (show $ dayOfMonth dt))) ++ "/" ++
@@ -144,64 +144,64 @@ Supported Templates:
 numeralFormatter :: String -> (Number -> String)
 numeralFormatter template =
   case template of
-    "0" -> converter_0
-    "0.0" -> converter_0d0
-    "0.00" -> converter_0d00
-    "0.000" -> converter_0d000
-    "0.0000" -> converter_0d0000
-    "0e" -> converter_0e
-    "0.0e" -> converter_0d0e
-    "0.00e" -> converter_0d00e
-    "0a" -> converter_0a
-    "0.0a" -> converter_0d0a
-    "0.00a" -> converter_0d00a
-    "0%" -> converter_0p
-    "0.0%" -> converter_0d0p
-    "0.00%" -> converter_0d00p
+    "0" -> formatAs0
+    "0.0" -> formatAs0d0
+    "0.00" -> formatAs0d00
+    "0.000" -> formatAs0d000
+    "0.0000" -> formatAs0d0000
+    "0e" -> formatAs0e
+    "0.0e" -> formatAs0d0e
+    "0.00e" -> formatAs0d00e
+    "0a" -> formatAs0a
+    "0.0a" -> formatAs0d0a
+    "0.00a" -> formatAs0d00a
+    "0%" -> formatAs0p
+    "0.0%" -> formatAs0d0p
+    "0.00%" -> formatAs0d00p
     _ -> doNothing
   
   where
-  converter_0 :: Number -> String
-  converter_0 = precision 0 
+  formatAs0 :: Number -> String
+  formatAs0 = precision 0 
   
-  converter_0d0 :: Number -> String
-  converter_0d0 = precision 1
+  formatAs0d0 :: Number -> String
+  formatAs0d0 = precision 1
     
-  converter_0d00 :: Number -> String
-  converter_0d00 = precision 2
+  formatAs0d00 :: Number -> String
+  formatAs0d00 = precision 2
 
-  converter_0d000 :: Number -> String
-  converter_0d000 = precision 3
+  formatAs0d000 :: Number -> String
+  formatAs0d000 = precision 3
   
-  converter_0d0000 :: Number -> String
-  converter_0d0000 = precision 4
+  formatAs0d0000 :: Number -> String
+  formatAs0d0000 = precision 4
 
-  converter_0e :: Number -> String
-  converter_0e = converter_e 0
+  formatAs0e :: Number -> String
+  formatAs0e = formatAsE 0
 
-  converter_0d0e :: Number -> String
-  converter_0d0e = converter_e 1
+  formatAs0d0e :: Number -> String
+  formatAs0d0e = formatAsE 1
 
-  converter_0d00e :: Number -> String
-  converter_0d00e = converter_e 2
+  formatAs0d00e :: Number -> String
+  formatAs0d00e = formatAsE 2
 
-  converter_0a :: Number -> String
-  converter_0a = converter_a 0
+  formatAs0a :: Number -> String
+  formatAs0a = formatAsA 0
 
-  converter_0d0a :: Number -> String
-  converter_0d0a = converter_a 1
+  formatAs0d0a :: Number -> String
+  formatAs0d0a = formatAsA 1
 
-  converter_0d00a :: Number -> String
-  converter_0d00a = converter_a 2
+  formatAs0d00a :: Number -> String
+  formatAs0d00a = formatAsA 2
 
-  converter_0p :: Number -> String
-  converter_0p = converter_p 0
+  formatAs0p :: Number -> String
+  formatAs0p = formatAsP 0
 
-  converter_0d0p :: Number -> String
-  converter_0d0p = converter_p 1
+  formatAs0d0p :: Number -> String
+  formatAs0d0p = formatAsP 1
 
-  converter_0d00p :: Number -> String
-  converter_0d00p = converter_p 2
+  formatAs0d00p :: Number -> String
+  formatAs0d00p = formatAsP 2
 
   precision :: Int -> Number -> String
   precision p num = case p of 
@@ -212,8 +212,8 @@ numeralFormatter template =
       f = 10.0 `pow` Int.toNumber p
       numStr = show (round (num * f) / f)
 
-  converter_e :: Int -> Number -> String
-  converter_e p num = case num == 0.0 of
+  formatAsE :: Int -> Number -> String
+  formatAsE p num = case num == 0.0 of
     true -> precision p num
     false -> case d1 > d2 of
       true -> 
@@ -227,8 +227,8 @@ numeralFormatter template =
     d1 = length (takeWhile isNotDot numAbsStr)
     d2 = length (takeWhile isZeroOrDot numAbsStr)
 
-  converter_a :: Int -> Number -> String
-  converter_a p num = case (d - 1)/3 of
+  formatAsA :: Int -> Number -> String
+  formatAsA p num = case (d - 1)/3 of
     0 -> precision p num
     1 -> precision p (num/(1000.0 `pow` 1.0)) ++ "K"
     2 -> precision p (num/(1000.0 `pow` 2.0)) ++ "M"
@@ -239,8 +239,8 @@ numeralFormatter template =
     numAbsStr = show $ abs num
     d = length (takeWhile isNotDot numAbsStr)
 
-  converter_p :: Int -> Number -> String
-  converter_p p num = precision p (num * 100.0) ++ "%"
+  formatAsP :: Int -> Number -> String
+  formatAsP p num = precision p (num * 100.0) ++ "%"
 
   doNothing :: Number -> String
   doNothing num = show num
