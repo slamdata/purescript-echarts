@@ -9,13 +9,13 @@ unnull :: Json -> Json
 #### `dateTimeFormatter`
 
 ``` purescript
-dateTimeFormatter :: String -> String -> String
+dateTimeFormatter :: String -> (String -> String)
 ```
 
 #### `numeralFormatter`
 
 ``` purescript
-numeralFormatter :: String -> Number -> String
+numeralFormatter :: String -> (Number -> String)
 ```
 
 

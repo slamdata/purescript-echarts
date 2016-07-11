@@ -28,13 +28,13 @@ markPointDefault :: MarkPointRec
 #### `delMarkPoint`
 
 ``` purescript
-delMarkPoint :: forall e. Number -> String -> EChart -> Eff (removeMarkPointECharts :: REMOVE_MARKPOINT | e) EChart
+delMarkPoint :: forall e. Number -> String -> EChart -> (Eff (removeMarkPointECharts :: REMOVE_MARKPOINT | e) EChart)
 ```
 
 #### `addMarkPoint`
 
 ``` purescript
-addMarkPoint :: forall e. MarkPoint -> EChart -> Eff (addMarkPointECharts :: ADD_MARKPOINT | e) EChart
+addMarkPoint :: forall e. MarkPoint -> EChart -> (Eff (addMarkPointECharts :: ADD_MARKPOINT | e) EChart)
 ```
 
 
