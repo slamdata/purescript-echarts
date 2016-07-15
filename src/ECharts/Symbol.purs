@@ -18,8 +18,9 @@ import ECharts.Item.Value
 
 foreign import func2json :: forall a. a -> Json
 
+
 data Symbol = Circle | Rectangle | Triangle | Diamond | EmptyCircle | EmptyRectangle
-            | EmptyTriangle | EmptyDiamond
+            | EmptyTriangle | EmptyDiamond | NoSymbol
 
 instance encodeJsonSymbol :: EncodeJson Symbol where
   encodeJson a = fromString $ case a of
@@ -31,6 +32,7 @@ instance encodeJsonSymbol :: EncodeJson Symbol where
     EmptyRectangle -> "emptyRectangle"
     EmptyTriangle -> "emptyTriangle"
     EmptyDiamond -> "emptyDiamond"
+    NoSymbol -> "none"
 
 instance symbolDecodeJson :: DecodeJson Symbol where
   decodeJson j = do
@@ -44,6 +46,7 @@ instance symbolDecodeJson :: DecodeJson Symbol where
       "emptyRectangle" -> pure EmptyRectangle
       "emptyTriangle" -> pure EmptyTriangle
       "emptyDiamond" -> pure EmptyDiamond
+      "none" -> pure NoSymbol
       _ -> Left "incorrect symbol"
 
 

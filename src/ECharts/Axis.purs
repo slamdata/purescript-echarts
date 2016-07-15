@@ -22,7 +22,7 @@ import ECharts.Formatter
 
 
 type AxisLineStyleRec = {
-    color :: Maybe (Array (Tuple Number Color)),
+    color :: Maybe Color,
     width :: Maybe Number
     }
 

@@ -3,7 +3,7 @@
 #### `AxisLineStyleRec`
 
 ``` purescript
-type AxisLineStyleRec = { color :: Maybe (Array (Tuple Number Color)), width :: Maybe Number }
+type AxisLineStyleRec = { color :: Maybe Color, width :: Maybe Number }
 ```
 
 #### `AxisLineStyle`
