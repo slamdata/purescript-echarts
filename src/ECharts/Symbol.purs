@@ -50,12 +50,15 @@ instance symbolDecodeJson :: DecodeJson Symbol where
       _ -> Left "incorrect symbol"
 
 
-data SymbolSize = Size Number | Func (ItemValue -> Number)
+data SymbolSize = Size Number 
+                | Func (ItemValue -> Number) 
+                | ArrayMappingFunc (Array Number -> Number)
 
 instance symbolSizeEncodeJson :: EncodeJson SymbolSize where
   encodeJson ss = case ss of
     Size num -> encodeJson num
     Func func -> func2json $ mkFn1 func
+    ArrayMappingFunc func -> func2json $ func
 
 instance symbolSizeDecodeJson :: DecodeJson SymbolSize where
   decodeJson j = Size <$> decodeJson j
