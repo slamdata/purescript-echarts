@@ -27,6 +27,7 @@ DecodeJson Symbol
 data SymbolSize
   = Size Number
   | Func (ItemValue -> Number)
+  | ArrayMappingFunc (Array Number -> Number)
 ```
 
 ##### Instances
