@@ -20,18 +20,10 @@
   ],
   "dependencies": {
     "echarts": "~2.1.10",
-    "purescript-argonaut-codecs": "^0.6.0",
-    "purescript-argonaut-core": "^0.2.0",
-    "purescript-datetime": "^0.9.0",
-    "purescript-dom": "^0.2.6",
-    "purescript-globals": "^0.2.0"
+    "purescript-argonaut": "^1.0.0",
+    "purescript-datetime": "^1.0.0",
+    "purescript-dom": "^1.1.0",
+    "purescript-globals": "^1.0.0"
   },
-  "devDependencies": {
-    "purescript-console": "^0.1.1",
-    "purescript-random": "^0.2.0",
-    "purescript-signal": "^4.1.0"
-  },
-  "resolutions": {
-    "purescript-dom": "^0.2.4"
-  }
+  "devDependencies": {}
 }

@@ -12,34 +12,34 @@ import Data.Maybe
 import ECharts.Color
 
 
-type AreaStyleRec = {
-    color :: Maybe CalculableColor,
-    "type" :: Maybe String
+type AreaStyleRec =
+  { color ∷ Maybe CalculableColor
+  , "type" ∷ Maybe String
   }
 
-newtype AreaStyle = AreaStyle AreaStyleRec
+newtype AreaStyle
+  = AreaStyle AreaStyleRec
 
-areaStyleDefault :: AreaStyleRec
+areaStyleDefault ∷ AreaStyleRec
 areaStyleDefault =
-  {
-    color: Nothing,
-    "type": Just "fill"
+  { color: Nothing
+  , "type": Just "fill"
   }
 
-instance areaStyleEncodeJson :: EncodeJson AreaStyle where
+instance areaStyleEncodeJson ∷ EncodeJson AreaStyle where
   encodeJson (AreaStyle ars) =
-    fromObject $ fromList $ toList
-    [
-      "color" := ars.color,
-      "type" := ars."type"
-    ]
+    fromObject
+      $ fromList
+      $ toList
+        [ "color" := ars.color
+        , "type" := ars."type"
+        ]
 
-instance areaStyleDecodeJson :: DecodeJson AreaStyle where
+instance areaStyleDecodeJson ∷ DecodeJson AreaStyle where
   decodeJson j = do
-    o <- decodeJson j
-    r <- { color: _
-         , "type": _ } <$>
-         (o .? "color") <*>
-         (o .? "type")
+    o ← decodeJson j
+    r ← { color: _
+        , "type": _ }
+        <$> (o .? "color")
+        <*> (o .? "type")
     pure $ AreaStyle r
-

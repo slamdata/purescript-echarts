@@ -12,38 +12,39 @@ import Data.Argonaut.Combinators
 
 import ECharts.Color
 
-type NodeStyleRec = {
-    color :: Maybe Color,
-    borderColor :: Maybe Color,
-    borderWidth :: Maybe Number
+type NodeStyleRec =
+  { color ∷ Maybe Color
+  , borderColor ∷ Maybe Color
+  , borderWidth ∷ Maybe Number
   }
 
-newtype NodeStyle = NodeStyle NodeStyleRec
+newtype NodeStyle
+  = NodeStyle NodeStyleRec
 
-
-instance nodeStyleEncodeJson :: EncodeJson NodeStyle where
+instance nodeStyleEncodeJson ∷ EncodeJson NodeStyle where
   encodeJson (NodeStyle ns) =
-    fromObject $ fromList $ toList
-    [
-      "color" := ns.color,
-      "borderColor" := ns.borderColor,
-      "borderWidth" := ns.borderWidth
-    ]
+    fromObject
+      $ fromList
+      $ toList
+        [ "color" := ns.color
+        , "borderColor" := ns.borderColor
+        , "borderWidth" := ns.borderWidth
+        ]
 
-instance nodeStyleDecodeJson :: DecodeJson NodeStyle where
+instance nodeStyleDecodeJson ∷ DecodeJson NodeStyle where
   decodeJson j = do
-    o <- decodeJson j
-    r <- { color: _
-         , borderColor: _
-         , borderWidth: _ } <$>
-         (o .? "color") <*>
-         (o .? "borderColor") <*>
-         (o .? "borderWidth")
+    o ← decodeJson j
+    r ← { color: _
+        , borderColor: _
+        , borderWidth: _ }
+        <$> (o .? "color")
+        <*> (o .? "borderColor")
+        <*> (o .? "borderWidth")
     pure $ NodeStyle r
 
-nodeStyleDefault :: NodeStyleRec
-nodeStyleDefault = {
-  color: Nothing,
-  borderColor: Nothing,
-  borderWidth: Nothing
+nodeStyleDefault ∷ NodeStyleRec
+nodeStyleDefault =
+  { color: Nothing
+  , borderColor: Nothing
+  , borderWidth: Nothing
   }

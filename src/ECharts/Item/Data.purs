@@ -14,64 +14,63 @@ import ECharts.Item.Value
 import ECharts.Tooltip
 import ECharts.Style.Item
 
-type ItemDataDatRec =  {
-  value :: ItemValue,
-  name :: Maybe String,
-  tooltip :: Maybe Tooltip,
-  itemStyle :: Maybe ItemStyle,
-  selected :: Maybe Boolean
+type ItemDataDatRec =
+  { value ∷ ItemValue
+  , name ∷ Maybe String
+  , tooltip ∷ Maybe Tooltip
+  , itemStyle ∷ Maybe ItemStyle
+  , selected ∷ Maybe Boolean
   }
 
-data ItemData = Value ItemValue
-              | Dat ItemDataDatRec
-              | Label String
+data ItemData
+  = Value ItemValue
+  | Dat ItemDataDatRec
+  | Label String
 
 
-instance itemDataEncodeJson :: EncodeJson ItemData where
+instance itemDataEncodeJson ∷ EncodeJson ItemData where
   encodeJson (Value val) = encodeJson val
   encodeJson (Dat conf) =
-    fromObject $ fromList $ toList
-    [
-      "value" := conf.value,
-      "name" := conf.name,
-      "tooltip" := conf.tooltip,
-      "itemStyle" := conf.itemStyle,
-      "selected" := conf.selected
-    ]
+    fromObject
+      $ fromList
+      $ toList
+        [ "value" := conf.value
+        , "name" := conf.name
+        , "tooltip" := conf.tooltip
+        , "itemStyle" := conf.itemStyle
+        , "selected" := conf.selected
+        ]
   encodeJson (Label name) =
-    fromObject $ fromList $ toList
-    ["name" := name]
+    fromObject $ fromList $ toList ["name" := name]
 
-instance itemDataDecodeJson :: DecodeJson ItemData where
+instance itemDataDecodeJson ∷ DecodeJson ItemData where
   decodeJson json =
-    (do obj <- decodeJson json
-        val <- obj .? "value"
-        name <- obj .? "name"
+    (do obj ← decodeJson json
+        val ← obj .? "value"
+        name ← obj .? "name"
         case name of
-          Nothing -> pure $ Value val
-          Just n -> do
-            r <- { value: val
-                 , name: n
-                 , tooltip: _
-                 , itemStyle: _
-                 , selected: _ } <$>
-                 (obj .? "tooltip") <*>
-                 (obj .? "itemStyle") <*>
-                 (obj .? "selected")
+          Nothing → pure $ Value val
+          Just n → do
+            r ← { value: val
+                , name: n
+                , tooltip: _
+                , itemStyle: _
+                , selected: _ }
+                <$> (obj .? "tooltip")
+                <*> (obj .? "itemStyle")
+                <*> (obj .? "selected")
             pure $ Dat r)
     <|>
-    (Label <$> (decodeJson json >>= (.? "name")))
+    (Label <$> (decodeJson json >>= (_ .? "name")))
     <|>
     (Value <$> (decodeJson json))
 
 
-
-dataDefault :: ItemValue -> ItemDataDatRec
+dataDefault ∷ ItemValue → ItemDataDatRec
 dataDefault value =
-  {
-    value: value,
-    name: Nothing,
-    tooltip: Nothing,
-    itemStyle: Nothing,
-    selected: Nothing
+  { value: value
+  , name: Nothing
+  , tooltip: Nothing
+  , itemStyle: Nothing
+  , selected: Nothing
   }

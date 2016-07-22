@@ -1,12 +1,13 @@
-module ECharts.Mark.Line (
-  MarkLine(..),
-  MarkLineRec(),
-  markLineDefault,
-  addMarkLine,
-  delMarkLine
+module ECharts.Mark.Line
+  ( MarkLine(..)
+  , MarkLineRec
+  , markLineDefault
+  , addMarkLine
+  , delMarkLine
   ) where
 
 import Prelude
+
 import ECharts.Chart
 import ECharts.Common
 import ECharts.Mark.Effect
@@ -27,79 +28,86 @@ import Data.Argonaut.Encode
 import Data.Argonaut.Decode
 import Data.Argonaut.Combinators
 
-type MarkLineRec = {
-    symbol :: Maybe (Tuple Symbol Symbol),
-    symbolSize :: Maybe DoubleSymbolSize,
-    symbolRotate :: Maybe (Tuple Number Number),
-    effect :: Maybe MarkPointEffect,
-    geoCoord :: Maybe (Array GeoCoord),
-    "data" :: Maybe (Array (Tuple MarkPointData MarkPointData)),
-    itemStyle :: Maybe ItemStyle
+type MarkLineRec =
+  { symbol ∷ Maybe (Tuple Symbol Symbol)
+  , symbolSize ∷ Maybe DoubleSymbolSize
+  , symbolRotate ∷ Maybe (Tuple Number Number)
+  , effect ∷ Maybe MarkPointEffect
+  , geoCoord ∷ Maybe (Array GeoCoord)
+  , "data" ∷ Maybe (Array (Tuple MarkPointData MarkPointData))
+  , itemStyle ∷ Maybe ItemStyle
   }
 
-newtype MarkLine = MarkLine MarkLineRec
+newtype MarkLine
+  = MarkLine MarkLineRec
 
-
-instance mlEncodeJson :: EncodeJson MarkLine where
+instance mlEncodeJson ∷ EncodeJson MarkLine where
   encodeJson (MarkLine ml) =
-    fromObject $ fromList $ toList
-    [
-      "symbol" := ml.symbol,
-      "symbolSize" := ml.symbolSize,
-      "symbolRotate" := ml.symbolRotate,
-      "effect" := ml.effect,
-      "geoCoord" := ml.geoCoord,
-      "data" := ml.data,
-      "itemStyle" := ml.itemStyle
-    ]
+    fromObject
+      $ fromList
+      $ toList
+        [ "symbol" := ml.symbol
+        , "symbolSize" := ml.symbolSize
+        , "symbolRotate" := ml.symbolRotate
+        , "effect" := ml.effect
+        , "geoCoord" := ml.geoCoord
+        , "data" := ml."data"
+        , "itemStyle" := ml.itemStyle
+        ]
 
-instance mlDecodeJson :: DecodeJson MarkLine where
+instance mlDecodeJson ∷ DecodeJson MarkLine where
   decodeJson j = do
-    o <- decodeJson j
-    r <- { symbol: _
-         , symbolSize: _
-         , symbolRotate: _
-         , effect: _
-         , geoCoord: _
-         , "data": _
-         , itemStyle: _ } <$>
-         (o .? "symbol") <*>
-         (o .? "symbolSize") <*>
-         (o .? "symbolRotate") <*>
-         (o .? "effect") <*>
-         (o .? "geoCoord") <*>
-         (o .? "data") <*>
-         (o .? "itemStyle")
+    o ← decodeJson j
+    r ← { symbol: _
+        , symbolSize: _
+        , symbolRotate: _
+        , effect: _
+        , geoCoord: _
+        , "data": _
+        , itemStyle: _ }
+        <$> (o .? "symbol")
+        <*> (o .? "symbolSize")
+        <*> (o .? "symbolRotate")
+        <*> (o .? "effect")
+        <*> (o .? "geoCoord")
+        <*> (o .? "data")
+        <*> (o .? "itemStyle")
     pure $ MarkLine r
 
 
-markLineDefault :: MarkLineRec
+markLineDefault ∷ MarkLineRec
 markLineDefault =
-  {
-    symbol: Nothing,
-    symbolSize: Nothing,
-    symbolRotate: Nothing,
-    effect: Nothing,
-    geoCoord: Nothing,
-    "data": Nothing,
-    itemStyle: Nothing
+  { symbol: Nothing
+  , symbolSize: Nothing
+  , symbolRotate: Nothing
+  , effect: Nothing
+  , geoCoord: Nothing
+  , "data": Nothing
+  , itemStyle: Nothing
   }
 
 
-foreign import addMarkLineImpl :: forall e. Fn2 Json EChart (Eff (addMarkLineECharts::ADD_MARKLINE|e) EChart)
+foreign import addMarkLineImpl
+  ∷ ∀ e. Fn2 Json EChart (Eff (echarts ∷ ECHARTS |e) EChart)
 
 
-addMarkLine :: forall e. MarkLine  -> EChart ->
-               Eff (addMarkLineECharts::ADD_MARKLINE|e) EChart
-addMarkLine ml chart = runFn2 addMarkLineImpl (encodeJson ml) chart
+addMarkLine
+ ∷ ∀ e
+ . MarkLine
+ → EChart
+ → Eff (echarts ∷ ECHARTS |e) EChart
+addMarkLine ml chart =
+  runFn2 addMarkLineImpl (encodeJson ml) chart
 
 
+foreign import delMarkLineImpl
+  ∷ ∀ e. Fn3 Number String EChart (Eff (echarts ∷ ECHARTS |e) EChart)
 
-
-foreign import delMarkLineImpl :: forall e. Fn3 Number String EChart
-       (Eff (removeMarkLine::REMOVE_MARKLINE|e) EChart)
-
-delMarkLine :: forall e. Number -> String -> EChart ->
-               Eff (removeMarkLine::REMOVE_MARKLINE|e) EChart
-delMarkLine idx name chart = runFn3 delMarkLineImpl idx name chart
-
+delMarkLine
+  ∷ ∀ e
+  . Number
+  → String
+  → EChart
+  → Eff (echarts ∷ ECHARTS |e) EChart
+delMarkLine idx name chart =
+  runFn3 delMarkLineImpl idx name chart
