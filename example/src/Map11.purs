@@ -27,7 +27,7 @@ import ECharts.Mark.Point
 import ECharts.Mark.Data
 import ECharts.Symbol
 
-nameValue {name = name, value = value} =
+nameValue {name, value} =
   MarkPointData $ markPointDataDefault {
     name = Just name,
     value = Just value
@@ -63,7 +63,3 @@ map11 id = do
   case mbEl of
     Nothing -> print "incorrect id in map11"
     Just el -> init Nothing el >>= setOption option true >>= \_ -> return unit
-
-
-
-

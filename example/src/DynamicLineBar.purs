@@ -34,7 +34,7 @@ import ECharts.Formatter
 import ECharts.Style.Item
 import ECharts.AddData
 import ECharts.Title
-import qualified ECharts.DataZoom as Zoom
+import ECharts.DataZoom as Zoom
 import ECharts.Style.Text
 import ECharts.Coords
 
@@ -209,4 +209,3 @@ dynamicLineBar id = do
       runSignal $ dataStream ~> \effContent -> do
         content <- effContent
         sequence_ $ (flip addData) chart <$> content
-

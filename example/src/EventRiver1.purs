@@ -3,7 +3,7 @@ module EventRiver1 where
 import Prelude
 import Control.Monad.Eff.Console
 import Data.Maybe
-import qualified Data.Date as D
+import Data.Date as D
 import Utils
 
 import ECharts.Chart

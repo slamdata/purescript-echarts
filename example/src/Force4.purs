@@ -99,7 +99,7 @@ mkChild node idx = do
 
 mkChildren :: forall e. EFNode -> Eff (random::RANDOM|e) (Array (Tuple EFNode EFLink))
 mkChildren node = do
-  ints <- (0 ..) <$> randomInt constMinChildren constMaxChildren
+  ints <- (0 .. _) <$> randomInt constMinChildren constMaxChildren
   for ints \i ->
     mkChild node $ node.id <> ":" <> show i
 
@@ -198,4 +198,3 @@ force4 id = do
       opts <- options
       chart <- init Nothing el >>= setOption opts true
       return unit
-

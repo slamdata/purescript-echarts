@@ -26,8 +26,8 @@ import ECharts.Style.Item
 import ECharts.AddData
 import ECharts.Title
 import ECharts.Style.Text
-import qualified ECharts.DataZoom as Zoom
-import qualified ECharts.Loading as L
+import ECharts.DataZoom as Zoom
+import ECharts.Loading as L
 
 import Signal (runSignal, (~>), Signal(), foldp)
 import Signal.Time

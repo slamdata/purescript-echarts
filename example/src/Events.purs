@@ -25,7 +25,7 @@ import ECharts.Item.Value
 import ECharts.Common
 import ECharts.Formatter
 import ECharts.Style.Item
-import qualified  ECharts.DataZoom as Zoom
+import ECharts.DataZoom as Zoom
 
 simpleData = Value <<< Simple
 
@@ -122,5 +122,3 @@ events id = do
 
       subscribe chart
       return unit
-
-
