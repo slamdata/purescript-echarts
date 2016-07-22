@@ -7,23 +7,17 @@ module ECharts.Loading
   , hideLoading
   ) where
 
-import Prelude
+import ECharts.Prelude
 
-import ECharts.Coords
-import ECharts.Chart
-import ECharts.Style.Text
-import ECharts.Effects
-import ECharts.Utils
+import Data.Function.Uncurried (Fn2, runFn2)
+import Data.StrMap as SM
 
-import Data.Function
-import Data.Maybe
-import Data.StrMap as M
-import Control.Monad.Eff
-import Data.List (toList)
+import ECharts.Coords (XPos, YPos)
+import ECharts.Chart (EChart)
+import ECharts.Style.Text (TextStyle)
+import ECharts.Effects (ECHARTS)
+import ECharts.Utils (unnull)
 
-import Data.Argonaut.Core
-import Data.Argonaut.Combinators
-import Data.Argonaut.Encode
 
 data LoadingEffect
   = Spin
@@ -34,7 +28,7 @@ data LoadingEffect
   | Bubble
 
 instance loadingEffectEncodeJson ∷ EncodeJson LoadingEffect where
-  encodeJson a = fromString $ case a of
+  encodeJson a = encodeJson $ case a of
     Spin → "spin"
     Bar → "bar"
     Ring → "ring"
@@ -57,9 +51,8 @@ newtype LoadingOption
 
 instance showLoadingOptions ∷ EncodeJson LoadingOption where
   encodeJson (LoadingOption options) =
-    fromObject
-      $ M.fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "text" := options.text
         , "x" := options.x
         , "y" := options.y
@@ -71,7 +64,7 @@ instance showLoadingOptions ∷ EncodeJson LoadingOption where
 
 
 foreign import showLoadingImpl
-  ∷ ∀ e. Fn2 Json EChart (Eff (showLoadingECharts∷LOADING_SHOW|e) EChart)
+  ∷ ∀ e. Fn2 Json EChart (Eff (echarts ∷ ECHARTS|e) EChart)
 
 showLoading
   ∷ ∀ e

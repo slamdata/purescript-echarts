@@ -4,11 +4,9 @@ module ECharts.AddData
   , addData
   ) where
 
-import Prelude
-import Control.Monad.Eff (Eff)
-import Data.Function (Fn2, runFn2)
-import Data.Maybe (Maybe)
-import Data.Argonaut (class Encode, encodeJson)
+import ECharts.Prelude
+
+import Data.Function.Uncurried (Fn2, runFn2)
 
 import ECharts.Chart (EChart)
 import ECharts.Item.Data(ItemData)
@@ -28,7 +26,7 @@ newtype AdditionalData =
 
 instance additionalDataEncodeJson ∷ EncodeJson AdditionalData where
   encodeJson (AdditionalData ad) =
-    fromArray
+    encodeJson
       [ encodeJson ad.idx
       , encodeJson ad.datum
       , encodeJson ad.isHead

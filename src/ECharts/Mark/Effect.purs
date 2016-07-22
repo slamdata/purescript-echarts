@@ -1,14 +1,10 @@
 module ECharts.Mark.Effect where
 
-import Prelude
-import Data.Maybe
-import Data.Argonaut.Core
-import Data.Argonaut.Combinators
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.StrMap (fromList)
-import ECharts.Color
-import Data.List (toList)
+import ECharts.Prelude
+
+import Data.StrMap as SM
+
+import ECharts.Color (Color)
 
 type MarkPointEffectRec =
   { show ∷ Maybe Boolean
@@ -24,9 +20,8 @@ newtype MarkPointEffect
 
 instance mpEffectEncodeJson ∷ EncodeJson MarkPointEffect where
   encodeJson (MarkPointEffect cfg) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "show" := cfg.show
         , "loop" := cfg.loop
         , "period" := cfg.period

@@ -1,23 +1,16 @@
 module ECharts.Axis where
 
-import Prelude
+import ECharts.Prelude
 
-import Data.Argonaut (class EncodeJson, class DecodeJson, encodeJson, decodeJson, (.?), (:=))
-
-import Data.Tuple (Tuple)
-import Data.StrMap hiding (toList)
-import Data.Maybe
-import Data.Either
+import Data.StrMap as SM
 import Data.Array ((!!))
-import Control.Alt ((<|>))
-import Data.List (toList)
 
-import ECharts.Common
-import ECharts.Color
-import ECharts.Style.Line
-import ECharts.Style.Text
-import ECharts.Style.Area
-import ECharts.Formatter
+import ECharts.Common (PercentOrPixel, Interval)
+import ECharts.Color (Color)
+import ECharts.Style.Line (LineStyle)
+import ECharts.Style.Text (TextStyle)
+import ECharts.Style.Area (AreaStyle)
+import ECharts.Formatter (Formatter)
 
 
 type AxisLineStyleRec =
@@ -30,9 +23,8 @@ newtype AxisLineStyle =
 
 instance axisLineStyleEncodeJson ∷ EncodeJson AxisLineStyle where
   encodeJson (AxisLineStyle a) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "color" := a.color
         , "width" := a.width
         ]
@@ -61,9 +53,8 @@ newtype AxisLine =
 
 instance axisLineEncodeJson ∷ EncodeJson AxisLine where
   encodeJson (AxisLine a) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "show" := a.show
         , "lineStyle" := a.lineStyle
         , "onZero" := a.onZero
@@ -103,9 +94,8 @@ newtype AxisTick =
 
 instance axisTickEncodeJson ∷ EncodeJson AxisTick where
   encodeJson (AxisTick a) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "show" := a.show
         , "splitNumber" := a.splitNumber
         , "length" := a.length
@@ -161,9 +151,8 @@ newtype AxisLabel =
 
 instance axisLabelEncodeJson ∷ EncodeJson AxisLabel  where
   encodeJson (AxisLabel a) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "show" := a.show
         , "formatter" := a.formatter
         , "textStyle" := a.textStyle
@@ -232,9 +221,8 @@ newtype AxisSplitLine =
 
 instance axisSplitLineEncodeJson ∷ EncodeJson AxisSplitLine where
   encodeJson (AxisSplitLine obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
           [ "show" := obj.show
           , "onGap" := obj.onGap
           , "lineStyle" := obj.lineStyle
@@ -270,9 +258,8 @@ newtype AxisSplitArea =
 
 instance axisSplitAreaEncodeJson ∷ EncodeJson AxisSplitArea where
   encodeJson (AxisSplitArea obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "show" := obj.show
         , "onGap" := obj.onGap
         , "areaStyle" := obj.areaStyle
@@ -370,14 +357,13 @@ data AxisData
 
 instance axisDataEncodeJson ∷ EncodeJson AxisData where
   encodeJson (CommonAxisData name) =
-    fromString name
+    encodeJson name
   encodeJson (CustomAxisData obj) =
-    fromObject
-      $ fromList
-      $ toList
-      $ [ "value" := obj.value
-        , "textStyle" := obj.textStyle
-        ]
+    encodeJson
+      $ SM.fromFoldable
+          [ "value" := obj.value
+          , "textStyle" := obj.textStyle
+          ]
 
 instance axisDataDecodeJson ∷ DecodeJson AxisData where
   decodeJson j =
@@ -401,10 +387,10 @@ instance axisBoundaryGapDecodeJson ∷ DecodeJson AxisBoundaryGap where
   decodeJson j =
     (CatBoundaryGap <$> decodeJson j)
     <|> (do arr ← decodeJson j
-         maybe (Left "incorrect axis boundary gap") Right do
-            a ← arr !! 0
-            b ← arr !! 1
-            pure $ ValueBoundaryGap a b)
+            maybe (Left "incorrect axis boundary gap") Right do
+              a ← arr !! 0
+              b ← arr !! 1
+              pure $ ValueBoundaryGap a b)
 
 type AxisRec =
   { "type" ∷ Maybe AxisType
@@ -451,9 +437,8 @@ axisDefault =
 
 instance axisEncJson ∷ EncodeJson Axis where
   encodeJson (Axis obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "type" := obj."type"
         , "show" := obj.show
         , "position" := obj.position
@@ -524,9 +509,8 @@ newtype PolarName =
 
 instance polarNameEncode ∷ EncodeJson PolarName where
   encodeJson (PolarName obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "show" := obj.show
         , "formatter" := obj.formatter
         , "textStyle" := obj.textStyle
@@ -580,9 +564,8 @@ newtype Indicator =
 
 instance indicatorEncodeJson ∷ EncodeJson Indicator where
   encodeJson (Indicator obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "text" := obj.text
         , "min" := obj.min
         , "max" := obj.max
@@ -631,9 +614,8 @@ newtype Polar = Polar PolarRec
 
 instance polarEncodeJson ∷ EncodeJson Polar where
   encodeJson (Polar obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "center" := obj.center
         , "radius" := obj.radius
         , "startAngle" := obj.startAngle

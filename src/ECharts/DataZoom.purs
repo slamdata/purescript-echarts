@@ -1,15 +1,11 @@
 module ECharts.DataZoom where
 
-import Prelude
-import Data.Argonaut.Core
-import Data.Argonaut.Combinators
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Maybe
-import Data.StrMap (fromList)
-import ECharts.Color
-import ECharts.Coords
-import Data.List (toList)
+import ECharts.Prelude
+
+import Data.StrMap as SM
+
+import ECharts.Color (Color)
+import ECharts.Coords (XPos, YPos, Orient)
 
 type DataZoomRec =
   { show ∷ Maybe Boolean
@@ -36,9 +32,8 @@ newtype DataZoom
 
 instance dataZoomEncodeJson ∷ EncodeJson DataZoom where
   encodeJson (DataZoom obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "show" := obj.show
         , "orient" := obj.orient
         , "x" := obj.x

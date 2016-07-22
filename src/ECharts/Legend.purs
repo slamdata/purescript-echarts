@@ -1,19 +1,14 @@
 module ECharts.Legend where
 
-import Prelude
-import Data.Maybe
-import Data.StrMap hiding (toList)
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
-import Data.List (toList)
+import ECharts.Prelude
 
-import ECharts.Color
-import ECharts.Common
-import ECharts.Coords
-import ECharts.Style.Text
-import ECharts.Formatter
+import Data.StrMap as SM
+
+import ECharts.Color (Color)
+import ECharts.Common (SelectedMode, Corner)
+import ECharts.Coords (XPos, YPos, Orient)
+import ECharts.Style.Text (TextStyle)
+import ECharts.Formatter (Formatter)
 
 type LegendItemRec =
   { icon ∷ Maybe String
@@ -25,9 +20,8 @@ data LegendItem
 
 instance legendItemEncodeJson ∷ EncodeJson LegendItem where
   encodeJson (LegendItem name obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "name" := name
         , "icon" := obj.icon
         , "textStyle" := obj.textStyle
@@ -59,7 +53,7 @@ type LegendRec =
   , textStyle ∷ Maybe TextStyle
   , formatter ∷ Maybe Formatter
   , selectedMode ∷ Maybe SelectedMode
-  , selected ∷ Maybe (StrMap Boolean)
+  , selected ∷ Maybe (SM.StrMap Boolean)
   , "data" ∷ Maybe (Array LegendItem)
   }
 
@@ -88,9 +82,8 @@ legendDefault =
 
 instance legendEncodeJson ∷ EncodeJson Legend where
   encodeJson (Legend obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "show" := obj.show
         , "orient" := obj.orient
         , "x" := obj.x

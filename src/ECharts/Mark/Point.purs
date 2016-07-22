@@ -6,25 +6,16 @@ module ECharts.Mark.Point
   , delMarkPoint
   ) where
 
-import Prelude
+import ECharts.Prelude
 
-import ECharts.Chart
-import ECharts.Symbol
-import ECharts.Mark.Effect
-import ECharts.Mark.Data
-import ECharts.Effects
+import Data.Function.Uncurried (Fn2, Fn3, runFn2, runFn3)
+import Data.StrMap as SM
 
-import Data.Maybe
-import Control.Monad.Eff
-import Data.Function
-
-import Data.StrMap (fromList, StrMap ())
-import Data.List (toList)
-import Data.Tuple
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
+import ECharts.Chart (EChart)
+import ECharts.Symbol (Symbol, SymbolSize)
+import ECharts.Mark.Effect (MarkPointEffect)
+import ECharts.Mark.Data (MarkPointData)
+import ECharts.Effects (ECHARTS)
 
 type MarkPointRec =
   { symbol ∷ Maybe Symbol
@@ -32,7 +23,7 @@ type MarkPointRec =
   , large ∷ Maybe Boolean
   , effect ∷ Maybe MarkPointEffect
   , "data" ∷ Maybe (Array MarkPointData)
-  , geoCoord∷ Maybe (StrMap (Tuple Number Number))
+  , geoCoord∷ Maybe (SM.StrMap (Tuple Number Number))
   }
 
 newtype MarkPoint
@@ -40,9 +31,8 @@ newtype MarkPoint
 
 instance markPointEncodeJson ∷ EncodeJson MarkPoint where
   encodeJson (MarkPoint mp) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "symbol" := mp.symbol
         , "symbolSize" := mp.symbolSize
         , "large" := mp.large

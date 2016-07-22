@@ -1,18 +1,12 @@
 module ECharts.RoamController where
 
-import Prelude
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
+import ECharts.Prelude
 
-import Data.Maybe
-import Data.StrMap (fromList, StrMap())
-import Data.List (toList)
+import Data.StrMap as SM
 
-import ECharts.Coords
-import ECharts.Color
-import ECharts.Common
+import ECharts.Coords (XPos, YPos)
+import ECharts.Color (Color)
+import ECharts.Common (Corner)
 
 type RoamControllerRec =
   { show ∷ Maybe Boolean
@@ -27,7 +21,7 @@ type RoamControllerRec =
   , fillerColor ∷ Maybe Color
   , handleColor ∷ Maybe Color
   , step ∷ Maybe Number
-  , mapTypeControl ∷ Maybe (StrMap Boolean)
+  , mapTypeControl ∷ Maybe (SM.StrMap Boolean)
   }
 
 newtype RoamController
@@ -35,9 +29,8 @@ newtype RoamController
 
 instance roamControllerEncodeJson ∷ EncodeJson RoamController where
   encodeJson (RoamController obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "show" := obj.show
         , "x" := obj.x
         , "y" := obj.y

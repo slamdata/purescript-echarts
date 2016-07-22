@@ -11,24 +11,18 @@ module ECharts.Tooltip
   , tooltipDefault
   ) where
 
-import Prelude
+import ECharts.Prelude
 
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
-import Data.Maybe
-import Data.Either
-import Data.StrMap hiding (toList)
-import Data.Function
-import Data.List (toList)
+import Data.StrMap as SM
 
-import ECharts.Common
-import ECharts.Color
-import ECharts.Style.Text
-import ECharts.Style.Line
-import ECharts.Style.Area
-import ECharts.Formatter
+import ECharts.Common (Corner)
+import ECharts.Color (Color)
+import ECharts.Style.Text (TextStyle)
+import ECharts.Style.Line (LineStyle)
+import ECharts.Style.Area (AreaStyle)
+import ECharts.Formatter (Formatter)
+
+import Unsafe.Coerce (unsafeCoerce)
 
 data TooltipTrigger
   = TriggerItem
@@ -46,8 +40,9 @@ instance tooltipTriggerDecodeJson ∷ DecodeJson TooltipTrigger where
       "axis" → pure TriggerAxis
       _ → Left $ "incorrect tooltip trigger"
 
-foreign import func2json ∷ ∀ a. a → Json
 
+func2json ∷ ∀ a b. (a → b) → Json
+func2json = unsafeCoerce
 
 data TooltipPosition
   = Fixed (Array Number)
@@ -55,7 +50,7 @@ data TooltipPosition
 
 instance tooltipPositionEncodeJson ∷ EncodeJson TooltipPosition where
   encodeJson (Fixed nums) = encodeJson nums
-  encodeJson (FuncPos func) = func2json $ mkFn1 func
+  encodeJson (FuncPos func) = func2json func
 
 instance tooltipPositionDecodeJson ∷ DecodeJson TooltipPosition where
   decodeJson nums = Fixed <$> decodeJson nums
@@ -96,9 +91,8 @@ newtype TooltipAxisPointer
 
 instance tooltipAxisPointerEncodeJson ∷ EncodeJson TooltipAxisPointer where
   encodeJson (TooltipAxisPointer obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "type" := obj."type"
         , "lineStyle" := obj.lineStyle
         , "crossStyle" := obj.crossStyle
@@ -151,9 +145,8 @@ newtype Tooltip
 
 instance tooltipEncodeJson ∷ EncodeJson Tooltip where
   encodeJson (Tooltip obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "show" := obj.show
         , "showContent" := obj.showContent
         , "trigger" := obj.trigger

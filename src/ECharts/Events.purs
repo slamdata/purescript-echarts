@@ -4,14 +4,13 @@ module ECharts.Events
   , Sub
   , listen
   ) where
-import Prelude
 
-import Data.Function
-import Control.Monad.Eff
-import Data.Argonaut.Core
+import ECharts.Prelude
 
-import ECharts.Chart
-import ECharts.Effects
+import Data.Function.Uncurried (Fn3, runFn3)
+
+import ECharts.Chart (EChart)
+import ECharts.Effects (ECHARTS)
 
 data EventType
   = RefreshEvent

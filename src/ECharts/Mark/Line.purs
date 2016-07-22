@@ -6,27 +6,19 @@ module ECharts.Mark.Line
   , delMarkLine
   ) where
 
-import Prelude
+import ECharts.Prelude
 
-import ECharts.Chart
-import ECharts.Common
-import ECharts.Mark.Effect
-import ECharts.Mark.Data
-import ECharts.Style.Item
-import ECharts.Symbol
-import ECharts.Effects
+import Data.Function.Uncurried (Fn2, Fn3, runFn2, runFn3)
+import Data.StrMap as SM
 
-import Data.Maybe
-import Control.Monad.Eff
-import Data.Function
+import ECharts.Chart (EChart)
+import ECharts.Common (GeoCoord)
+import ECharts.Mark.Effect (MarkPointEffect)
+import ECharts.Mark.Data (MarkPointData)
+import ECharts.Style.Item (ItemStyle)
+import ECharts.Symbol (DoubleSymbolSize, Symbol)
+import ECharts.Effects (ECHARTS)
 
-import Data.StrMap (fromList)
-import Data.Tuple
-import Data.List (toList)
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
 
 type MarkLineRec =
   { symbol ∷ Maybe (Tuple Symbol Symbol)
@@ -43,9 +35,8 @@ newtype MarkLine
 
 instance mlEncodeJson ∷ EncodeJson MarkLine where
   encodeJson (MarkLine ml) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "symbol" := ml.symbol
         , "symbolSize" := ml.symbolSize
         , "symbolRotate" := ml.symbolRotate

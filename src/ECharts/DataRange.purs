@@ -1,20 +1,14 @@
 module ECharts.DataRange where
 
-import Prelude
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
-import Data.Maybe
-import Data.StrMap (fromList)
-import Data.Tuple
-import Data.List (toList)
+import ECharts.Prelude
 
-import ECharts.Color
-import ECharts.Coords
-import ECharts.Common
-import ECharts.Formatter
-import ECharts.Style.Text
+import Data.StrMap as SM
+
+import ECharts.Color (Color)
+import ECharts.Coords (XPos, YPos, Orient)
+import ECharts.Common (SelectedMode, Corner)
+import ECharts.Formatter (Formatter)
+import ECharts.Style.Text (TextStyle)
 
 type DataRangeRec =
   { show ∷ Maybe Boolean
@@ -47,9 +41,8 @@ newtype DataRange =
 
 instance dataRangeEncodeJson ∷ EncodeJson DataRange where
   encodeJson (DataRange obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "show" := obj.show
         , "orient" := obj.orient
         , "x" := obj.x

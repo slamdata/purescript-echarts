@@ -1,20 +1,14 @@
 module ECharts.Series.Gauge where
 
-import Prelude
-import Data.Maybe
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
-import Data.Tuple (Tuple())
-import Data.StrMap hiding (toList)
-import Data.List (toList)
+import ECharts.Prelude
 
-import ECharts.Common
-import ECharts.Color
-import ECharts.Style.Line
-import ECharts.Style.Text
-import ECharts.Formatter
+import Data.StrMap as SM
+
+import ECharts.Common (PercentOrPixel)
+import ECharts.Color (Color)
+import ECharts.Style.Line (LineStyle)
+import ECharts.Style.Text (TextStyle)
+import ECharts.Formatter (Formatter)
 
 type PointerRec =
   { length ∷ Maybe Number
@@ -33,9 +27,8 @@ pointerDefault =
 
 instance pointerEncodeJson ∷ EncodeJson Pointer where
   encodeJson (Pointer p) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
           [ "length" := p.length
           , "width" := p.width
           , "color" := p.color
@@ -70,9 +63,8 @@ splitLineDefault =
 
 instance splitLineEncodeJson ∷ EncodeJson SplitLine where
   encodeJson (SplitLine sl) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
           [ "show" := sl.show
           , "length" := sl.length
           , "lineStyle" := sl.lineStyle
@@ -121,9 +113,8 @@ gaugeDetailDefault =
 
 instance gaugeDetailEncodeJson ∷ EncodeJson GaugeDetail where
   encodeJson (GaugeDetail gd) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
           [ "show" := gd.show
           , "backgroundColor" := gd.backgroundColor
           , "borderWidth" := gd.borderWidth

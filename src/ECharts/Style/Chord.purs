@@ -1,15 +1,10 @@
 module ECharts.Style.Chord where
 
-import Prelude
-import Data.Maybe
-import Data.StrMap (fromList)
-import Data.List (toList)
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
+import ECharts.Prelude
 
-import ECharts.Color
+import Data.StrMap as SM
+
+import ECharts.Color (Color)
 
 type ChordStyleRec =
   { width ∷ Maybe Number
@@ -23,9 +18,8 @@ newtype ChordStyle
 
 instance chordStyleJson ∷ EncodeJson ChordStyle where
   encodeJson (ChordStyle cs) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "width" := cs.width
         , "color" := cs.color
         , "borderWidth" := cs.borderWidth
@@ -42,7 +36,7 @@ instance chordStyleDecodeJson ∷ DecodeJson ChordStyle where
         <$> (o .? "width")
         <*> (o .? "color")
         <*> (o .? "borderWidth")
-        <*> x(o .? "borderColor")
+        <*> (o .? "borderColor")
     pure $ ChordStyle r
 
 chordStyleDefault ∷ ChordStyleRec

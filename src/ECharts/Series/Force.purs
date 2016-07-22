@@ -1,19 +1,11 @@
 module ECharts.Series.Force where
 
-import Prelude
-import Control.Alt ((<|>))
-import Data.Maybe
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
-import Data.Tuple (Tuple())
-import Data.StrMap hiding (toList)
-import Data.List (toList)
+import ECharts.Prelude
 
-import ECharts.Style.Item
-import ECharts.Symbol
-import ECharts.Series.Force
+import Data.StrMap as SM
+
+import ECharts.Style.Item (ItemStyle)
+import ECharts.Symbol (SymbolSize, Symbol)
 
 type ForceCategoryRec =
   { name ∷ Maybe String
@@ -35,9 +27,8 @@ forceCategoryDefault =
 
 instance forceCategoryEncodeJson ∷ EncodeJson ForceCategory where
    encodeJson (ForceCategory fc) =
-     fromObject
-       $ fromList
-       $ toList
+     encodeJson
+       $ SM.fromFoldable
            [ "name" := fc.name
            , "symbol" := fc.symbol
            , "symbolSize" := fc.symbolSize
@@ -92,9 +83,8 @@ nodeDefault value =
 
 instance nodeEncodeJson ∷ EncodeJson Node where
   encodeJson (Node n) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
           [ "name" := n.name
           , "label" := n.label
           , "value" := n.value
@@ -163,9 +153,8 @@ newtype Link
 
 instance linkEncodeJson ∷ EncodeJson Link where
   encodeJson (Link link) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
           [ "source" := link.source
           , "target" := link.target
           , "weight" := link.weight

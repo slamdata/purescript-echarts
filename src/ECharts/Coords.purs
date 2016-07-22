@@ -1,15 +1,8 @@
 module ECharts.Coords where
 
-import Prelude
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
+import ECharts.Prelude
 
-import Data.Maybe
-import Data.Either
-import Control.Alt ((<|>))
-import Data.StrMap (fromList)
-import Data.List (toList)
+import Data.StrMap as SM
 
 data XPos
   = XLeft
@@ -18,10 +11,10 @@ data XPos
   | X Number
 
 instance xPosEncodeJson ∷ EncodeJson XPos where
-  encodeJson XLeft = fromString "left"
-  encodeJson XRight = fromString "right"
-  encodeJson XCenter = fromString "center"
-  encodeJson (X num) = fromNumber num
+  encodeJson XLeft = encodeJson "left"
+  encodeJson XRight = encodeJson "right"
+  encodeJson XCenter = encodeJson "center"
+  encodeJson (X num) = encodeJson num
 
 instance xPosDecodeJson ∷ DecodeJson XPos where
   decodeJson j =
@@ -42,10 +35,10 @@ data YPos
 
 instance yPosEncodeJson ∷ EncodeJson YPos where
   encodeJson ypos = case ypos of
-    YTop → fromString "top"
-    YBottom → fromString "bottom"
-    YCenter → fromString "center"
-    Y num → fromNumber num
+    YTop → encodeJson "top"
+    YBottom → encodeJson "bottom"
+    YCenter → encodeJson "center"
+    Y num → encodeJson num
 
 instance yPosDecodeJson ∷ DecodeJson YPos where
   decodeJson j =
@@ -108,7 +101,7 @@ data HorizontalAlign
   | HAlignCenter
 
 instance textAlignEncodeJson ∷ EncodeJson HorizontalAlign where
-  encodeJson a = fromString $ case a of
+  encodeJson a = encodeJson $ case a of
     HAlignLeft → "left"
     HAlignRight → "right"
     HAlignCenter → "center"
@@ -134,9 +127,8 @@ newtype Location
 
 instance locationEncodeJson ∷ EncodeJson Location where
   encodeJson (Location xy) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "x" := xy.x
         , "y" := xy.y
         ]

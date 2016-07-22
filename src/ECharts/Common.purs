@@ -1,22 +1,13 @@
 module ECharts.Common where
 
-import Prelude
+import ECharts.Prelude
 
-import Control.Alt ((<|>))
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Maybe
-import Data.Either
 import Data.Array ((!!))
-import Data.List (toList)
-
 import Data.String as S
-import Data.Tuple
-import Data.StrMap as M
-import Global
+import Data.StrMap as SM
+import Global (readInt, isNaN)
 
-type GeoCoord = M.StrMap (Tuple Number Number)
+type GeoCoord = SM.StrMap (Tuple Number Number)
 
 data Corner a
   = AllCorners a
@@ -154,9 +145,8 @@ newtype MinMax
 
 instance minMaxEncodeJson ∷ EncodeJson MinMax where
   encodeJson (MinMax mm) =
-    fromObject
-      $ M.fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
       $ [ "min" := mm.min
         , "max" := mm.max
         ]

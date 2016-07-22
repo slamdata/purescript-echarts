@@ -11,17 +11,13 @@ module ECharts.Chart
   , dispose
   ) where
 
-import Prelude
+import ECharts.Prelude
 
-import Data.Maybe
-import Data.Function (Fn2, runFn2)
+import Data.Function.Uncurried (Fn2, runFn2)
 
 import DOM (DOM)
 import DOM.HTML.Types (HTMLElement())
-import Control.Monad.Eff
 
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
 
 import ECharts.Effects (ECHARTS)
 
@@ -33,12 +29,12 @@ data Theme
   | ThemeConfig Json
 
 instance themeEncodeJson ∷ EncodeJson Theme where
-  encodeJson theme = case theme of
-    ThemeName name → fromString name
+  encodeJson = case _ of
+    ThemeName name → encodeJson name
     ThemeConfig a → encodeJson a
 
 foreign import initImpl
-  ∷ ∀ e. Fn2 HTMLElement Json (Eff (dom ∷ DOM, echartInit ∷ ECHARTS_INIT|e) EChart)
+  ∷ ∀ e. Fn2 HTMLElement Json (Eff (dom ∷ DOM, echarts ∷ ECHARTS|e) EChart)
 
 init
  ∷ ∀ e

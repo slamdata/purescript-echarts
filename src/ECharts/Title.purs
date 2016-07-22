@@ -1,26 +1,20 @@
 module ECharts.Title where
 
-import Prelude
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
-import Data.Maybe
-import Data.Either
-import Data.StrMap hiding (toList)
-import Data.List (toList)
+import ECharts.Prelude
 
-import ECharts.Color
-import ECharts.Coords
-import ECharts.Common
-import ECharts.Style.Text
+import Data.StrMap as SM
+
+import ECharts.Color (Color)
+import ECharts.Coords (HorizontalAlign, XPos, YPos)
+import ECharts.Common (Corner)
+import ECharts.Style.Text (TextStyle)
 
 data LinkTarget
   = Self
   | Blank
 
 instance linkTargetEncodeJson ∷ EncodeJson LinkTarget where
-  encodeJson a = fromString $ case a of
+  encodeJson a = encodeJson $ case a of
     Self → "self"
     Blank → "blank"
 
@@ -57,9 +51,8 @@ newtype Title
 
 instance titleEncodeJson ∷ EncodeJson Title where
   encodeJson (Title obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
           [ "text" := obj.text
           , "link" := obj.link
           , "target" := obj.target

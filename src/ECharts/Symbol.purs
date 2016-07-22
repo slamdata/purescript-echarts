@@ -4,20 +4,15 @@ module ECharts.Symbol
   , DoubleSymbolSize(..)
   ) where
 
-import Prelude
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Either
+import ECharts.Prelude
 
-import Data.Function
-import Data.Tuple
+import Unsafe.Coerce (unsafeCoerce)
 
-import ECharts.Item.Value
+import ECharts.Item.Value (ItemValue)
 
 
-foreign import func2json ∷ forall a. a → Json
-
+func2json ∷ ∀ a b. (a → b) → Json
+func2json = unsafeCoerce
 
 data Symbol
   = Circle
@@ -31,7 +26,7 @@ data Symbol
   | NoSymbol
 
 instance encodeJsonSymbol ∷ EncodeJson Symbol where
-  encodeJson a = fromString $ case a of
+  encodeJson a = encodeJson $ case a of
     Circle → "circle"
     Rectangle → "rectangle"
     Triangle → "triangle"
@@ -64,10 +59,10 @@ data SymbolSize
   | ArrayMappingFunc (Array Number → Number)
 
 instance symbolSizeEncodeJson ∷ EncodeJson SymbolSize where
-  encodeJson ss = case ss of
+  encodeJson = case _ of
     Size num → encodeJson num
-    Func func → func2json $ mkFn1 func
-    ArrayMappingFunc func → func2json $ func
+    Func func → func2json func
+    ArrayMappingFunc func → func2json func
 
 instance symbolSizeDecodeJson ∷ DecodeJson SymbolSize where
   decodeJson j = Size <$> decodeJson j
@@ -78,9 +73,9 @@ data DoubleSymbolSize
   | DblFunc (ItemValue → Tuple Number Number)
 
 instance dblSymbolSizeEncodeJson ∷ EncodeJson DoubleSymbolSize where
-  encodeJson ss = case ss of
+  encodeJson = case _ of
     DblSize num → encodeJson num
-    DblFunc func → func2json $ mkFn1 func
+    DblFunc func → func2json func
 
 instance dblSymbolSizeDecodeJson ∷ DecodeJson DoubleSymbolSize where
   decodeJson j = DblSize <$> decodeJson j

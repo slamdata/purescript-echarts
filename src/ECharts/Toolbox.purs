@@ -1,20 +1,15 @@
 module ECharts.Toolbox where
 
-import Prelude
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
-import Data.Maybe
-import Data.List (toList)
-import Data.Either
-import Data.StrMap hiding (toList)
-import ECharts.Color
-import ECharts.Coords
-import ECharts.Common
-import ECharts.Style.Text
-import ECharts.Style.Line
-import ECharts.Image
+import ECharts.Prelude
+
+import Data.StrMap as SM
+
+import ECharts.Color (Color)
+import ECharts.Coords (XPos, YPos, Orient)
+import ECharts.Common (Corner)
+import ECharts.Style.Text (TextStyle)
+import ECharts.Style.Line (LineStyle)
+import ECharts.Image (ImgType)
 
 type ToolboxRec =
   { show ∷ Maybe Boolean
@@ -61,9 +56,8 @@ toolboxDefault =
 
 instance toolboxEncodeJson ∷ EncodeJson Toolbox where
   encodeJson (Toolbox obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "show" := obj.show
         , "orient" := obj.orient
         , "x" := obj.x
@@ -133,9 +127,8 @@ newtype Feature
 
 instance featureEncodeJson ∷ EncodeJson Feature where
   encodeJson (Feature obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "mark" := obj.mark
         , "dataZoom" := obj.dataZoom
         , "dataView" := obj.dataView
@@ -185,9 +178,8 @@ newtype SaveAsImageFeature
 
 instance saveAsImageEncodeJson ∷ EncodeJson SaveAsImageFeature where
   encodeJson (SaveAsImageFeature obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "show" := obj.show
         , "title" := obj.title
         , "type" := obj."type"
@@ -226,9 +218,8 @@ newtype RestoreFeature
 
 instance restoreFeatureEncodeJson ∷ EncodeJson RestoreFeature where
   encodeJson (RestoreFeature obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "show" := obj.show
         , "title" := obj.title
         ]
@@ -254,9 +245,8 @@ newtype DataZoomFeatureTitle
 
 instance datazoomTitleEncodeJson ∷ EncodeJson DataZoomFeatureTitle where
   encodeJson (DataZoomFeatureTitle obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "dataZoom" := obj.dataZoom
         , "dataZoomReset" := obj.dataZoomReset
         ]
@@ -283,9 +273,8 @@ dataZoomFeatureDefault =
 
 instance dataZoomFeatureEncodeJson ∷ EncodeJson DataZoomFeature where
   encodeJson (DataZoomFeature obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "show" := obj.show
         , "title" := obj.title
         ]
@@ -315,9 +304,8 @@ dataViewFeatureDefault =
 
 instance dataViewFeatureEncodeJson ∷ EncodeJson DataViewFeature where
   encodeJson (DataViewFeature obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "show" := obj.show
         , "title" := obj.title
         , "readOnly" := obj.readOnly
@@ -349,9 +337,8 @@ newtype MarkFeatureTitle
 
 instance mftitleEncodeJson ∷ EncodeJson MarkFeatureTitle where
   encodeJson (MarkFeatureTitle obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "mark" := obj.mark
         , "markUndo" := obj.markUndo
         , "markClear" := obj.markUndo
@@ -379,9 +366,8 @@ newtype MarkFeature
 
 instance markFeatureEncodeJson ∷ EncodeJson MarkFeature where
   encodeJson (MarkFeature obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "show" := obj.show
         , "title" := obj.title
         , "lineStyle" := obj.lineStyle
@@ -443,7 +429,7 @@ instance magicTypeDecodeJson ∷ DecodeJson MagicType where
 
 type MagicTypeFeatureRec =
   { show ∷ Maybe Boolean
-  , title ∷ Maybe (StrMap String)
+  , title ∷ Maybe (SM.StrMap String)
   , option ∷ Maybe Json
   , "type" ∷ Maybe (Array MagicType)
   }
@@ -461,9 +447,8 @@ magicTypeFeatureDefault =
 
 instance magicTypeFeatureEncodeJson ∷ EncodeJson MagicTypeFeature where
   encodeJson (MagicTypeFeature obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "show" := obj.show
         , "title" := obj.title
         , "option" := obj.option

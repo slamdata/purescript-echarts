@@ -9,18 +9,11 @@ module ECharts.Series.EventRiver
   , oneEventDefault
   ) where
 
-import Prelude
+import ECharts.Prelude
 
-import Data.Maybe
-import Data.Either
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
-import Data.StrMap hiding (toList)
-import Data.List (toList)
-import Data.Date (Date(), JSDate(), toJSDate, fromStringStrict)
-
+import Data.StrMap as SM
+import Data.DateTime as DT
+import Data.JSDate as JSD
 
 type EvolutionDetailRec =
   { link ∷ Maybe String
@@ -34,9 +27,8 @@ newtype EvolutionDetail
 
 instance evoDetailEncodeJson ∷ EncodeJson EvolutionDetail where
   encodeJson (EvolutionDetail e) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
           [ "link" := e.link
           , "text" := e.text
           , "img" := e.img
@@ -62,7 +54,7 @@ evolutionDetailDefault =
   }
 
 type EvolutionRec =
-  { time ∷ Date
+  { time ∷ DT.DateTime
   , value ∷ Number
   , detail ∷ Maybe EvolutionDetail
   }
@@ -70,16 +62,17 @@ type EvolutionRec =
 newtype Evolution
   = Evolution EvolutionRec
 
-foreign import jsDateToJson ∷ JSDate → Json
+foreign import jsDateToJson ∷ JSD.JSDate → Json
 
-dateToJson ∷ Date → Json
-dateToJson = jsDateToJson <<< toJSDate
+foreign import jsonToJSDate ∷ Json → JSD.JSDate
+
+dateToJson ∷ DT.DateTime → Json
+dateToJson = jsDateToJson <<< JSD.fromDateTime
 
 instance evoEncodeJson ∷ EncodeJson Evolution where
   encodeJson (Evolution e) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
           [ "time" := dateToJson e.time
           , "value" := e.value
           , "detail" := e.detail
@@ -89,7 +82,10 @@ instance evoDecodeJson ∷ DecodeJson Evolution where
   decodeJson j = do
     o ← decodeJson j
     t ← o .? "time"
-    time ← maybe (Left "incorrect time") Right $ fromStringStrict t
+    time ←
+      jsonToJSDate t
+      # JSD.toDateTime
+      # maybe (Left "incorrect datetime") pure
     r ← { time: time
         , value: _
         , detail: _ }
@@ -115,9 +111,8 @@ oneEventDefault =
 
 instance oneEventEncodeJson ∷ EncodeJson OneEvent where
   encodeJson (OneEvent oe) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
           [ "name" := oe.name
           , "weight" := oe.weight
           , "evolution" := oe.evolution

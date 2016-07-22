@@ -1,24 +1,19 @@
 module ECharts.Style.Item where
 
-import Prelude
-import Data.Maybe
-import Data.List (toList)
-import Data.StrMap (fromList)
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
+import ECharts.Prelude
 
-import ECharts.Common
-import ECharts.Color
-import ECharts.Coords
-import ECharts.Formatter
-import ECharts.Style.Line
-import ECharts.Style.Area
-import ECharts.Style.Chord
-import ECharts.Style.Node
-import ECharts.Style.Link
-import ECharts.Style.Text
+import Data.StrMap as SM
+
+import ECharts.Common (Corner)
+import ECharts.Color (Color, CalculableColor)
+import ECharts.Coords (LabelPosition)
+import ECharts.Formatter (Formatter)
+import ECharts.Style.Line (LineStyle)
+import ECharts.Style.Area (AreaStyle)
+import ECharts.Style.Chord (ChordStyle)
+import ECharts.Style.Node (NodeStyle)
+import ECharts.Style.Link (LinkStyle)
+import ECharts.Style.Text (TextStyle)
 
 type ItemLabelRec =
   { show ∷ Maybe Boolean
@@ -34,9 +29,8 @@ newtype ItemLabel
 
 instance itemLabelEncodeJson ∷ EncodeJson ItemLabel where
   encodeJson (ItemLabel il) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "show" := il.show
         , "position" := il.position
         , "distance" := il.distance
@@ -85,9 +79,8 @@ newtype ItemLabelLine
 
 instance itemLabelLineEncodeJson ∷ EncodeJson ItemLabelLine where
   encodeJson (ItemLabelLine ill) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "show" := ill.show
         , "length" := ill.length
         , "lineStyle" := ill.lineStyle
@@ -150,9 +143,8 @@ istyleDefault =
 
 instance istyleEncodeJson ∷ EncodeJson IStyle where
   encodeJson (IStyle is) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "color" := is.color
         , "borderColor" := is.borderColor
         , "borderWidth" := is.borderWidth
@@ -210,7 +202,7 @@ newtype ItemStyle
 
 instance itemStyleEncodeJson ∷ EncodeJson ItemStyle where
   encodeJson (ItemStyle is) =
-    fromObject $ fromList $ toList ["normal" := is.normal, "emphasis" := is.emphasis]
+    encodeJson $ SM.fromFoldable ["normal" := is.normal, "emphasis" := is.emphasis]
 
 instance itemStyleDecodeJson ∷ DecodeJson ItemStyle where
   decodeJson j = do

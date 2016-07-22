@@ -3,12 +3,12 @@ module ECharts.Connect
   , Connection
   ) where
 
-import Prelude
+import ECharts.Prelude
 
-import Data.Function
-import ECharts.Chart
-import Control.Monad.Eff
-import ECharts.Effects
+import Data.Function.Uncurried (Fn2, runFn2)
+
+import ECharts.Chart (EChart)
+import ECharts.Effects (ECHARTS)
 
 newtype Connection =
   Connection (∀ eff. Eff (echarts ∷ ECHARTS |eff) Unit)

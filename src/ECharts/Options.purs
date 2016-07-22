@@ -5,32 +5,26 @@ module ECharts.Options
   , setOption
   ) where
 
-import Prelude
-import Control.Monad.Eff
-import Data.Maybe
-import Data.Function
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
-import Data.StrMap (fromList)
-import Data.List (toList)
+import ECharts.Prelude
 
-import ECharts.Chart
-import ECharts.Color
-import ECharts.Series
-import ECharts.Timeline
-import ECharts.Toolbox
-import ECharts.Tooltip
-import ECharts.Title
-import ECharts.Legend
-import ECharts.DataRange
-import ECharts.DataZoom
-import ECharts.RoamController
-import ECharts.Grid
-import ECharts.Axis
-import ECharts.Utils
-import ECharts.Effects
+import Data.Function.Uncurried (Fn3, runFn3)
+import Data.StrMap as SM
+
+import ECharts.Chart (EChart)
+import ECharts.Color (Color)
+import ECharts.Series (Series)
+import ECharts.Timeline (Timeline)
+import ECharts.Toolbox (Toolbox)
+import ECharts.Tooltip (Tooltip)
+import ECharts.Title (Title)
+import ECharts.Legend (Legend)
+import ECharts.DataRange (DataRange)
+import ECharts.DataZoom (DataZoom)
+import ECharts.RoamController (RoamController)
+import ECharts.Grid (Grid)
+import ECharts.Axis (Polar, Axises)
+import ECharts.Utils (unnull)
+import ECharts.Effects (ECHARTS)
 
 {- To set second series tooltip
      Option{series = Just [Nothing,
@@ -70,9 +64,8 @@ newtype Option = Option OptionRec
 
 instance optionsEncodeJson ∷ EncodeJson Option where
   encodeJson (Option opts) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
           [ "backgroundColor" := opts.backgroundColor
           , "color" := opts.color
           , "renderAsImage" := opts.renderAsImage

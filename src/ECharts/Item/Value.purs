@@ -1,12 +1,10 @@
 module ECharts.Item.Value where
 
-import Prelude
-import Data.Maybe
-import Data.Either (Either(..))
-import Control.Alt ((<|>))
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.List (fromFoldable, fromList, List(..))
+import ECharts.Prelude
+
+import Data.List (List(..))
+import Data.List as L
+import Data.Array as A
 
 type XYRRec =
   { x ∷ Number
@@ -40,11 +38,11 @@ instance itemValueEncodeJson ∷ EncodeJson ItemValue where
 instance itemValueDecodeJson ∷ DecodeJson ItemValue where
   decodeJson json =
     (do arr ← decodeJson json
-        case fromFoldable (arr ∷ Array Number) of
+        case L.fromFoldable (arr ∷ Array Number) of
           (Cons o (Cons c (Cons l (Cons h _)))) → pure $ HLOC {h, l, o, c}
           (Cons x (Cons y (Cons r Nil))) → pure $ XYR {x, y, r: Just r}
           (Cons x (Cons y Nil)) → pure $ XYR {x, y, r: Nothing}
-          nums → pure $ Many (fromList nums)
+          nums → pure $ Many $ A.fromFoldable nums
     )
     <|>
     (Simple <$> decodeJson json)

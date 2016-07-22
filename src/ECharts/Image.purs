@@ -4,18 +4,15 @@ module ECharts.Image
   , getImage
   ) where
 
-import Prelude
+import ECharts.Prelude
 
-import DOM
-import DOM.Node.Types
-import Control.Monad.Eff
-import Data.Function
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Either
+import DOM (DOM)
+import DOM.Node.Types (Node)
 
-import ECharts.Chart
-import ECharts.Effects
+import Data.Function.Uncurried (Fn2, runFn2)
+
+import ECharts.Chart (EChart)
+import ECharts.Effects (ECHARTS)
 
 data ImgType
   = PNG

@@ -1,16 +1,10 @@
 module ECharts.Style.Node where
 
-import Prelude
-import Data.Maybe
-import Data.StrMap (fromList)
-import Data.List (toList)
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
+import ECharts.Prelude
 
+import Data.StrMap as SM
 
-import ECharts.Color
+import ECharts.Color (Color)
 
 type NodeStyleRec =
   { color ∷ Maybe Color
@@ -23,9 +17,8 @@ newtype NodeStyle
 
 instance nodeStyleEncodeJson ∷ EncodeJson NodeStyle where
   encodeJson (NodeStyle ns) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "color" := ns.color
         , "borderColor" := ns.borderColor
         , "borderWidth" := ns.borderWidth

@@ -1,16 +1,10 @@
 module ECharts.Style.Line where
 
-import Prelude
-import Data.Maybe
-import Data.Either
-import Data.StrMap (fromList)
-import Data.List (toList)
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
+import ECharts.Prelude
 
-import ECharts.Color
+import Data.StrMap as SM
+
+import ECharts.Color (Color)
 
 data LineType
   = Solid
@@ -18,7 +12,7 @@ data LineType
   | Dashed
 
 instance linetypeEncodeJson ∷ EncodeJson LineType where
-  encodeJson a = fromString $ case a of
+  encodeJson a = encodeJson $ case a of
     Solid → "solid"
     Dotted → "dotted"
     Dashed → "dashed"
@@ -47,9 +41,8 @@ newtype LineStyle
 
 instance lineStyleEncodeJson ∷ EncodeJson LineStyle where
   encodeJson (LineStyle ls) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "color" := ls.color
         , "type" := ls."type"
         , "width" := ls.width

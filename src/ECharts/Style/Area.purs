@@ -1,15 +1,10 @@
 module ECharts.Style.Area where
 
-import Prelude
-import Data.StrMap (fromList)
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
-import Data.List (toList)
-import Data.Maybe
+import ECharts.Prelude
 
-import ECharts.Color
+import Data.StrMap as SM
+
+import ECharts.Color (CalculableColor)
 
 
 type AreaStyleRec =
@@ -28,9 +23,8 @@ areaStyleDefault =
 
 instance areaStyleEncodeJson ∷ EncodeJson AreaStyle where
   encodeJson (AreaStyle ars) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "color" := ars.color
         , "type" := ars."type"
         ]

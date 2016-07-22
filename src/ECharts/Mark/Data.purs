@@ -1,12 +1,8 @@
 module ECharts.Mark.Data where
 
-import Prelude
-import Data.Maybe
-import Data.StrMap (fromList)
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.List (fromFoldable)
+import ECharts.Prelude
+
+import Data.StrMap as SM
 
 type MarkPointDataRec =
   { name ∷ Maybe String
@@ -23,9 +19,8 @@ newtype MarkPointData
 
 instance mpDataEncodeJson ∷ EncodeJson MarkPointData where
   encodeJson (MarkPointData mp) =
-    fromObject
-      $ fromList
-      $ fromFoldable
+    encodeJson
+      $ SM.fromFoldable
         [ "name" := mp.name
         , "value" := mp.value
         , "x" := mp.x

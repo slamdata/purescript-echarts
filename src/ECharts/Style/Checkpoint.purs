@@ -1,16 +1,12 @@
 module ECharts.Style.Checkpoint where
 
-import Prelude
-import Data.Maybe
-import Data.StrMap hiding (toList)
-import Data.List (toList)
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
-import ECharts.Symbol
-import ECharts.Color
-import ECharts.Axis
+import ECharts.Prelude
+
+import Data.StrMap as SM
+
+import ECharts.Symbol (Symbol, SymbolSize)
+import ECharts.Color (Color)
+import ECharts.Axis (AxisLabel)
 
 type CheckpointStyleRec =
   { symbol ∷ Maybe Symbol
@@ -25,9 +21,8 @@ newtype CheckpointStyle
 
 instance checkpointStyleEncodeJson ∷ EncodeJson CheckpointStyle where
   encodeJson (CheckpointStyle obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "symbol" := obj.symbol
         , "symbolSize" := obj.symbolSize
         , "color" := obj.color

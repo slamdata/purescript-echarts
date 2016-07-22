@@ -1,18 +1,11 @@
 module ECharts.Style.Text where
 
-import Prelude
-import Data.Maybe
-import Data.Either
-import Data.Argonaut.Core
-import Data.Argonaut.Decode
-import Data.Argonaut.Encode
-import Data.Argonaut.Combinators
-import Data.List (toList)
-import Data.StrMap as M
+import ECharts.Prelude
 
+import Data.StrMap as SM
 
-import ECharts.Color
-import ECharts.Coords
+import ECharts.Color (Color)
+import ECharts.Coords (HorizontalAlign)
 
 type Decoration = String
 type FontFamily = String
@@ -23,7 +16,7 @@ data TextBaseline
   | TBLMiddle
 
 instance textBaselineEncodeJson ∷ EncodeJson TextBaseline where
-  encodeJson a = fromString $ case a of
+  encodeJson a = encodeJson $ case a of
     TBLTop → "top"
     TBLBottom → "bottom"
     TBLMiddle → "middle"
@@ -43,7 +36,7 @@ data FontStyle
   | FSOblique
 
 instance fontStyleEncodeJson ∷ EncodeJson FontStyle where
-  encodeJson a = fromString $ case a of
+  encodeJson a = encodeJson $ case a of
     FSNormal → "normal"
     FSItalic → "italic"
     FSOblique → "oblique"
@@ -73,7 +66,7 @@ data FontWeight
   | FW900
 
 instance fontWeightEncodeJson ∷ EncodeJson FontWeight where
-  encodeJson a = fromString $ case a of
+  encodeJson a = encodeJson $ case a of
     FWNormal → "normal"
     FWBold → "bold"
     FWBolder → "bolder"
@@ -124,9 +117,8 @@ newtype TextStyle
 
 instance textStyleEncodeJson ∷ EncodeJson TextStyle where
   encodeJson (TextStyle ts) =
-    fromObject
-      $ M.fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
           [ "color" := ts.color
           , "decoration" := ts.decoration
           , "align" := ts.align

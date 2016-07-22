@@ -8,18 +8,9 @@ module ECharts.Color
   , linearGradientInputDefault
   ) where
 
-import Prelude
+import ECharts.Prelude
 
-import Data.Function
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Maybe
-import Data.Either
-
-import Control.Monad.Eff
-
-import ECharts.Item.Value
+import ECharts.Item.Value (ItemValue)
 
 type Color = String
 
@@ -72,7 +63,7 @@ data CalculableColor
 instance calculableColorEncodeJson ∷ EncodeJson CalculableColor where
   encodeJson cc = case cc of
     SimpleColor color → encodeJson color
-    ColorFunc func → func2json $ mkFn1 func
+    ColorFunc func → func2json func
     GradientColor gc → func2json gc
 
 instance calculableColorDecodeJson ∷ DecodeJson CalculableColor where

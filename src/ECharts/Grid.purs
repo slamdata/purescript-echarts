@@ -1,17 +1,11 @@
 module ECharts.Grid where
 
-import Prelude
+import ECharts.Prelude
 
-import Data.Maybe
-import Data.StrMap (fromList)
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
-import Data.List (toList)
+import Data.StrMap as SM
 
-import ECharts.Common
-import ECharts.Color
+import ECharts.Common (PercentOrPixel)
+import ECharts.Color (Color)
 
 type GridRec =
   { x ∷ Maybe PercentOrPixel
@@ -30,9 +24,8 @@ newtype Grid = Grid GridRec
 
 instance gridEncodeJson ∷ EncodeJson Grid where
   encodeJson (Grid obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
         [ "x" := obj.x
         , "y" := obj.y
         , "x2" := obj.x2

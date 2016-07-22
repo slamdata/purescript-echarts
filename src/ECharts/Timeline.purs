@@ -1,21 +1,16 @@
 module ECharts.Timeline where
 
-import Prelude
-import Data.Maybe
-import Data.Either
-import Data.StrMap hiding (toList)
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
-import ECharts.Style.Item
-import ECharts.Style.Checkpoint
-import ECharts.Style.Line
-import ECharts.Symbol
-import ECharts.Color
-import ECharts.Axis
-import ECharts.Common
-import Data.List (toList)
+import ECharts.Prelude
+
+import Data.StrMap as SM
+
+import ECharts.Axis (AxisLabel)
+import ECharts.Color (Color)
+import ECharts.Common (Corner, PercentOrPixel)
+import ECharts.Style.Checkpoint (CheckpointStyle)
+import ECharts.Style.Item (ItemStyle)
+import ECharts.Style.Line (LineStyle)
+import ECharts.Symbol (Symbol, SymbolSize)
 
 data TimelineType
   = TimelineTime
@@ -89,9 +84,8 @@ newtype Timeline
 
 instance timelineEncodeJson ∷ EncodeJson Timeline where
   encodeJson (Timeline obj) =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
           [ "show" := obj.show
           , "type" := obj."type"
           , "notMerge" := obj.notMerge

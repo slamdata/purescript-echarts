@@ -3,14 +3,9 @@ module ECharts.Formatter
   , Formatter(..)
   ) where
 
-import Prelude
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
+import ECharts.Prelude
 
-import Data.Function
-
-import Control.Monad.Eff
+import Unsafe.Coerce (unsafeCoerce)
 
 type FormatParams = Json
 
@@ -20,13 +15,12 @@ data Formatter
   | StringFormatFunc (String → String)
   | NumberFormatFunc (Number → String)
 
-foreign import func2json ∷ ∀ a. a → Json
-
-foreign import effArrToFn ∷ ∀ eff a b. (a → Eff eff b) → (a → b)
+func2json ∷ ∀ a b. (a → b) → Json
+func2json = unsafeCoerce
 
 instance formatterEncodeJson ∷ EncodeJson Formatter where
   encodeJson (Template str) = encodeJson str
-  encodeJson (FormatFunc func) = func2json $ func
+  encodeJson (FormatFunc func) = func2json func
   encodeJson (StringFormatFunc func) = func2json func
   encodeJson (NumberFormatFunc func) = func2json func
 

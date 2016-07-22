@@ -29,36 +29,27 @@ module ECharts.Series
   , eventRiverSeriesDefault
   ) where
 
-import Prelude
+import ECharts.Prelude
 
-import Control.Monad.Eff
-import Data.Function
-import Data.Maybe
-import Data.Either
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
-import Data.Tuple (Tuple())
-import Data.StrMap hiding (toList)
+import Data.Function.Uncurried (Fn3, runFn3)
+import Data.StrMap as SM
 import Data.Array (concat)
-import Data.List (toList)
 
-import ECharts.Common
-import ECharts.Coords
-import ECharts.Chart
-import ECharts.Tooltip
-import ECharts.Style.Item
-import ECharts.Mark.Line
-import ECharts.Mark.Point
-import ECharts.Item.Data
-import ECharts.Symbol
-import ECharts.Series.Force
-import ECharts.Series.Gauge
-import ECharts.Series.EventRiver
-import ECharts.Axis
-import ECharts.Title
-import ECharts.Utils
+import ECharts.Common (Sort, PercentOrPixel, Radius, MinMax, Roam, MapValueCalculation, SelectedMode,Center, RoseType)
+import ECharts.Coords (HorizontalAlign, Location)
+import ECharts.Chart (EChart)
+import ECharts.Tooltip (Tooltip)
+import ECharts.Style.Item (ItemStyle)
+import ECharts.Mark.Line (MarkLine)
+import ECharts.Mark.Point (MarkPoint)
+import ECharts.Item.Data (ItemData)
+import ECharts.Symbol (Symbol, SymbolSize)
+import ECharts.Series.Force (Matrix, Link, Node, ForceCategory)
+import ECharts.Series.Gauge (Pointer, GaugeDetail, SplitLine)
+import ECharts.Series.EventRiver (OneEvent)
+import ECharts.Axis (AxisLabel, AxisLine, AxisTick)
+import ECharts.Title (Title)
+import ECharts.Utils (unnull)
 
 
 data ChartType
@@ -76,7 +67,7 @@ data ChartType
   | EventRiver
 
 instance chartTypeEncodeJson ∷ EncodeJson ChartType where
-  encodeJson a = fromString $ case a of
+  encodeJson a = encodeJson $ case a of
     Line → "line"
     Bar → "bar"
     Scatter → "scatter"
@@ -168,7 +159,7 @@ universalForSeries ∷ Series → Array JAssoc
 universalForSeries series =
   universalRecEncode $ case series of
     LineSeries {common: u} → u
-    BarSeries {commom: u} → u
+    BarSeries {common: u} → u
     CandlestickSeries {common: u} → u
     ScatterSeries {common: u} → u
     PieSeries {common: u} → u
@@ -731,9 +722,9 @@ type MapSeriesRec =
   , showLegendSymbol ∷ Maybe Boolean
   , roam ∷ Maybe Roam
   , scaleLimit ∷ Maybe MinMax
-  , nameMap ∷ Maybe (StrMap String)
-  , textFixed ∷  Maybe (StrMap (Tuple Number Number))
-  , geoCoord ∷ Maybe (StrMap (Tuple Number Number))
+  , nameMap ∷ Maybe (SM.StrMap String)
+  , textFixed ∷  Maybe (SM.StrMap (Tuple Number Number))
+  , geoCoord ∷ Maybe (SM.StrMap (Tuple Number Number))
   }
 mapSeriesDefault ∷ MapSeriesRec
 mapSeriesDefault =
@@ -1036,9 +1027,8 @@ specialForSeries series =
 
 instance encodeSeries ∷ EncodeJson Series where
   encodeJson series =
-    fromObject
-      $ fromList
-      $ toList
+    encodeJson
+      $ SM.fromFoldable
       $ concat
         [ universalForSeries series
         , typeForSeries series
