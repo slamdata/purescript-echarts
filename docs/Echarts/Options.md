@@ -28,7 +28,7 @@ optionDefault :: OptionRec
 #### `setOption`
 
 ``` purescript
-setOption :: forall e. Option -> Boolean -> EChart -> Eff (echartSetOption :: ECHARTS_OPTION_SET | e) EChart
+setOption :: forall e. Option -> Boolean -> EChart -> Eff (echarts :: ECHARTS | e) EChart
 ```
 
 

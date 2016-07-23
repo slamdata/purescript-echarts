@@ -38,7 +38,7 @@ newtype Sub
 #### `listen`
 
 ``` purescript
-listen :: forall e. EventType -> (EventParam -> Eff (listen :: LISTEN | e) Unit) -> EChart -> Eff (listen :: LISTEN | e) Sub
+listen :: forall e. EventType -> (EventParam -> Eff (echarts :: ECHARTS | e) Unit) -> EChart -> Eff (echarts :: ECHARTS | e) Sub
 ```
 
 

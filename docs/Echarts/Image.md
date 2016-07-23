@@ -17,13 +17,13 @@ DecodeJson ImgType
 #### `getDataURL`
 
 ``` purescript
-getDataURL :: forall e. ImgType -> EChart -> Eff (image :: IMAGE_MAKING | e) String
+getDataURL :: forall e. ImgType -> EChart -> Eff (echarts :: ECHARTS | e) String
 ```
 
 #### `getImage`
 
 ``` purescript
-getImage :: forall e. ImgType -> EChart -> Eff (dom :: DOM, image :: IMAGE_MAKING | e) Node
+getImage :: forall e. ImgType -> EChart -> Eff (dom :: DOM, echarts :: ECHARTS | e) Node
 ```
 
 

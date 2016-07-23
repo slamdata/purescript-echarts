@@ -21,7 +21,7 @@ EncodeJson AdditionalData
 #### `addData`
 
 ``` purescript
-addData :: forall e. AdditionalData -> EChart -> Eff (dataAdd :: ADD_DATA | e) EChart
+addData :: forall e. AdditionalData -> EChart -> Eff (echarts :: ECHARTS | e) EChart
 ```
 
 
