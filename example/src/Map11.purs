@@ -1,65 +1,48 @@
 module Map11 where
 
 import Prelude
-import Control.Monad.Eff.Console (print)
-import Data.Tuple.Nested
-import Data.Maybe
-import Data.StrMap (fromList)
-import Data.Tuple
-import Data.List (toList)
 
-import Utils
-import Control.Monad.Eff
+import Control.Monad.Eff (Eff)
+import Control.Monad.Eff.Console (log, CONSOLE)
 
-import ECharts.Chart
-import ECharts.Options
-import ECharts.Legend
-import ECharts.Axis
-import ECharts.Series
-import ECharts.Item.Data
-import ECharts.Item.Value
-import ECharts.Common
-import ECharts.Formatter
-import ECharts.Style.Item
-import ECharts.Title
-import ECharts.Tooltip
-import ECharts.Mark.Point
-import ECharts.Mark.Data
-import ECharts.Symbol
+import Data.Maybe (Maybe(..))
+import Data.StrMap (fromFoldable)
+import Data.Tuple (Tuple(..))
 
+import DOM (DOM)
+import DOM.Node.Types (ElementId)
+
+import Utils as U
+
+import ECharts as E
+
+nameValue ∷ ∀ r. {name ∷ String, value ∷ Number|r} → E.MarkPointData
 nameValue {name, value} =
-  MarkPointData $ markPointDataDefault {
-    name = Just name,
-    value = Just value
-    }
+  E.MarkPointData $ E.markPointDataDefault { name = Just name, value = Just value }
 
-option = Option $ optionDefault {
-  tooltip = Just $ Tooltip tooltipDefault {trigger = Just TriggerItem},
-  series = Just $ Just <$> [
-    MapSeries {
-       common: universalSeriesDefault{
-          markPoint = Just $
-            MarkPoint $ markPointDefault {
-              "data" = Just $ nameValue <$> [
-                 {name: "trololo", value: 123.0}
-                 ]
+option ∷ E.Option
+option =
+  E.Option $ E.optionDefault
+  { tooltip = Just $ E.Tooltip E.tooltipDefault {trigger = Just E.TriggerItem}
+  , series = Just $ map Just
+      [ E.MapSeries
+          { common: E.universalSeriesDefault
+              { markPoint = Just $ E.MarkPoint E.markPointDefault
+                  { "data" = Just $ map nameValue [ {name: "trololo", value: 123.0} ] }
               }
-
-          },
-
-
-       mapSeries: mapSeriesDefault{
-         "data" = Just [],
-         mapType = Just "china",
-         geoCoord = Just $ fromList $ toList [
-           Tuple "trololo" (Tuple 121.0 43.0)
-           ]
-         }
-       }
-    ]
+          , mapSeries: E.mapSeriesDefault
+              { "data" = Just []
+              , mapType = Just "china"
+              , geoCoord = Just $ fromFoldable
+                  [ Tuple "trololo" (Tuple 121.0 43.0) ]
+              }
+          }
+      ]
   }
+
+map11 ∷ ∀ e. ElementId → Eff (console ∷ CONSOLE, echarts ∷ E.ECHARTS, dom ∷ DOM|e) Unit
 map11 id = do
-  mbEl <- getElementById id
+  mbEl ← U.getElementById id
   case mbEl of
-    Nothing -> print "incorrect id in map11"
-    Just el -> init Nothing el >>= setOption option true >>= \_ -> return unit
+    Nothing → log "incorrect id in map11"
+    Just el → E.init Nothing el >>= E.setOption option true >>= \_ → pure unit

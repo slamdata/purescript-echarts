@@ -1,124 +1,118 @@
 module Events where
 
 import Prelude
-import Control.Monad.Eff.Console (print, CONSOLE())
-import Math hiding (log)
-import Data.Array hiding (init)
-import Data.Maybe
 
-import Control.Monad.Eff
-import Control.Monad.Eff.Random
+import Control.Monad.Eff (Eff)
+import Control.Monad.Eff.Console (log, CONSOLE)
+import Control.Monad.Eff.Random (RANDOM)
 
-import Utils
+import Data.Array ((..))
+import Data.Maybe (Maybe(..))
+import Data.NonEmpty as NE
 
-import ECharts.Chart
-import ECharts.Events
-import ECharts.Options
-import ECharts.Tooltip
-import ECharts.Toolbox
-import ECharts.Coords
-import ECharts.Legend
-import ECharts.Axis
-import ECharts.Series
-import ECharts.Item.Data
-import ECharts.Item.Value
-import ECharts.Common
-import ECharts.Formatter
-import ECharts.Style.Item
-import ECharts.DataZoom as Zoom
+import Debug.Trace as DT
 
-simpleData = Value <<< Simple
+import DOM (DOM)
+import DOM.Node.Types (ElementId)
 
-lineData :: Eff _ (Array Number)
+import ECharts as E
+
+import Math (round)
+
+import Utils as U
+
+simpleData ∷ Number → E.ItemData
+simpleData = E.Value <<< E.Simple
+
+lineData ∷ ∀ e. Eff (random ∷ RANDOM|e) (Array Number)
 lineData = do
-  lst <- randomLst 30.0
-  return $ (\x -> round $ x * 30.0 + 30.0 ) <$> lst
+  lst ← map NE.oneOf $ U.randomArray 30
+  pure $ (\x → round $ x * 30.0 + 30.0 ) <$> lst
 
-barData :: Eff _ (Array Number)
+barData ∷ ∀ e. Eff (random ∷ RANDOM|e) (Array Number)
 barData = do
-  lst <- randomLst 30.0
-  return $ (\x -> round $ x * 10.0) <$> lst
+  lst ← map NE.oneOf $ U.randomArray 30
+  pure $ (\x → round $ x * 10.0) <$> lst
 
-options_ :: Array Number -> Array Number -> Option
-options_ line bar = Option $ optionDefault {
-  tooltip = Just $ Tooltip tooltipDefault {trigger = Just TriggerAxis},
-  legend = Just $ Legend legendDefault {
-    "data" = Just $ legendItemDefault <$> ["fst","snd"]
-    },
-  toolbox = Just $ Toolbox $ toolboxDefault {
-    show = Just true,
-    x = Just XRight,
-    feature = Just $ Feature $ featureDefault {
-      mark = Just $ MarkFeature $ markFeatureDefault {show = Just true},
-      dataView = Just $ DataViewFeature $ dataViewFeatureDefault {
-        show = Just true,
-        readOnly = Just false
-        },
-      magicType = Just $ MagicTypeFeature $ magicTypeFeatureDefault {
-        show = Just true,
-        "type" = Just [MagicLine, MagicBar, MagicStack, MagicTiled]
-        },
-      restore = Just $ RestoreFeature $ restoreFeatureDefault {
-        show = Just true
-        },
-      saveAsImage = Just $ SaveAsImageFeature $ saveAsImageFeatureDefault {
-        show = Just true
+options_ ∷ Array Number → Array Number → E.Option
+options_ line bar =
+  E.Option E.optionDefault
+    { tooltip = Just $ E.Tooltip E.tooltipDefault {trigger = Just E.TriggerAxis}
+    , legend = Just $ E.Legend E.legendDefault
+        { "data" = Just $ map E.legendItemDefault ["fst","snd"] }
+    , toolbox = Just $ E.Toolbox E.toolboxDefault
+        { show = Just true
+        , x = Just E.XRight
+        , feature = Just $ E.Feature E.featureDefault
+            { mark = Just $ E.MarkFeature E.markFeatureDefault {show = Just true}
+            , dataView = Just $ E.DataViewFeature E. dataViewFeatureDefault
+                { show = Just true
+                , readOnly = Just false
+                }
+            , magicType = Just $ E.MagicTypeFeature E.magicTypeFeatureDefault
+                { show = Just true
+                , "type" = Just [E.MagicLine, E.MagicBar, E.MagicStack, E.MagicTiled]
+                }
+            , restore = Just $ E.RestoreFeature E.restoreFeatureDefault
+                { show = Just true }
+            , saveAsImage = Just $ E.SaveAsImageFeature E.saveAsImageFeatureDefault
+                { show = Just true }
+            }
         }
-      }
-    },
-  calculable = Just true,
-  dataZoom = Just $ Zoom.DataZoom $ Zoom.dataZoomDefault {
-    show = Just true,
-    realtime = Just true,
-    start = Just 40.0,
-    end = Just 60.0
-    },
-  xAxis = Just $ OneAxis $ Axis $ axisDefault {
-    "type" = Just CategoryAxis,
-    boundaryGap = Just $ CatBoundaryGap true,
-    "data" = Just $ (\i -> CommonAxisData $ "2013-03-" <> show i) <$> (1..30)
-    },
-  yAxis = Just $ OneAxis $ Axis $ axisDefault {"type" = Just ValueAxis},
-  series = Just $ Just <$> [
-    LineSeries {
-       common: universalSeriesDefault{name = Just "fst"},
-       lineSeries: lineSeriesDefault{"data" = Just $ simpleData <$> line}
-       },
-    BarSeries {
-      common: universalSeriesDefault{name = Just "snd"},
-      barSeries: barSeriesDefault{"data" = Just $ simpleData <$> bar}
-      }
-    ]
-  }
+    , calculable = Just true
+    , dataZoom = Just $ E.DataZoom $ E.dataZoomDefault
+        { show = Just true
+        , realtime = Just true
+        , start = Just 40.0
+        , end = Just 60.0
+        }
+    , xAxis = Just $ E.OneAxis $ E.Axis E.axisDefault
+        { "type" = Just E.CategoryAxis
+        , boundaryGap = Just $ E.CatBoundaryGap true
+        , "data" = Just $ (\i → E.CommonAxisData $ "2013-03-" <> show i) <$> (1..30)
+        }
+    , yAxis = Just $ E.OneAxis $ E.Axis E.axisDefault {"type" = Just E.ValueAxis}
+    , series = Just $ map Just
+        [ E.LineSeries
+            { common: E.universalSeriesDefault {name = Just "fst"}
+            , lineSeries: E.lineSeriesDefault{"data" = Just $ map simpleData line}
+            }
+        , E.BarSeries
+            { common: E.universalSeriesDefault{name = Just "snd"}
+            , barSeries: E.barSeriesDefault{"data" = Just $ map simpleData bar}
+            }
+        ]
+    }
 
 
-options :: Eff _ _
+options ∷ ∀ e. Eff (random ∷ RANDOM|e) E.Option
 options = do
-  line <- lineData
-  bar <- barData
-  return $ options_ line bar
+  line ← lineData
+  bar ← barData
+  pure $ options_ line bar
 
-foreign import log :: forall a e. a -> Eff e Unit
-
-
+subscribe ∷ ∀ e. E.EChart → Eff (echarts ∷ E.ECHARTS|e) E.Sub
 subscribe chart = do
-  let sub = \et hndl -> listen et hndl chart
-  sub ClickEvent log
-  sub DoubleClickEvent log
-  sub DataZoomEvent log
-  sub LegendSelectedEvent log
-  sub MagicTypeChangedEvent log
-  sub DataViewChangedEvent log
+  let sub = \et hndl → E.listen et hndl chart
+  sub E.ClickEvent DT.traceAnyA
+  sub E.DoubleClickEvent DT.traceAnyA
+  sub E.DataZoomEvent DT.traceAnyA
+  sub E.LegendSelectedEvent DT.traceAnyA
+  sub E.MagicTypeChangedEvent DT.traceAnyA
+  sub E.DataViewChangedEvent DT.traceAnyA
 
-
+events
+  ∷ ∀ e
+  . ElementId
+  → Eff (dom ∷ DOM, console ∷ CONSOLE, random ∷ RANDOM, echarts ∷ E.ECHARTS|e) Unit
 events id = do
-  mbEl <- getElementById id
+  mbEl ← U.getElementById id
   case mbEl of
-    Nothing -> print "incorrect id in events"
-    Just el -> do
-      opts <- options
-      chart <- init Nothing el
-               >>= setOption opts true
-
+    Nothing → log "incorrect id in events"
+    Just el → do
+      opts ← options
+      chart ←
+        E.init Nothing el
+          >>= E.setOption opts true
       subscribe chart
-      return unit
+      pure unit

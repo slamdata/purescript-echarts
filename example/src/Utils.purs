@@ -3,6 +3,7 @@ module Utils
   , getElementById
   , randomArray
   , precise
+  , onLoad
   ) where
 
 import Prelude

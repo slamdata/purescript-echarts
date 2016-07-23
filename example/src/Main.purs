@@ -2,13 +2,20 @@ module Main where
 
 import Prelude
 
+
+import Control.Monad.Eff.Random (RANDOM)
+import Control.Monad.Eff.Console (CONSOLE)
+import Control.Monad.Eff.Now (NOW)
+
+import DOM (DOM)
 import DOM.Node.Types (ElementId(..))
+
+import ECharts (ECHARTS)
 
 import Chord2 (chord2)
 import Connect (connectM)
 import Control.Monad.Eff (Eff())
 import DynamicLineBar (dynamicLineBar)
-import ECharts.Effects
 import EventRiver1 (eventRiver)
 import Events (events)
 import Force4 (force4)
@@ -25,8 +32,10 @@ import Bubble (bubble)
 import AreaPlot (areaPlot)
 import ConfidenceBand (confidenceBand)
 import PercentageArea (percentageArea)
-import Utils
+import Utils (onLoad)
 
+
+main ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ECHARTS, random ∷ RANDOM, now ∷ NOW, console ∷ CONSOLE|e) Unit
 main = onLoad $ do
   line4 (ElementId "line4")
   scatter3 (ElementId "scatter3")

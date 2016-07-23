@@ -1,146 +1,131 @@
 module Bubble where
 
-import DOM (DOM())
+import Prelude
+
+import Control.Monad.Eff (Eff)
+import Control.Monad.Eff.Console (log, CONSOLE)
+
+import Data.Tuple (Tuple(..))
+import Data.Array ((!!))
+import Data.Maybe (Maybe(..), fromMaybe)
+
+import DOM (DOM)
 import DOM.Node.Types (ElementId)
 
-import Prelude
-import Control.Monad.Eff.Console (print, CONSOLE())
-import Control.Monad.Eff (Eff)
-import Data.Tuple (Tuple(Tuple), snd, fst)
-import Data.Array ((!!))
-import Data.Maybe (Maybe(Nothing, Just), fromMaybe)
+import ECharts as E
 
-import ECharts.Chart (init)
-import ECharts.Tooltip (Tooltip(Tooltip), TooltipAxisPointer(TooltipAxisPointer), TooltipAxisPointerType(CrossPointer), TooltipTrigger(TriggerAxis), tooltipAxisPointerDefault, tooltipDefault)
-import ECharts.Options (Option(Option), setOption, optionDefault)
-import ECharts.Series (Series(ScatterSeries), scatterSeriesDefault, universalSeriesDefault)
-import ECharts.Item.Value (ItemValue(XYR))
-import ECharts.Item.Data (ItemData(Value))
-import ECharts.Symbol (SymbolSize(ArrayMappingFunc), Symbol(Circle))
-import ECharts.Axis (Axis(Axis), AxisLabel(AxisLabel), AxisLine(AxisLine), AxisLineStyle(AxisLineStyle), AxisSplitLine(AxisSplitLine), AxisTick(AxisTick), AxisType(ValueAxis), Axises(OneAxis), axisLabelDefault, axisSplitLineDefault, axisLineStyleDefault, axisLineDefault, axisDefault, axisTickDefault)
-import ECharts.Style.Line (LineStyle(LineStyle), LineType(Solid), lineStyleDefault)
-import ECharts.Style.Text (TextStyle(TextStyle), textStyleDefault)
-import ECharts.Effects (ECHARTS_INIT, ECHARTS_OPTION_SET)
 import Utils as U
 
-
-options :: Option
-options = Option $ optionDefault 
-    { xAxis = Just $ OneAxis $ Axis $ axisDefault 
-      { "type" = Just ValueAxis
-      , axisLine = Just $ AxisLine axisLineDefault 
-        { lineStyle = Just $ AxisLineStyle axisLineStyleDefault 
+options ∷ E.Option
+options =
+  E.Option E.optionDefault
+    { xAxis = Just $ E.OneAxis $ E.Axis E.axisDefault
+      { "type" = Just E.ValueAxis
+      , axisLine = Just $ E.AxisLine E.axisLineDefault
+        { lineStyle = Just $ E.AxisLineStyle E.axisLineStyleDefault
           { color = Just "rgba(184,184,184,0.8)"
           , width = Just 1.0
           }
         }
-      , axisTick = Just $ AxisTick axisTickDefault 
+      , axisTick = Just $ E.AxisTick E.axisTickDefault
         { length = Just $ 2.0
-        , lineStyle = Just $ LineStyle lineStyleDefault 
+        , lineStyle = Just $ E.LineStyle E.lineStyleDefault
           { color = Just "rgba(184,184,184,0.8)"
           , width = Just 1.0
           }
         }
-      , splitLine = Just $ AxisSplitLine axisSplitLineDefault 
-        { lineStyle = Just $ LineStyle lineStyleDefault 
+      , splitLine = Just $ E.AxisSplitLine E.axisSplitLineDefault
+        { lineStyle = Just $ E.LineStyle E.lineStyleDefault
           { color = Just "rgba(204,204,204,0.2)"
           , width = Just 1.0
           }
         }
-      , axisLabel = Just $ AxisLabel axisLabelDefault 
-        { textStyle = Just $ TextStyle textStyleDefault 
+      , axisLabel = Just $ E.AxisLabel E.axisLabelDefault
+        { textStyle = Just $ E.TextStyle E.textStyleDefault
           { fontFamily = Just "Palatino, Georgia, serif"
           }
         }
       }
-    , yAxis = Just $ OneAxis $ Axis $ axisDefault 
-      { "type" = Just ValueAxis
-      , axisLine = Just $ AxisLine axisLineDefault
-        { lineStyle = Just $ AxisLineStyle axisLineStyleDefault 
+    , yAxis = Just $ E.OneAxis $ E.Axis E.axisDefault
+      { "type" = Just E.ValueAxis
+      , axisLine = Just $ E.AxisLine E.axisLineDefault
+        { lineStyle = Just $ E.AxisLineStyle E.axisLineStyleDefault
           { color = Just "rgba(184,184,184,0.8)"
           , width = Just 1.0
           }
         }
-      , splitLine = Just $ AxisSplitLine axisSplitLineDefault 
-        { lineStyle = Just $ LineStyle lineStyleDefault 
+      , splitLine = Just $ E.AxisSplitLine E.axisSplitLineDefault
+        { lineStyle = Just $ E.LineStyle E.lineStyleDefault
           { color = Just "rgba(204,204,204,0.2)"
           , width = Just 1.0
           }
         }
-      , axisLabel = Just $ AxisLabel axisLabelDefault 
-        { textStyle = Just $ TextStyle textStyleDefault 
+      , axisLabel = Just $ E.AxisLabel E.axisLabelDefault
+        { textStyle = Just $ E.TextStyle E.textStyleDefault
           { fontFamily = Just "Palatino, Georgia, serif"
           }
         }
       }
-    , tooltip = Just $ Tooltip tooltipDefault 
-      { trigger = Just TriggerAxis
-      , textStyle = Just $ TextStyle textStyleDefault 
+    , tooltip = Just $ E.Tooltip E.tooltipDefault
+      { trigger = Just E.TriggerAxis
+      , textStyle = Just $ E.TextStyle E.textStyleDefault
         { fontFamily = Just "Palatino, Georgia, serif"
-        , fontSize = Just 12.0 
+        , fontSize = Just 12.0
         }
-      , axisPointer = Just $ TooltipAxisPointer tooltipAxisPointerDefault 
-        { "type" = Just $ CrossPointer
-        , lineStyle = Just $ LineStyle lineStyleDefault 
+      , axisPointer = Just $ E.TooltipAxisPointer E.tooltipAxisPointerDefault
+        { "type" = Just E.CrossPointer
+        , lineStyle = Just $ E.LineStyle E.lineStyleDefault
           { color = Just "rgba(170,170,170,0.8)"
           , width = Just 1.5
-          , "type" = Just $ Solid
+          , "type" = Just E.Solid
           }
         }
       }
-    , series = Just $ Just <$> 
-      [ ScatterSeries 
-        { common: universalSeriesDefault
+    , series = Just $ map Just
+      [ E.ScatterSeries
+        { common: E.universalSeriesDefault
             { name = Just "A"}
-        , scatterSeries: scatterSeriesDefault 
+        , scatterSeries: E.scatterSeriesDefault
           { large = Just true
-          , "data" = Just $ xyrData <$> 
+          , "data" = Just $ map xyrData
               [Tuple (Tuple 10.0 20.0) Nothing]
-          , symbol = Just Circle
-          , symbolSize = Just $ ArrayMappingFunc (radiusMapper 0.0)
+          , symbol = Just E.Circle
+          , symbolSize = Just $ E.ArrayMappingFunc (radiusMapper 0.0)
           }
         }
-      , ScatterSeries 
-        { common: universalSeriesDefault
+       , E.ScatterSeries
+        { common: E.universalSeriesDefault
             { name = Just "B"}
-        , scatterSeries: scatterSeriesDefault 
+        , scatterSeries: E.scatterSeriesDefault
           { large = Just true
-          , "data" = Just $ xyrData <$> 
+          , "data" = Just $ map xyrData
               [Tuple (Tuple 5.0 10.0) (Just 20.0)]
-          , symbol = Just Circle
-          , symbolSize = Just $ ArrayMappingFunc (radiusMapper 0.0)
+          , symbol = Just E.Circle
+          , symbolSize = Just $ E.ArrayMappingFunc (radiusMapper 0.0)
           }
         }
       ]
     }
 
-xyrData ∷ Tuple (Tuple Number Number) (Maybe Number) → ItemData
-xyrData (Tuple a b)= Value $ XYR 
-  { x: fst a
-  , y: snd a
-  , r: b
-  }
+xyrData ∷ Tuple (Tuple Number Number) (Maybe Number) → E.ItemData
+xyrData (Tuple (Tuple x y) r)= E.Value $ E.XYR { x, y, r }
+
 
 radiusMapper ∷ Number → (Array Number → Number)
 radiusMapper i = func
-  where 
+  where
   func ∷ Array Number → Number
   func a = i + (fromMaybe 4.0 (a !! 2))
 
-bubble :: forall eff. 
-  ElementId -> 
-  Eff ( echartSetOption :: ECHARTS_OPTION_SET
-        , echartInit :: ECHARTS_INIT
-        , console :: CONSOLE
-        , dom :: DOM
-        | eff
-        ) Unit
+bubble
+  ∷ ∀ eff
+  . ElementId
+  → Eff ( echarts ∷ E.ECHARTS, console ∷ CONSOLE, dom ∷ DOM |eff) Unit
 bubble id = do
-  mbEl <- U.getElementById id
+  mbEl ← U.getElementById id
   case mbEl  of
-    Nothing -> print "incorrect id in bubble"
-    Just el -> do
-      chart <- init Nothing el
-      chart' <- setOption options true chart
+    Nothing → log "incorrect id in bubble"
+    Just el → do
+      chart ← E.init Nothing el
+      chart' ← E.setOption options true chart
       pure unit
-

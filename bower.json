@@ -25,7 +25,14 @@
     "purescript-dom": "^1.1.0",
     "purescript-globals": "^1.0.0",
     "purescript-js-date": "^1.2.0",
-    "purescript-unsafe-coerce": "^1.0.0"
+    "purescript-unsafe-coerce": "^1.0.0",
+    "purescript-formatters": "^0.0.3"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "purescript-debug": "^1.0.0"
+  },
+  "resolutions": {
+    "purescript-dom": "^1.1.0",
+    "purescript-formatters": "^0.0.2"
+  }
 }
