@@ -3,7 +3,10 @@ var express = require("express"),
     http = require("http"),
     ecstatic = require("ecstatic");
 
-module.exports = function(taskName, serverPort, subdirectory) {
+
+
+
+var runServer = function(taskName, serverPort, subdirectory) {
     if (taskName === undefined) {
         taskName = "serve";
     }
@@ -17,7 +20,8 @@ module.exports = function(taskName, serverPort, subdirectory) {
     app.use(express.static(__dirname + '/../' + subdirectory));
     app.use("/lib", express.static(__dirname + '/../bower_components'));
 
-    gulp.task(taskName, function() {
-        app.listen(serverPort);
-    });
+
+    app.listen(serverPort);
 };
+
+runServer();

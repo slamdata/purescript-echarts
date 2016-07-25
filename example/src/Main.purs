@@ -34,26 +34,32 @@ import ConfidenceBand (confidenceBand)
 import PercentageArea (percentageArea)
 import Utils (onLoad)
 
+import Debug.Trace as DT
 
 main ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ECHARTS, random ∷ RANDOM, now ∷ NOW, console ∷ CONSOLE|e) Unit
 main = onLoad $ do
-  line4 (ElementId "line4")
-  scatter3 (ElementId "scatter3")
-  bubble (ElementId "bubble")
-  k (ElementId "k")
-  radar3 (ElementId "radar3")
-  chord2 (ElementId "chord2")
-  force4 (ElementId "force4")
-  map11 (ElementId "map11")
-  gauge4 (ElementId "gauge4")
-  funnel2 (ElementId "funnel2")
-  eventRiver (ElementId "event-river")
+--  line4 (ElementId "line4")
+--  scatter3 (ElementId "scatter3")
+--  bubble (ElementId "bubble")
+--  k (ElementId "k")
+--  radar3 (ElementId "radar3")
+--  chord2 (ElementId "chord2")
+--  force4 (ElementId "force4")
+--  map11 (ElementId "map11")
+--  gauge4 (ElementId "gauge4")
+--  funnel2 (ElementId "funnel2")
+--  eventRiver (ElementId "event-river")
 
-  dynamicLineBar (ElementId "dynamic-line-bar")
-  loading (ElementId "loading")
-  events (ElementId "events")
-  connectM (ElementId "connect1") (ElementId "connect2")
-  mix2safe (ElementId "mix2safe")
+--  dynamicLineBar (ElementId "dynamic-line-bar")
+--  loading (ElementId "loading")
+--  events (ElementId "events")
+--  connectM (ElementId "connect1") (ElementId "connect2")
+--  mix2safe (ElementId "mix2safe")
+
+  DT.traceAnyA "!!!!"
   areaPlot (ElementId "area-plot")
-  confidenceBand (ElementId "confidence-band")
-  percentageArea (ElementId "percentage-area")
+  DT.traceAnyA "????"
+--  confidenceBand (ElementId "confidence-band")
+  DT.traceAnyA "*****"
+--  percentageArea (ElementId "percentage-area")
+  DT.traceAnyA "ooooo"

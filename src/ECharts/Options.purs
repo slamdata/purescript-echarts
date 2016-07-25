@@ -26,6 +26,8 @@ import ECharts.Axis (Polar, Axises)
 import ECharts.Utils (unnull)
 import ECharts.Effects (ECHARTS)
 
+import Debug.Trace as DT
+
 {- To set second series tooltip
      Option{series = Just [Nothing,
         Just $ SomeSeries
@@ -160,4 +162,4 @@ setOption
   → EChart
   → Eff (echarts ∷ ECHARTS|e) EChart
 setOption opts notMerge chart =
-  runFn3 setOptionImpl (unnull <<< encodeJson $ opts) notMerge chart
+  runFn3 setOptionImpl (DT.spy <<< unnull <<< DT.spy <<< encodeJson $ opts) notMerge chart

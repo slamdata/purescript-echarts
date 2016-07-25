@@ -18,6 +18,8 @@ import ECharts as E
 
 import Utils as U
 
+import Debug.Trace as DT
+
 simpleData ∷ Number → E.ItemData
 simpleData = E.Value <<< E.Simple
 
@@ -84,11 +86,13 @@ options =
                 }
             }
         , axisLabel = Just $ E.AxisLabel E.axisLabelDefault
-            { formatter =
+            {
+              formatter =
                  Just $ E.StringFormatFunc \s →
+                   DT.spy $
                    either (const "Incorrect datetime") id
                    $ DFD.formatDateTime "MMM-DD"
-                   =<< DFD.unformatDateTime "YYYY-MM-DDTHH:mm:ss" s
+                   =<< DFD.unformatDateTime "YYYY-MM-DD" s
             , textStyle = Just $ E.TextStyle E.textStyleDefault
                 { fontFamily = Just "Palatino, Georgia, serif" }
             }
@@ -109,10 +113,10 @@ options =
                 }
             }
         , axisLabel = Just $ E.AxisLabel E.axisLabelDefault
-            { formatter = Just $ E.NumberFormatFunc (DFN.formatOrShowNumber "0.00a")
-            , textStyle = Just $ E.TextStyle E.textStyleDefault
-                { fontFamily = Just "Palatino, Georgia, serif" }
-            }
+--            { formatter = Just $ E.NumberFormatFunc (DFN.formatOrShowNumber "0.00a")
+--            , textStyle = Just $ E.TextStyle E.textStyleDefault
+--                { fontFamily = Just "Palatino, Georgia, serif" }
+--            }
         }
     , series = Just $ map Just
         [ E.LineSeries
@@ -152,11 +156,15 @@ areaPlot
   → Eff ( echarts ∷ E.ECHARTS, console ∷ CONSOLE, dom ∷ DOM | eff) Unit
 areaPlot id = do
   mbEl ← U.getElementById id
+  DT.traceAnyA "in are plot"
   case mbEl of
     Nothing → log "incorrect id in area-plot"
     Just el → do
       chart ← E.init Nothing el
-      chart' ← E.setOption options true chart
+      DT.traceAnyA "inited"
+      DT.traceAnyA options
+      E.setOption options true chart
+      DT.traceAnyA "options are set"
       pure unit
 
 
