@@ -1,6 +1,6 @@
 {
   "name": "purescript-echarts",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "authors": [
     "John A. De Goes <john@degoes.net> (http://degoes.net)",
     "Maxim Zimaliev <zimaliev@gmail.com>"
@@ -25,14 +25,17 @@
     "purescript-dom": "^1.1.0",
     "purescript-globals": "^1.0.0",
     "purescript-js-date": "^1.2.0",
-    "purescript-unsafe-coerce": "^1.0.0",
-    "purescript-formatters": "^0.0.3"
+    "purescript-unsafe-coerce": "^1.0.0"
   },
   "devDependencies": {
-    "purescript-debug": "^1.0.0"
+    "purescript-debug": "^1.0.0",
+    "purescript-formatters": "^0.0.4",
+    "purescript-random": "^1.0.0",
+    "purescript-nonempty": "^1.1.0",
+    "purescript-signal": "^6.0.0",
+    "purescript-now": "^1.0.0"
   },
   "resolutions": {
-    "purescript-dom": "^1.1.0",
-    "purescript-formatters": "^0.0.2"
+    "purescript-dom": "^1.1.0"
   }
 }
