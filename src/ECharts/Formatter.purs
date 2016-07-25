@@ -1,36 +1,28 @@
-module ECharts.Formatter(
-  FormatParams(),
-  Formatter(..)
+module ECharts.Formatter
+  ( FormatParams
+  , Formatter(..)
   ) where
 
-import Prelude
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
+import ECharts.Prelude
 
-import Data.Function
-
-import Control.Monad.Eff
-
+import Unsafe.Coerce (unsafeCoerce)
 
 type FormatParams = Json
 
-data Formatter =
-  Template String
-  | FormatFunc (Array FormatParams -> String)
-  | StringFormatFunc (String -> String)
-  | NumberFormatFunc (Number -> String)
+data Formatter
+  = Template String
+  | FormatFunc (Array FormatParams → String)
+  | StringFormatFunc (String → String)
+  | NumberFormatFunc (Number → String)
 
-foreign import func2json :: forall a. a -> Json
+func2json ∷ ∀ a b. (a → b) → Json
+func2json = unsafeCoerce
 
-foreign import effArrToFn :: forall eff a b. (a -> Eff eff b) -> Fn1 a b
-
-instance formatterEncodeJson :: EncodeJson Formatter where
+instance formatterEncodeJson ∷ EncodeJson Formatter where
   encodeJson (Template str) = encodeJson str
-  encodeJson (FormatFunc func) = func2json $ func
+  encodeJson (FormatFunc func) = func2json func
   encodeJson (StringFormatFunc func) = func2json func
   encodeJson (NumberFormatFunc func) = func2json func
 
-instance formatterDecodeJson :: DecodeJson Formatter where
+instance formatterDecodeJson ∷ DecodeJson Formatter where
   decodeJson json = Template <$> decodeJson json
-

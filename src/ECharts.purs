@@ -43,45 +43,46 @@ module ECharts (
   module ECharts.Utils
   ) where
 
-import ECharts.AddData
-import ECharts.Axis
-import ECharts.Chart
-import ECharts.Color
-import ECharts.Common
-import ECharts.Connect
-import ECharts.Coords
-import ECharts.DataRange
-import ECharts.DataZoom
-import ECharts.Effects
-import ECharts.Events
-import ECharts.Formatter
-import ECharts.Grid
-import ECharts.Image
-import ECharts.Item.Data
-import ECharts.Item.Value
-import ECharts.Legend
-import ECharts.Loading
-import ECharts.Mark.Data
-import ECharts.Mark.Effect
-import ECharts.Mark.Line
-import ECharts.Mark.Point
-import ECharts.Options
-import ECharts.RoamController
-import ECharts.Series
-import ECharts.Series.EventRiver
-import ECharts.Series.Force
-import ECharts.Series.Gauge
-import ECharts.Style.Area
-import ECharts.Style.Checkpoint
-import ECharts.Style.Chord
-import ECharts.Style.Item
-import ECharts.Style.Line
-import ECharts.Style.Link
-import ECharts.Style.Node
-import ECharts.Style.Text
-import ECharts.Symbol
-import ECharts.Timeline
-import ECharts.Title
-import ECharts.Toolbox
-import ECharts.Tooltip
-import ECharts.Utils
+
+import ECharts.AddData (AdditionalDataRec, AdditionalData(..), addData)
+import ECharts.Axis (AxisLabelRec, AxisLineRec, AxisLineStyleRec, AxisRec, AxisSplitAreaRec, AxisSplitLineRec, AxisTickRec, CustomAxisDataRec, IndicatorRec, PolarNameRec, PolarRec, Axis(..), AxisBoundaryGap(..), AxisData(..), AxisLabel(..), AxisLine(..), AxisLineStyle(..), AxisNameLocation(..), AxisPosition(..), AxisSplitArea(..), AxisSplitLine(..), AxisTick(..), AxisType(..), Axises(..), Indicator(..), Polar(..), PolarName(..), PolarType(..), axisDefault, axisLabelDefault, axisLineDefault, axisLineStyleDefault, axisSplitAreaDefault, axisSplitLineDefault, axisTickDefault, indicatorDefault, polarDefault, polarNameDefault)
+import ECharts.Chart (EChart, ZRender, Theme(..), clear, dispose, getZRender, init, refresh, resize, setTheme)
+import ECharts.Color (Color, ColorFuncParamRec, LinearGradient, LinearGradientInput, CalculableColor(..), ColorFuncParam(..), linearGradientInputDefault)
+import ECharts.Common (Center, GeoCoord, MinMaxRec, RsRec, Corner(..), Interval(..), MapValueCalculation(..), MinMax(..), PercentOrPixel(..), Radius(..), Roam(..), RoseType(..), SelectedMode(..), Sort(..))
+import ECharts.Connect (Connection, connect)
+import ECharts.Coords (LocationRec, HorizontalAlign(..), LabelPosition(..), Location(..), Orient(..), XPos(..), YPos(..))
+import ECharts.DataRange (DataRangeRec, DataRange(..), dataRangeDefault)
+import ECharts.DataZoom (DataZoomRec, DataZoom(..), dataZoomDefault)
+import ECharts.Effects (ECHARTS)
+import ECharts.Events (EventParam, Sub, EventType(..), listen)
+import ECharts.Formatter (FormatParams, Formatter(..))
+import ECharts.Grid (GridRec, Grid(..), gridDefault)
+import ECharts.Image (ImgType(..), getDataURL, getImage)
+import ECharts.Item.Data (ItemDataDatRec, ItemData(..), dataDefault)
+import ECharts.Item.Value (HLOCRec, XYRRec, ItemValue(..))
+import ECharts.Legend (LegendItemRec, LegendRec, Legend(..), LegendItem(..), legendDefault, legendItemDefault)
+import ECharts.Loading (LoadingOptionRec, LoadingEffect(..), LoadingOption(..), hideLoading, loadingOptionDefault, showLoading)
+import ECharts.Mark.Data (MarkPointDataRec, MarkPointData(..), markPointDataDefault)
+import ECharts.Mark.Effect (MarkPointEffectRec, MarkPointEffect(..), markPointEffectDefault)
+import ECharts.Mark.Line (MarkLineRec, MarkLine(..), addMarkLine, delMarkLine, markLineDefault)
+import ECharts.Mark.Point (MarkPointRec, MarkPoint(..), addMarkPoint, delMarkPoint, markPointDefault)
+import ECharts.Options (OptionRec, Option(..), optionDefault, setOption)
+import ECharts.RoamController (RoamControllerRec, RoamController(..), roamControllerDefault)
+import ECharts.Series (BarSeriesRec, CandlestickSeriesRec, ChordSeriesRec, EventRiverSeriesRec, ForceSeriesRec, FunnelSeriesRec, GaugeSeriesRec, LineSeriesRec, MapSeriesRec, PieSeriesRec, RadarSeriesRec, ScatterSeriesRec, UniversalSeriesRec, Series(..), barSeriesDefault, candlestickSeriesDefault, chordSeriesDefault, eventRiverSeriesDefault, forceSeriesDefault, funnelSeriesDefault, gaugeSeriesDefault, lineSeriesDefault, mapSeriesDefault, pieSeriesDefault, radarSeriesDefault, scatterSeriesDefault, setSeries, universalSeriesDefault)
+import ECharts.Series.EventRiver (EvolutionDetailRec, EvolutionRec, OneEventRec, Evolution(..), EvolutionDetail(..), OneEvent(..), evolutionDetailDefault, oneEventDefault)
+import ECharts.Series.Force (ForceCategoryRec, LinkRec, Matrix, NodeRec, ForceCategory(..), Link(..), LinkEnd(..), Node(..), forceCategoryDefault, nodeDefault)
+import ECharts.Series.Gauge (GaugeDetailRec, PointerRec, SplitLineRec, GaugeDetail(..), Pointer(..), SplitLine(..), gaugeDetailDefault, pointerDefault, splitLineDefault)
+import ECharts.Style.Area (AreaStyleRec, AreaStyle(..), areaStyleDefault)
+import ECharts.Style.Checkpoint (CheckpointStyleRec, CheckpointStyle(..), checkpointStyleDefault)
+import ECharts.Style.Chord (ChordStyleRec, ChordStyle(..), chordStyleDefault)
+import ECharts.Style.Item (IStyleRec, ItemLabelLineRec, ItemLabelRec, ItemStyleRec, IStyle(..), ItemLabel(..), ItemLabelLine(..), ItemStyle(..), istyleDefault, itemLabelDefault, itemLabelLineDefault, itemStyleDefault)
+import ECharts.Style.Line (LineStyleRec, LineStyle(..), LineType(..), lineStyleDefault)
+import ECharts.Style.Link (LinkStyleRec, LinkStyle(..), LinkType(..), linkStyleDefault)
+import ECharts.Style.Node (NodeStyleRec, NodeStyle(..), nodeStyleDefault)
+import ECharts.Style.Text (Decoration, FontFamily, TextStyleRec, FontStyle(..), FontWeight(..), TextBaseline(..), TextStyle(..), textStyleDefault)
+import ECharts.Symbol (DoubleSymbolSize(..), Symbol(..), SymbolSize(..))
+import ECharts.Timeline (TimelineRec, Timeline(..), TimelineControlPosition(..), TimelineType(..), timelineDefault)
+import ECharts.Title (TitleRec, LinkTarget(..), Title(..), titleDefault)
+import ECharts.Toolbox (DataViewFeatureRec, DataZoomFeatureRec, DataZoomFeatureTitleRec, FeatureRec, MagicTypeFeatureRec, MarkFeatureRec, MarkFeatureTitleRec, RestoreFeatureRec, SaveAsImageFeatureRec, ToolboxRec, DataViewFeature(..), DataZoomFeature(..), DataZoomFeatureTitle(..), Feature(..), MagicType(..), MagicTypeFeature(..), MarkFeature(..), MarkFeatureTitle(..), RestoreFeature(..), SaveAsImageFeature(..), Toolbox(..), dataViewFeatureDefault, dataZoomFeatureDefault, featureDefault, magicTypeFeatureDefault, markFeatureDefault, restoreFeatureDefault, saveAsImageFeatureDefault, toolboxDefault)
+import ECharts.Tooltip (TooltipAxisPointerRec, TooltipRec, Tooltip(..), TooltipAxisPointer(..), TooltipAxisPointerType(..), TooltipPosition(..), TooltipTrigger(..), tooltipAxisPointerDefault, tooltipDefault)
+import ECharts.Utils (unnull)

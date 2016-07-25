@@ -38,13 +38,13 @@ EncodeJson LoadingOption
 #### `showLoading`
 
 ``` purescript
-showLoading :: forall e. LoadingOption -> EChart -> Eff (showLoadingECharts :: LOADING_SHOW | e) EChart
+showLoading :: forall e. LoadingOption -> EChart -> Eff (echarts :: ECHARTS | e) EChart
 ```
 
 #### `hideLoading`
 
 ``` purescript
-hideLoading :: forall e. EChart -> Eff (hideLoadingECharts :: LOADING_HIDE | e) EChart
+hideLoading :: forall e. EChart -> Eff (echarts :: ECHARTS | e) EChart
 ```
 
 #### `loadingOptionDefault`

@@ -28,13 +28,13 @@ EncodeJson Theme
 #### `init`
 
 ``` purescript
-init :: forall e. Maybe Theme -> HTMLElement -> Eff (dom :: DOM, echartInit :: ECHARTS_INIT | e) EChart
+init :: forall e. Maybe Theme -> HTMLElement -> Eff (dom :: DOM, echarts :: ECHARTS | e) EChart
 ```
 
 #### `setTheme`
 
 ``` purescript
-setTheme :: forall e. Theme -> EChart -> Eff (dom :: DOM, echartTheme :: ECHARTS_THEME_SET | e) EChart
+setTheme :: forall e. Theme -> EChart -> Eff (dom :: DOM, echarts :: ECHARTS | e) EChart
 ```
 
 #### `getZRender`
@@ -46,25 +46,25 @@ getZRender :: forall e. EChart -> Eff e ZRender
 #### `resize`
 
 ``` purescript
-resize :: forall e. EChart -> Eff (dom :: DOM, echartResize :: ECHARTS_RESIZE | e) Unit
+resize :: forall e. EChart -> Eff (dom :: DOM, echarts :: ECHARTS | e) Unit
 ```
 
 #### `refresh`
 
 ``` purescript
-refresh :: forall e. EChart -> Eff (dom :: DOM, echartRefresh :: ECHARTS_REFRESH | e) Unit
+refresh :: forall e. EChart -> Eff (dom :: DOM, echarts :: ECHARTS | e) Unit
 ```
 
 #### `clear`
 
 ``` purescript
-clear :: forall e. EChart -> Eff (dom :: DOM, echartClear :: ECHARTS_CLEAR | e) Unit
+clear :: forall e. EChart -> Eff (dom :: DOM, echarts :: ECHARTS | e) Unit
 ```
 
 #### `dispose`
 
 ``` purescript
-dispose :: forall e. EChart -> Eff (dom :: DOM, echartDispose :: ECHARTS_DISPOSE | e) Unit
+dispose :: forall e. EChart -> Eff (dom :: DOM, echarts :: ECHARTS | e) Unit
 ```
 
 

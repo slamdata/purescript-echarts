@@ -1,223 +1,229 @@
-module ECharts.Tooltip (
-  TooltipTrigger(..),
-  TooltipPosition(..),
-  TooltipAxisPointerType(..),
-  TooltipAxisPointer(..),
-  TooltipAxisPointerRec(),
-  Tooltip(..),
-  TooltipRec(),
+module ECharts.Tooltip
+  ( TooltipTrigger(..)
+  , TooltipPosition(..)
+  , TooltipAxisPointerType(..)
+  , TooltipAxisPointer(..)
+  , TooltipAxisPointerRec
+  , Tooltip(..)
+  , TooltipRec
 
-  tooltipAxisPointerDefault,
-  tooltipDefault
+  , tooltipAxisPointerDefault
+  , tooltipDefault
   ) where
 
-import Prelude
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
-import Data.Maybe
-import Data.Either
-import Data.StrMap hiding (toList)
-import Data.Function
-import Data.List (toList)
+import ECharts.Prelude
 
-import ECharts.Common
-import ECharts.Color
-import ECharts.Style.Text
-import ECharts.Style.Line
-import ECharts.Style.Area
-import ECharts.Formatter
+import Data.StrMap as SM
 
-data TooltipTrigger = TriggerItem | TriggerAxis
-instance tooltipTriggerEncodeJson :: EncodeJson TooltipTrigger where
+import ECharts.Common (Corner)
+import ECharts.Color (Color)
+import ECharts.Style.Text (TextStyle)
+import ECharts.Style.Line (LineStyle)
+import ECharts.Style.Area (AreaStyle)
+import ECharts.Formatter (Formatter)
+
+import Unsafe.Coerce (unsafeCoerce)
+
+data TooltipTrigger
+  = TriggerItem
+  | TriggerAxis
+
+instance tooltipTriggerEncodeJson ∷ EncodeJson TooltipTrigger where
   encodeJson TriggerItem = encodeJson "item"
   encodeJson TriggerAxis = encodeJson "axis"
 
-instance tooltipTriggerDecodeJson :: DecodeJson TooltipTrigger where
+instance tooltipTriggerDecodeJson ∷ DecodeJson TooltipTrigger where
   decodeJson json = do
-    str <- decodeJson json
+    str ← decodeJson json
     case str of
-      "item" -> pure TriggerItem
-      "axis" -> pure TriggerAxis
-      _ -> Left $ "incorrect tooltip trigger"
+      "item" → pure TriggerItem
+      "axis" → pure TriggerAxis
+      _ → Left $ "incorrect tooltip trigger"
 
 
-foreign import func2json :: forall a. a -> Json
+func2json ∷ ∀ a b. (a → b) → Json
+func2json = unsafeCoerce
 
+data TooltipPosition
+  = Fixed (Array Number)
+  | FuncPos (Array Number → Array Number)
 
-data TooltipPosition = Fixed (Array Number) | FuncPos (Array Number -> Array Number)
-instance tooltipPositionEncodeJson :: EncodeJson TooltipPosition where
+instance tooltipPositionEncodeJson ∷ EncodeJson TooltipPosition where
   encodeJson (Fixed nums) = encodeJson nums
-  encodeJson (FuncPos func) = func2json $ mkFn1 func
+  encodeJson (FuncPos func) = func2json func
 
-instance tooltipPositionDecodeJson :: DecodeJson TooltipPosition where
+instance tooltipPositionDecodeJson ∷ DecodeJson TooltipPosition where
   decodeJson nums = Fixed <$> decodeJson nums
 
 
-data TooltipAxisPointerType =
-  LinePointer | CrossPointer | ShadowPointer | NonePointer
-instance tooltipAxisPointerTypeEncodeJson :: EncodeJson TooltipAxisPointerType where
+data TooltipAxisPointerType
+  = LinePointer
+  | CrossPointer
+  | ShadowPointer
+  | NonePointer
+
+instance tooltipAxisPointerTypeEncodeJson ∷ EncodeJson TooltipAxisPointerType where
   encodeJson a = encodeJson $ case a of
-    LinePointer -> "line"
-    CrossPointer -> "cross"
-    ShadowPointer -> "shadow"
-    NonePointer -> "none"
+    LinePointer → "line"
+    CrossPointer → "cross"
+    ShadowPointer → "shadow"
+    NonePointer → "none"
 
-instance tooltiopAxisPointerTypeDecodeJson :: DecodeJson TooltipAxisPointerType where
+instance tooltiopAxisPointerTypeDecodeJson ∷ DecodeJson TooltipAxisPointerType where
   decodeJson json = do
-    str <- decodeJson json
+    str ← decodeJson json
     case str of
-      "line" -> pure LinePointer
-      "cross" -> pure CrossPointer
-      "shadow" -> pure ShadowPointer
-      "none" -> pure NonePointer
-      _ -> Left "incorrect tooltip axis pointer type"
+      "line" → pure LinePointer
+      "cross" → pure CrossPointer
+      "shadow" → pure ShadowPointer
+      "none" → pure NonePointer
+      _ → Left "incorrect tooltip axis pointer type"
 
-type TooltipAxisPointerRec = {
-    "type" :: Maybe TooltipAxisPointerType,
-    lineStyle :: Maybe LineStyle,
-    crossStyle :: Maybe LineStyle,
-    shadowStyle :: Maybe AreaStyle
-    }
-
-newtype TooltipAxisPointer = TooltipAxisPointer TooltipAxisPointerRec
-
-instance tooltipAxisPointerEncodeJson :: EncodeJson TooltipAxisPointer where
-  encodeJson (TooltipAxisPointer obj) =
-    fromObject $ fromList $ toList
-    [
-      "type" := obj.type,
-      "lineStyle" := obj.lineStyle,
-      "crossStyle" := obj.crossStyle,
-      "shadowStyle" := obj.shadowStyle
-    ]
-
-instance tooltipAxisPointerDecodeJson :: DecodeJson TooltipAxisPointer where
-  decodeJson json = do
-    o <- decodeJson json
-    r <- { "type": _
-         , lineStyle: _
-         , crossStyle: _
-         , shadowStyle: _ } <$>
-         (o .? "type") <*>
-         (o .? "lineStyle") <*>
-         (o .? "crossStyle") <*>
-         (o .? "shadowStyle")
-    pure $ TooltipAxisPointer r
-tooltipAxisPointerDefault :: TooltipAxisPointerRec
-tooltipAxisPointerDefault = {
-  "type": Nothing,
-  lineStyle: Nothing,
-  crossStyle: Nothing,
-  shadowStyle: Nothing
+type TooltipAxisPointerRec =
+  { "type" ∷ Maybe TooltipAxisPointerType
+  , lineStyle ∷ Maybe LineStyle
+  , crossStyle ∷ Maybe LineStyle
+  , shadowStyle ∷ Maybe AreaStyle
   }
 
-type TooltipRec = {
-    show :: Maybe Boolean,
-    showContent :: Maybe Boolean,
-    trigger :: Maybe TooltipTrigger,
-    position :: Maybe TooltipPosition,
-    formatter :: Maybe Formatter,
-    islandFormatter :: Maybe Formatter,
-    showDelay :: Maybe Number,
-    hideDelay :: Maybe Number,
-    transitionDuration :: Maybe Number,
-    backgroundColor :: Maybe Color,
-    borderColor :: Maybe Color,
-    borderRadius :: Maybe Number,
-    borderWidth :: Maybe Number,
-    padding :: Maybe (Corner Number),
-    axisPointer :: Maybe TooltipAxisPointer,
-    textStyle :: Maybe TextStyle,
-    enterable :: Maybe Boolean
-    }
+newtype TooltipAxisPointer
+  = TooltipAxisPointer TooltipAxisPointerRec
 
+instance tooltipAxisPointerEncodeJson ∷ EncodeJson TooltipAxisPointer where
+  encodeJson (TooltipAxisPointer obj) =
+    encodeJson
+      $ SM.fromFoldable
+        [ "type" := obj."type"
+        , "lineStyle" := obj.lineStyle
+        , "crossStyle" := obj.crossStyle
+        , "shadowStyle" := obj.shadowStyle
+        ]
 
-newtype Tooltip = Tooltip TooltipRec
-
-
-instance tooltipEncodeJson :: EncodeJson Tooltip where
-  encodeJson (Tooltip obj) =
-    fromObject $ fromList $ toList
-    [
-      "show" := obj.show,
-      "showContent" := obj.showContent,
-      "trigger" := obj.trigger,
-      "position" := obj.position,
-      "formatter" := obj.formatter,
-      "islandFormatter" := obj.islandFormatter,
-      "showDelay" := obj.showDelay,
-      "hideDelay" := obj.hideDelay,
-      "transitionDuration" := obj.transitionDuration,
-      "backgroundColor" := obj.backgroundColor,
-      "borderColor" := obj.borderColor,
-      "borderRadius" := obj.borderRadius,
-      "borderWidth" := obj.borderWidth,
-      "padding" := obj.padding,
-      "axisPointer" := obj.axisPointer,
-      "textStyle" := obj.textStyle,
-      "enterable" := obj.enterable
-    ]
-
-
-instance tooltipDecodeJson :: DecodeJson Tooltip where
+instance tooltipAxisPointerDecodeJson ∷ DecodeJson TooltipAxisPointer where
   decodeJson json = do
-    o <- decodeJson json
-    r <- { show: _
-         , showContent: _
-         , trigger: _
-         , position: _
-         , formatter: _
-         , islandFormatter: _
-         , showDelay: _
-         , hideDelay: _
-         , transitionDuration: _
-         , backgroundColor: _
-         , borderColor: _
-         , borderRadius: _
-         , borderWidth: _
-         , padding: _
-         , axisPointer: _
-         , textStyle: _
-         , enterable: _ } <$>
-         (o .? "show") <*>
-         (o .? "showContent") <*>
-         (o .? "trigger") <*>
-         (o .? "position") <*>
-         (o .? "formatter") <*>
-         (o .? "islandFormatter") <*>
-         (o .? "showDelay") <*>
-         (o .? "hideDelay") <*>
-         (o .? "transitionDuration") <*>
-         (o .? "backgroundColor") <*>
-         (o .? "borderColor") <*>
-         (o .? "borderRadius") <*>
-         (o .? "borderWidth") <*>
-         (o .? "padding") <*>
-         (o .? "axisPointer") <*>
-         (o .? "textStyle") <*>
-         (o .? "enterable")
+    o ← decodeJson json
+    r ← { "type": _
+        , lineStyle: _
+        , crossStyle: _
+        , shadowStyle: _ }
+        <$> (o .? "type")
+        <*> (o .? "lineStyle")
+        <*> (o .? "crossStyle")
+        <*> (o .? "shadowStyle")
+    pure $ TooltipAxisPointer r
+tooltipAxisPointerDefault ∷ TooltipAxisPointerRec
+tooltipAxisPointerDefault =
+  { "type": Nothing
+  , lineStyle: Nothing
+  , crossStyle: Nothing
+  , shadowStyle: Nothing
+  }
+
+type TooltipRec =
+  { show ∷ Maybe Boolean
+  , showContent ∷ Maybe Boolean
+  , trigger ∷ Maybe TooltipTrigger
+  , position ∷ Maybe TooltipPosition
+  , formatter ∷ Maybe Formatter
+  , islandFormatter ∷ Maybe Formatter
+  , showDelay ∷ Maybe Number
+  , hideDelay ∷ Maybe Number
+  , transitionDuration ∷ Maybe Number
+  , backgroundColor ∷ Maybe Color
+  , borderColor ∷ Maybe Color
+  , borderRadius ∷ Maybe Number
+  , borderWidth ∷ Maybe Number
+  , padding ∷ Maybe (Corner Number)
+  , axisPointer ∷ Maybe TooltipAxisPointer
+  , textStyle ∷ Maybe TextStyle
+  , enterable ∷ Maybe Boolean
+  }
+
+
+newtype Tooltip
+  = Tooltip TooltipRec
+
+instance tooltipEncodeJson ∷ EncodeJson Tooltip where
+  encodeJson (Tooltip obj) =
+    encodeJson
+      $ SM.fromFoldable
+        [ "show" := obj.show
+        , "showContent" := obj.showContent
+        , "trigger" := obj.trigger
+        , "position" := obj.position
+        , "formatter" := obj.formatter
+        , "islandFormatter" := obj.islandFormatter
+        , "showDelay" := obj.showDelay
+        , "hideDelay" := obj.hideDelay
+        , "transitionDuration" := obj.transitionDuration
+        , "backgroundColor" := obj.backgroundColor
+        , "borderColor" := obj.borderColor
+        , "borderRadius" := obj.borderRadius
+        , "borderWidth" := obj.borderWidth
+        , "padding" := obj.padding
+        , "axisPointer" := obj.axisPointer
+        , "textStyle" := obj.textStyle
+        , "enterable" := obj.enterable
+        ]
+
+
+instance tooltipDecodeJson ∷ DecodeJson Tooltip where
+  decodeJson json = do
+    o ← decodeJson json
+    r ← { show: _
+        , showContent: _
+        , trigger: _
+        , position: _
+        , formatter: _
+        , islandFormatter: _
+        , showDelay: _
+        , hideDelay: _
+        , transitionDuration: _
+        , backgroundColor: _
+        , borderColor: _
+        , borderRadius: _
+        , borderWidth: _
+        , padding: _
+        , axisPointer: _
+        , textStyle: _
+        , enterable: _ }
+        <$> (o .? "show")
+        <*> (o .? "showContent")
+        <*> (o .? "trigger")
+        <*> (o .? "position")
+        <*> (o .? "formatter")
+        <*> (o .? "islandFormatter")
+        <*> (o .? "showDelay")
+        <*> (o .? "hideDelay")
+        <*> (o .? "transitionDuration")
+        <*> (o .? "backgroundColor")
+        <*> (o .? "borderColor")
+        <*> (o .? "borderRadius")
+        <*> (o .? "borderWidth")
+        <*> (o .? "padding")
+        <*> (o .? "axisPointer")
+        <*> (o .? "textStyle")
+        <*> (o .? "enterable")
     pure $ Tooltip r
 
 
-tooltipDefault :: TooltipRec
-tooltipDefault = {
-  show: Nothing,
-  showContent: Nothing,
-  trigger: Nothing,
-  position: Nothing,
-  formatter: Nothing,
-  islandFormatter: Nothing,
-  showDelay: Nothing,
-  hideDelay: Nothing,
-  transitionDuration: Nothing,
-  backgroundColor: Nothing,
-  borderColor: Nothing,
-  borderRadius: Nothing,
-  borderWidth: Nothing,
-  padding: Nothing,
-  axisPointer: Nothing,
-  textStyle: Nothing,
-  enterable: Nothing
+tooltipDefault ∷ TooltipRec
+tooltipDefault =
+  { show: Nothing
+  , showContent: Nothing
+  , trigger: Nothing
+  , position: Nothing
+  , formatter: Nothing
+  , islandFormatter: Nothing
+  , showDelay: Nothing
+  , hideDelay: Nothing
+  , transitionDuration: Nothing
+  , backgroundColor: Nothing
+  , borderColor: Nothing
+  , borderRadius: Nothing
+  , borderWidth: Nothing
+  , padding: Nothing
+  , axisPointer: Nothing
+  , textStyle: Nothing
+  , enterable: Nothing
   }

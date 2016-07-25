@@ -1,45 +1,39 @@
 module ECharts.Style.Area where
 
-import Prelude
-import Data.StrMap (fromList)
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Argonaut.Combinators
-import Data.List (toList)
-import Data.Maybe
+import ECharts.Prelude
 
-import ECharts.Color
+import Data.StrMap as SM
+
+import ECharts.Color (CalculableColor)
 
 
-type AreaStyleRec = {
-    color :: Maybe CalculableColor,
-    "type" :: Maybe String
+type AreaStyleRec =
+  { color ∷ Maybe CalculableColor
+  , "type" ∷ Maybe String
   }
 
-newtype AreaStyle = AreaStyle AreaStyleRec
+newtype AreaStyle
+  = AreaStyle AreaStyleRec
 
-areaStyleDefault :: AreaStyleRec
+areaStyleDefault ∷ AreaStyleRec
 areaStyleDefault =
-  {
-    color: Nothing,
-    "type": Just "fill"
+  { color: Nothing
+  , "type": Just "fill"
   }
 
-instance areaStyleEncodeJson :: EncodeJson AreaStyle where
+instance areaStyleEncodeJson ∷ EncodeJson AreaStyle where
   encodeJson (AreaStyle ars) =
-    fromObject $ fromList $ toList
-    [
-      "color" := ars.color,
-      "type" := ars."type"
-    ]
+    encodeJson
+      $ SM.fromFoldable
+        [ "color" := ars.color
+        , "type" := ars."type"
+        ]
 
-instance areaStyleDecodeJson :: DecodeJson AreaStyle where
+instance areaStyleDecodeJson ∷ DecodeJson AreaStyle where
   decodeJson j = do
-    o <- decodeJson j
-    r <- { color: _
-         , "type": _ } <$>
-         (o .? "color") <*>
-         (o .? "type")
+    o ← decodeJson j
+    r ← { color: _
+        , "type": _ }
+        <$> (o .? "color")
+        <*> (o .? "type")
     pure $ AreaStyle r
-

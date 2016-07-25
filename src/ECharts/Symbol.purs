@@ -1,77 +1,81 @@
-module ECharts.Symbol (
-  Symbol(..),
-  SymbolSize(..),
-  DoubleSymbolSize(..)
+module ECharts.Symbol
+  ( Symbol(..)
+  , SymbolSize(..)
+  , DoubleSymbolSize(..)
   ) where
 
-import Prelude
-import Data.Argonaut.Core
-import Data.Argonaut.Encode
-import Data.Argonaut.Decode
-import Data.Either
+import ECharts.Prelude
 
-import Data.Function
-import Data.Tuple
+import Unsafe.Coerce (unsafeCoerce)
 
-import ECharts.Item.Value
+import ECharts.Item.Value (ItemValue)
 
 
-foreign import func2json :: forall a. a -> Json
+func2json ∷ ∀ a b. (a → b) → Json
+func2json = unsafeCoerce
 
+data Symbol
+  = Circle
+  | Rectangle
+  | Triangle
+  | Diamond
+  | EmptyCircle
+  | EmptyRectangle
+  | EmptyTriangle
+  | EmptyDiamond
+  | NoSymbol
 
-data Symbol = Circle | Rectangle | Triangle | Diamond | EmptyCircle | EmptyRectangle
-            | EmptyTriangle | EmptyDiamond | NoSymbol
+instance encodeJsonSymbol ∷ EncodeJson Symbol where
+  encodeJson a = encodeJson $ case a of
+    Circle → "circle"
+    Rectangle → "rectangle"
+    Triangle → "triangle"
+    Diamond → "diamond"
+    EmptyCircle → "emptyCircle"
+    EmptyRectangle → "emptyRectangle"
+    EmptyTriangle → "emptyTriangle"
+    EmptyDiamond → "emptyDiamond"
+    NoSymbol → "none"
 
-instance encodeJsonSymbol :: EncodeJson Symbol where
-  encodeJson a = fromString $ case a of
-    Circle -> "circle"
-    Rectangle -> "rectangle"
-    Triangle -> "triangle"
-    Diamond -> "diamond"
-    EmptyCircle -> "emptyCircle"
-    EmptyRectangle -> "emptyRectangle"
-    EmptyTriangle -> "emptyTriangle"
-    EmptyDiamond -> "emptyDiamond"
-    NoSymbol -> "none"
-
-instance symbolDecodeJson :: DecodeJson Symbol where
+instance symbolDecodeJson ∷ DecodeJson Symbol where
   decodeJson j = do
-    str <- decodeJson j
+    str ← decodeJson j
     case str of
-      "circle" -> pure Circle
-      "rectangle" -> pure Rectangle
-      "triangle" -> pure Triangle
-      "diamond" -> pure Diamond
-      "emptyCircle" -> pure EmptyCircle
-      "emptyRectangle" -> pure EmptyRectangle
-      "emptyTriangle" -> pure EmptyTriangle
-      "emptyDiamond" -> pure EmptyDiamond
-      "none" -> pure NoSymbol
-      _ -> Left "incorrect symbol"
+      "circle" → pure Circle
+      "rectangle" → pure Rectangle
+      "triangle" → pure Triangle
+      "diamond" → pure Diamond
+      "emptyCircle" → pure EmptyCircle
+      "emptyRectangle" → pure EmptyRectangle
+      "emptyTriangle" → pure EmptyTriangle
+      "emptyDiamond" → pure EmptyDiamond
+      "none" → pure NoSymbol
+      _ → Left "incorrect symbol"
 
 
-data SymbolSize = Size Number 
-                | Func (ItemValue -> Number) 
-                | ArrayMappingFunc (Array Number -> Number)
+data SymbolSize
+  = Size Number
+  | Func (ItemValue → Number)
+  | ArrayMappingFunc (Array Number → Number)
 
-instance symbolSizeEncodeJson :: EncodeJson SymbolSize where
-  encodeJson ss = case ss of
-    Size num -> encodeJson num
-    Func func -> func2json $ mkFn1 func
-    ArrayMappingFunc func -> func2json $ func
+instance symbolSizeEncodeJson ∷ EncodeJson SymbolSize where
+  encodeJson = case _ of
+    Size num → encodeJson num
+    Func func → func2json func
+    ArrayMappingFunc func → func2json func
 
-instance symbolSizeDecodeJson :: DecodeJson SymbolSize where
+instance symbolSizeDecodeJson ∷ DecodeJson SymbolSize where
   decodeJson j = Size <$> decodeJson j
 
 
-data DoubleSymbolSize = DblSize (Tuple Number Number)
-                      | DblFunc (ItemValue -> Tuple Number Number)
+data DoubleSymbolSize
+  = DblSize (Tuple Number Number)
+  | DblFunc (ItemValue → Tuple Number Number)
 
-instance dblSymbolSizeEncodeJson :: EncodeJson DoubleSymbolSize where
-  encodeJson ss = case ss of
-    DblSize num -> encodeJson num
-    DblFunc func -> func2json $ mkFn1 func
+instance dblSymbolSizeEncodeJson ∷ EncodeJson DoubleSymbolSize where
+  encodeJson = case _ of
+    DblSize num → encodeJson num
+    DblFunc func → func2json func
 
-
-instance dblSymbolSizeDecodeJson :: DecodeJson DoubleSymbolSize where
+instance dblSymbolSizeDecodeJson ∷ DecodeJson DoubleSymbolSize where
   decodeJson j = DblSize <$> decodeJson j
