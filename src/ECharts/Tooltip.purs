@@ -1,229 +1,62 @@
-module ECharts.Tooltip
-  ( TooltipTrigger(..)
-  , TooltipPosition(..)
-  , TooltipAxisPointerType(..)
-  , TooltipAxisPointer(..)
-  , TooltipAxisPointerRec
-  , Tooltip(..)
-  , TooltipRec
+module ECharts.Tooltip where
 
-  , tooltipAxisPointerDefault
-  , tooltipDefault
-  ) where
+import Prelude
 
-import ECharts.Prelude
+import Control.Monad.Writer (Writer, execWriter)
+import Control.Monad.Writer.Class (tell)
 
-import Data.StrMap as SM
+import Data.Array as Arr
+import Data.Foldable as F
 
-import ECharts.Common (Corner)
-import ECharts.Color (Color)
-import ECharts.Style.Text (TextStyle)
-import ECharts.Style.Line (LineStyle)
-import ECharts.Style.Area (AreaStyle)
-import ECharts.Formatter (Formatter)
+import Data.Foreign (Foreign, toForeign)
+import Data.Tuple (Tuple(..), uncurry)
 
-import Unsafe.Coerce (unsafeCoerce)
+import ECharts.Types as T
+import ECharts.Internal (unsafeSetField, emptyObject)
 
-data TooltipTrigger
-  = TriggerItem
-  | TriggerAxis
+data TooltipC
+  = Shown Boolean
+  | ShowContent Boolean
+  | Trigger T.TooltipTrigger
 
-instance tooltipTriggerEncodeJson ∷ EncodeJson TooltipTrigger where
-  encodeJson TriggerItem = encodeJson "item"
-  encodeJson TriggerAxis = encodeJson "axis"
+newtype TooltipM a = TooltipM (Writer (Array TooltipC) a)
 
-instance tooltipTriggerDecodeJson ∷ DecodeJson TooltipTrigger where
-  decodeJson json = do
-    str ← decodeJson json
-    case str of
-      "item" → pure TriggerItem
-      "axis" → pure TriggerAxis
-      _ → Left $ "incorrect tooltip trigger"
+instance functorTooltipM ∷ Functor TooltipM where
+  map f (TooltipM o) = TooltipM $ map f o
 
+instance applyTooltipM ∷ Apply TooltipM where
+  apply (TooltipM f) (TooltipM o) = TooltipM $ apply f o
 
-func2json ∷ ∀ a b. (a → b) → Json
-func2json = unsafeCoerce
+instance applicativeTooltipM ∷ Applicative TooltipM where
+  pure = TooltipM <<< pure
 
-data TooltipPosition
-  = Fixed (Array Number)
-  | FuncPos (Array Number → Array Number)
+instance bindTooltipM ∷ Bind TooltipM where
+  bind (TooltipM o) f = TooltipM $ o >>= (\(TooltipM o') → o') <<< f
 
-instance tooltipPositionEncodeJson ∷ EncodeJson TooltipPosition where
-  encodeJson (Fixed nums) = encodeJson nums
-  encodeJson (FuncPos func) = func2json func
+instance monadTooltipM ∷ Monad TooltipM
 
-instance tooltipPositionDecodeJson ∷ DecodeJson TooltipPosition where
-  decodeJson nums = Fixed <$> decodeJson nums
+shown ∷ Boolean → TooltipM Unit
+shown = TooltipM <<< tell <<< Arr.singleton <<< Shown
 
+showContent ∷ Boolean → TooltipM Unit
+showContent = TooltipM <<< tell <<< Arr.singleton <<< ShowContent
 
-data TooltipAxisPointerType
-  = LinePointer
-  | CrossPointer
-  | ShadowPointer
-  | NonePointer
+trigger ∷ T.TooltipTrigger → TooltipM Unit
+trigger = TooltipM <<< tell <<< Arr.singleton <<< Trigger
 
-instance tooltipAxisPointerTypeEncodeJson ∷ EncodeJson TooltipAxisPointerType where
-  encodeJson a = encodeJson $ case a of
-    LinePointer → "line"
-    CrossPointer → "cross"
-    ShadowPointer → "shadow"
-    NonePointer → "none"
+tooltipTuple ∷ TooltipC → Tuple String Foreign
+tooltipTuple = case _ of
+  Shown b → Tuple "show" $ toForeign $ show b
+  ShowContent b → Tuple "showContent" $ toForeign $ show b
+  Trigger t → Tuple "trigger" $ toForeign $ T.printTooltipTrigger t
 
-instance tooltiopAxisPointerTypeDecodeJson ∷ DecodeJson TooltipAxisPointerType where
-  decodeJson json = do
-    str ← decodeJson json
-    case str of
-      "line" → pure LinePointer
-      "cross" → pure CrossPointer
-      "shadow" → pure ShadowPointer
-      "none" → pure NonePointer
-      _ → Left "incorrect tooltip axis pointer type"
+buildTooltip ∷ TooltipM Unit → T.Tooltip
+buildTooltip (TooltipM cs) =
+  let
+    commands ∷ Array TooltipC
+    commands = execWriter cs
 
-type TooltipAxisPointerRec =
-  { "type" ∷ Maybe TooltipAxisPointerType
-  , lineStyle ∷ Maybe LineStyle
-  , crossStyle ∷ Maybe LineStyle
-  , shadowStyle ∷ Maybe AreaStyle
-  }
-
-newtype TooltipAxisPointer
-  = TooltipAxisPointer TooltipAxisPointerRec
-
-instance tooltipAxisPointerEncodeJson ∷ EncodeJson TooltipAxisPointer where
-  encodeJson (TooltipAxisPointer obj) =
-    encodeJson
-      $ SM.fromFoldable
-        [ "type" := obj."type"
-        , "lineStyle" := obj.lineStyle
-        , "crossStyle" := obj.crossStyle
-        , "shadowStyle" := obj.shadowStyle
-        ]
-
-instance tooltipAxisPointerDecodeJson ∷ DecodeJson TooltipAxisPointer where
-  decodeJson json = do
-    o ← decodeJson json
-    r ← { "type": _
-        , lineStyle: _
-        , crossStyle: _
-        , shadowStyle: _ }
-        <$> (o .? "type")
-        <*> (o .? "lineStyle")
-        <*> (o .? "crossStyle")
-        <*> (o .? "shadowStyle")
-    pure $ TooltipAxisPointer r
-tooltipAxisPointerDefault ∷ TooltipAxisPointerRec
-tooltipAxisPointerDefault =
-  { "type": Nothing
-  , lineStyle: Nothing
-  , crossStyle: Nothing
-  , shadowStyle: Nothing
-  }
-
-type TooltipRec =
-  { show ∷ Maybe Boolean
-  , showContent ∷ Maybe Boolean
-  , trigger ∷ Maybe TooltipTrigger
-  , position ∷ Maybe TooltipPosition
-  , formatter ∷ Maybe Formatter
-  , islandFormatter ∷ Maybe Formatter
-  , showDelay ∷ Maybe Number
-  , hideDelay ∷ Maybe Number
-  , transitionDuration ∷ Maybe Number
-  , backgroundColor ∷ Maybe Color
-  , borderColor ∷ Maybe Color
-  , borderRadius ∷ Maybe Number
-  , borderWidth ∷ Maybe Number
-  , padding ∷ Maybe (Corner Number)
-  , axisPointer ∷ Maybe TooltipAxisPointer
-  , textStyle ∷ Maybe TextStyle
-  , enterable ∷ Maybe Boolean
-  }
-
-
-newtype Tooltip
-  = Tooltip TooltipRec
-
-instance tooltipEncodeJson ∷ EncodeJson Tooltip where
-  encodeJson (Tooltip obj) =
-    encodeJson
-      $ SM.fromFoldable
-        [ "show" := obj.show
-        , "showContent" := obj.showContent
-        , "trigger" := obj.trigger
-        , "position" := obj.position
-        , "formatter" := obj.formatter
-        , "islandFormatter" := obj.islandFormatter
-        , "showDelay" := obj.showDelay
-        , "hideDelay" := obj.hideDelay
-        , "transitionDuration" := obj.transitionDuration
-        , "backgroundColor" := obj.backgroundColor
-        , "borderColor" := obj.borderColor
-        , "borderRadius" := obj.borderRadius
-        , "borderWidth" := obj.borderWidth
-        , "padding" := obj.padding
-        , "axisPointer" := obj.axisPointer
-        , "textStyle" := obj.textStyle
-        , "enterable" := obj.enterable
-        ]
-
-
-instance tooltipDecodeJson ∷ DecodeJson Tooltip where
-  decodeJson json = do
-    o ← decodeJson json
-    r ← { show: _
-        , showContent: _
-        , trigger: _
-        , position: _
-        , formatter: _
-        , islandFormatter: _
-        , showDelay: _
-        , hideDelay: _
-        , transitionDuration: _
-        , backgroundColor: _
-        , borderColor: _
-        , borderRadius: _
-        , borderWidth: _
-        , padding: _
-        , axisPointer: _
-        , textStyle: _
-        , enterable: _ }
-        <$> (o .? "show")
-        <*> (o .? "showContent")
-        <*> (o .? "trigger")
-        <*> (o .? "position")
-        <*> (o .? "formatter")
-        <*> (o .? "islandFormatter")
-        <*> (o .? "showDelay")
-        <*> (o .? "hideDelay")
-        <*> (o .? "transitionDuration")
-        <*> (o .? "backgroundColor")
-        <*> (o .? "borderColor")
-        <*> (o .? "borderRadius")
-        <*> (o .? "borderWidth")
-        <*> (o .? "padding")
-        <*> (o .? "axisPointer")
-        <*> (o .? "textStyle")
-        <*> (o .? "enterable")
-    pure $ Tooltip r
-
-
-tooltipDefault ∷ TooltipRec
-tooltipDefault =
-  { show: Nothing
-  , showContent: Nothing
-  , trigger: Nothing
-  , position: Nothing
-  , formatter: Nothing
-  , islandFormatter: Nothing
-  , showDelay: Nothing
-  , hideDelay: Nothing
-  , transitionDuration: Nothing
-  , backgroundColor: Nothing
-  , borderColor: Nothing
-  , borderRadius: Nothing
-  , borderWidth: Nothing
-  , padding: Nothing
-  , axisPointer: Nothing
-  , textStyle: Nothing
-  , enterable: Nothing
-  }
+    foldFn ∷ TooltipC → Foreign → Foreign
+    foldFn opt obj = uncurry (unsafeSetField obj) (tooltipTuple opt)
+  in
+    T.Tooltip $ F.foldr foldFn (emptyObject unit) commands

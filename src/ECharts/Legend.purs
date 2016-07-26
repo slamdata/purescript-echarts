@@ -1,140 +1,81 @@
 module ECharts.Legend where
 
-import ECharts.Prelude
+import Prelude
 
-import Data.StrMap as SM
+import Control.Monad.Writer (Writer, execWriter)
+import Control.Monad.Writer.Class (tell)
 
-import ECharts.Color (Color)
-import ECharts.Common (SelectedMode, Corner)
-import ECharts.Coords (XPos, YPos, Orient)
-import ECharts.Style.Text (TextStyle)
-import ECharts.Formatter (Formatter)
+import Data.Array as Arr
+import Data.Foldable as F
 
-type LegendItemRec =
-  { icon ∷ Maybe String
-  , textStyle ∷ Maybe TextStyle
-  }
+import Data.Foreign (Foreign, toForeign)
+import Data.Tuple (Tuple(..), uncurry)
 
-data LegendItem
-  = LegendItem String LegendItemRec
+import ECharts.Types as T
+import ECharts.Internal (unsafeSetField, emptyObject)
 
-instance legendItemEncodeJson ∷ EncodeJson LegendItem where
-  encodeJson (LegendItem name obj) =
-    encodeJson
-      $ SM.fromFoldable
-        [ "name" := name
-        , "icon" := obj.icon
-        , "textStyle" := obj.textStyle
-        ]
 
-instance legendItemDecodeJson ∷ DecodeJson LegendItem where
-  decodeJson j = do
-    o ← decodeJson j
-    name ← (o .? "name")
-    r ← {icon: _, textStyle: _} <$> (o .? "icon") <*> (o .? "textStyle")
-    pure $ LegendItem name r
+data LegendC
+  = Orient T.Orient
+  | Items (Array T.Item)
+  | Shown Boolean
+  | Left T.PixelOrPercent
+  | Right T.PixelOrPercent
+  | Top T.PixelOrPercent
+  | Bottom T.PixelOrPercent
 
-legendItemDefault ∷ String → LegendItem
-legendItemDefault name =
-  LegendItem name {icon: Nothing, textStyle: Nothing}
+newtype LegendM a = LegendM (Writer (Array LegendC) a)
 
-type LegendRec =
-  { show ∷ Maybe Boolean
-  , orient ∷ Maybe Orient
-  , x ∷ Maybe XPos
-  , y ∷ Maybe YPos
-  , backgroundColor ∷ Maybe Color
-  , borderColor ∷ Maybe Color
-  , borderWidth ∷ Maybe Number
-  , padding ∷ Maybe (Corner Number)
-  , itemGap ∷ Maybe Number
-  , itemHeight ∷ Maybe Number
-  , itemWidth ∷ Maybe Number
-  , textStyle ∷ Maybe TextStyle
-  , formatter ∷ Maybe Formatter
-  , selectedMode ∷ Maybe SelectedMode
-  , selected ∷ Maybe (SM.StrMap Boolean)
-  , "data" ∷ Maybe (Array LegendItem)
-  }
+instance functorLegendM ∷ Functor LegendM where
+  map f (LegendM o) = LegendM $ map f o
 
-newtype Legend
-  = Legend LegendRec
+instance applyLegendM ∷ Apply LegendM where
+  apply (LegendM f) (LegendM o) = LegendM $ apply f o
 
-legendDefault ∷ LegendRec
-legendDefault =
-  { show: Nothing
-  , orient: Nothing
-  , x: Nothing
-  , y: Nothing
-  , backgroundColor: Nothing
-  , borderColor: Nothing
-  , borderWidth: Nothing
-  , padding: Nothing
-  , itemGap: Nothing
-  , itemHeight: Nothing
-  , itemWidth: Nothing
-  , textStyle: Nothing
-  , formatter: Nothing
-  , selectedMode: Nothing
-  , selected: Nothing
-  , "data": Nothing
-  }
+instance applicativeLegendM ∷ Applicative LegendM where
+  pure = LegendM <<< pure
 
-instance legendEncodeJson ∷ EncodeJson Legend where
-  encodeJson (Legend obj) =
-    encodeJson
-      $ SM.fromFoldable
-        [ "show" := obj.show
-        , "orient" := obj.orient
-        , "x" := obj.x
-        , "y" := obj.y
-        , "backgroundColor" := obj.backgroundColor
-        , "borderColor" := obj.borderColor
-        , "borderWidth" := obj.borderWidth
-        , "padding" := obj.padding
-        , "itemGap" := obj.itemGap
-        , "itemHeight" := obj.itemHeight
-        , "itemWidth" := obj.itemWidth
-        , "textStyle" := obj.textStyle
-        , "formatter" := obj.formatter
-        , "selectedMode" := obj.selectedMode
-        , "selected" := obj.selected
-        , "data" := obj."data"
-        ]
+instance bindLegendM ∷ Bind LegendM where
+  bind (LegendM o) f = LegendM $ o >>= (\(LegendM o') → o') <<< f
 
-instance legendDecodeJson ∷ DecodeJson Legend where
-  decodeJson j = do
-    o ← decodeJson j
-    r ← { show: _
-        , orient: _
-        , x: _
-        , y: _
-        , backgroundColor: _
-        , borderColor: _
-        , borderWidth: _
-        , padding: _
-        , itemGap: _
-        , itemHeight: _
-        , itemWidth: _
-        , textStyle: _
-        , formatter: _
-        , selectedMode: _
-        , selected: _
-        , "data": _ }
-        <$> (o .? "show")
-        <*> (o .? "orient")
-        <*> (o .? "x")
-        <*> (o .? "y")
-        <*> (o .? "backgroundColor")
-        <*> (o .? "borderColor")
-        <*> (o .? "borderWidth")
-        <*> (o .? "padding")
-        <*> (o .? "itemGap")
-        <*> (o .? "itemHeight")
-        <*> (o .? "itemWidth")
-        <*> (o .? "textStyle")
-        <*> (o .? "formatter")
-        <*> (o .? "selectedMode")
-        <*> (o .? "selected")
-        <*> (o .? "data")
-    pure $ Legend r
+instance monadLegendM ∷ Monad LegendM
+
+orient ∷ T.Orient → LegendM Unit
+orient = LegendM <<< tell <<< Arr.singleton <<< Orient
+
+shown ∷ Boolean → LegendM Unit
+shown = LegendM <<< tell <<< Arr.singleton <<< Shown
+
+items ∷ Array T.Item → LegendM Unit
+items = LegendM <<< tell <<< Arr.singleton <<< Items
+
+left ∷ T.PixelOrPercent → LegendM Unit
+left = LegendM <<< tell <<< Arr.singleton <<< Left
+
+right ∷ T.PixelOrPercent → LegendM Unit
+right = LegendM <<< tell <<< Arr.singleton <<< Right
+
+top ∷ T.PixelOrPercent → LegendM Unit
+top = LegendM <<< tell <<< Arr.singleton <<< Top
+
+bottom ∷ T.PixelOrPercent → LegendM Unit
+bottom = LegendM <<< tell <<< Arr.singleton <<< Bottom
+
+
+legendTuple ∷ LegendC → Tuple String Foreign
+legendTuple = case _ of
+  Orient f → Tuple "orient" $ toForeign $ T.printOrient f
+  Shown f → Tuple "show" $ toForeign $ show f
+  Items f → Tuple "data" $ toForeign f
+  Left f → Tuple "left" $ T.pixelOrPercentToForeign f
+  Right f → Tuple "right" $ T.pixelOrPercentToForeign f
+  Top f → Tuple "top" $ T.pixelOrPercentToForeign f
+  Bottom f → Tuple "bottom" $ T.pixelOrPercentToForeign f
+
+buildLegend ∷ LegendM Unit → T.Legend
+buildLegend (LegendM cs) =
+  let
+    foldFn ∷ LegendC → Foreign → Foreign
+    foldFn opt obj = uncurry (unsafeSetField obj) (legendTuple opt)
+  in
+    T.Legend $ F.foldr foldFn (emptyObject unit) $ execWriter cs

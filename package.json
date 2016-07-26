@@ -2,6 +2,7 @@
   "name": "purescript-echarts",
   "private": true,
   "devDependencies": {
+    "echarts": "^3.2.2",
     "ecstatic": "^0.5.8",
     "express": "^4.11.0"
   },

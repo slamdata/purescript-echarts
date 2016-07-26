@@ -1,78 +1,66 @@
 module ECharts.Chart
-  ( EChart
-  , ZRender
-  , Theme(..)
+  ( Chart
   , init
-  , setTheme
-  , getZRender
+  , setOption
+  , resetOption
   , resize
-  , refresh
-  , clear
-  , dispose
   ) where
 
-import ECharts.Prelude
+import Prelude
 
-import Data.Function.Uncurried (Fn2, runFn2)
+import Control.Monad.Eff (Eff)
+import Control.Monad.Eff.Class (class MonadEff, liftEff)
+import Control.Monad.Eff.Exception (EXCEPTION)
 
 import DOM (DOM)
-import DOM.HTML.Types (HTMLElement())
-
+import DOM.Node.Types (Element)
 
 import ECharts.Effects (ECHARTS)
+import ECharts.Types (Option)
 
-foreign import data EChart ∷ *
-foreign import data ZRender ∷ *
-
-data Theme
-  = ThemeName String
-  | ThemeConfig Json
-
-instance themeEncodeJson ∷ EncodeJson Theme where
-  encodeJson = case _ of
-    ThemeName name → encodeJson name
-    ThemeConfig a → encodeJson a
+foreign import data Chart ∷ *
 
 foreign import initImpl
-  ∷ ∀ e. Fn2 HTMLElement Json (Eff (dom ∷ DOM, echarts ∷ ECHARTS|e) EChart)
+  ∷ ∀ e. Element → Eff (dom ∷ DOM, echarts ∷ ECHARTS, err ∷ EXCEPTION|e) Chart
 
 init
- ∷ ∀ e
- . Maybe Theme
- → HTMLElement
- → Eff (dom ∷ DOM, echarts ∷ ECHARTS |e) EChart
-init theme dom =
-  runFn2 initImpl dom (encodeJson theme)
+  ∷ ∀ m e
+  . MonadEff (dom ∷ DOM, echarts ∷ ECHARTS, err ∷ EXCEPTION|e) m
+  ⇒ Element
+  → m Chart
+init el = liftEff $ initImpl el
 
-foreign import setThemeImpl
-  ∷ ∀ e. Fn2 Json EChart (Eff e EChart)
+foreign import setOptionImpl
+  ∷ ∀ e. Option → Chart → Eff (echarts ∷ ECHARTS, err ∷ EXCEPTION|e) Unit
 
-setTheme
-  ∷ ∀ e
-  . Theme
-  → EChart
-  → Eff (dom ∷ DOM, echarts ∷ ECHARTS |e) EChart
-setTheme theme chart = do
-  runFn2 setThemeImpl (encodeJson theme) chart
+setOption
+  ∷ ∀ m e
+  . MonadEff (echarts ∷ ECHARTS, err ∷ EXCEPTION|e) m
+  ⇒ Option
+  → Chart
+  → m Unit
+setOption opts chart = liftEff $ setOptionImpl opts chart
 
 
-foreign import getZRender
-  ∷ ∀ e. EChart → Eff e ZRender
+foreign import resetOptionImpl
+  ∷ ∀ e. Option → Chart → Eff (echarts ∷ ECHARTS, err ∷ EXCEPTION|e) Unit
 
-foreign import resize
-  ∷ ∀ e. EChart → Eff (dom ∷ DOM, echarts ∷ ECHARTS |e) Unit
 
-foreign import refresh
- ∷ ∀ e
- . EChart
- → Eff (dom ∷ DOM, echarts ∷ ECHARTS |e) Unit
+resetOption
+  ∷ ∀ m e
+  . MonadEff (echarts ∷ ECHARTS, err ∷ EXCEPTION|e) m
+  ⇒ Option
+  → Chart
+  → m Unit
+resetOption opts chart = liftEff $ resetOptionImpl opts chart
 
-foreign import clear
-  ∷ ∀ e
-  . EChart
-  → Eff (dom ∷ DOM, echarts ∷ ECHARTS |e) Unit
 
-foreign import dispose
-  ∷ ∀ e
-  . EChart
-  → Eff (dom ∷ DOM, echarts ∷ ECHARTS |e) Unit
+foreign import resizeImpl
+  ∷ ∀ e. Chart → Eff (echarts ∷ ECHARTS|e) Unit
+
+resize
+  ∷ ∀ m e
+  . MonadEff (echarts ∷ ECHARTS|e) m
+  ⇒ Chart
+  → m Unit
+resize chart = liftEff $ resizeImpl chart
