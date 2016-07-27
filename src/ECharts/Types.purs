@@ -23,6 +23,8 @@ newtype YAxis = YAxis Foreign
 
 newtype Series = Series Foreign
 
+newtype Title = Title Foreign
+
 data TooltipTrigger
   = ItemTrigger
   | AxisTrigger
@@ -107,6 +109,11 @@ newtype GaugeSeries = GaugeSeries Foreign
 
 newtype SymbolSize = SymbolSize Foreign
 
+numSymbolSize ∷ Number → SymbolSize
+numSymbolSize = SymbolSize <<< toForeign
+
+newtype AxisPointer = AxisPointer Foreign
+
 data Symbol
   = Circle
   | Rect
@@ -143,3 +150,78 @@ newtype Radius = Radius { start ∷ PixelOrPercent, end ∷ PixelOrPercent }
 radiusToForeign ∷ Radius → Foreign
 radiusToForeign (Radius {start, end}) =
   toForeign [ pixelOrPercentToForeign start, pixelOrPercentToForeign end ]
+
+numItem ∷ Number → Item
+numItem = Item <<< toForeign
+
+strItem ∷ String → Item
+strItem = Item <<< toForeign
+
+data PointerType
+  = LinePointer
+  | CrossPointer
+  | ShadowPointer
+
+pointerTypeToForeign ∷ PointerType → Foreign
+pointerTypeToForeign = toForeign <<< case _ of
+  LinePointer → "line"
+  CrossPointer → "cross"
+  ShadowPointer → "shadow"
+
+data LineType
+  = SolidLine
+  | DashedLine
+  | DottedLine
+
+lineTypeToForeign ∷ LineType → Foreign
+lineTypeToForeign = toForeign <<< case _ of
+  SolidLine → "solid"
+  DashedLine → "dashed"
+  DottedLine → "dotted"
+
+pairItem ∷ Number → Number → Item
+pairItem x y = Item $ toForeign [ x, y ]
+
+newtype Formatter = Formatter Foreign
+
+type FormatterInput =
+  { componentType ∷ String
+  , seriesIndex ∷ Int
+  , seriesName ∷ String
+  , name ∷ String
+  , dataIndex ∷ Int
+  , "data" ∷ Item -- ???
+  , value ∷ Number
+  , color ∷ String
+  , percent ∷ Number
+  }
+
+newtype SplitLine = SplitLine Foreign
+
+data SelectedMode
+  = Single
+  | Multiple
+  | Disabled
+
+selectedModeToForeign ∷ SelectedMode → Foreign
+selectedModeToForeign = case _ of
+  Single → toForeign "single"
+  Multiple → toForeign "multiple"
+  Disabled → toForeign false
+
+newtype Label = Label Foreign
+
+newtype LabelInner = LabelInner Foreign
+
+newtype Items = Items Foreign
+
+data HorizontalPosition
+  = LeftHP
+  | RightHP
+  | CenterHP
+
+horizontalPositionToForeign ∷ HorizontalPosition → Foreign
+horizontalPositionToForeign = toForeign <<< case _ of
+  LeftHP → "left"
+  RightHP → "right"
+  CenterHP → "center"

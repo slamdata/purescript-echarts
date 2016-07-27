@@ -24,6 +24,16 @@ type TooltipI =
   ( show ∷ I
   , showContent ∷ I
   , trigger ∷ I
+  , showDelay ∷ I
+  , axisPointer ∷ I
+  , zlevel ∷ I
+  , formatter ∷ I
+  , animation ∷ I
+  )
+
+type TitleI =
+  ( text ∷ I
+  , left ∷ I
   )
 
 type OptionI =
@@ -33,6 +43,8 @@ type OptionI =
   , yAxis ∷ I
   , color ∷ I
   , series ∷ I
+  , legend ∷ I
+  , title ∷ I
   )
 
 type GridI =
@@ -70,6 +82,10 @@ type AxisI i =
   , items ∷ I
   , axisTick ∷ I
   , axisLabel ∷ I
+  , name ∷ I
+  , scale ∷ I
+  , splitLine ∷ I
+  , boundaryGap ∷ I
   | i)
 
 type XAxisI =
@@ -90,6 +106,8 @@ type LineSeriesI =
   , areaStyle ∷ I
   , smooth ∷ I
   , items ∷ I
+  , hoverAnimation ∷ I
+  , showSymbol ∷ I
   )
 
 type BarSeriesI =
@@ -104,10 +122,16 @@ type PieSeriesI =
   , radius ∷ I
   , items ∷ I
   , startAngle ∷ I
+  , selectedMode ∷ I
+  , label ∷ I
   )
 
 type ScatterI =
   ( name ∷ I
+  , items ∷ I
+  , large ∷ I
+
+  , symbolSize ∷ I
   )
 
 type EffectScatterI =
@@ -161,3 +185,43 @@ type FunnelI =
 type GaugeI =
   ( name ∷ I
   )
+
+type ItemI =
+  ( name ∷ I
+  , value ∷ I
+  , symbol ∷ I
+  , symbolSize ∷ I
+  , symbolRotate ∷ I
+  , symbolOffset ∷ I
+  , label ∷ I
+  , itemStyle ∷ I
+  , selected ∷ I
+  )
+
+type AxisPointerI =
+  ( show ∷ I
+  , pointerType ∷ I
+  , lineStyle ∷ I
+  , zlevel ∷ I
+  )
+
+type LineStyleI =
+  ( lineType ∷ I
+  , width ∷ I
+  )
+
+type SplitLineI =
+  ( show ∷ I )
+
+type LabelI =
+  ( normalLabel ∷ I
+  , emphasisLabel ∷ I
+  )
+
+type LabelInnerI =
+  ( show ∷ I
+  , textStyle ∷ I
+  )
+
+type ItemsI =
+  ( item ∷ I )

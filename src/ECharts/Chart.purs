@@ -12,17 +12,17 @@ import Control.Monad.Eff.Class (class MonadEff, liftEff)
 import Control.Monad.Eff.Exception (EXCEPTION)
 
 import DOM (DOM)
-import DOM.Node.Types (Element)
+import DOM.HTML.Types (HTMLElement)
 
 import ECharts.Types (Option, Chart, ECHARTS)
 
 foreign import initImpl
-  ∷ ∀ e. Element → Eff (dom ∷ DOM, echarts ∷ ECHARTS, err ∷ EXCEPTION|e) Chart
+  ∷ ∀ e. HTMLElement → Eff (dom ∷ DOM, echarts ∷ ECHARTS, err ∷ EXCEPTION|e) Chart
 
 init
   ∷ ∀ m e
   . MonadEff (dom ∷ DOM, echarts ∷ ECHARTS, err ∷ EXCEPTION|e) m
-  ⇒ Element
+  ⇒ HTMLElement
   → m Chart
 init el = liftEff $ initImpl el
 

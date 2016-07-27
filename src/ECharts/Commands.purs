@@ -8,11 +8,13 @@ import Data.Array as Arr
 import Data.Foldable as F
 import Data.Foreign (toForeign)
 
-import ECharts.Monad (DSL, set, buildObj, buildSeries)
+import ECharts.Monad (DSL, set, buildObj, buildSeries, buildArr)
 import ECharts.Types as T
 import ECharts.Types.Phantom (I)
 import ECharts.Types.Phantom as TP
 
+buildOption ∷ DSL TP.OptionI Unit → T.Option
+buildOption = T.Option <<< buildObj
 
 seriesF ∷ ∀ i. T.Series → DSL (series ∷ I|i) Unit
 seriesF a = set "series" $ toForeign a
@@ -81,7 +83,19 @@ orient ∷ ∀ i. T.Orient → DSL (orient ∷ I|i) Unit
 orient a = set "orient" $ T.orientToForeign a
 
 items ∷ ∀ i f. F.Foldable f ⇒ f T.Item → DSL (items ∷ I|i) Unit
-items a = set "items" $ toForeign $ F.foldMap (Arr.singleton <<< toForeign) a
+items a = set "data" $ toForeign $ F.foldMap (Arr.singleton <<< toForeign) a
+
+itemsDSL ∷ ∀ i f. F.Foldable f ⇒ f (DSL TP.ItemI Unit) → DSL (items ∷ I|i) Unit
+itemsDSL a = set "data" $ toForeign $ F.foldMap (Arr.singleton <<< T.Item <<< buildObj) a
+
+addItemF ∷ ∀ i. T.Item → DSL (item ∷ I|i) Unit
+addItemF a = set "" $ toForeign a
+
+addItem ∷ ∀ i. DSL TP.ItemI Unit → DSL (item ∷ I|i) Unit
+addItem = addItemF <<< T.Item <<< buildObj
+
+buildItems ∷ ∀ i. DSL TP.ItemsI Unit → DSL (items ∷ I|i) Unit
+buildItems is = set "data" $ buildArr is
 
 visibleContent ∷ ∀ i. Boolean → DSL (showContent ∷ I|i) Unit
 visibleContent a = set "showContent" $ toForeign a
@@ -212,6 +226,9 @@ symbolSizeF a = set "symbolSize" $ toForeign a
 lineStyleF ∷ ∀ i. T.LineStyle → DSL (lineStyle ∷ I|i) Unit
 lineStyleF a = set "lineStyle" $ toForeign a
 
+lineStyle ∷ ∀ i. DSL TP.LineStyleI Unit → DSL (lineStyle ∷ I|i) Unit
+lineStyle = lineStyleF <<< T.LineStyle <<< buildObj
+
 areaStyleF ∷ ∀ i. T.AreaStyle → DSL (areaStyle ∷ I|i) Unit
 areaStyleF a = set "areaStyle" $ toForeign a
 
@@ -241,3 +258,99 @@ axisLabelF a = set "axisLabel" $ toForeign a
 
 axisType ∷ ∀ i. T.AxisType → DSL (axisType ∷ I|i) Unit
 axisType a = set "type" $ T.axisTypeToForeign a
+
+value ∷ ∀ i. Number → DSL (value ∷ I|i) Unit
+value a = set "value" $ toForeign a
+
+valuePair ∷ ∀ i. String → Number → DSL (value ∷ I|i) Unit
+valuePair a b = set "value" $ toForeign [toForeign a, toForeign b]
+
+titleF ∷ ∀ i. T.Title → DSL (title ∷ I|i) Unit
+titleF a = set "title" $ toForeign a
+
+title ∷ ∀ i. DSL TP.TitleI Unit → DSL (title ∷ I|i) Unit
+title = titleF <<< T.Title <<< buildObj
+
+text ∷ ∀ i. String → DSL (text ∷ I|i) Unit
+text a = set "text" $ toForeign a
+
+showDelay ∷ ∀ i. Number → DSL (showDelay ∷ I|i) Unit
+showDelay a = set "showDelay" $ toForeign a
+
+pointerType ∷ ∀ i. T.PointerType → DSL (pointerType ∷ I|i) Unit
+pointerType a = set "type" $ T.pointerTypeToForeign a
+
+zlevel ∷ ∀ i. Int → DSL (zlevel ∷ I|i) Unit
+zlevel a = set "zlevel" $ toForeign a
+
+lineType ∷ ∀ i. T.LineType → DSL (lineType ∷ I|i) Unit
+lineType a = set "type" $ toForeign a
+
+width ∷ ∀ i. Int → DSL (width ∷ I|i) Unit
+width a = set "width" $ toForeign a
+
+axisPointerF ∷ ∀ i. T.AxisPointer → DSL (axisPointer ∷ I|i) Unit
+axisPointerF a = set "axisPointer" $ toForeign a
+
+axisPointer ∷ ∀ i. DSL TP.AxisPointerI Unit → DSL (axisPointer ∷ I|i) Unit
+axisPointer = axisPointerF <<< T.AxisPointer <<< buildObj
+
+scale ∷ ∀ i. Boolean → DSL (scale ∷ I|i) Unit
+scale a = set "scale" $ toForeign a
+
+large ∷ ∀ i. Boolean → DSL (large ∷ I|i) Unit
+large a = set "large" $ toForeign a
+
+formatterAxis ∷ ∀ i. (Array T.FormatterInput → String) → DSL (formatter ∷ I|i) Unit
+formatterAxis a = set "formatter" $ toForeign a
+
+formatterItem ∷ ∀ i. (T.FormatterInput → String) → DSL (formatter ∷ I|i) Unit
+formatterItem a = set "formatter" $ toForeign a
+
+formatterString ∷ ∀ i. String → DSL (formatter ∷ I|i) Unit
+formatterString a = set "formatter" $ toForeign a
+
+animationEnabled ∷ ∀ i. Boolean → DSL (animation ∷ I|i) Unit
+animationEnabled a = set "animation" $ toForeign a
+
+splitLineF ∷ ∀ i. T.SplitLine → DSL (splitLine ∷ I|i) Unit
+splitLineF a = set "splitLine" $ toForeign a
+
+splitLine ∷ ∀ i. DSL TP.SplitLineI Unit → DSL (splitLine ∷ I|i) Unit
+splitLine = splitLineF <<< T.SplitLine <<< buildObj
+
+boundaryGap ∷ ∀ i. T.Point → DSL (boundaryGap ∷ I|i) Unit
+boundaryGap a = set "boundaryGap" $ T.pointToForeign a
+
+hoverAnimationEnabled ∷ ∀ i. Boolean → DSL (hoverAnimation ∷ I|i) Unit
+hoverAnimationEnabled a = set "hoverAnimation" $ toForeign a
+
+showSymbol ∷ ∀ i. Boolean → DSL (showSymbol ∷ I|i) Unit
+showSymbol a = set "showSymbol" $ toForeign a
+
+selectedMode ∷ ∀ i. T.SelectedMode → DSL (selectedMode ∷ I|i) Unit
+selectedMode a = set "selectedMode" $ T.selectedModeToForeign a
+
+labelF ∷ ∀ i. T.Label → DSL (label ∷ I|i) Unit
+labelF a = set "label" $ toForeign a
+
+label ∷ ∀ i. DSL TP.LabelI Unit → DSL (label ∷ I|i) Unit
+label = labelF <<< T.Label <<< buildObj
+
+normalLabelF ∷ ∀ i. T.LabelInner → DSL (normalLabel ∷ I|i) Unit
+normalLabelF a = set "normal" $ toForeign a
+
+normalLabel ∷ ∀ i. DSL TP.LabelInnerI Unit → DSL (normalLabel ∷ I|i) Unit
+normalLabel = normalLabelF <<< T.LabelInner <<< buildObj
+
+emphasisLabelF ∷ ∀ i. T.LabelInner → DSL (emphasisLabel ∷ I|i) Unit
+emphasisLabelF a = set "emphasis" $ toForeign a
+
+emphasisLabel ∷ ∀ i. DSL TP.LabelInnerI Unit → DSL (emphasisLabel ∷ I|i) Unit
+emphasisLabel = emphasisLabelF <<< T.LabelInner <<< buildObj
+
+selected ∷ ∀ i. Boolean → DSL (selected ∷ I|i) Unit
+selected a = set "selected" $ toForeign a
+
+leftPosition ∷ ∀ i. T.HorizontalPosition → DSL (left ∷ I|i) Unit
+leftPosition a = set "left" $ T.horizontalPositionToForeign a

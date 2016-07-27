@@ -7,7 +7,7 @@ import Control.Monad.Writer.Class (tell)
 
 import Data.Array as Arr
 import Data.Foreign (Foreign, toForeign)
-import Data.Tuple (Tuple(..), uncurry)
+import Data.Tuple (Tuple(..), uncurry, snd)
 import Data.Foldable as F
 
 import ECharts.Internal (unsafeSetField, emptyObject)
@@ -43,3 +43,7 @@ buildObj (DSL cs) =
 buildSeries ∷ ∀ i. DSL i Unit → Foreign
 buildSeries (DSL cs) =
   toForeign $ map (\(Tuple ty f) → unsafeSetField f "type" $ toForeign ty) $ execWriter cs
+
+buildArr ∷ ∀ i. DSL i Unit → Foreign
+buildArr (DSL cs) =
+  toForeign $ map snd $ execWriter cs

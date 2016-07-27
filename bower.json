@@ -27,6 +27,14 @@
     "purescript-colors": "^1.0.1"
   },
   "devDependencies": {
-    "purescript-debug": "^1.0.0"
+    "purescript-debug": "^1.0.0",
+    "purescript-random": "^1.0.0",
+    "purescript-nonempty": "^1.1.0",
+    "purescript-signal": "^6.0.0",
+    "purescript-now": "^1.0.0",
+    "purescript-formatters": "^0.0.4"
+  },
+  "resolutions": {
+    "purescript-dom": "^1.2.0"
   }
 }

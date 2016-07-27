@@ -3,21 +3,22 @@ module Main where
 import Prelude
 
 import Control.Monad.Eff (Eff)
+import Control.Monad.Eff.Exception (EXCEPTION)
+import Control.Monad.Eff.Random (RANDOM)
+import Control.Monad.Eff.Now (NOW)
 
-import Debug.Trace as DT
+import DOM (DOM)
 
-import ECharts.Option as E
-import ECharts.Tooltip as ET
+import ECharts.Types as ET
 
-import Unsafe.Coerce (unsafeCoerce)
+import Line as Line
+import Scatter as Scatter
+import Pie as Pie
 
-foreign import data I ∷ !
+import Utils as U
 
-main ∷ ∀ e. Eff (i ∷ I|e) Unit
-main = do
-  DT.traceAnyA $ E.buildOption do
-    E.xAxis $ unsafeCoerce unit
-    E.yAxis $ unsafeCoerce unit
-    E.tooltip do
-      ET.shown true
-  DT.traceAnyA "!!!"
+main ∷ ∀ e. Eff (now ∷ NOW, dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION, random ∷ RANDOM|e) Unit
+main = U.onLoad do
+  Line.chart
+  Scatter.chart
+  Pie.chart
