@@ -1,6 +1,5 @@
 module ECharts.Chart
-  ( Chart
-  , init
+  ( init
   , setOption
   , resetOption
   , resize
@@ -15,10 +14,7 @@ import Control.Monad.Eff.Exception (EXCEPTION)
 import DOM (DOM)
 import DOM.Node.Types (Element)
 
-import ECharts.Effects (ECHARTS)
-import ECharts.Types (Option)
-
-foreign import data Chart ∷ *
+import ECharts.Types (Option, Chart, ECHARTS)
 
 foreign import initImpl
   ∷ ∀ e. Element → Eff (dom ∷ DOM, echarts ∷ ECHARTS, err ∷ EXCEPTION|e) Chart
