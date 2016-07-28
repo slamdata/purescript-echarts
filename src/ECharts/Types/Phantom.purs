@@ -18,6 +18,7 @@ type LegendI =
     ( show ∷ I
     , items ∷ I
     , orient ∷ I
+    , align ∷ I
     )
 
 type TooltipI =
@@ -45,7 +46,101 @@ type OptionI =
   , series ∷ I
   , legend ∷ I
   , title ∷ I
+  , backgroundColor ∷ I
+  , brush ∷ I
+  , toolbox ∷ I
+  , visualMap ∷ I
   )
+
+type VisualMapI =
+  ( continuousVisualMap ∷ I
+  , piecewiseVisualMap ∷ I
+  )
+
+type ContinuousVisualMapI =
+  PositionedI
+  ( dimension ∷ I
+  , textPair ∷ I
+  , inverse ∷ I
+  , itemHeight ∷ I
+  , calculable ∷ I
+  , min ∷ I
+  , max ∷ I
+  , inRange ∷ I
+  , outOfRange ∷ I
+  , controller ∷ I
+  )
+
+type InOutRangeI =
+  ( color ∷ I
+  , colorLightness ∷ I
+  )
+
+type ControllerI =
+  ( inRange ∷ I
+  , outOfRange ∷ I
+  )
+
+type ToolboxI =
+  PositionedI
+  ( feature ∷ I
+  , show ∷ I
+  , orient ∷ I
+  )
+
+type FeatureI =
+  ( brush ∷ I
+  , saveAsImage ∷ I
+  , restore ∷ I
+  , dataView ∷ I
+  , dataZoom ∷ I
+  , magicType ∷ I
+  )
+
+type SaveAsImageI =
+  ( imageType ∷ I
+  , name ∷ I
+  , backgroundColor ∷ I
+  , excludeComponents ∷ I -- ???
+  , show ∷ I
+  , title ∷ I
+  , icon ∷ I
+  , iconStyle ∷ I
+  , pixelRatio ∷ I
+  )
+
+type RestoreI =
+  ( show ∷ I
+  , title ∷ I
+  , icon ∷ I
+  , iconStyle ∷ I
+  )
+
+type DataViewI =
+  ( show ∷ I
+  , title ∷ I
+  , icon ∷ I
+  , iconStyle ∷ I
+  )
+
+type MagicTypeI =
+  ( show ∷ I
+  , magics ∷ I
+  )
+
+-- LOL
+type MagicsI =
+  ( magic ∷ I )
+
+
+type BrushI =
+  ( brushToolbox ∷ I
+  , xAxisIndex ∷ I
+  )
+
+type BrushToolboxI =
+  ( tool ∷ I )
+
 
 type GridI =
   PositionedI
@@ -84,9 +179,20 @@ type AxisI i =
   , axisLabel ∷ I
   , name ∷ I
   , scale ∷ I
-  , splitLine ∷ I
   , boundaryGap ∷ I
+  , silent ∷ I
+  , splitLine ∷ I
+  , splitArea ∷ I
+  , axisLine ∷ I
+  , inverse ∷ I
   | i)
+
+type SplitAreaI =
+  ( show ∷ I )
+
+type AxisLineI =
+  ( onZero ∷ I )
+
 
 type XAxisI =
   AxisI (horizontalPosition ∷ I)
@@ -114,6 +220,7 @@ type BarSeriesI =
   ( name ∷ I
   , items ∷ I
   , stack ∷ I
+  , itemStyle ∷ I
   )
 
 type PieSeriesI =
@@ -130,7 +237,6 @@ type ScatterI =
   ( name ∷ I
   , items ∷ I
   , large ∷ I
-
   , symbolSize ∷ I
   )
 
@@ -225,3 +331,16 @@ type LabelInnerI =
 
 type ItemsI =
   ( item ∷ I )
+
+type ItemStyleI =
+  ( normalItemStyle ∷ I
+  , emphasisItemStyle ∷ I
+  )
+
+type IStyleI =
+  ( barBorderWidth ∷ I
+  , shadowBlur ∷ I
+  , shadowOffsetX ∷ I
+  , shadowOffsetY ∷ I
+  , shadowColor ∷ I
+  )

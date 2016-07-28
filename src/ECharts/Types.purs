@@ -225,3 +225,14 @@ horizontalPositionToForeign = toForeign <<< case _ of
   LeftHP → "left"
   RightHP → "right"
   CenterHP → "center"
+
+
+newtype Brush = Brush Foreign
+
+newtype BrushToolbox = BrushToolbox Foreign
+
+newtype Toolbox = Toolbox Foreign
+
+newtype Feature = Feature Foreign
+
+newtype MagicType = MagicType Foreign

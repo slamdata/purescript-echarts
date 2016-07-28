@@ -52,8 +52,14 @@ yAxisF a = set "yAxis" $ toForeign a
 yAxis ∷ ∀ i. DSL TP.YAxisI Unit → DSL (yAxis ∷ I|i) Unit
 yAxis = yAxisF <<< T.YAxis <<< buildObj
 
-color ∷ ∀ i f. F.Foldable f ⇒ f C.Color → DSL (color ∷ I|i) Unit
-color colors = set "color" $ toForeign $ F.foldMap (Arr.singleton <<< C.toHexString) colors
+color ∷ ∀ i f. C.Color → DSL (color ∷ I|i) Unit
+color a = set "color" $ toForeign $ C.cssStringRGBA a
+
+colors ∷ ∀ i f. F.Foldable f ⇒ f C.Color → DSL (color ∷ I|i) Unit
+colors colors = set "color" $ toForeign $ F.foldMap (Arr.singleton <<< C.toHexString) colors
+
+backgroundColor ∷ ∀ i. C.Color → DSL (backgroundColor ∷ I|i) Unit
+backgroundColor a = set "backgroundColor" $ toForeign $ C.toHexString a
 
 visible ∷ ∀ i. Boolean → DSL (show ∷ I|i) Unit
 visible a = set "show" $ toForeign a
@@ -354,3 +360,153 @@ selected a = set "selected" $ toForeign a
 
 leftPosition ∷ ∀ i. T.HorizontalPosition → DSL (left ∷ I|i) Unit
 leftPosition a = set "left" $ T.horizontalPositionToForeign a
+
+alignLeft ∷ ∀ i. DSL (align ∷ I|i) Unit
+alignLeft = set "align" $ toForeign "left"
+
+alignRight ∷ ∀ i. DSL (align ∷ I|i) Unit
+alignRight = set "align" $ toForeign "right"
+
+alignAuto ∷ ∀ i. DSL (align ∷ I|i) Unit
+alignAuto = set "align" $ toForeign "auto"
+
+brushF ∷ ∀ i. T.Brush → DSL (brush ∷ I|i) Unit
+brushF a = set "brush" $ toForeign a
+
+brush ∷ ∀ i. DSL TP.BrushI Unit → DSL (brush ∷ I|i) Unit
+brush = brushF <<< T.Brush <<< buildObj
+
+brushToolboxF ∷ ∀ i. T.BrushToolbox → DSL (brushToolbox ∷ I|i) Unit
+brushToolboxF a = set "toolbox" $ toForeign a
+
+brushToolbox ∷ ∀ i. DSL TP.BrushToolboxI Unit → DSL (brushToolbox ∷ I|i) Unit
+brushToolbox a =  set "toolbox" $ buildArr a
+
+rect ∷ ∀ i. DSL (tool ∷ I|i) Unit
+rect = set "" $ toForeign "rect"
+
+polygon ∷ ∀ i. DSL (tool ∷ I|i) Unit
+polygon = set "" $ toForeign "polygon"
+
+lineX ∷ ∀ i. DSL (tool ∷ I|i) Unit
+lineX = set "" $ toForeign "lineX"
+
+lineY ∷ ∀ i. DSL (tool ∷ I|i) Unit
+lineY = set "" $ toForeign "lineY"
+
+keep ∷ ∀ i. DSL (tool ∷ I|i) Unit
+keep = set "" $ toForeign "keep"
+
+clear ∷ ∀ i. DSL (tool ∷ I|i) Unit
+clear = set "" $ toForeign "clear"
+
+toolboxF ∷ ∀ i. T.Toolbox → DSL (toolbox ∷ I|i) Unit
+toolboxF a = set "toolbox" $ toForeign a
+
+toolbox ∷ ∀ i. DSL TP.ToolboxI Unit → DSL (toolbox ∷ I|i) Unit
+toolbox a = set "toolbox" $ buildObj a
+
+featureF ∷ ∀ i. T.Feature → DSL (feature ∷ I|i) Unit
+featureF a = set "feature" $ toForeign a
+
+feature ∷ ∀ i. DSL TP.FeatureI Unit → DSL (feature ∷ I|i) Unit
+feature a = set "feature" $ buildObj a
+
+magicTypeF ∷ ∀ i. T.MagicType → DSL (magicType ∷ I|i) Unit
+magicTypeF a = set "magicType" $ toForeign a
+
+magicType ∷ ∀ i. DSL TP.MagicTypeI Unit → DSL (magicType ∷ I|i) Unit
+magicType a = set "magicType" $ buildObj a
+
+magics ∷ ∀ i. DSL TP.MagicsI Unit → DSL (magics ∷ I|i) Unit
+magics a = set "type" $ buildArr a
+
+magicLine ∷ ∀ i. DSL (magic ∷ I|i) Unit
+magicLine = set "" $ toForeign "line"
+
+magicBar ∷ ∀ i. DSL (magic ∷ I|i) Unit
+magicBar = set "" $ toForeign "bar"
+
+magicStack ∷ ∀ i. DSL (magic ∷ I|i) Unit
+magicStack = set "" $ toForeign "stack"
+
+magicTiled ∷ ∀ i. DSL (magic ∷ I|i) Unit
+magicTiled = set "" $ toForeign "tiled"
+
+dataView ∷ ∀ i. DSL TP.DataViewI Unit → DSL (dataView ∷ I|i) Unit
+dataView a = set "dataView" $ buildObj a
+
+splitArea ∷ ∀ i. DSL TP.SplitAreaI Unit → DSL (splitArea ∷ I|i) Unit
+splitArea a = set "splitArea" $ buildObj a
+
+axisLine ∷ ∀ i. DSL TP.AxisLineI Unit → DSL (axisLine ∷ I|i) Unit
+axisLine a = set "axisLine" $ buildObj a
+
+silent ∷ ∀ i. Boolean → DSL (silent ∷ I|i) Unit
+silent a = set "silent" $ toForeign a
+
+onZero ∷ ∀ i. Boolean → DSL (onZero ∷ I|i) Unit
+onZero a = set "onZero" $ toForeign a
+
+inverse ∷ ∀ i. Boolean → DSL (inverse ∷ I|i) Unit
+inverse a = set "inverse" $ toForeign a
+
+visualMap ∷ ∀ i. DSL TP.VisualMapI Unit → DSL (visualMap ∷ I|i) Unit
+visualMap a = set "visualMap" $ buildSeries a
+
+continuous ∷ ∀ i. DSL TP.ContinuousVisualMapI Unit → DSL (continuousVisualMap ∷ I|i) Unit
+continuous a = set "continuous" $ buildObj a
+
+dimension ∷ ∀ i. Int → DSL (dimension ∷ I|i) Unit
+dimension a = set "dimension" $ toForeign a
+
+textPair ∷ ∀ i. String → String → DSL (textPair ∷ I|i) Unit
+textPair high low = set "text" $ toForeign [high, low]
+
+itemHeight ∷ ∀ i. Number → DSL (itemHeight ∷ I|i) Unit
+itemHeight a = set "itemHeight" $ toForeign a
+
+calculable ∷ ∀ i. Boolean → DSL (calculable ∷ I|i) Unit
+calculable a = set "calculable" $ toForeign a
+
+min ∷ ∀ i. Number → DSL (min ∷ I|i) Unit
+min a = set "min" $ toForeign a
+
+max ∷ ∀ i. Number → DSL (max ∷ I|i) Unit
+max a = set "max" $ toForeign a
+
+inRange ∷ ∀ i. DSL TP.InOutRangeI Unit → DSL (inRange ∷ I|i) Unit
+inRange a = set "inRagne" $ buildObj a
+
+outOfRange ∷ ∀ i. DSL TP.InOutRangeI Unit → DSL (outOfRange ∷ I|i) Unit
+outOfRange a = set "outOfRange" $ buildObj a
+
+controller ∷ ∀ i. DSL TP.ControllerI Unit → DSL (controller ∷ I|i) Unit
+controller a = set "controller" $ buildObj a
+
+colorLightness ∷ ∀ i. Number → Number → DSL (colorLightness ∷ I|i) Unit
+colorLightness a b = set "colorLightness" $ toForeign [a, b]
+
+itemStyle ∷ ∀ i. DSL TP.ItemStyleI Unit → DSL (itemStyle ∷ I|i) Unit
+itemStyle a = set "itemStyle" $ buildObj a
+
+normalItemStyle ∷ ∀ i. DSL TP.IStyleI Unit → DSL (normalItemStyle ∷ I|i) Unit
+normalItemStyle a = set "normal" $ buildObj a
+
+emphasisItemStyle ∷ ∀ i. DSL TP.IStyleI Unit → DSL (emphasisItemStyle ∷ I|i) Unit
+emphasisItemStyle a = set "emphasis" $ buildObj a
+
+barBorderWidth ∷ ∀ i. Number → DSL (barBorderWidth ∷ I|i) Unit
+barBorderWidth a = set "barBorderWidth" $ toForeign a
+
+shadowBlur ∷ ∀ i. Number → DSL (shadowBlur ∷ I|i) Unit
+shadowBlur a = set "shadowBlur" $ toForeign a
+
+shadowOffsetX ∷ ∀ i. Number → DSL (shadowOffsetX ∷ I|i) Unit
+shadowOffsetX a = set "shadowOffsetX" $ toForeign a
+
+shadowOffsetY ∷ ∀ i. Number → DSL (shadowOffsetY ∷ I|i) Unit
+shadowOffsetY a = set "shadowOffsetY" $ toForeign a
+
+shadowColor ∷ ∀ i. C.Color → DSL (shadowColor ∷ I|i) Unit
+shadowColor a = set "shadowColor" $ toForeign $ C.cssStringRGBA a

@@ -14,6 +14,8 @@ import ECharts.Types as ET
 import Line as Line
 import Scatter as Scatter
 import Pie as Pie
+import Bar as Bar
+
 
 import Utils as U
 
@@ -22,3 +24,4 @@ main = U.onLoad do
   Line.chart
   Scatter.chart
   Pie.chart
+  Bar.chart
