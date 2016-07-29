@@ -18,13 +18,13 @@ import DOM.Node.Types (ElementId(..))
 
 import ECharts.Chart as EC
 import ECharts.Types as ET
+import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
+import ECharts.Monad (DSL)
 
 import Math (cos, sin, (%))
 
 import Utils as U
-
-import Debug.Trace as DT
 
 genSinData ∷ ∀ e. Eff (random ∷ RANDOM|e) (Array ET.Item)
 genSinData = do
@@ -51,8 +51,8 @@ genCosData = do
       $ Tuple i (U.precise 3.0 $ cos i - i * (if i % 2.0 > 0.0 then 0.1 else -0.1) * rnd)
   pure $ map mapfn randoms
 
-options ∷ Array ET.Item → Array ET.Item → ET.Option
-options sinData cosData = E.buildOption do
+options ∷ Array ET.Item → Array ET.Item → DSL ETP.OptionI
+options sinData cosData = do
   E.title do
     E.text "SIN and COS random scatter"
 
@@ -82,13 +82,13 @@ options sinData cosData = E.buildOption do
     E.scatter do
       E.name "sin"
       E.large true
-      E.symbolSizeF $ ET.numSymbolSize 3.0
+      E.symbolSize $ ET.numSymbolSize 3.0
       E.items sinData
 
     E.scatter do
       E.name "cos"
       E.large true
-      E.symbolSizeF $ ET.numSymbolSize 2.0
+      E.symbolSize $ ET.numSymbolSize 2.0
       E.items cosData
 
 chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION, random ∷ RANDOM|e) Unit

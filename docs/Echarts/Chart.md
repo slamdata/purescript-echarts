@@ -1,70 +1,27 @@
 ## Module ECharts.Chart
 
-#### `EChart`
-
-``` purescript
-data EChart :: *
-```
-
-#### `ZRender`
-
-``` purescript
-data ZRender :: *
-```
-
-#### `Theme`
-
-``` purescript
-data Theme
-  = ThemeName String
-  | ThemeConfig Json
-```
-
-##### Instances
-``` purescript
-EncodeJson Theme
-```
-
 #### `init`
 
 ``` purescript
-init :: forall e. Maybe Theme -> HTMLElement -> Eff (dom :: DOM, echarts :: ECHARTS | e) EChart
+init :: forall m e. MonadEff (dom :: DOM, echarts :: ECHARTS, err :: EXCEPTION | e) m => HTMLElement -> m Chart
 ```
 
-#### `setTheme`
+#### `setOption`
 
 ``` purescript
-setTheme :: forall e. Theme -> EChart -> Eff (dom :: DOM, echarts :: ECHARTS | e) EChart
+setOption :: forall m e. MonadEff (echarts :: ECHARTS, err :: EXCEPTION | e) m => DSL OptionI -> Chart -> m Unit
 ```
 
-#### `getZRender`
+#### `resetOption`
 
 ``` purescript
-getZRender :: forall e. EChart -> Eff e ZRender
+resetOption :: forall m e. MonadEff (echarts :: ECHARTS, err :: EXCEPTION | e) m => DSL OptionI -> Chart -> m Unit
 ```
 
 #### `resize`
 
 ``` purescript
-resize :: forall e. EChart -> Eff (dom :: DOM, echarts :: ECHARTS | e) Unit
-```
-
-#### `refresh`
-
-``` purescript
-refresh :: forall e. EChart -> Eff (dom :: DOM, echarts :: ECHARTS | e) Unit
-```
-
-#### `clear`
-
-``` purescript
-clear :: forall e. EChart -> Eff (dom :: DOM, echarts :: ECHARTS | e) Unit
-```
-
-#### `dispose`
-
-``` purescript
-dispose :: forall e. EChart -> Eff (dom :: DOM, echarts :: ECHARTS | e) Unit
+resize :: forall m e. MonadEff (echarts :: ECHARTS | e) m => Chart -> m Unit
 ```
 
 

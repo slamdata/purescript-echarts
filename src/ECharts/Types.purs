@@ -9,22 +9,6 @@ foreign import data Chart ∷ *
 -- | For Eff computation
 foreign import data ECHARTS ∷ !
 
-newtype Option = Option Foreign
-
-newtype Grid = Grid Foreign
-
-newtype Tooltip = Tooltip Foreign
-
-newtype Legend = Legend Foreign
-
-newtype XAxis = XAxis Foreign
-
-newtype YAxis = YAxis Foreign
-
-newtype Series = Series Foreign
-
-newtype Title = Title Foreign
-
 data TooltipTrigger
   = ItemTrigger
   | AxisTrigger
@@ -43,8 +27,6 @@ pixelOrPercentToForeign = case _ of
   Pixel i → toForeign i
   Percent n → toForeign $ show n <> "%"
 
-newtype TextStyle = TextStyle Foreign
-
 data Orient
   = Vertical
   | Horizontal
@@ -53,8 +35,6 @@ orientToForeign ∷ Orient → Foreign
 orientToForeign = toForeign <<< case _ of
   Vertical → "vertical"
   Horizontal → "horizontal"
-
-newtype Item = Item Foreign
 
 data AxisType
   = Category
@@ -69,50 +49,8 @@ axisTypeToForeign = toForeign <<< case _ of
   Time → "time"
   Log → "log"
 
-newtype AxisTick = AxisTick Foreign
-
-newtype AxisLabel = AxisLabel Foreign
-
-newtype PieSeries = PieSeries Foreign
-
-newtype LineSeries = LineSeries Foreign
-
-newtype BarSeries = BarSeries Foreign
-
-newtype ScatterSeries = ScatterSeries Foreign
-
-newtype EffectScatterSeries = EffectScatterSeries Foreign
-
-newtype RadarSeries = RadarSeries Foreign
-
-newtype TreeMapSeries = TreeMapSeries Foreign
-
-newtype BoxPlotSeries = BoxPlotSeries Foreign
-
-newtype CandlestickSeries = CandlestickSeries Foreign
-
-newtype HeatMapSeries = HeatMapSeries Foreign
-
-newtype MapSeries = MapSeries Foreign
-
-newtype ParallelSeries = ParallelSeries Foreign
-
-newtype LinesSeries = LinesSeries Foreign
-
-newtype GraphSeries = GraphSeries Foreign
-
-newtype SankeySeries = SankeySeries Foreign
-
-newtype FunnelSeries = FunnelSeries Foreign
-
-newtype GaugeSeries = GaugeSeries Foreign
-
-newtype SymbolSize = SymbolSize Foreign
-
 numSymbolSize ∷ Number → SymbolSize
 numSymbolSize = SymbolSize <<< toForeign
-
-newtype AxisPointer = AxisPointer Foreign
 
 data Symbol
   = Circle
@@ -135,11 +73,6 @@ symbolToForeign = toForeign <<< case _ of
   Arrow → "arrow"
   EmptyCircle → "emptyCircle"
 
-newtype ItemStyle = ItemStyle Foreign
-
-newtype LineStyle = LineStyle Foreign
-
-newtype AreaStyle = AreaStyle Foreign
 
 newtype Point = Point { x ∷ PixelOrPercent, y ∷ PixelOrPercent }
 pointToForeign ∷ Point → Foreign
@@ -182,8 +115,6 @@ lineTypeToForeign = toForeign <<< case _ of
 pairItem ∷ Number → Number → Item
 pairItem x y = Item $ toForeign [ x, y ]
 
-newtype Formatter = Formatter Foreign
-
 type FormatterInput =
   { componentType ∷ String
   , seriesIndex ∷ Int
@@ -196,8 +127,6 @@ type FormatterInput =
   , percent ∷ Number
   }
 
-newtype SplitLine = SplitLine Foreign
-
 data SelectedMode
   = Single
   | Multiple
@@ -208,12 +137,6 @@ selectedModeToForeign = case _ of
   Single → toForeign "single"
   Multiple → toForeign "multiple"
   Disabled → toForeign false
-
-newtype Label = Label Foreign
-
-newtype LabelInner = LabelInner Foreign
-
-newtype Items = Items Foreign
 
 data HorizontalPosition
   = LeftHP
@@ -226,13 +149,5 @@ horizontalPositionToForeign = toForeign <<< case _ of
   RightHP → "right"
   CenterHP → "center"
 
-
-newtype Brush = Brush Foreign
-
-newtype BrushToolbox = BrushToolbox Foreign
-
-newtype Toolbox = Toolbox Foreign
-
-newtype Feature = Feature Foreign
-
-newtype MagicType = MagicType Foreign
+newtype Item = Item Foreign
+newtype SymbolSize = SymbolSize Foreign

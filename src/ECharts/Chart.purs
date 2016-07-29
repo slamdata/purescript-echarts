@@ -11,10 +11,14 @@ import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Class (class MonadEff, liftEff)
 import Control.Monad.Eff.Exception (EXCEPTION)
 
+import Data.Foreign (Foreign)
+
 import DOM (DOM)
 import DOM.HTML.Types (HTMLElement)
 
-import ECharts.Types (Option, Chart, ECHARTS)
+import ECharts.Monad (DSL, buildObj)
+import ECharts.Types.Phantom (OptionI)
+import ECharts.Types (Chart, ECHARTS)
 
 foreign import initImpl
   ∷ ∀ e. HTMLElement → Eff (dom ∷ DOM, echarts ∷ ECHARTS, err ∷ EXCEPTION|e) Chart
@@ -27,28 +31,28 @@ init
 init el = liftEff $ initImpl el
 
 foreign import setOptionImpl
-  ∷ ∀ e. Option → Chart → Eff (echarts ∷ ECHARTS, err ∷ EXCEPTION|e) Unit
+  ∷ ∀ e. Foreign → Chart → Eff (echarts ∷ ECHARTS, err ∷ EXCEPTION|e) Unit
 
 setOption
   ∷ ∀ m e
   . MonadEff (echarts ∷ ECHARTS, err ∷ EXCEPTION|e) m
-  ⇒ Option
+  ⇒ DSL OptionI
   → Chart
   → m Unit
-setOption opts chart = liftEff $ setOptionImpl opts chart
+setOption opts chart = liftEff $ setOptionImpl (buildObj opts) chart
 
 
 foreign import resetOptionImpl
-  ∷ ∀ e. Option → Chart → Eff (echarts ∷ ECHARTS, err ∷ EXCEPTION|e) Unit
+  ∷ ∀ e. Foreign → Chart → Eff (echarts ∷ ECHARTS, err ∷ EXCEPTION|e) Unit
 
 
 resetOption
   ∷ ∀ m e
   . MonadEff (echarts ∷ ECHARTS, err ∷ EXCEPTION|e) m
-  ⇒ Option
+  ⇒ DSL OptionI
   → Chart
   → m Unit
-resetOption opts chart = liftEff $ resetOptionImpl opts chart
+resetOption opts chart = liftEff $ resetOptionImpl (buildObj opts) chart
 
 
 foreign import resizeImpl

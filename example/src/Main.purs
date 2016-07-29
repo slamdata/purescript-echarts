@@ -15,6 +15,8 @@ import Line as Line
 import Scatter as Scatter
 import Pie as Pie
 import Bar as Bar
+import Gauge as Gauge
+import Funnel as Funnel
 
 
 import Utils as U
@@ -25,3 +27,5 @@ main = U.onLoad do
   Scatter.chart
   Pie.chart
   Bar.chart
+  Gauge.chart
+  Funnel.chart

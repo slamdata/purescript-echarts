@@ -14,12 +14,15 @@ import DOM.Node.Types (ElementId(..))
 
 import ECharts.Chart as EC
 import ECharts.Types as ET
+import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
+import ECharts.Monad (DSL)
+
 
 import Utils as U
 
-options ∷ ET.Option
-options = E.buildOption do
+options ∷ DSL ETP.OptionI
+options = do
   E.tooltip do
     E.trigger ET.ItemTrigger
     E.formatterString "{a} <br /> {b}: {c} ({d}%)"

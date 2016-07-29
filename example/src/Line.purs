@@ -31,11 +31,9 @@ import Signal (Signal, runSignal, (~>), foldp)
 import Signal.Time (every)
 
 import Utils as U
-import Unsafe.Coerce (unsafeCoerce)
 
-
-startOptions ∷ ET.Option
-startOptions = E.buildOption do
+startOptions ∷ DSL ETP.OptionI
+startOptions = do
   E.title do
     E.text "Dynamic line"
   E.tooltip do
@@ -60,11 +58,11 @@ startOptions = E.buildOption do
 type Accum =
   { dt ∷ D.DateTime
   , value ∷ Number
-  , values ∷ Array (DSL ETP.ItemI Unit)
+  , values ∷ Array (DSL ETP.ItemI)
   }
 
 dataStream
-  ∷ ∀ e i. Accum → Signal (Eff (random ∷ RANDOM|e) (DSL (items ∷ I|i) Unit))
+  ∷ ∀ e i. Accum → Signal (Eff (random ∷ RANDOM|e) (DSL (items ∷ I|i)))
 dataStream start =
   accumStream ~> map (E.itemsDSL <<< _.values)
   where
@@ -80,18 +78,18 @@ dataStream start =
       newTimeLabel = either (const $ "Incorrect date") id $ FDT.formatDateTime "YYYY-MM-DD" newTime
       newValue = acc.value + (ran * 21.0 - 10.0)
 
-      newItem ∷ DSL ETP.ItemI Unit
+      newItem ∷ DSL ETP.ItemI
       newItem = do
         E.name newTimeLabel
         E.valuePair newTimeLabel newValue
 
     pure { value: newValue, dt: newTime, values: [newItem] <> acc.values }
 
-optStream ∷ ∀ e. Accum → Signal (Eff (now ∷ NOW, random ∷ RANDOM|e) ET.Option)
+optStream ∷ ∀ e. Accum → Signal (Eff (now ∷ NOW, random ∷ RANDOM|e) (DSL ETP.OptionI))
 optStream acc =
   dataStream acc ~> \effItemsSet → do
     itemsSet ← effItemsSet
-    pure $ E.buildOption $ E.series $ E.line itemsSet
+    pure $ E.series $ E.line itemsSet
 
 chart ∷ ∀ e. Eff (now ∷ NOW, dom ∷ DOM, err ∷ EXCEPTION, echarts ∷ ET.ECHARTS, random ∷ RANDOM|e) Unit
 chart = do

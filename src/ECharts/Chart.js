@@ -9,7 +9,6 @@ exports.initImpl = function(el) {
 exports.setOptionImpl = function(option) {
     return function(chart) {
         return function() {
-            console.log(option);
             chart.setOption(option, false, false);
             return {};
         };

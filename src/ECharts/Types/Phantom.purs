@@ -35,6 +35,10 @@ type TooltipI =
 type TitleI =
   ( text ∷ I
   , left ∷ I
+  , textStyle ∷ I
+  , offsetCenter ∷ I
+  , show ∷ I
+  , subtext ∷ I
   )
 
 type OptionI =
@@ -121,6 +125,7 @@ type DataViewI =
   , title ∷ I
   , icon ∷ I
   , iconStyle ∷ I
+  , readOnly ∷ I
   )
 
 type MagicTypeI =
@@ -191,7 +196,9 @@ type SplitAreaI =
   ( show ∷ I )
 
 type AxisLineI =
-  ( onZero ∷ I )
+  ( onZero ∷ I
+  , lineStyle ∷ I
+  )
 
 
 type XAxisI =
@@ -286,10 +293,39 @@ type SankeyI =
 
 type FunnelI =
   ( name ∷ I
+  , left ∷ I
+  , width ∷ I
+  , label ∷ I
+  , labelLine ∷ I
+  , items ∷ I
+  , itemStyle ∷ I
+  , maxSize ∷ I
   )
 
 type GaugeI =
   ( name ∷ I
+  , z ∷ I
+  , min ∷ I
+  , max ∷ I
+  , splitNumber ∷ I
+  , gaugeRadius ∷ I
+  , axisLine ∷ I
+  , axisTick ∷ I
+  , splitLine ∷ I
+  , title ∷ I
+  , detail ∷ I
+  , items ∷ I
+  , center ∷ I
+  , endAngle ∷ I
+  , gaugePointer ∷ I
+  , startAngle ∷ I
+  , axisLabel ∷ I
+  )
+
+type GaugePointerI =
+  ( show ∷ I
+  , length ∷ I
+  , width ∷ I
   )
 
 type ItemI =
@@ -314,10 +350,14 @@ type AxisPointerI =
 type LineStyleI =
   ( lineType ∷ I
   , width ∷ I
+  , color ∷ I
   )
 
 type SplitLineI =
-  ( show ∷ I )
+  ( show ∷ I
+  , lineStyle ∷ I
+  , length ∷ I
+  )
 
 type LabelI =
   ( normalLabel ∷ I
@@ -327,6 +367,9 @@ type LabelI =
 type LabelInnerI =
   ( show ∷ I
   , textStyle ∷ I
+  , position ∷ I
+  , formatter ∷ I
+  , color ∷ I
   )
 
 type ItemsI =
@@ -343,4 +386,43 @@ type IStyleI =
   , shadowOffsetX ∷ I
   , shadowOffsetY ∷ I
   , shadowColor ∷ I
+  , opacity ∷ I
+  , borderWidth ∷ I
+  , borderColor ∷ I
   )
+
+type TextStyleI =
+  ( color ∷ I
+  , fontWeight ∷ I
+  , fontSize ∷ I
+  , fontStyle ∷ I
+  )
+
+type AreaStyleI =
+  ( color ∷ I
+  )
+
+type AxisTickI =
+  ( show ∷ I
+  , length ∷ I
+  , lineStyle ∷ I
+  , splitNumber ∷ I
+  )
+
+type AxisLabelI =
+  ( show ∷ I
+  , formatter ∷ I
+  )
+
+type DetailI =
+  ( textStyle ∷ I
+  , show ∷ I
+  )
+
+type LabelLineI =
+  ( normalLabelLine ∷ I
+  , emphasisLabelLine ∷ I
+  )
+
+type LabelLineInnerI =
+  ( show ∷ I )

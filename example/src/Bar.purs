@@ -25,9 +25,7 @@ import ECharts.Commands as E
 
 import Utils as U
 
-import Debug.Trace as DT
-
-itemStyle ∷ DSL ETP.ItemStyleI Unit
+itemStyle ∷ DSL ETP.ItemStyleI
 itemStyle = do
   E.normalItemStyle $ pure unit
   E.emphasisItemStyle do
@@ -45,9 +43,8 @@ type OptionInput =
   , four ∷ Number
   }
 
-options ∷ Array OptionInput → ET.Option
-options inp = E.buildOption do
-  DT.traceAnyA $ C.fromHexString "#ccc"
+options ∷ Array OptionInput → DSL ETP.OptionI
+options inp = do
   F.for_ (C.fromHexString "#eee") E.backgroundColor
 
   E.tooltip $ pure unit
