@@ -1,9 +1,14 @@
 language: node_js
+dist: trusty
 sudo: required
-node_js:
-  - 5
+node_js: 6
 install:
-  - npm install bower gulp -g
+  - npm install -g bower
   - npm install && bower install
 script:
   - npm run build
+after_success:
+- >-
+  test $TRAVIS_TAG &&
+  echo $GITHUB_TOKEN | pulp login &&
+  echo y | pulp publish --no-push
