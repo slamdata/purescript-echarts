@@ -1,6 +1,10 @@
 {
   "name": "purescript-echarts",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/slamdata/purescript-echarts.git"
+  },
   "authors": [
     "John A. De Goes <john@degoes.net> (http://degoes.net)",
     "Maxim Zimaliev <zimaliev@gmail.com>"
@@ -22,9 +26,9 @@
     "echarts": "~2.1.10",
     "purescript-argonaut": "^1.0.0",
     "purescript-datetime": "^1.0.0",
-    "purescript-dom": "^1.1.0",
-    "purescript-globals": "^1.0.0",
-    "purescript-js-date": "^1.2.0",
+    "purescript-dom": "^2.0.0",
+    "purescript-globals": "^1.1.0",
+    "purescript-js-date": "^2.0.0",
     "purescript-unsafe-coerce": "^1.0.0"
   },
   "devDependencies": {
@@ -32,10 +36,11 @@
     "purescript-formatters": "^0.0.4",
     "purescript-random": "^1.0.0",
     "purescript-nonempty": "^1.1.0",
-    "purescript-signal": "^6.0.0",
+    "purescript-signal": "^6.1.0",
     "purescript-now": "^1.0.0"
   },
   "resolutions": {
-    "purescript-dom": "^1.1.0"
+    "purescript-dom": "^2.0.0",
+    "purescript-js-date": "^2.0.0"
   }
 }
