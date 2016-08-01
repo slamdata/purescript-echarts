@@ -17,7 +17,7 @@ import Pie as Pie
 import Bar as Bar
 import Gauge as Gauge
 import Funnel as Funnel
-
+import Radar as Radar
 
 import Utils as U
 
@@ -29,3 +29,4 @@ main = U.onLoad do
   Bar.chart
   Gauge.chart
   Funnel.chart
+  Radar.chart

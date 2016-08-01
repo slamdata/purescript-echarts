@@ -18,7 +18,6 @@ import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
 import ECharts.Monad (DSL)
 
-
 import Utils as U
 
 options ∷ DSL ETP.OptionI

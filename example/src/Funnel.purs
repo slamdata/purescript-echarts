@@ -40,8 +40,7 @@ options = do
       E.saveAsImage $ pure unit
 
   E.legend
-    $ E.item
-    s
+    $ E.items
     $ map ET.strItem [ "one", "two", "three", "four", "five" ]
 
   E.series do

@@ -61,6 +61,7 @@ data Symbol
   | Pin
   | Arrow
   | EmptyCircle
+  | None
 
 symbolToForeign ∷ Symbol → Foreign
 symbolToForeign = toForeign <<< case _ of
@@ -72,6 +73,7 @@ symbolToForeign = toForeign <<< case _ of
   Pin → "pin"
   Arrow → "arrow"
   EmptyCircle → "emptyCircle"
+  None → "none"
 
 
 newtype Point = Point { x ∷ PixelOrPercent, y ∷ PixelOrPercent }

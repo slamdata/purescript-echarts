@@ -37,6 +37,12 @@ color a = set "color" $ toForeign $ C.cssStringRGBA a
 colors ∷ ∀ i f. F.Foldable f ⇒ f C.Color → DSL (color ∷ I|i)
 colors a = set "color" $ toForeign $ F.foldMap (Arr.singleton <<< C.toHexString) a
 
+rgbaColors ∷ ∀ i f. F.Foldable f ⇒ f C.Color → DSL (color ∷ I|i)
+rgbaColors a = set "color" $ toForeign $ F.foldMap (Arr.singleton <<< C.cssStringRGBA) a
+
+rgbaColor ∷ ∀ i. C.Color → DSL (color ∷ I|i)
+rgbaColor a = set "color" $ toForeign $ C.cssStringRGBA a
+
 backgroundColor ∷ ∀ i. C.Color → DSL (backgroundColor ∷ I|i)
 backgroundColor a = set "backgroundColor" $ toForeign $ C.toHexString a
 
@@ -145,6 +151,9 @@ funnel = set "funnel" <<< buildObj
 gauge ∷ ∀ i. DSL TP.GaugeI → DSL (gauge ∷ I|i)
 gauge = set "gauge" <<< buildObj
 
+radarSeries ∷ ∀ i. DSL TP.RadarSeriesI → DSL (radarSeries ∷ I|i)
+radarSeries = set "radar" <<< buildObj
+
 xAxisIndex ∷ ∀ i. Int → DSL (xAxisIndex ∷ I|i)
 xAxisIndex a = set "xAxisIndex" $ toForeign a
 
@@ -195,6 +204,9 @@ axisType a = set "type" $ T.axisTypeToForeign a
 
 value ∷ ∀ i. Number → DSL (value ∷ I|i)
 value a = set "value" $ toForeign a
+
+values ∷ ∀ i f. F.Foldable f ⇒ f Number → DSL (value ∷ I|i)
+values = set "value" <<< toForeign <<< F.foldMap Arr.singleton
 
 valuePair ∷ ∀ i. String → Number → DSL (value ∷ I|i)
 valuePair a b = set "value" $ toForeign [toForeign a, toForeign b]
@@ -486,3 +498,45 @@ borderColor = set "borderColor" <<< toForeign <<< C.toHexString
 
 borderWidth ∷ ∀ i. Int → DSL (borderWidth ∷ I|i)
 borderWidth = set "borderWidth" <<< toForeign
+
+normalLineStyle ∷ ∀ i. DSL TP.LineStyleI → DSL (normalLineStyle ∷ I|i)
+normalLineStyle = set "normal" <<< buildObj
+
+emphasisLineStyle ∷ ∀ i. DSL TP.LineStyleI → DSL (emphasisLineStyle ∷ I|i)
+emphasisLineStyle = set "emphasis" <<< buildObj
+
+leftCenter ∷ ∀ i. DSL (left ∷ I|i)
+leftCenter = set "left" $ toForeign "center"
+
+itemGap ∷ ∀ i. Int → DSL (itemGap ∷ I|i)
+itemGap = set "itemGap" <<< toForeign
+
+indicators ∷ ∀ i. DSL TP.IndicatorsI → DSL (indicators ∷ I|i)
+indicators = set "indicator" <<< buildArr
+
+indicator ∷ ∀ i. DSL TP.IndicatorI → DSL (indicator ∷ I|i)
+indicator = set "" <<< buildObj
+
+radarName ∷ ∀ i. DSL TP.RadarNameI → DSL (radarName ∷ I|i)
+radarName = set "name" <<< buildObj
+
+polygonShape ∷ ∀ i. DSL (shape ∷ I|i)
+polygonShape = set "shape" $ toForeign "polygon"
+
+circleShape ∷ ∀ i. DSL (shape ∷ I|i)
+circleShape = set "shape" $ toForeign "circle"
+
+lineStylePair ∷ ∀ i. DSL TP.LineStylePairI → DSL (lineStylePair ∷ I|i)
+lineStylePair = set "lineStyle" <<< buildObj
+
+areaStylePair ∷ ∀ i. DSL TP.AreaStylePairI → DSL (areaStylePair ∷ I|i)
+areaStylePair = set "areaStyle" <<< buildObj
+
+normalAreaStyle ∷ ∀ i. DSL TP.AreaStyleI → DSL (normalAreaStyle ∷ I|i)
+normalAreaStyle = set "normal" <<< buildObj
+
+emphasisAreaStyle ∷ ∀ i. DSL TP.AreaStyleI → DSL (emphasisAreaStyle ∷ I|i)
+emphasisAreaStyle = set "emphasis" <<< buildObj
+
+radar ∷ ∀ i. DSL TP.RadarI → DSL (radar ∷ I|i)
+radar = set "radar" <<< buildObj

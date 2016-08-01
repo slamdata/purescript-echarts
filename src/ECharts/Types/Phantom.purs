@@ -19,6 +19,9 @@ type LegendI =
     , items ∷ I
     , orient ∷ I
     , align ∷ I
+    , itemGap ∷ I
+    , textStyle ∷ I
+    , selectedMode ∷ I
     )
 
 type TooltipI =
@@ -54,7 +57,34 @@ type OptionI =
   , brush ∷ I
   , toolbox ∷ I
   , visualMap ∷ I
+  , radar ∷ I
   )
+
+type RadarI =
+  ( indicators ∷ I
+  , shape ∷ I
+  , splitNumber ∷ I
+  , radarName ∷ I
+  , splitLine ∷ I
+  , splitArea ∷ I
+  , axisLine ∷ I
+  )
+
+type IndicatorsI =
+  ( indicator ∷ I )
+
+type IndicatorI =
+  ( name ∷ I
+  , min ∷ I
+  , max ∷ I
+  )
+
+type RadarNameI =
+  ( show ∷ I
+  , formatter ∷ I
+  , textStyle ∷ I
+  )
+
 
 type VisualMapI =
   ( continuousVisualMap ∷ I
@@ -161,7 +191,7 @@ type SeriesI =
   , bar ∷ I
   , scatter ∷ I
   , effectScatter ∷ I
-  , radar ∷ I
+  , radarSeries ∷ I
   , treeMap ∷ I
   , boxPlot ∷ I
   , candlestick ∷ I
@@ -251,8 +281,14 @@ type EffectScatterI =
   ( name ∷ I
   )
 
-type RadarI =
+type RadarSeriesI =
   ( name ∷ I
+  , items ∷ I
+  , symbol ∷ I
+  , itemStyle ∷ I
+  , lineStylePair ∷ I
+  , areaStylePair ∷ I
+  , axisLine ∷ I
   )
 
 type TreeMapI =
@@ -347,10 +383,16 @@ type AxisPointerI =
   , zlevel ∷ I
   )
 
+type LineStylePairI =
+  ( normalLineStyle ∷ I
+  , emphasisLineStyle ∷ I
+  )
+
 type LineStyleI =
   ( lineType ∷ I
   , width ∷ I
   , color ∷ I
+  , opacity ∷ I
   )
 
 type SplitLineI =
@@ -389,6 +431,7 @@ type IStyleI =
   , opacity ∷ I
   , borderWidth ∷ I
   , borderColor ∷ I
+  , color ∷ I
   )
 
 type TextStyleI =
@@ -398,8 +441,14 @@ type TextStyleI =
   , fontStyle ∷ I
   )
 
+type AreaStylePairI =
+  ( normalAreaStyle ∷ I
+  , emphasisAreaStyle ∷ I
+  )
+
 type AreaStyleI =
   ( color ∷ I
+  , opacity ∷ I
   )
 
 type AxisTickI =
