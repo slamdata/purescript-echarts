@@ -7,10 +7,8 @@
     "express": "^4.11.0"
   },
   "scripts": {
-    "copy-echarts": "cp bower_components/echarts/build/dist/echarts-all.js public/echarts-all.js",
     "build": "pulp browserify --include example/src --to public/build.js",
-    "serve": "node script/serve.js",
-    "example": "npm run copy-echarts && npm run build && npm run serve"
+    "serve": "node script/serve.js"
   },
   "dependencies": {
     "pulp": "^9.0.1",
