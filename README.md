@@ -12,7 +12,7 @@ All basic echarts function are implemented as effectful functions. They are wrap
 `Option` object is constructed using `Writer` monad augmented with phantom rows. I.e. there is no any
 special type for `Option`, `Legend` or `Tooltip`, but they are `DSL PhantomRowsI` where `PhantomRowsI` is phantom row type.
 
-To write a field to objects one should use function from `ECharts.Commands` module. Row label of this function indicates if this function could be used for building particular objects. For example, if you build something like `Pie` series object you can use function `name` because it has type `forall i. String -> DSL (name :: I|i)` and `PieI` has this `name` label in its phantom part, but you can't use `symbol` because its type is `forall i. Symbol -> DSL (symbol :: I|i)` and `PieI` hasn't `symbol label.
+To write a field to objects one should use function from `ECharts.Commands` module. Row label of this function indicates if this function could be used for building particular objects. For example, if you build something like `Pie` series object you can use function `name` because it has type `forall i. String -> DSL (name :: I|i)` and `PieI` has this `name` label in its phantom part, but you can't use `symbol` because its type is `forall i. Symbol -> DSL (symbol :: I|i)` and `PieI` hasn't `symbol` label.
 
 ## Examples
 
