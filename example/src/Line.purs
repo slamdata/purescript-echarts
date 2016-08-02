@@ -8,11 +8,11 @@ import Control.Monad.Eff.Random (RANDOM, random)
 import Control.Monad.Eff.Now (NOW, now)
 
 import Data.Array (head)
-import Data.Either (Either(..), either)
+import Data.Either (either)
 import Data.Maybe (Maybe(..), maybe, fromMaybe)
 import Data.Formatter.DateTime as FDT
 import Data.DateTime as D
-import Data.DateTime.Instant (Instant, toDateTime, unInstant, instant)
+import Data.DateTime.Instant (toDateTime)
 import Data.Time.Duration (Milliseconds(..))
 
 import DOM (DOM)
