@@ -12,6 +12,7 @@ import ECharts.Monad (DSL, set, buildObj, buildSeries, buildArr)
 import ECharts.Types as T
 import ECharts.Types.Phantom (I)
 import ECharts.Types.Phantom as TP
+import ECharts.Internal (undefinedValue)
 
 series ∷ ∀ i. DSL TP.SeriesI → DSL (series ∷ I|i)
 series a = set "series" $ buildSeries a
@@ -66,6 +67,15 @@ right a = set "right" $ T.pixelOrPercentToForeign a
 
 top ∷ ∀ i. T.PixelOrPercent → DSL (top ∷ I|i)
 top a = set "top" $ T.pixelOrPercentToForeign a
+
+topTop ∷ ∀ i. DSL (top ∷ I|i)
+topTop = set "top" $ toForeign "top"
+
+topMiddle ∷ ∀ i. DSL (top ∷ I|i)
+topMiddle = set "top" $ toForeign "middle"
+
+topBottom ∷ ∀ i. DSL (top ∷ I|i)
+topBottom = set "top" $ toForeign "bottom"
 
 bottom ∷ ∀ i. T.PixelOrPercent → DSL (bottom ∷ I|i)
 bottom a = set "bottom" $ T.pixelOrPercentToForeign a
@@ -166,7 +176,7 @@ polarIndex a = set "polarIndex" $ toForeign a
 symbol ∷ ∀ i. T.Symbol → DSL (symbol ∷ I|i)
 symbol a = set "symbol" $ T.symbolToForeign a
 
-symbolSize ∷ ∀ i. T.SymbolSize → DSL (symbolSize ∷ I|i)
+symbolSize ∷ ∀ i. Int → DSL (symbolSize ∷ I|i)
 symbolSize a = set "symbolSize" $ toForeign a
 
 lineStyle ∷ ∀ i. DSL TP.LineStyleI → DSL (lineStyle ∷ I|i)
@@ -264,6 +274,12 @@ splitLine = set "splitLine" <<< buildObj
 
 boundaryGap ∷ ∀ i. T.Point → DSL (boundaryGap ∷ I|i)
 boundaryGap a = set "boundaryGap" $ T.pointToForeign a
+
+disabledBoundaryGap ∷ ∀ i. DSL (boundaryGap ∷ I|i)
+disabledBoundaryGap = set "boundaryGap" $ toForeign false
+
+enabledBoundaryGap ∷ ∀ i. DSL (boundaryGap ∷ I|i)
+enabledBoundaryGap = set "boundaryGap" $ toForeign true
 
 hoverAnimationEnabled ∷ ∀ i. Boolean → DSL (hoverAnimation ∷ I|i)
 hoverAnimationEnabled a = set "hoverAnimation" $ toForeign a
@@ -508,6 +524,12 @@ emphasisLineStyle = set "emphasis" <<< buildObj
 leftCenter ∷ ∀ i. DSL (left ∷ I|i)
 leftCenter = set "left" $ toForeign "center"
 
+leftLeft ∷ ∀ i. DSL (left ∷ I|i)
+leftLeft = set "left" $ toForeign "left"
+
+leftRight ∷ ∀ i. DSL (left ∷ I|i)
+leftRight = set "left" $ toForeign "right"
+
 itemGap ∷ ∀ i. Int → DSL (itemGap ∷ I|i)
 itemGap = set "itemGap" <<< toForeign
 
@@ -540,3 +562,81 @@ emphasisAreaStyle = set "emphasis" <<< buildObj
 
 radar ∷ ∀ i. DSL TP.RadarI → DSL (radar ∷ I|i)
 radar = set "radar" <<< buildObj
+
+ascending ∷ ∀ i. DSL (sort ∷ I|i)
+ascending = set "sort" $ toForeign "ascending"
+
+descending ∷ ∀ i. DSL (sort ∷ I|i)
+descending = set "sort" $ toForeign "descending"
+
+animationDurationUpdate ∷ ∀ i. Int → DSL (animationDurationUpdate ∷ I|i)
+animationDurationUpdate = set "animationDurationUpdate" <<< toForeign
+
+animationEasingUpdateQuinticInOut ∷ ∀ i. DSL (animationEasingUpdate ∷ I|i)
+animationEasingUpdateQuinticInOut = set "animationEasingUpdate" $ toForeign "quinticInOut"
+
+roam ∷ ∀ i. Boolean → DSL (roam ∷ I|i)
+roam = set "roam" <<< toForeign
+
+edgeSymbols ∷ ∀ i. DSL TP.EdgeSymbolsI → DSL (edgeSymbols ∷ I|i)
+edgeSymbols = set "edgeSymbol" <<< buildArr
+
+circleEdgeSymbol ∷ ∀ i. DSL (edgeSymbol ∷ I|i)
+circleEdgeSymbol = set "" $ toForeign "circle"
+
+arrowEdgeSymbol ∷ ∀ i. DSL (edgeSymbol ∷ I|i)
+arrowEdgeSymbol = set "" $ toForeign "arrow"
+
+edgeSymbolSize ∷ ∀ i. Int → DSL (edgeSymbolSize ∷ I|i)
+edgeSymbolSize = set "edgeSymbolSize" <<< toForeign
+
+edgeSymbolSizes ∷ ∀ i. Int → Int → DSL (edgeSymbolSize ∷ I|i)
+edgeSymbolSizes a b = set "edgeSymbolSize" $ toForeign [a, b]
+
+buildLinks ∷ ∀ i. DSL TP.LinksI → DSL (links ∷ I|i)
+buildLinks = set "links" <<< buildArr
+
+addLink ∷ ∀ i. DSL TP.LinkI → DSL (link ∷ I|i)
+addLink = set "" <<< buildObj
+
+edgeLabel ∷ ∀ i. DSL TP.EdgeLabelI → DSL (edgeLabel ∷ I|i)
+edgeLabel = set "edgeLabel" <<< buildObj
+
+normalEdgeLabel ∷ ∀ i. DSL TP.EdgeLabelInnerI → DSL (normalEdgeLabel ∷ I|i)
+normalEdgeLabel = set "normal" <<< buildObj
+
+emphasisEdgeLabel ∷ ∀ i. DSL TP.EdgeLabelInnerI → DSL (emphasisEdgeLabel ∷ I|i)
+emphasisEdgeLabel = set "emphasis" <<< buildObj
+
+x ∷ ∀ i. Number → DSL (x ∷ I|i)
+x = set "x" <<< toForeign
+
+y ∷ ∀ i. Number → DSL (y ∷ I|i)
+y = set "y" <<< toForeign
+
+curveness ∷ ∀ i. Number → DSL (curveness ∷ I|i)
+curveness = set "curveness" <<< toForeign
+
+symbolSizes ∷ ∀ i. Int → Int → DSL (symbolSize ∷ I|i)
+symbolSizes a b = set "symbolSize" $ toForeign [a, b]
+
+sourceIx ∷ ∀ i. Int → DSL (source ∷ I|i)
+sourceIx = set "source" <<< toForeign
+
+targetIx ∷ ∀ i. Int → DSL (target ∷ I|i)
+targetIx = set "target" <<< toForeign
+
+sourceName ∷ ∀ i. String → DSL (source ∷ I|i)
+sourceName = set "source" <<< toForeign
+
+targetName ∷ ∀ i. String → DSL (target ∷ I|i)
+targetName = set "target" <<< toForeign
+
+layoutNone ∷ ∀ i. DSL (layout ∷ I|i)
+layoutNone = set "layout" $ toForeign "none"
+
+missingSeries ∷ ∀ i. DSL (missing ∷ I|i)
+missingSeries = set "" undefinedValue
+
+missingItem ∷ ∀ i. DSL (item ∷ I|i)
+missingItem = set "" undefinedValue

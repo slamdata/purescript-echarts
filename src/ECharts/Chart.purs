@@ -3,6 +3,8 @@ module ECharts.Chart
   , setOption
   , resetOption
   , resize
+  , dispose
+  , clear
   ) where
 
 import Prelude
@@ -64,3 +66,24 @@ resize
   ⇒ Chart
   → m Unit
 resize chart = liftEff $ resizeImpl chart
+
+
+foreign import clearImpl
+  ∷ ∀ e. Chart → Eff (echarts ∷ ECHARTS|e) Unit
+
+clear
+  ∷ ∀ m e
+  . MonadEff (echarts ∷ ECHARTS|e) m
+  ⇒ Chart
+  → m Unit
+clear chart = liftEff $ clearImpl chart
+
+foreign import disposeImpl
+  ∷ ∀ e. Chart → Eff (echarts ∷ ECHARTS|e) Unit
+
+dispose
+  ∷ ∀ m e
+  . MonadEff (echarts ∷ ECHARTS|e) m
+  ⇒ Chart
+  → m Unit
+dispose chart = liftEff $ disposeImpl chart

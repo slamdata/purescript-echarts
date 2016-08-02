@@ -82,13 +82,13 @@ options sinData cosData = do
     E.scatter do
       E.name "sin"
       E.large true
-      E.symbolSize $ ET.numSymbolSize 3.0
+      E.symbolSize 3
       E.items sinData
 
     E.scatter do
       E.name "cos"
       E.large true
-      E.symbolSize $ ET.numSymbolSize 2.0
+      E.symbolSize 2
       E.items cosData
 
 chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION, random ∷ RANDOM|e) Unit

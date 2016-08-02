@@ -10,3 +10,5 @@ exports.unsafeSetField = function(obj) {
 exports.emptyObject = function() {
     return {};
 };
+
+exports.undefinedValue = undefined;

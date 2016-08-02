@@ -30,3 +30,17 @@ exports.resizeImpl = function(chart) {
         return {};
     };
 };
+
+exports.clearImpl = function(chart) {
+    return function() {
+        chart.clear();
+        return {};
+    };
+};
+
+exports.disposeImpl = function(chart) {
+    return function() {
+        chart.dispose();
+        return {};
+    };
+};

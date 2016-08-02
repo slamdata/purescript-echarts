@@ -9,3 +9,6 @@ foreign import unsafeSetField
 
 foreign import emptyObject
   ∷ Unit → Foreign
+
+foreign import undefinedValue
+  ∷ Foreign

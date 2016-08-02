@@ -58,6 +58,8 @@ type OptionI =
   , toolbox ∷ I
   , visualMap ∷ I
   , radar ∷ I
+  , animationDurationUpdate ∷ I
+  , animationEasingUpdate ∷ I
   )
 
 type RadarI =
@@ -203,6 +205,7 @@ type SeriesI =
   , sankey ∷ I
   , funnel ∷ I
   , gauge ∷ I
+  , missing ∷ I
   )
 
 
@@ -220,6 +223,8 @@ type AxisI i =
   , splitArea ∷ I
   , axisLine ∷ I
   , inverse ∷ I
+  , min ∷ I
+  , max ∷ I
   | i)
 
 type SplitAreaI =
@@ -251,6 +256,7 @@ type LineSeriesI =
   , items ∷ I
   , hoverAnimation ∷ I
   , showSymbol ∷ I
+  , stack ∷ I
   )
 
 type BarSeriesI =
@@ -301,6 +307,7 @@ type BoxPlotI =
 
 type CandlestickI =
   ( name ∷ I
+  , items ∷ I
   )
 
 type HeatMapI =
@@ -321,7 +328,39 @@ type LinesI =
 
 type GraphI =
   ( name ∷ I
+  , layout ∷ I
+  , symbolSize ∷ I
+  , roam ∷ I
+  , label ∷ I
+  , edgeSymbols ∷ I
+  , edgeSymbolSize ∷ I
+  , edgeLabel ∷ I
+  , items ∷ I
+  , links ∷ I
+  , lineStylePair ∷ I
   )
+
+type EdgeLabelI =
+  ( normalEdgeLabel ∷ I
+  , emphasisEdgeLabel ∷ I
+  )
+
+type EdgeLabelInnerI =
+  ( textStyle ∷ I )
+
+type LinksI =
+  ( link ∷ I )
+
+type LinkI =
+  ( source ∷ I
+  , target ∷ I
+  , label ∷ I
+  , lineStylePair ∷ I
+  , symbolSize ∷ I
+  )
+
+type EdgeSymbolsI =
+  ( edgeSymbol ∷ I )
 
 type SankeyI =
   ( name ∷ I
@@ -336,6 +375,7 @@ type FunnelI =
   , items ∷ I
   , itemStyle ∷ I
   , maxSize ∷ I
+  , sort ∷ I
   )
 
 type GaugeI =
@@ -374,6 +414,8 @@ type ItemI =
   , label ∷ I
   , itemStyle ∷ I
   , selected ∷ I
+  , x ∷ I
+  , y ∷ I
   )
 
 type AxisPointerI =
@@ -393,6 +435,7 @@ type LineStyleI =
   , width ∷ I
   , color ∷ I
   , opacity ∷ I
+  , curveness ∷ I
   )
 
 type SplitLineI =

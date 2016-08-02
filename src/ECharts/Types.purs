@@ -49,9 +49,6 @@ axisTypeToForeign = toForeign <<< case _ of
   Time → "time"
   Log → "log"
 
-numSymbolSize ∷ Number → SymbolSize
-numSymbolSize = SymbolSize <<< toForeign
-
 data Symbol
   = Circle
   | Rect
@@ -152,4 +149,3 @@ horizontalPositionToForeign = toForeign <<< case _ of
   CenterHP → "center"
 
 newtype Item = Item Foreign
-newtype SymbolSize = SymbolSize Foreign
