@@ -24,4 +24,16 @@ resetOption :: forall m e. MonadEff (echarts :: ECHARTS, err :: EXCEPTION | e) m
 resize :: forall m e. MonadEff (echarts :: ECHARTS | e) m => Chart -> m Unit
 ```
 
+#### `clear`
+
+``` purescript
+clear :: forall m e. MonadEff (echarts :: ECHARTS | e) m => Chart -> m Unit
+```
+
+#### `dispose`
+
+``` purescript
+dispose :: forall m e. MonadEff (echarts :: ECHARTS | e) m => Chart -> m Unit
+```
+
 

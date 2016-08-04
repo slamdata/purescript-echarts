@@ -48,6 +48,18 @@ color :: forall i. Color -> DSL (color :: I | i)
 colors :: forall i f. Foldable f => f Color -> DSL (color :: I | i)
 ```
 
+#### `rgbaColors`
+
+``` purescript
+rgbaColors :: forall i f. Foldable f => f Color -> DSL (color :: I | i)
+```
+
+#### `rgbaColor`
+
+``` purescript
+rgbaColor :: forall i. Color -> DSL (color :: I | i)
+```
+
 #### `backgroundColor`
 
 ``` purescript
@@ -96,10 +108,34 @@ right :: forall i. PixelOrPercent -> DSL (right :: I | i)
 top :: forall i. PixelOrPercent -> DSL (top :: I | i)
 ```
 
+#### `topTop`
+
+``` purescript
+topTop :: forall i. DSL (top :: I | i)
+```
+
+#### `topMiddle`
+
+``` purescript
+topMiddle :: forall i. DSL (top :: I | i)
+```
+
+#### `topBottom`
+
+``` purescript
+topBottom :: forall i. DSL (top :: I | i)
+```
+
 #### `bottom`
 
 ``` purescript
 bottom :: forall i. PixelOrPercent -> DSL (bottom :: I | i)
+```
+
+#### `bottomPx`
+
+``` purescript
+bottomPx :: forall i. Int -> DSL (bottom :: I | i)
 ```
 
 #### `orient`
@@ -264,6 +300,12 @@ funnel :: forall i. DSL FunnelI -> DSL (funnel :: I | i)
 gauge :: forall i. DSL GaugeI -> DSL (gauge :: I | i)
 ```
 
+#### `radarSeries`
+
+``` purescript
+radarSeries :: forall i. DSL RadarSeriesI -> DSL (radarSeries :: I | i)
+```
+
 #### `xAxisIndex`
 
 ``` purescript
@@ -291,7 +333,7 @@ symbol :: forall i. Symbol -> DSL (symbol :: I | i)
 #### `symbolSize`
 
 ``` purescript
-symbolSize :: forall i. SymbolSize -> DSL (symbolSize :: I | i)
+symbolSize :: forall i. Int -> DSL (symbolSize :: I | i)
 ```
 
 #### `lineStyle`
@@ -364,6 +406,12 @@ axisType :: forall i. AxisType -> DSL (axisType :: I | i)
 
 ``` purescript
 value :: forall i. Number -> DSL (value :: I | i)
+```
+
+#### `values`
+
+``` purescript
+values :: forall i f. Foldable f => f Number -> DSL (value :: I | i)
 ```
 
 #### `valuePair`
@@ -478,6 +526,18 @@ splitLine :: forall i. DSL SplitLineI -> DSL (splitLine :: I | i)
 
 ``` purescript
 boundaryGap :: forall i. Point -> DSL (boundaryGap :: I | i)
+```
+
+#### `disabledBoundaryGap`
+
+``` purescript
+disabledBoundaryGap :: forall i. DSL (boundaryGap :: I | i)
+```
+
+#### `enabledBoundaryGap`
+
+``` purescript
+enabledBoundaryGap :: forall i. DSL (boundaryGap :: I | i)
 ```
 
 #### `hoverAnimationEnabled`
@@ -946,6 +1006,348 @@ borderColor :: forall i. Color -> DSL (borderColor :: I | i)
 
 ``` purescript
 borderWidth :: forall i. Int -> DSL (borderWidth :: I | i)
+```
+
+#### `normalLineStyle`
+
+``` purescript
+normalLineStyle :: forall i. DSL LineStyleI -> DSL (normalLineStyle :: I | i)
+```
+
+#### `emphasisLineStyle`
+
+``` purescript
+emphasisLineStyle :: forall i. DSL LineStyleI -> DSL (emphasisLineStyle :: I | i)
+```
+
+#### `leftCenter`
+
+``` purescript
+leftCenter :: forall i. DSL (left :: I | i)
+```
+
+#### `leftLeft`
+
+``` purescript
+leftLeft :: forall i. DSL (left :: I | i)
+```
+
+#### `leftRight`
+
+``` purescript
+leftRight :: forall i. DSL (left :: I | i)
+```
+
+#### `itemGap`
+
+``` purescript
+itemGap :: forall i. Int -> DSL (itemGap :: I | i)
+```
+
+#### `indicators`
+
+``` purescript
+indicators :: forall i. DSL IndicatorsI -> DSL (indicators :: I | i)
+```
+
+#### `indicator`
+
+``` purescript
+indicator :: forall i. DSL IndicatorI -> DSL (indicator :: I | i)
+```
+
+#### `radarName`
+
+``` purescript
+radarName :: forall i. DSL RadarNameI -> DSL (radarName :: I | i)
+```
+
+#### `polygonShape`
+
+``` purescript
+polygonShape :: forall i. DSL (shape :: I | i)
+```
+
+#### `circleShape`
+
+``` purescript
+circleShape :: forall i. DSL (shape :: I | i)
+```
+
+#### `lineStylePair`
+
+``` purescript
+lineStylePair :: forall i. DSL LineStylePairI -> DSL (lineStylePair :: I | i)
+```
+
+#### `areaStylePair`
+
+``` purescript
+areaStylePair :: forall i. DSL AreaStylePairI -> DSL (areaStylePair :: I | i)
+```
+
+#### `normalAreaStyle`
+
+``` purescript
+normalAreaStyle :: forall i. DSL AreaStyleI -> DSL (normalAreaStyle :: I | i)
+```
+
+#### `emphasisAreaStyle`
+
+``` purescript
+emphasisAreaStyle :: forall i. DSL AreaStyleI -> DSL (emphasisAreaStyle :: I | i)
+```
+
+#### `radar`
+
+``` purescript
+radar :: forall i. DSL RadarI -> DSL (radar :: I | i)
+```
+
+#### `ascending`
+
+``` purescript
+ascending :: forall i. DSL (sort :: I | i)
+```
+
+#### `descending`
+
+``` purescript
+descending :: forall i. DSL (sort :: I | i)
+```
+
+#### `animationDurationUpdate`
+
+``` purescript
+animationDurationUpdate :: forall i. Int -> DSL (animationDurationUpdate :: I | i)
+```
+
+#### `animationEasingUpdateQuinticInOut`
+
+``` purescript
+animationEasingUpdateQuinticInOut :: forall i. DSL (animationEasingUpdate :: I | i)
+```
+
+#### `roam`
+
+``` purescript
+roam :: forall i. Boolean -> DSL (roam :: I | i)
+```
+
+#### `edgeSymbols`
+
+``` purescript
+edgeSymbols :: forall i. DSL EdgeSymbolsI -> DSL (edgeSymbols :: I | i)
+```
+
+#### `circleEdgeSymbol`
+
+``` purescript
+circleEdgeSymbol :: forall i. DSL (edgeSymbol :: I | i)
+```
+
+#### `arrowEdgeSymbol`
+
+``` purescript
+arrowEdgeSymbol :: forall i. DSL (edgeSymbol :: I | i)
+```
+
+#### `edgeSymbolSize`
+
+``` purescript
+edgeSymbolSize :: forall i. Int -> DSL (edgeSymbolSize :: I | i)
+```
+
+#### `edgeSymbolSizes`
+
+``` purescript
+edgeSymbolSizes :: forall i. Int -> Int -> DSL (edgeSymbolSize :: I | i)
+```
+
+#### `buildLinks`
+
+``` purescript
+buildLinks :: forall i. DSL LinksI -> DSL (links :: I | i)
+```
+
+#### `addLink`
+
+``` purescript
+addLink :: forall i. DSL LinkI -> DSL (link :: I | i)
+```
+
+#### `edgeLabel`
+
+``` purescript
+edgeLabel :: forall i. DSL EdgeLabelI -> DSL (edgeLabel :: I | i)
+```
+
+#### `normalEdgeLabel`
+
+``` purescript
+normalEdgeLabel :: forall i. DSL EdgeLabelInnerI -> DSL (normalEdgeLabel :: I | i)
+```
+
+#### `emphasisEdgeLabel`
+
+``` purescript
+emphasisEdgeLabel :: forall i. DSL EdgeLabelInnerI -> DSL (emphasisEdgeLabel :: I | i)
+```
+
+#### `x`
+
+``` purescript
+x :: forall i. Number -> DSL (x :: I | i)
+```
+
+#### `y`
+
+``` purescript
+y :: forall i. Number -> DSL (y :: I | i)
+```
+
+#### `curveness`
+
+``` purescript
+curveness :: forall i. Number -> DSL (curveness :: I | i)
+```
+
+#### `symbolSizes`
+
+``` purescript
+symbolSizes :: forall i. Int -> Int -> DSL (symbolSize :: I | i)
+```
+
+#### `symbolSizeArrFunc`
+
+``` purescript
+symbolSizeArrFunc :: forall i. (Array Number -> Number) -> DSL (symbolSize :: I | i)
+```
+
+#### `sourceIx`
+
+``` purescript
+sourceIx :: forall i. Int -> DSL (source :: I | i)
+```
+
+#### `targetIx`
+
+``` purescript
+targetIx :: forall i. Int -> DSL (target :: I | i)
+```
+
+#### `sourceName`
+
+``` purescript
+sourceName :: forall i. String -> DSL (source :: I | i)
+```
+
+#### `targetName`
+
+``` purescript
+targetName :: forall i. String -> DSL (target :: I | i)
+```
+
+#### `layoutNone`
+
+``` purescript
+layoutNone :: forall i. DSL (layout :: I | i)
+```
+
+#### `missingSeries`
+
+``` purescript
+missingSeries :: forall i. DSL (missing :: I | i)
+```
+
+#### `missingItem`
+
+``` purescript
+missingItem :: forall i. DSL (item :: I | i)
+```
+
+#### `rotate`
+
+``` purescript
+rotate :: forall i. Number -> DSL (rotate :: I | i)
+```
+
+#### `fontFamily`
+
+``` purescript
+fontFamily :: forall i. String -> DSL (fontFamily :: I | i)
+```
+
+#### `yAxes`
+
+``` purescript
+yAxes :: forall i. DSL YAxesI -> DSL (yAxis :: I | i)
+```
+
+#### `xAxes`
+
+``` purescript
+xAxes :: forall i. DSL XAxesI -> DSL (xAxis :: I | i)
+```
+
+#### `addYAxis`
+
+``` purescript
+addYAxis :: forall i. DSL YAxisI -> DSL (addYAxis :: I | i)
+```
+
+#### `addXAxis`
+
+``` purescript
+addXAxis :: forall i. DSL XAxisI -> DSL (addXAxis :: I | i)
+```
+
+#### `interval`
+
+``` purescript
+interval :: forall i. Int -> DSL (interval :: I | i)
+```
+
+#### `lineAxisPointer`
+
+``` purescript
+lineAxisPointer :: forall i. DSL (axisPointerType :: I | i)
+```
+
+#### `crossAxisPointer`
+
+``` purescript
+crossAxisPointer :: forall i. DSL (axisPointerType :: I | i)
+```
+
+#### `solidLine`
+
+``` purescript
+solidLine :: forall i. DSL (lineType :: I | i)
+```
+
+#### `dashedLine`
+
+``` purescript
+dashedLine :: forall i. DSL (lineType :: I | i)
+```
+
+#### `dottedLine`
+
+``` purescript
+dottedLine :: forall i. DSL (lineType :: I | i)
+```
+
+#### `widthNum`
+
+``` purescript
+widthNum :: forall i. Number -> DSL (width :: I | i)
+```
+
+#### `crossStyle`
+
+``` purescript
+crossStyle :: forall i. DSL CrossStyleI -> DSL (crossStyle :: I | i)
 ```
 
 

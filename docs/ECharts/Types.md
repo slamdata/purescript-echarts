@@ -72,12 +72,6 @@ data AxisType
 axisTypeToForeign :: AxisType -> Foreign
 ```
 
-#### `numSymbolSize`
-
-``` purescript
-numSymbolSize :: Number -> SymbolSize
-```
-
 #### `Symbol`
 
 ``` purescript
@@ -90,6 +84,7 @@ data Symbol
   | Pin
   | Arrow
   | EmptyCircle
+  | None
 ```
 
 #### `symbolToForeign`
@@ -213,13 +208,6 @@ horizontalPositionToForeign :: HorizontalPosition -> Foreign
 ``` purescript
 newtype Item
   = Item Foreign
-```
-
-#### `SymbolSize`
-
-``` purescript
-newtype SymbolSize
-  = SymbolSize Foreign
 ```
 
 

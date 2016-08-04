@@ -12,4 +12,10 @@ unsafeSetField :: Foreign -> String -> Foreign -> Foreign
 emptyObject :: Unit -> Foreign
 ```
 
+#### `undefinedValue`
+
+``` purescript
+undefinedValue :: Foreign
+```
+
 

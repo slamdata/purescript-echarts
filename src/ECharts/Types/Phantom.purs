@@ -36,6 +36,13 @@ type TooltipI =
   , textStyle ∷ I
   )
 
+type CrossStyleI =
+  ( color ∷ I
+  , width ∷ I
+  , lineType ∷ I
+  , textStyle ∷ I
+  )
+
 type TitleI =
   ( text ∷ I
   , left ∷ I
@@ -289,6 +296,8 @@ type ScatterI =
   , items ∷ I
   , large ∷ I
   , symbolSize ∷ I
+  , itemStyle ∷ I
+  , symbol ∷ I
   )
 
 type EffectScatterI =
@@ -432,6 +441,7 @@ type AxisPointerI =
   , zlevel ∷ I
   , axisPointerType ∷ I
   , lineStyle ∷ I
+  , crossStyle ∷ I
   )
 
 type LineStylePairI =

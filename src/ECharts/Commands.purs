@@ -623,6 +623,9 @@ curveness = set "curveness" <<< toForeign
 symbolSizes ∷ ∀ i. Int → Int → DSL (symbolSize ∷ I|i)
 symbolSizes a b = set "symbolSize" $ toForeign [a, b]
 
+symbolSizeArrFunc ∷ ∀ i. (Array Number → Number) → DSL (symbolSize ∷ I|i)
+symbolSizeArrFunc fn = set "symbolSize" $ toForeign fn
+
 sourceIx ∷ ∀ i. Int → DSL (source ∷ I|i)
 sourceIx = set "source" <<< toForeign
 
@@ -668,6 +671,9 @@ interval = set "interval" <<< toForeign
 lineAxisPointer ∷ ∀ i. DSL (axisPointerType ∷ I|i)
 lineAxisPointer = set "type" $ toForeign "line"
 
+crossAxisPointer ∷ ∀ i. DSL (axisPointerType ∷ I|i)
+crossAxisPointer = set "type" $ toForeign "cross"
+
 solidLine ∷ ∀ i. DSL (lineType ∷ I|i)
 solidLine = set "type" $ toForeign "solid"
 
@@ -679,3 +685,6 @@ dottedLine = set "type" $ toForeign "dotted"
 
 widthNum ∷ ∀ i. Number → DSL (width ∷ I|i)
 widthNum = set "width" <<< toForeign
+
+crossStyle ∷ ∀ i. DSL TP.CrossStyleI → DSL (crossStyle ∷ I|i)
+crossStyle = set "crossStyle" <<< buildObj
