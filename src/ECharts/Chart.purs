@@ -87,3 +87,13 @@ dispose
   ⇒ Chart
   → m Unit
 dispose chart = liftEff $ disposeImpl chart
+
+foreign import getOptionImpl
+  ∷ ∀ e. Chart → Eff (echarts ∷ ECHARTS|e) Foreign
+
+getOption
+  ∷ ∀ m e
+  . MonadEff (echarts ∷ ECHARTS|e) m
+  ⇒ Chart
+  → m Foreign
+getOption chart = liftEff $ getOptionImpl chart

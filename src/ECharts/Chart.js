@@ -45,3 +45,9 @@ exports.disposeImpl = function(chart) {
         return {};
     };
 };
+
+exports.getOptionImpl = function(chart) {
+    return function() {
+        return chart.getOption();
+    };
+};
