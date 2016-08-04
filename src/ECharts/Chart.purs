@@ -5,6 +5,7 @@ module ECharts.Chart
   , resize
   , dispose
   , clear
+  , getOption
   ) where
 
 import Prelude
