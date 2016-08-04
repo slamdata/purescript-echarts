@@ -33,6 +33,7 @@ type TooltipI =
   , zlevel ∷ I
   , formatter ∷ I
   , animation ∷ I
+  , textStyle ∷ I
   )
 
 type TitleI =
@@ -255,9 +256,9 @@ type LineSeriesI =
   , polarIndex ∷ I
   , symbol ∷ I
   , symbolSize ∷ I
-  , lineStyle ∷ I
+  , lineStylePair ∷ I
   , itemStyle ∷ I
-  , areaStyle ∷ I
+  , areaStylePair ∷ I
   , smooth ∷ I
   , items ∷ I
   , hoverAnimation ∷ I
@@ -428,8 +429,9 @@ type ItemI =
 type AxisPointerI =
   ( show ∷ I
   , pointerType ∷ I
-  , lineStyle ∷ I
   , zlevel ∷ I
+  , axisPointerType ∷ I
+  , lineStyle ∷ I
   )
 
 type LineStylePairI =

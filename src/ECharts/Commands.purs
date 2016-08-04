@@ -664,3 +664,18 @@ addXAxis = set "" <<< buildObj
 
 interval ∷ ∀ i. Int → DSL (interval ∷ I|i)
 interval = set "interval" <<< toForeign
+
+lineAxisPointer ∷ ∀ i. DSL (axisPointerType ∷ I|i)
+lineAxisPointer = set "type" $ toForeign "line"
+
+solidLine ∷ ∀ i. DSL (lineType ∷ I|i)
+solidLine = set "type" $ toForeign "solid"
+
+dashedLine ∷ ∀ i. DSL (lineType ∷ I|i)
+dashedLine = set "type" $ toForeign "dashed"
+
+dottedLine ∷ ∀ i. DSL (lineType ∷ I|i)
+dottedLine = set "type" $ toForeign "dotted"
+
+widthNum ∷ ∀ i. Number → DSL (width ∷ I|i)
+widthNum = set "width" <<< toForeign
