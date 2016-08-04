@@ -225,6 +225,7 @@ type AxisI i =
   , inverse ∷ I
   , min ∷ I
   , max ∷ I
+  , interval ∷ I
   | i)
 
 type SplitAreaI =
@@ -235,6 +236,11 @@ type AxisLineI =
   , lineStyle ∷ I
   )
 
+type YAxesI =
+  ( addYAxis ∷ I )
+
+type XAxesI =
+  ( addXAxis ∷ I )
 
 type XAxisI =
   AxisI (horizontalPosition ∷ I)
@@ -274,6 +280,7 @@ type PieSeriesI =
   , startAngle ∷ I
   , selectedMode ∷ I
   , label ∷ I
+  , labelLine ∷ I
   )
 
 type ScatterI =
@@ -482,6 +489,7 @@ type TextStyleI =
   , fontWeight ∷ I
   , fontSize ∷ I
   , fontStyle ∷ I
+  , fontFamily ∷ I
   )
 
 type AreaStylePairI =
@@ -504,6 +512,8 @@ type AxisTickI =
 type AxisLabelI =
   ( show ∷ I
   , formatter ∷ I
+  , rotate ∷ I
+  , textStyle ∷ I
   )
 
 type DetailI =

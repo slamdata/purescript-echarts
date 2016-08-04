@@ -80,6 +80,9 @@ topBottom = set "top" $ toForeign "bottom"
 bottom ∷ ∀ i. T.PixelOrPercent → DSL (bottom ∷ I|i)
 bottom a = set "bottom" $ T.pixelOrPercentToForeign a
 
+bottomPx ∷ ∀ i. Int → DSL (bottom ∷ I|i)
+bottomPx = set "bottom" <<< toForeign
+
 orient ∷ ∀ i. T.Orient → DSL (orient ∷ I|i)
 orient a = set "orient" $ T.orientToForeign a
 
@@ -640,3 +643,24 @@ missingSeries = set "" undefinedValue
 
 missingItem ∷ ∀ i. DSL (item ∷ I|i)
 missingItem = set "" undefinedValue
+
+rotate ∷ ∀ i. Number → DSL (rotate ∷ I|i)
+rotate = set "rotate" <<< toForeign
+
+fontFamily ∷ ∀ i. String → DSL (fontFamily ∷ I|i)
+fontFamily = set "fontFamily" <<< toForeign
+
+yAxes ∷ ∀ i. DSL TP.YAxesI → DSL (yAxis ∷ I|i)
+yAxes = set "yAxis" <<< buildArr
+
+xAxes ∷ ∀ i. DSL TP.XAxesI → DSL (xAxis ∷ I|i)
+xAxes = set "xAxis" <<< buildArr
+
+addYAxis ∷ ∀ i. DSL TP.YAxisI → DSL (addYAxis ∷ I|i)
+addYAxis = set "" <<< buildObj
+
+addXAxis ∷ ∀ i. DSL TP.XAxisI → DSL (addXAxis ∷ I|i)
+addXAxis = set "" <<< buildObj
+
+interval ∷ ∀ i. Int → DSL (interval ∷ I|i)
+interval = set "interval" <<< toForeign
