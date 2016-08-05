@@ -414,6 +414,24 @@ value :: forall i. Number -> DSL (value :: I | i)
 values :: forall i f. Foldable f => f Number -> DSL (value :: I | i)
 ```
 
+#### `buildValues`
+
+``` purescript
+buildValues :: forall i. DSL ValuesI -> DSL (value :: I | i)
+```
+
+#### `addValue`
+
+``` purescript
+addValue :: forall i. Number -> DSL (addValue :: I | i)
+```
+
+#### `missingValue`
+
+``` purescript
+missingValue :: forall i. DSL (addValue :: I | i)
+```
+
 #### `valuePair`
 
 ``` purescript
@@ -567,13 +585,13 @@ label :: forall i. DSL LabelI -> DSL (label :: I | i)
 #### `normalLabel`
 
 ``` purescript
-normalLabel :: forall i. DSL LabelInnerI -> DSL (normalLabel :: I | i)
+normalLabel :: forall i. DSL LabelInnerI -> DSL (normal :: R LabelInnerI | i)
 ```
 
 #### `emphasisLabel`
 
 ``` purescript
-emphasisLabel :: forall i. DSL LabelInnerI -> DSL (emphasisLabel :: I | i)
+emphasisLabel :: forall i. DSL LabelInnerI -> DSL (emphasis :: R LabelInnerI | i)
 ```
 
 #### `selected`
@@ -819,13 +837,13 @@ itemStyle :: forall i. DSL ItemStyleI -> DSL (itemStyle :: I | i)
 #### `normalItemStyle`
 
 ``` purescript
-normalItemStyle :: forall i. DSL IStyleI -> DSL (normalItemStyle :: I | i)
+normalItemStyle :: forall i. DSL IStyleI -> DSL (normal :: R IStyleI | i)
 ```
 
 #### `emphasisItemStyle`
 
 ``` purescript
-emphasisItemStyle :: forall i. DSL IStyleI -> DSL (emphasisItemStyle :: I | i)
+emphasisItemStyle :: forall i. DSL IStyleI -> DSL (emphasis :: R IStyleI | i)
 ```
 
 #### `barBorderWidth`
@@ -969,13 +987,13 @@ labelLine :: forall i. DSL LabelLineI -> DSL (labelLine :: I | i)
 #### `normalLabelLine`
 
 ``` purescript
-normalLabelLine :: forall i. DSL LabelLineInnerI -> DSL (normalLabelLine :: I | i)
+normalLabelLine :: forall i. DSL LabelLineInnerI -> DSL (normal :: R LabelLineInnerI | i)
 ```
 
 #### `emphasisLabelLine`
 
 ``` purescript
-emphasisLabelLine :: forall i. DSL LabelLineInnerI -> DSL (emphasisLabelLine :: I | i)
+emphasisLabelLine :: forall i. DSL LabelLineInnerI -> DSL (emphasis :: R LabelLineInnerI | i)
 ```
 
 #### `opacity`
@@ -1011,13 +1029,13 @@ borderWidth :: forall i. Int -> DSL (borderWidth :: I | i)
 #### `normalLineStyle`
 
 ``` purescript
-normalLineStyle :: forall i. DSL LineStyleI -> DSL (normalLineStyle :: I | i)
+normalLineStyle :: forall i. DSL LineStyleI -> DSL (normal :: R LineStyleI | i)
 ```
 
 #### `emphasisLineStyle`
 
 ``` purescript
-emphasisLineStyle :: forall i. DSL LineStyleI -> DSL (emphasisLineStyle :: I | i)
+emphasisLineStyle :: forall i. DSL LineStyleI -> DSL (emphasis :: R LineStyleI | i)
 ```
 
 #### `leftCenter`
@@ -1089,13 +1107,13 @@ areaStylePair :: forall i. DSL AreaStylePairI -> DSL (areaStylePair :: I | i)
 #### `normalAreaStyle`
 
 ``` purescript
-normalAreaStyle :: forall i. DSL AreaStyleI -> DSL (normalAreaStyle :: I | i)
+normalAreaStyle :: forall i. DSL AreaStyleI -> DSL (normal :: R AreaStyleI | i)
 ```
 
 #### `emphasisAreaStyle`
 
 ``` purescript
-emphasisAreaStyle :: forall i. DSL AreaStyleI -> DSL (emphasisAreaStyle :: I | i)
+emphasisAreaStyle :: forall i. DSL AreaStyleI -> DSL (emphasis :: R AreaStyleI | i)
 ```
 
 #### `radar`
@@ -1185,13 +1203,13 @@ edgeLabel :: forall i. DSL EdgeLabelI -> DSL (edgeLabel :: I | i)
 #### `normalEdgeLabel`
 
 ``` purescript
-normalEdgeLabel :: forall i. DSL EdgeLabelInnerI -> DSL (normalEdgeLabel :: I | i)
+normalEdgeLabel :: forall i. DSL EdgeLabelInnerI -> DSL (normal :: R EdgeLabelInnerI | i)
 ```
 
 #### `emphasisEdgeLabel`
 
 ``` purescript
-emphasisEdgeLabel :: forall i. DSL EdgeLabelInnerI -> DSL (emphasisEdgeLabel :: I | i)
+emphasisEdgeLabel :: forall i. DSL EdgeLabelInnerI -> DSL (emphasis :: R EdgeLabelInnerI | i)
 ```
 
 #### `x`
@@ -1348,6 +1366,24 @@ widthNum :: forall i. Number -> DSL (width :: I | i)
 
 ``` purescript
 crossStyle :: forall i. DSL CrossStyleI -> DSL (crossStyle :: I | i)
+```
+
+#### `normal`
+
+``` purescript
+normal :: forall p i. DSL p -> DSL (normal :: R p | i)
+```
+
+#### `emphasis`
+
+``` purescript
+emphasis :: forall p i. DSL p -> DSL (emphasis :: R p | i)
+```
+
+#### `height`
+
+``` purescript
+height :: forall i. PixelOrPercent -> DSL (height :: I | i)
 ```
 
 

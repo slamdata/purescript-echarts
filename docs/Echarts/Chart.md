@@ -36,4 +36,10 @@ clear :: forall m e. MonadEff (echarts :: ECHARTS | e) m => Chart -> m Unit
 dispose :: forall m e. MonadEff (echarts :: ECHARTS | e) m => Chart -> m Unit
 ```
 
+#### `getOption`
+
+``` purescript
+getOption :: forall m e. MonadEff (echarts :: ECHARTS | e) m => Chart -> m Foreign
+```
+
 
