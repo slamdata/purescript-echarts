@@ -18,6 +18,9 @@ import Bar as Bar
 import Gauge as Gauge
 import Funnel as Funnel
 import Radar as Radar
+import Graph as Graph
+import K as K
+import Heatmap as Heatmap
 
 import Utils as U
 
@@ -30,3 +33,6 @@ main = U.onLoad do
   Gauge.chart
   Funnel.chart
   Radar.chart
+  Graph.chart
+  K.chart
+  Heatmap.chart

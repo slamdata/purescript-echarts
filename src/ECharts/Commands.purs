@@ -10,7 +10,7 @@ import Data.Foreign (toForeign)
 
 import ECharts.Monad (DSL, set, buildObj, buildSeries, buildArr)
 import ECharts.Types as T
-import ECharts.Types.Phantom (I)
+import ECharts.Types.Phantom (I, R)
 import ECharts.Types.Phantom as TP
 import ECharts.Internal (undefinedValue)
 
@@ -221,6 +221,15 @@ value a = set "value" $ toForeign a
 values ∷ ∀ i f. F.Foldable f ⇒ f Number → DSL (value ∷ I|i)
 values = set "value" <<< toForeign <<< F.foldMap Arr.singleton
 
+buildValues ∷ ∀ i. DSL TP.ValuesI → DSL (value ∷ I|i)
+buildValues = set "value" <<< buildArr
+
+addValue ∷ ∀ i. Number → DSL (addValue ∷ I|i)
+addValue = set "" <<< toForeign
+
+missingValue ∷ ∀ i. DSL (addValue ∷ I|i)
+missingValue = set "" undefinedValue
+
 valuePair ∷ ∀ i. String → Number → DSL (value ∷ I|i)
 valuePair a b = set "value" $ toForeign [toForeign a, toForeign b]
 
@@ -296,11 +305,11 @@ selectedMode a = set "selectedMode" $ T.selectedModeToForeign a
 label ∷ ∀ i. DSL TP.LabelI → DSL (label ∷ I|i)
 label = set "label" <<< buildObj
 
-normalLabel ∷ ∀ i. DSL TP.LabelInnerI → DSL (normalLabel ∷ I|i)
-normalLabel = set "normal" <<< buildObj
+normalLabel ∷ ∀ i. DSL TP.LabelInnerI → DSL (normal ∷ R TP.LabelInnerI|i)
+normalLabel = normal
 
-emphasisLabel ∷ ∀ i. DSL TP.LabelInnerI → DSL (emphasisLabel ∷ I|i)
-emphasisLabel = set "emphasis" <<< buildObj
+emphasisLabel ∷ ∀ i. DSL TP.LabelInnerI → DSL (emphasis ∷ R TP.LabelInnerI|i)
+emphasisLabel = emphasis
 
 selected ∷ ∀ i. Boolean → DSL (selected ∷ I|i)
 selected a = set "selected" $ toForeign a
@@ -422,11 +431,11 @@ colorLightness a b = set "colorLightness" $ toForeign [a, b]
 itemStyle ∷ ∀ i. DSL TP.ItemStyleI → DSL (itemStyle ∷ I|i)
 itemStyle a = set "itemStyle" $ buildObj a
 
-normalItemStyle ∷ ∀ i. DSL TP.IStyleI → DSL (normalItemStyle ∷ I|i)
-normalItemStyle a = set "normal" $ buildObj a
+normalItemStyle ∷ ∀ i. DSL TP.IStyleI → DSL (normal ∷ R TP.IStyleI|i)
+normalItemStyle = normal
 
-emphasisItemStyle ∷ ∀ i. DSL TP.IStyleI → DSL (emphasisItemStyle ∷ I|i)
-emphasisItemStyle a = set "emphasis" $ buildObj a
+emphasisItemStyle ∷ ∀ i. DSL TP.IStyleI → DSL (emphasis ∷ R TP.IStyleI|i)
+emphasisItemStyle = emphasis
 
 barBorderWidth ∷ ∀ i. Number → DSL (barBorderWidth ∷ I|i)
 barBorderWidth a = set "barBorderWidth" $ toForeign a
@@ -497,11 +506,11 @@ positionInside = set "position" $ toForeign "inside"
 labelLine ∷ ∀ i. DSL TP.LabelLineI → DSL (labelLine ∷ I|i)
 labelLine = set "labelLine" <<< buildObj
 
-normalLabelLine ∷ ∀ i. DSL TP.LabelLineInnerI → DSL (normalLabelLine ∷ I|i)
-normalLabelLine = set "normal" <<< buildObj
+normalLabelLine ∷ ∀ i. DSL TP.LabelLineInnerI → DSL (normal ∷ R TP.LabelLineInnerI|i)
+normalLabelLine = normal
 
-emphasisLabelLine ∷ ∀ i. DSL TP.LabelLineInnerI → DSL (emphasisLabelLine ∷ I|i)
-emphasisLabelLine = set "emphasis" <<< buildObj
+emphasisLabelLine ∷ ∀ i. DSL TP.LabelLineInnerI → DSL (emphasis ∷ R TP.LabelLineInnerI|i)
+emphasisLabelLine = emphasis
 
 opacity ∷ ∀ i. Number → DSL (opacity ∷ I|i)
 opacity = set "opacity" <<< toForeign
@@ -518,11 +527,11 @@ borderColor = set "borderColor" <<< toForeign <<< C.toHexString
 borderWidth ∷ ∀ i. Int → DSL (borderWidth ∷ I|i)
 borderWidth = set "borderWidth" <<< toForeign
 
-normalLineStyle ∷ ∀ i. DSL TP.LineStyleI → DSL (normalLineStyle ∷ I|i)
-normalLineStyle = set "normal" <<< buildObj
+normalLineStyle ∷ ∀ i. DSL TP.LineStyleI → DSL (normal ∷ R TP.LineStyleI|i)
+normalLineStyle = normal
 
-emphasisLineStyle ∷ ∀ i. DSL TP.LineStyleI → DSL (emphasisLineStyle ∷ I|i)
-emphasisLineStyle = set "emphasis" <<< buildObj
+emphasisLineStyle ∷ ∀ i. DSL TP.LineStyleI → DSL (emphasis ∷ R TP.LineStyleI|i)
+emphasisLineStyle = emphasis
 
 leftCenter ∷ ∀ i. DSL (left ∷ I|i)
 leftCenter = set "left" $ toForeign "center"
@@ -557,11 +566,11 @@ lineStylePair = set "lineStyle" <<< buildObj
 areaStylePair ∷ ∀ i. DSL TP.AreaStylePairI → DSL (areaStylePair ∷ I|i)
 areaStylePair = set "areaStyle" <<< buildObj
 
-normalAreaStyle ∷ ∀ i. DSL TP.AreaStyleI → DSL (normalAreaStyle ∷ I|i)
-normalAreaStyle = set "normal" <<< buildObj
+normalAreaStyle ∷ ∀ i. DSL TP.AreaStyleI → DSL (normal ∷ R TP.AreaStyleI|i)
+normalAreaStyle = normal
 
-emphasisAreaStyle ∷ ∀ i. DSL TP.AreaStyleI → DSL (emphasisAreaStyle ∷ I|i)
-emphasisAreaStyle = set "emphasis" <<< buildObj
+emphasisAreaStyle ∷ ∀ i.DSL TP.AreaStyleI → DSL (emphasis ∷ R TP.AreaStyleI|i)
+emphasisAreaStyle = emphasis
 
 radar ∷ ∀ i. DSL TP.RadarI → DSL (radar ∷ I|i)
 radar = set "radar" <<< buildObj
@@ -605,11 +614,11 @@ addLink = set "" <<< buildObj
 edgeLabel ∷ ∀ i. DSL TP.EdgeLabelI → DSL (edgeLabel ∷ I|i)
 edgeLabel = set "edgeLabel" <<< buildObj
 
-normalEdgeLabel ∷ ∀ i. DSL TP.EdgeLabelInnerI → DSL (normalEdgeLabel ∷ I|i)
-normalEdgeLabel = set "normal" <<< buildObj
+normalEdgeLabel ∷ ∀ i. DSL TP.EdgeLabelInnerI → DSL (normal ∷ R TP.EdgeLabelInnerI|i)
+normalEdgeLabel = normal
 
-emphasisEdgeLabel ∷ ∀ i. DSL TP.EdgeLabelInnerI → DSL (emphasisEdgeLabel ∷ I|i)
-emphasisEdgeLabel = set "emphasis" <<< buildObj
+emphasisEdgeLabel ∷ ∀ i. DSL TP.EdgeLabelInnerI → DSL (emphasis ∷ R TP.EdgeLabelInnerI|i)
+emphasisEdgeLabel = emphasis
 
 x ∷ ∀ i. Number → DSL (x ∷ I|i)
 x = set "x" <<< toForeign
@@ -688,3 +697,12 @@ widthNum = set "width" <<< toForeign
 
 crossStyle ∷ ∀ i. DSL TP.CrossStyleI → DSL (crossStyle ∷ I|i)
 crossStyle = set "crossStyle" <<< buildObj
+
+normal ∷ ∀ p i. DSL p → DSL (normal ∷ R p |i)
+normal = set "normal" <<< buildObj
+
+emphasis ∷ ∀ p i. DSL p → DSL (emphasis ∷ R p|i)
+emphasis = set "emphasis" <<< buildObj
+
+height ∷ ∀ i. T.PixelOrPercent → DSL (height ∷ I|i)
+height = set "height" <<< T.pixelOrPercentToForeign
