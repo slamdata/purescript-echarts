@@ -83,6 +83,11 @@ radiusToForeign ∷ Radius → Foreign
 radiusToForeign (Radius {start, end}) =
   toForeign [ pixelOrPercentToForeign start, pixelOrPercentToForeign end ]
 
+newtype SingleValueRadius = SingleValueRadius PixelOrPercent
+singleValueRadiusToForeign ∷ SingleValueRadius → Foreign
+singleValueRadiusToForeign (SingleValueRadius r) =
+  toForeign $ pixelOrPercentToForeign r
+
 numItem ∷ Number → Item
 numItem = Item <<< toForeign
 
@@ -149,3 +154,9 @@ horizontalPositionToForeign = toForeign <<< case _ of
   CenterHP → "center"
 
 newtype Item = Item Foreign
+
+newtype Coord = Coord Foreign
+
+coord ∷ Number → Number → Coord
+coord x y = Coord $ toForeign [ x, y ]
+

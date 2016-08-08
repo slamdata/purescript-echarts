@@ -59,6 +59,9 @@ hidden = visible false
 textStyle ∷ ∀ i. DSL TP.TextStyleI → DSL (textStyle ∷ I|i)
 textStyle a = set "textStyle" $ buildObj a
 
+subtextStyle ∷ ∀ i. DSL TP.TextStyleI → DSL (subtextStyle ∷ I|i)
+subtextStyle a = set "subtextStyle" $ buildObj a
+
 left ∷ ∀ i. T.PixelOrPercent → DSL (left ∷ I|i)
 left a = set "left" $ T.pixelOrPercentToForeign a
 
@@ -107,14 +110,26 @@ showContent = visibleContent true
 hideContent ∷ ∀ i. DSL (showContent ∷ I|i)
 hideContent = visibleContent false
 
+alwaysShowContent ∷ ∀ i. Boolean → DSL (alwaysShowContent ∷ I|i)
+alwaysShowContent a = set "alwaysShowContent" $ toForeign a
+
 trigger ∷ ∀ i. T.TooltipTrigger → DSL (trigger ∷ I|i)
 trigger a = set "trigger" $ T.tooltipTriggerToForeign a
+
+triggerOnMouseMove ∷ ∀ i. DSL (triggerOn ∷ I|i)
+triggerOnMouseMove = set "triggerOn" $ toForeign "mousemove"
+
+triggerOnClick ∷ ∀ i. DSL (triggerOn ∷ I|i)
+triggerOnClick = set "triggerOn" $ toForeign "click"
 
 triggerAxis ∷ ∀ i. DSL (trigger ∷ I|i)
 triggerAxis = set "trigger" $ toForeign "axis"
 
 triggerItem ∷ ∀ i. DSL (trigger ∷ I|i)
 triggerItem = set "trigger" $ toForeign "item"
+
+triggerEvent ∷ ∀ i. Boolean → DSL (trigger ∷ I|i)
+triggerEvent a = set "triggerEvent" $ toForeign a
 
 pie ∷ ∀ i. DSL TP.PieSeriesI → DSL (pie ∷ I|i)
 pie = set "pie" <<< buildObj
@@ -203,6 +218,9 @@ center a = set "center" $ T.pointToForeign a
 radius ∷ ∀ i. T.Radius → DSL (radius ∷ I|i)
 radius a = set "radius" $ T.radiusToForeign a
 
+singleValueRadius ∷ ∀ i. T.SingleValueRadius → DSL (radius ∷ I|i)
+singleValueRadius a = set "radius" $ T.singleValueRadiusToForeign a
+
 startAngle ∷ ∀ i. Number → DSL (startAngle ∷ I|i)
 startAngle a = set "startAngle" $ toForeign a
 
@@ -233,6 +251,9 @@ missingValue = set "" undefinedValue
 valuePair ∷ ∀ i. String → Number → DSL (value ∷ I|i)
 valuePair a b = set "value" $ toForeign [toForeign a, toForeign b]
 
+titles ∷ ∀ i. DSL TP.TitlesI → DSL (title ∷ I|i)
+titles = set "title" <<< buildArr
+
 title ∷ ∀ i. DSL TP.TitleI → DSL (title ∷ I|i)
 title = set "title" <<< buildObj
 
@@ -241,6 +262,9 @@ text a = set "text" $ toForeign a
 
 showDelay ∷ ∀ i. Number → DSL (showDelay ∷ I|i)
 showDelay a = set "showDelay" $ toForeign a
+
+hideDelay ∷ ∀ i. Number → DSL (hideDelay ∷ I|i)
+hideDelay a = set "hideDelay" $ toForeign a
 
 pointerType ∷ ∀ i. T.PointerType → DSL (pointerType ∷ I|i)
 pointerType a = set "type" $ T.pointerTypeToForeign a
@@ -325,6 +349,24 @@ alignRight = set "align" $ toForeign "right"
 
 alignAuto ∷ ∀ i. DSL (align ∷ I|i)
 alignAuto = set "align" $ toForeign "auto"
+
+textLeft ∷ ∀ i. DSL (textAlign ∷ I|i)
+textLeft = set "textAlign" $ toForeign "left"
+
+textRight ∷ ∀ i. DSL (textAlign ∷ I|i)
+textRight = set "textAlign" $ toForeign "right"
+
+textCenter ∷ ∀ i. DSL (textAlign ∷ I|i)
+textCenter = set "textAlign" $ toForeign "center"
+
+textTop∷ ∀ i. DSL (textBaseLine ∷ I|i)
+textTop = set "textBaseLine" $ toForeign "top"
+
+textBottom ∷ ∀ i. DSL (textBaseLine ∷ I|i)
+textBottom = set "textBaseLine" $ toForeign "bottom"
+
+textMiddle ∷ ∀ i. DSL (textBaseLine ∷ I|i)
+textMiddle = set "textBaseLine" $ toForeign "middle"
 
 brush ∷ ∀ i. DSL TP.BrushI → DSL (brush ∷ I|i)
 brush = set "brush" <<< buildObj
@@ -554,6 +596,9 @@ indicator = set "" <<< buildObj
 radarName ∷ ∀ i. DSL TP.RadarNameI → DSL (radarName ∷ I|i)
 radarName = set "name" <<< buildObj
 
+nameGap ∷ ∀ i. Number → DSL (nameGap ∷ I|i)
+nameGap = set "nameGap" <<< toForeign
+
 polygonShape ∷ ∀ i. DSL (shape ∷ I|i)
 polygonShape = set "shape" $ toForeign "polygon"
 
@@ -571,6 +616,9 @@ normalAreaStyle = normal
 
 emphasisAreaStyle ∷ ∀ i.DSL TP.AreaStyleI → DSL (emphasis ∷ R TP.AreaStyleI|i)
 emphasisAreaStyle = emphasis
+
+radars ∷ ∀ i. DSL TP.RadarsI → DSL (radar ∷ I|i)
+radars = set "radar" <<< buildArr
 
 radar ∷ ∀ i. DSL TP.RadarI → DSL (radar ∷ I|i)
 radar = set "radar" <<< buildObj
@@ -647,6 +695,9 @@ sourceName = set "source" <<< toForeign
 targetName ∷ ∀ i. String → DSL (target ∷ I|i)
 targetName = set "target" <<< toForeign
 
+subtargetName ∷ ∀ i. String → DSL (subtarget ∷ I|i)
+subtargetName = set "subtarget" <<< toForeign
+
 layoutNone ∷ ∀ i. DSL (layout ∷ I|i)
 layoutNone = set "layout" $ toForeign "none"
 
@@ -706,3 +757,47 @@ emphasis = set "emphasis" <<< buildObj
 
 height ∷ ∀ i. T.PixelOrPercent → DSL (height ∷ I|i)
 height = set "height" <<< T.pixelOrPercentToForeign
+
+padding ∷ ∀ i. Number → DSL (padding ∷ I|i)
+padding = set "padding" <<< toForeign
+
+enterable ∷ ∀ i. Boolean → DSL (enterable ∷ I|i)
+enterable = set "enterable" <<< toForeign
+
+transitionDuration ∷ ∀ i. Number → DSL (transitionDuration ∷ I|i)
+transitionDuration = set "transitionDuration" <<< toForeign
+
+extraCssText ∷ ∀ i. String → DSL (extraCssText ∷ I|i)
+extraCssText = set "extraCssText" <<< toForeign
+
+radarIndex ∷ ∀ i. Number → DSL (radarIndex ∷ I|i)
+radarIndex = set "radarIndex" <<< toForeign
+
+treeMapNodeId ∷ ∀ i. String → DSL (treeMapNodeId ∷ I|i)
+treeMapNodeId = set "id" <<< toForeign
+
+visualDimension ∷ ∀ i. Int → DSL (visualDimension ∷ I|i)
+visualDimension = set "visualDimension" <<< toForeign
+
+visibleMin ∷ ∀ i. Number → DSL (visibleMin ∷ I|i)
+visibleMin = set "visibleMin" <<< toForeign
+
+childVisibleMin ∷ ∀ i. Number → DSL (childVisibleMin ∷ I|i)
+childVisibleMin = set "childVisibleMin" <<< toForeign
+
+category ∷ ∀ i. Int → DSL (category ∷ I|i)
+category = set "category" <<< toForeign
+
+coords ∷ ∀ i f. F.Foldable f ⇒ f T.Coord → DSL (coords ∷ I|i)
+coords a = set "coords" $ toForeign $ F.foldMap (Arr.singleton <<< toForeign) a
+
+valueIndex ∷ ∀ i. Number → DSL (valueIndex ∷ I|i)
+valueIndex = set "valueIndex" <<< toForeign
+
+valueDim ∷ ∀ i. String → DSL (valueDim ∷ I|i)
+valueDim = set "valueDim" <<< toForeign
+
+markType ∷ ∀ i. String → DSL (markType ∷ I|i)
+markType = set "type" <<< toForeign
+
+
