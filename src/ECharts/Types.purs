@@ -85,8 +85,7 @@ radiusToForeign (Radius {start, end}) =
 
 newtype SingleValueRadius = SingleValueRadius PixelOrPercent
 singleValueRadiusToForeign ∷ SingleValueRadius → Foreign
-singleValueRadiusToForeign (SingleValueRadius r) =
-  toForeign $ pixelOrPercentToForeign r
+singleValueRadiusToForeign (SingleValueRadius r) = pixelOrPercentToForeign r
 
 numItem ∷ Number → Item
 numItem = Item <<< toForeign
