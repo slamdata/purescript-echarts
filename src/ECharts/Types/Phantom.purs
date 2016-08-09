@@ -144,6 +144,9 @@ type CrossStyleI =
   , lineType ∷ I
   , textStyle ∷ I)
 
+type TitlesI =
+  ( title ∷ I )
+
 type TitleI =
   PositionMixin
   (ZMixin
@@ -250,6 +253,9 @@ type PolarI =
   ZMixin
   ( center ∷ I
   , radius ∷ I)
+
+type RadarsI =
+  ( radar ∷ I )
 
 type RadarI =
   ZMixin
@@ -741,7 +747,8 @@ type RadarSeriesI =
     , areaStylePair ∷ I
     , axisLine ∷ I
     , radarIndex ∷ I
-    , label ∷ I)))
+    , label ∷ I
+    , silent ∷ I)))
 
 type TreeMapI =
   PositionMixin
@@ -755,7 +762,7 @@ type TreeMapI =
      , zoomNodeToRatio ∷ I
      , levels ∷ I
      , silentTreeMap ∷ I
-     , visualDimensions ∷ I
+     , visualDimension ∷ I
      , colorAlpha ∷ I
      , colorSaturation ∷ I
      , colorMappingBy ∷ I
@@ -990,13 +997,33 @@ type GaugePointerI =
 type ItemI =
   SymbolMixin
   ( name ∷ I
+  , treeMapNodeId ∷ I
   , value ∷ I
   , label ∷ I
+  , labelLine ∷ I
   , itemStyle ∷ I
+  , lineStyle ∷ I
+  , areaStyle ∷ I
   , selected ∷ I
   , icon ∷ I
+  , color ∷ I
+  , colorAlpha ∷ I
+  , colorSaturation ∷ I
+  , colorMappingBy ∷ I
   , x ∷ I
-  , y ∷ I)
+  , y ∷ I
+  , visualDimension ∷ I
+  , visibleMin ∷ I
+  , childrenVisibleMin ∷ I
+  , coord ∷ I
+  , coords ∷ I
+  , category ∷ I
+  , valueIndex ∷ I
+  , valueDim ∷ I
+  , markType ∷ I)
+
+type Coords =
+  ( coord ∷ I )
 
 type AxisPointerI =
   AnimationMixin
@@ -1126,7 +1153,7 @@ type RippleEffectI =
 type LevelsI = (level ∷ I)
 
 type LevelI =
-  ( visualDimensions ∷ I
+  ( visualDimension ∷ I
   , color ∷ I
   , colorAlpha ∷ I
   , colorSaturation ∷ I
