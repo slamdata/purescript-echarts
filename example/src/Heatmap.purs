@@ -87,7 +87,7 @@ options = do
   E.tooltip $ pure unit
   E.animationEnabled false
   E.grid do
-    E.height $ ET.Percent 50.0
+    E.heightPixelOrPercent $ ET.Percent 50.0
     E.top $ ET.Percent 10.0
   E.xAxis do
     E.axisType ET.Category

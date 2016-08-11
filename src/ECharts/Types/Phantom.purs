@@ -160,7 +160,7 @@ type TitleI =
      , link ∷ I
      , target ∷ I
      , textAlign ∷ I
-     , textBaseLine ∷ I
+     , textBaseline ∷ I
      , sublink ∷ I
      , subtarget ∷ I
      , subtextStyle ∷ I

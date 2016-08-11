@@ -350,6 +350,15 @@ alignRight = set "align" $ toForeign "right"
 alignAuto ∷ ∀ i. DSL (align ∷ I|i)
 alignAuto = set "align" $ toForeign "auto"
 
+funnelLeft ∷ ∀ i. DSL (funnelAlign ∷ I|i)
+funnelLeft = set "funnelAlign" $ toForeign "left"
+
+funnelRight ∷ ∀ i. DSL (funnelAlign ∷ I|i)
+funnelRight = set "funnelAlign" $ toForeign "right"
+
+funnelCenter ∷ ∀ i. DSL (funnelAlign ∷ I|i)
+funnelCenter = set "funnelAlign" $ toForeign "center"
+
 textLeft ∷ ∀ i. DSL (textAlign ∷ I|i)
 textLeft = set "textAlign" $ toForeign "left"
 
@@ -359,14 +368,14 @@ textRight = set "textAlign" $ toForeign "right"
 textCenter ∷ ∀ i. DSL (textAlign ∷ I|i)
 textCenter = set "textAlign" $ toForeign "center"
 
-textTop∷ ∀ i. DSL (textBaseLine ∷ I|i)
-textTop = set "textBaseLine" $ toForeign "top"
+textTop ∷ ∀ i. DSL (textBaseline ∷ I|i)
+textTop = set "textBaseline" $ toForeign "top"
 
-textBottom ∷ ∀ i. DSL (textBaseLine ∷ I|i)
-textBottom = set "textBaseLine" $ toForeign "bottom"
+textBottom ∷ ∀ i. DSL (textBaseline ∷ I|i)
+textBottom = set "textBaseline" $ toForeign "bottom"
 
-textMiddle ∷ ∀ i. DSL (textBaseLine ∷ I|i)
-textMiddle = set "textBaseLine" $ toForeign "middle"
+textMiddle ∷ ∀ i. DSL (textBaseline ∷ I|i)
+textMiddle = set "textBaseline" $ toForeign "middle"
 
 brush ∷ ∀ i. DSL TP.BrushI → DSL (brush ∷ I|i)
 brush = set "brush" <<< buildObj
@@ -755,8 +764,11 @@ normal = set "normal" <<< buildObj
 emphasis ∷ ∀ p i. DSL p → DSL (emphasis ∷ R p|i)
 emphasis = set "emphasis" <<< buildObj
 
-height ∷ ∀ i. T.PixelOrPercent → DSL (height ∷ I|i)
-height = set "height" <<< T.pixelOrPercentToForeign
+heightPixelOrPercent ∷ ∀ i. T.PixelOrPercent → DSL (height ∷ I|i)
+heightPixelOrPercent = set "height" <<< T.pixelOrPercentToForeign
+
+widthPixelOrPercent ∷ ∀ i. T.PixelOrPercent → DSL (width ∷ I|i)
+widthPixelOrPercent = set "width" <<< T.pixelOrPercentToForeign
 
 padding ∷ ∀ i. Number → DSL (padding ∷ I|i)
 padding = set "padding" <<< toForeign
@@ -799,5 +811,3 @@ valueDim = set "valueDim" <<< toForeign
 
 markType ∷ ∀ i. String → DSL (markType ∷ I|i)
 markType = set "type" <<< toForeign
-
-

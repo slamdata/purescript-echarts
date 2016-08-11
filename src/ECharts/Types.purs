@@ -158,4 +158,3 @@ newtype Coord = Coord Foreign
 
 coord ∷ Number → Number → Coord
 coord x y = Coord $ toForeign [ x, y ]
-
