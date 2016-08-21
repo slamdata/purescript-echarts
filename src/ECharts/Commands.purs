@@ -20,6 +20,9 @@ series a = set "series" $ buildSeries a
 tooltip ∷ ∀ i. DSL TP.TooltipI → DSL (tooltip ∷ I|i)
 tooltip a = set "tooltip" $ buildObj a
 
+grids ∷ ∀ i. DSL TP.GridsI → DSL (grid ∷ I|i)
+grids = set "grid" <<< buildArr
+
 grid ∷ ∀ i. DSL TP.GridI → DSL (grid ∷ I|i)
 grid a = set "grid" $ buildObj a
 
@@ -33,7 +36,7 @@ yAxis ∷ ∀ i. DSL TP.YAxisI → DSL (yAxis ∷ I|i)
 yAxis a = set "yAxis" $ buildObj a
 
 color ∷ ∀ i. C.Color → DSL (color ∷ I|i)
-color a = set "color" $ toForeign $ C.cssStringRGBA a
+color a = set "color" $ toForeign $ C.toHexString a
 
 colors ∷ ∀ i f. F.Foldable f ⇒ f C.Color → DSL (color ∷ I|i)
 colors a = set "color" $ toForeign $ F.foldMap (Arr.singleton <<< C.toHexString) a
@@ -458,6 +461,9 @@ textPair high low = set "text" $ toForeign [high, low]
 itemHeight ∷ ∀ i. Number → DSL (itemHeight ∷ I|i)
 itemHeight a = set "itemHeight" $ toForeign a
 
+itemWidth ∷ ∀ i. Number → DSL (itemWidth ∷ I|i)
+itemWidth a = set "itemWidth" $ toForeign a
+
 calculable ∷ ∀ i. Boolean → DSL (calculable ∷ I|i)
 calculable a = set "calculable" $ toForeign a
 
@@ -468,7 +474,7 @@ max ∷ ∀ i. Number → DSL (max ∷ I|i)
 max a = set "max" $ toForeign a
 
 inRange ∷ ∀ i. DSL TP.InOutRangeI → DSL (inRange ∷ I|i)
-inRange a = set "inRagne" $ buildObj a
+inRange a = set "inRange" $ buildObj a
 
 outOfRange ∷ ∀ i. DSL TP.InOutRangeI → DSL (outOfRange ∷ I|i)
 outOfRange a = set "outOfRange" $ buildObj a
@@ -782,6 +788,9 @@ transitionDuration = set "transitionDuration" <<< toForeign
 extraCssText ∷ ∀ i. String → DSL (extraCssText ∷ I|i)
 extraCssText = set "extraCssText" <<< toForeign
 
+gridIndex ∷ ∀ i. Int → DSL (gridIndex ∷ I|i)
+gridIndex a = set "gridIndex" $ toForeign a
+
 radarIndex ∷ ∀ i. Number → DSL (radarIndex ∷ I|i)
 radarIndex = set "radarIndex" <<< toForeign
 
@@ -811,3 +820,6 @@ valueDim = set "valueDim" <<< toForeign
 
 markType ∷ ∀ i. String → DSL (markType ∷ I|i)
 markType = set "type" <<< toForeign
+
+margin ∷ ∀ i. Int → DSL (margin ∷ I|i)
+margin = set "margin" <<< toForeign

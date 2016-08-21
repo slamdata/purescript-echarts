@@ -93,6 +93,12 @@ numItem = Item <<< toForeign
 strItem ∷ String → Item
 strItem = Item <<< toForeign
 
+numArrItem ∷ Array Int → Item
+numArrItem = Item <<< toForeign
+
+strArrItem ∷ Array String → Item
+strArrItem = Item <<< toForeign
+
 data PointerType
   = LinePointer
   | CrossPointer
