@@ -542,6 +542,9 @@ type BrushI =
 type BrushToolboxI =
   ( tool ∷ I )
 
+type GridsI =
+  ( grid ∷ I )
+
 type GridI =
   PositionMixin
   (ZMixin
