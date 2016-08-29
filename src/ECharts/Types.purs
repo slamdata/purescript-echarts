@@ -93,7 +93,7 @@ numItem = Item <<< toForeign
 strItem ∷ String → Item
 strItem = Item <<< toForeign
 
-numArrItem ∷ Array Int → Item
+numArrItem ∷ Array Number → Item
 numArrItem = Item <<< toForeign
 
 strArrItem ∷ Array String → Item
@@ -132,6 +132,18 @@ type FormatterInput =
   , dataIndex ∷ Int
   , "data" ∷ Item -- ???
   , value ∷ Number
+  , color ∷ String
+  , percent ∷ Number
+  }
+
+type FormatterInputArrayValue =
+  { componentType ∷ String
+  , seriesIndex ∷ Int
+  , seriesName ∷ String
+  , name ∷ String
+  , dataIndex ∷ Int
+  , "data" ∷ Item
+  , value ∷ Array Number
   , color ∷ String
   , percent ∷ Number
   }
