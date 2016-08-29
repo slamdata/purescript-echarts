@@ -905,6 +905,7 @@ type GraphI =
         , edgeLabel ∷ I
         , edgeSymbols ∷ I
         , edgeSymbolSize ∷ I
+        , circular ∷ I
         , silent ∷ I)))))))
 
 
@@ -1190,3 +1191,6 @@ type CategoryI =
   ( name ∷ I
   , itemStyle ∷ I
   , label ∷ I)
+
+type CircularI =
+  ( rotateLabel ∷ I)

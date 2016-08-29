@@ -716,6 +716,12 @@ subtargetName = set "subtarget" <<< toForeign
 layoutNone ∷ ∀ i. DSL (layout ∷ I|i)
 layoutNone = set "layout" $ toForeign "none"
 
+layoutCircular ∷ ∀ i. DSL (layout ∷ I|i)
+layoutCircular = set "layout" $ toForeign "circular"
+
+layoutForce ∷ ∀ i. DSL (layout ∷ I|i)
+layoutForce = set "layout" $ toForeign "force"
+
 missingSeries ∷ ∀ i. DSL (missing ∷ I|i)
 missingSeries = set "" undefinedValue
 
@@ -823,3 +829,39 @@ markType = set "type" <<< toForeign
 
 margin ∷ ∀ i. Int → DSL (margin ∷ I|i)
 margin = set "margin" <<< toForeign
+
+repulsion ∷ ∀ i. Number → DSL (repulsion ∷ I|i)
+repulsion = set "repulsion" <<< toForeign
+
+gravity ∷ ∀ i. Number → DSL (gravity ∷ I|i)
+gravity = set "gravity" <<< toForeign
+
+edgeLength ∷ ∀ i. Number → DSL (edgeLength ∷ I|i)
+edgeLength = set "edgeLength" <<< toForeign
+
+edgeLengths ∷ ∀ i. Number → Number → DSL (edgeLength ∷ I|i)
+edgeLengths a b = set "edgeLength" $ toForeign [ a, b ]
+
+layoutAnimation ∷ ∀ i. Boolean → DSL (layoutAnimation ∷ I|i)
+layoutAnimation = set "layoutAnimation" <<< toForeign
+
+circular ∷ ∀ i. DSL TP.CircularI → DSL (circular ∷ I|i)
+circular = set "circular" <<< buildObj
+
+rotateLabel ∷ ∀ i. Boolean → DSL (rotateLabel ∷ I|i)
+rotateLabel = set "rotateLabel" <<< toForeign
+
+force ∷ ∀ i. DSL TP.ForceI → DSL (force ∷ I|i)
+force = set "force" <<< buildObj
+
+buildCategories ∷ ∀ i. DSL TP.CategoriesI → DSL (categories ∷ I|i)
+buildCategories is = set "categories" $ buildArr is
+
+addCategory ∷ ∀ i. DSL TP.CategoryI → DSL (category ∷ I|i)
+addCategory = set "" <<< buildObj
+
+colorSource ∷ ∀ i. DSL (color ∷ I|i)
+colorSource = set "color" $ toForeign "source"
+
+colorTarget ∷ ∀ i. DSL (color ∷ I|i)
+colorTarget = set "target" $ toForeign "target"

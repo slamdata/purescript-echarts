@@ -134,7 +134,9 @@ type FormatterInput =
   , value ∷ Number
   , color ∷ String
   , percent ∷ Number
+  , dataType ∷ String
   }
+
 
 data SelectedMode
   = Single
@@ -159,7 +161,6 @@ horizontalPositionToForeign = toForeign <<< case _ of
   CenterHP → "center"
 
 newtype Item = Item Foreign
-
 newtype Coord = Coord Foreign
 
 coord ∷ Number → Number → Coord
