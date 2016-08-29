@@ -729,6 +729,7 @@ type BasicScatterSeriesI i =
        , geoIndex ∷ I
        , label ∷ I
        , silent ∷ I
+       , tooltip ∷ I
        | i))))))
 
 type ScatterI = BasicScatterSeriesI ()
@@ -788,7 +789,8 @@ type BoxPlotI =
      , boxWidth ∷ I
      , itemStyle ∷ I
      , items ∷ I
-     , silent ∷ I))))
+     , silent ∷ I
+     , tooltip ∷ I))))
 
 type CandlestickI =
   ZMixin

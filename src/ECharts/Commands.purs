@@ -296,8 +296,14 @@ large a = set "large" $ toForeign a
 formatterAxis ∷ ∀ i. (Array T.FormatterInput → String) → DSL (formatter ∷ I|i)
 formatterAxis a = set "formatter" $ toForeign a
 
+formatterAxisArrayValue ∷ ∀ i. (Array T.FormatterInputArrayValue → String) → DSL (formatter ∷ I|i)
+formatterAxisArrayValue a = set "formatter" $ toForeign a
+
 formatterItem ∷ ∀ i. (T.FormatterInput → String) → DSL (formatter ∷ I|i)
 formatterItem a = set "formatter" $ toForeign a
+
+formatterItemArrayValue ∷ ∀ i. (T.FormatterInputArrayValue → String) → DSL (formatter ∷ I|i)
+formatterItemArrayValue a = set "formatter" $ toForeign a
 
 formatterString ∷ ∀ i. String → DSL (formatter ∷ I|i)
 formatterString a = set "formatter" $ toForeign a
