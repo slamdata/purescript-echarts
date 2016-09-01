@@ -928,6 +928,7 @@ type LinkI =
   , label ∷ I
   , symbol ∷ I
   , lineStylePair ∷ I
+  , value ∷ I
   , symbolSize ∷ I)
 
 type EdgeSymbolsI =
@@ -943,7 +944,7 @@ type SankeyI =
      , layoutIterations ∷ I
      , label ∷ I
      , itemStyle ∷ I
-     , lineStyle ∷ I
+     , lineStylePair ∷ I
      , items ∷ I
      , nodes ∷ I
      , links ∷ I
