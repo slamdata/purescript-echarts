@@ -8,7 +8,7 @@ import Data.Array as Arr
 import Data.Foldable as F
 import Data.Foreign (toForeign)
 
-import ECharts.Monad (DSL, set, buildObj, buildSeries, buildArr)
+import ECharts.Monad (DSL, set, buildObj, buildSeries, buildArr, get, lastWithKeys)
 import ECharts.Types as T
 import ECharts.Types.Phantom (I, R)
 import ECharts.Types.Phantom as TP
@@ -199,12 +199,6 @@ symbol a = set "symbol" $ T.symbolToForeign a
 
 symbolSize ∷ ∀ i. Int → DSL (symbolSize ∷ I|i)
 symbolSize a = set "symbolSize" $ toForeign a
-
-lineStyle ∷ ∀ i. DSL TP.LineStyleI → DSL (lineStyle ∷ I|i)
-lineStyle = set "lineStyle" <<< buildObj
-
-areaStyle ∷ ∀ i. DSL TP.AreaStyleI → DSL (areaStyle ∷ I|i)
-areaStyle = set "areaStyle" <<< buildObj
 
 smooth ∷ ∀ i. Boolean → DSL (smooth ∷ I|i)
 smooth a = set "smooth" $ toForeign a
@@ -626,11 +620,11 @@ polygonShape = set "shape" $ toForeign "polygon"
 circleShape ∷ ∀ i. DSL (shape ∷ I|i)
 circleShape = set "shape" $ toForeign "circle"
 
-lineStylePair ∷ ∀ i. DSL TP.LineStylePairI → DSL (lineStylePair ∷ I|i)
-lineStylePair = set "lineStyle" <<< buildObj
+lineStylePair ∷ ∀ i. DSL TP.LineStylePairI → DSL (lineStyle ∷ R TP.LineStylePairI|i)
+lineStylePair = lineStyle
 
-areaStylePair ∷ ∀ i. DSL TP.AreaStylePairI → DSL (areaStylePair ∷ I|i)
-areaStylePair = set "areaStyle" <<< buildObj
+areaStylePair ∷ ∀ i. DSL TP.AreaStylePairI → DSL (areaStyle ∷ R TP.AreaStylePairI|i)
+areaStylePair = areaStyle
 
 normalAreaStyle ∷ ∀ i. DSL TP.AreaStyleI → DSL (normal ∷ R TP.AreaStyleI|i)
 normalAreaStyle = normal
@@ -779,6 +773,12 @@ crossStyle = set "crossStyle" <<< buildObj
 normal ∷ ∀ p i. DSL p → DSL (normal ∷ R p |i)
 normal = set "normal" <<< buildObj
 
+lineStyle ∷ ∀ ρ i. DSL ρ → DSL (lineStyle ∷ R ρ |i)
+lineStyle = set "lineStyle" <<< buildObj
+
+areaStyle ∷ ∀ ρ i. DSL ρ → DSL (areaStyle ∷ R ρ |i)
+areaStyle = set "areaStyle" <<< buildObj
+
 emphasis ∷ ∀ p i. DSL p → DSL (emphasis ∷ R p|i)
 emphasis = set "emphasis" <<< buildObj
 
@@ -871,3 +871,61 @@ colorSource = set "color" $ toForeign "source"
 
 colorTarget ∷ ∀ i. DSL (color ∷ I|i)
 colorTarget = set "target" $ toForeign "target"
+
+buildCenter ∷ ∀ i. DSL TP.PointI → DSL (center ∷ I|i)
+buildCenter dsl =
+  let
+    xx = get "x" dsl
+    yy = get "y" dsl
+  in
+    set "center" $ toForeign $ Arr.catMaybes [ xx, yy ]
+
+buildRadius ∷ ∀ i. DSL TP.RadiusI → DSL (radius ∷ I|i)
+buildRadius dsl =
+  let
+    s = get "start" dsl
+    e = get "end" dsl
+  in
+    set "radius" $ toForeign $ Arr.catMaybes [ s, e ]
+
+setStart ∷ ∀ i. DSL TP.DimensionI → DSL (start ∷ I|i)
+setStart dsl =
+  F.traverse_ (set "start") $ lastWithKeys ["pixels", "percents"] dsl
+
+setEnd ∷ ∀ i. DSL TP.DimensionI → DSL (end ∷ I|i)
+setEnd dsl =
+  F.traverse_ (set "end") $ lastWithKeys ["pixels", "percents"] dsl
+
+setX ∷ ∀ i. DSL TP.DimensionI → DSL (x ∷ I|i)
+setX dsl =
+  F.traverse_ (set "x") $ lastWithKeys ["pixels", "percents"] dsl
+
+setY ∷ ∀ i. DSL TP.DimensionI → DSL (y ∷ I|i)
+setY dsl =
+  F.traverse_ (set "y") $ lastWithKeys ["pixels", "percents"] dsl
+
+setZ ∷ ∀ i. DSL TP.DimensionI → DSL (z ∷ I|i)
+setZ dsl =
+  F.traverse_ (set "z") $ lastWithKeys ["pixels", "percents"] dsl
+
+pixels ∷ ∀ i. Int → DSL (pixels ∷ I|i)
+pixels = set "pixels" <<< toForeign
+
+percents ∷ ∀ i. Number → DSL (percents ∷ I|i)
+percents = set "percents" <<< toForeign <<< (_ <> "%") <<< show
+
+setWidth ∷ ∀ i. DSL TP.DimensionI → DSL (width ∷ I|i)
+setWidth dsl =
+  F.traverse_ (set "width") $ lastWithKeys ["pixels", "percents"] dsl
+
+buildGaugeRadius ∷ ∀ i. DSL TP.DimensionI → DSL (gaugeRadius ∷ I|i)
+buildGaugeRadius dsl =
+  F.traverse_ (set "radius") $ lastWithKeys ["pixels", "percents"] dsl
+
+buildOffsetCenter ∷ ∀ i. DSL TP.PointI → DSL (offsetCenter ∷ I|i)
+buildOffsetCenter dsl =
+  let
+    xx = get "x" dsl
+    yy = get "y" dsl
+  in
+    set "offsetCenter" $ toForeign $ Arr.catMaybes [ xx, yy ]

@@ -213,7 +213,7 @@ type TimelineI =
     , controlPosition ∷ I
     , orient ∷ I
     , inverse ∷ I
-    , lineStyle ∷ I
+    , lineStyle ∷ R LineStyleI
     , label ∷ I
     , itemStyle ∷ I
     , checkpointStyle ∷ I
@@ -328,8 +328,8 @@ type SliderDataZoom =
    , textStyle ∷ I))
 
 type DataBackgroundI =
-  ( lineStyle ∷ I
-  , areaStyle ∷ I)
+  ( lineStyle ∷ R LineStyleI
+  , areaStyle ∷ R AreaStyleI)
 
 type HandleStyleI =
   ShadowMixin
@@ -602,12 +602,12 @@ type AxisI i =
 type SplitAreaI =
   ( show ∷ I
   , interval ∷ I
-  , areaStyle ∷ I)
+  , areaStyle ∷ R AreaStyleI)
 
 type AxisLineI =
   ( show ∷ I
   , onZero ∷ I
-  , lineStyle ∷ I)
+  , lineStyle ∷ R LineStyleI)
 
 type YAxesI =
   ( addYAxis ∷ I )
@@ -664,9 +664,9 @@ type LineSeriesI =
       , connectNulls ∷ I
       , clipOverflow ∷ I
       , step ∷ I
-      , lineStylePair ∷ I
+      , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
       , itemStyle ∷ I
-      , areaStylePair ∷ I
+      , areaStyle ∷ R (NormalAndEmphasis AreaStyleI)
       , smooth ∷ I
       , smoothMonotone ∷ I
       , sampling ∷ I
@@ -747,8 +747,8 @@ type RadarSeriesI =
     ( name ∷ I
     , items ∷ I
     , itemStyle ∷ I
-    , lineStylePair ∷ I
-    , areaStylePair ∷ I
+    , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
+    , areaStyle ∷ R (NormalAndEmphasis AreaStyleI)
     , axisLine ∷ I
     , radarIndex ∷ I
     , label ∷ I
@@ -854,7 +854,7 @@ type ParallelSeriesI =
   (ZMixin
    ( parallelIndex ∷ I
    , name ∷ I
-   , lineStyle ∷ I
+   , lineStyle ∷ R LineStyleI
    , inactiveOpacity ∷ I
    , activeOpacity ∷ I
    , realtime ∷ I
@@ -872,7 +872,7 @@ type LinesI =
      , geoIndex ∷ I
      , polyline ∷ I
      , effect ∷ I
-     , lineStyle ∷ I
+     , lineStyle ∷ R LineStyleI
      , label ∷ I
      , items ∷ I
      , silent ∷ I))))
@@ -897,7 +897,7 @@ type GraphI =
         , draggable ∷ I
         , focusNodeAdjancency ∷ I
         , itemStyle ∷ I
-        , lineStylePair ∷ I
+        , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
         , label ∷ I
         , categories ∷ I
         , items ∷ I
@@ -927,7 +927,7 @@ type LinkI =
   , target ∷ I
   , label ∷ I
   , symbol ∷ I
-  , lineStylePair ∷ I
+  , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
   , value ∷ I
   , symbolSize ∷ I)
 
@@ -944,7 +944,7 @@ type SankeyI =
      , layoutIterations ∷ I
      , label ∷ I
      , itemStyle ∷ I
-     , lineStylePair ∷ I
+     , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
      , items ∷ I
      , nodes ∷ I
      , links ∷ I
@@ -1009,8 +1009,8 @@ type ItemI =
   , label ∷ I
   , labelLine ∷ I
   , itemStyle ∷ I
-  , lineStyle ∷ I
-  , areaStyle ∷ I
+  , lineStyle ∷ R LineStyleI
+  , areaStyle ∷ R AreaStyleI
   , selected ∷ I
   , icon ∷ I
   , color ∷ I
@@ -1039,7 +1039,7 @@ type AxisPointerI =
   , pointerType ∷ I
   , axisPointerType ∷ I
   , shadowStyle ∷ I
-  , lineStyle ∷ I
+  , lineStyle ∷ R LineStyleI
   , crossStyle ∷ I)
 
 type ShadowStyleI =
@@ -1059,7 +1059,7 @@ type LineStyleI =
 
 type SplitLineI =
   ( show ∷ I
-  , lineStyle ∷ I
+  , lineStyle ∷ R LineStyleI
   , interval ∷ I
   , length ∷ I)
 
@@ -1105,7 +1105,7 @@ type AxisTickI =
   , inside ∷ I
   , interval ∷ I
   , alignWithLabel ∷ I
-  , lineStyle ∷ I
+  , lineStyle ∷ R LineStyleI
   , splitNumber ∷ I)
 
 type AxisLabelI =
@@ -1119,6 +1119,8 @@ type AxisLabelI =
 
 type DetailI =
   ( textStyle ∷ I
+  , formatter ∷ I
+  , offsetCenter ∷ I
   , show ∷ I)
 
 type LabelLineI = NormalAndEmphasis LabelLineInnerI
@@ -1143,7 +1145,7 @@ type MarkLineI =
    ( precision ∷ I
    , label ∷ I
    , silent ∷ I
-   , lineStylePair ∷ I
+   , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
    , items ∷ I))
 
 type MarkAreaI =
@@ -1197,3 +1199,18 @@ type CategoryI =
 
 type CircularI =
   ( rotateLabel ∷ I)
+
+type PointI =
+  ( x ∷ I
+  , y ∷ I
+  )
+
+type DimensionI =
+  ( pixels ∷ I
+  , percents ∷ I
+  )
+
+type RadiusI =
+  ( start ∷ I
+  , end ∷ I
+  )
