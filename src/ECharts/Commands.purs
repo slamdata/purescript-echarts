@@ -242,8 +242,17 @@ buildValues = set "value" <<< buildArr
 addValue ∷ ∀ i. Number → DSL (addValue ∷ I|i)
 addValue = set "" <<< toForeign
 
+buildNames ∷ ∀ i. DSL TP.NamesI → DSL (name ∷ I|i)
+buildNames = set "name" <<< buildArr
+
+addName ∷ ∀ i. String → DSL (addName ∷ I|i)
+addName = set "" <<< toForeign
+
 missingValue ∷ ∀ i. DSL (addValue ∷ I|i)
 missingValue = set "" undefinedValue
+
+missingName ∷ ∀ i. DSL (addName ∷ I|i)
+missingName = set "" undefinedValue
 
 valuePair ∷ ∀ i. String → Number → DSL (value ∷ I|i)
 valuePair a b = set "value" $ toForeign [toForeign a, toForeign b]
@@ -784,6 +793,9 @@ emphasis = set "emphasis" <<< buildObj
 
 heightPixelOrPercent ∷ ∀ i. T.PixelOrPercent → DSL (height ∷ I|i)
 heightPixelOrPercent = set "height" <<< T.pixelOrPercentToForeign
+
+heightPct ∷ ∀ i. Number → DSL (width ∷ I|i)
+heightPct = set "height" <<< toForeign <<< (_ <> "%") <<< show
 
 widthPixelOrPercent ∷ ∀ i. T.PixelOrPercent → DSL (width ∷ I|i)
 widthPixelOrPercent = set "width" <<< T.pixelOrPercentToForeign

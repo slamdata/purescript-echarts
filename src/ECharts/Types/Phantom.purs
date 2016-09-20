@@ -1131,6 +1131,9 @@ type LabelLineInnerI =
 type ValuesI =
   ( addValue ∷ I )
 
+type NamesI =
+  ( addName ∷ I )
+
 type MarkPointI =
   AnimationMixin
   (SymbolMixin
