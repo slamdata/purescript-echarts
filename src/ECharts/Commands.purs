@@ -683,6 +683,9 @@ buildLinks = set "links" <<< buildArr
 addLink ∷ ∀ i. DSL TP.LinkI → DSL (link ∷ I|i)
 addLink = set "" <<< buildObj
 
+links ∷ ∀ i. Array { source ∷ String, target ∷ String } → DSL (links ∷ I|i)
+links = set "links" <<< toForeign
+
 edgeLabel ∷ ∀ i. DSL TP.EdgeLabelI → DSL (edgeLabel ∷ I|i)
 edgeLabel = set "edgeLabel" <<< buildObj
 
