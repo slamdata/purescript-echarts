@@ -242,6 +242,9 @@ buildValues = set "value" <<< buildArr
 addValue ∷ ∀ i. Number → DSL (addValue ∷ I|i)
 addValue = set "" <<< toForeign
 
+addStringValue ∷ ∀ i. String → DSL (addValue ∷ I|i)
+addStringValue = set "" <<< toForeign
+
 buildNames ∷ ∀ i. DSL TP.NamesI → DSL (name ∷ I|i)
 buildNames = set "name" <<< buildArr
 
@@ -910,6 +913,10 @@ setStart dsl =
 setEnd ∷ ∀ i. DSL TP.DimensionI → DSL (end ∷ I|i)
 setEnd dsl =
   F.traverse_ (set "end") $ lastWithKeys ["pixels", "percents"] dsl
+
+setBarWidth ∷ ∀ i. DSL TP.DimensionI → DSL (barWidth ∷ I|i)
+setBarWidth dsl =
+  F.traverse_ (set "barWidth") $ lastWithKeys ["pixels", "percents"] dsl
 
 setX ∷ ∀ i. DSL TP.DimensionI → DSL (x ∷ I|i)
 setX dsl =
