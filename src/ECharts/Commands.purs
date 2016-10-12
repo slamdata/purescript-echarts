@@ -951,3 +951,6 @@ buildOffsetCenter dsl =
     yy = get "y" dsl
   in
     set "offsetCenter" $ toForeign $ Arr.catMaybes [ xx, yy ]
+
+containLabel ∷ ∀ i. Boolean → DSL (containLabel ∷ I|i)
+containLabel = set "containLabel" <<< toForeign
