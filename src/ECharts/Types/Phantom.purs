@@ -5,12 +5,11 @@ foreign import data I ∷ !
 -- | Takes row of effects and returns an effect. Useful for emulating structural polymorphism.
 foreign import data R ∷ (# ! → !)
 
--- | There is no some row constraints because they have no sense
--- | E.g. `coordinateSystem` field is fully determined by
--- | `xAxisIndex/yAxisIndex/polarIndex/radarIndex/etc`
-
 -- | Open rows synonims are for mixins
 -- | closed rows are for complete dsls
+
+type CoordinateSystemMixin i =
+  ( coordinateSystem ∷ I |i)
 
 type PositionMixin i =
   ( left ∷ I
@@ -651,47 +650,49 @@ type SingleAxisI = AxisI (NameStyleMixin ())
 
 type LineSeriesI =
   ZMixin
-  (AnimationMixin
-   (MarkerMixin
-    (SymbolMixin
-     (LegendHoverMixin
-      ( name ∷ I
-      , xAxisIndex ∷ I
-      , yAxisIndex ∷ I
-      , polarIndex ∷ I
-      , showSymbol ∷ I
-      , showAllSymbol ∷ I
-      , connectNulls ∷ I
-      , clipOverflow ∷ I
-      , step ∷ I
-      , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
-      , itemStyle ∷ I
-      , areaStyle ∷ R (NormalAndEmphasis AreaStyleI)
-      , smooth ∷ I
-      , smoothMonotone ∷ I
-      , sampling ∷ I
-      , items ∷ I
-      , stack ∷ I
-      , silent ∷ I
-      , label ∷ I)))))
+  (CoordinateSystemMixin
+   (AnimationMixin
+    (MarkerMixin
+     (SymbolMixin
+      (LegendHoverMixin
+       ( name ∷ I
+       , xAxisIndex ∷ I
+       , yAxisIndex ∷ I
+       , polarIndex ∷ I
+       , showSymbol ∷ I
+       , showAllSymbol ∷ I
+       , connectNulls ∷ I
+       , clipOverflow ∷ I
+       , step ∷ I
+       , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
+       , itemStyle ∷ I
+       , areaStyle ∷ R (NormalAndEmphasis AreaStyleI)
+       , smooth ∷ I
+       , smoothMonotone ∷ I
+       , sampling ∷ I
+       , items ∷ I
+       , stack ∷ I
+       , silent ∷ I
+       , label ∷ I))))))
 
 type BarSeriesI =
   ZMixin
-  (AnimationMixin
-   (MarkerMixin
-    ( name ∷ I
-    , items ∷ I
-    , stack ∷ I
-    , legendHoverLink ∷ I
-    , xAxisIndex ∷ I
-    , yAxisIndex ∷ I
-    , itemStyle ∷ I
-    , label ∷ I
-    , barWidth ∷ I
-    , barMaxWidth ∷ I
-    , barMinHeight ∷ I
-    , barGap ∷ I
-    , barCategoryGap ∷ I)))
+  (CoordinateSystemMixin
+   (AnimationMixin
+    (MarkerMixin
+     ( name ∷ I
+     , items ∷ I
+     , stack ∷ I
+     , legendHoverLink ∷ I
+     , xAxisIndex ∷ I
+     , yAxisIndex ∷ I
+     , itemStyle ∷ I
+     , label ∷ I
+     , barWidth ∷ I
+     , barMaxWidth ∷ I
+     , barMinHeight ∷ I
+     , barGap ∷ I
+     , barCategoryGap ∷ I))))
 
 type PieSeriesI =
   ZMixin
@@ -715,22 +716,23 @@ type PieSeriesI =
 
 type BasicScatterSeriesI i =
   MarkerMixin
-  (ZMixin
-   (AnimationMixin
-    (SymbolMixin
-     (LargeMixin
-      (LegendHoverMixin
-       ( name ∷ I
-       , items ∷ I
-       , itemStyle ∷ I
-       , xAxisIndex ∷ I
-       , yAxisIndex ∷ I
-       , polarIndex ∷ I
-       , geoIndex ∷ I
-       , label ∷ I
-       , silent ∷ I
-       , tooltip ∷ I
-       | i))))))
+  (CoordinateSystemMixin
+   (ZMixin
+    (AnimationMixin
+     (SymbolMixin
+      (LargeMixin
+       (LegendHoverMixin
+        ( name ∷ I
+        , items ∷ I
+        , itemStyle ∷ I
+        , xAxisIndex ∷ I
+        , yAxisIndex ∷ I
+        , polarIndex ∷ I
+        , geoIndex ∷ I
+        , label ∷ I
+        , silent ∷ I
+        , tooltip ∷ I
+        | i)))))))
 
 type ScatterI = BasicScatterSeriesI ()
 
@@ -779,45 +781,48 @@ type TreeMapI =
 
 type BoxPlotI =
   ZMixin
-  (BaseAnimationMixin
-   (MarkerMixin
-    (LegendHoverMixin
-     ( xAxisIndex ∷ I
-     , yAxisIndex ∷ I
-     , name ∷ I
-     , layout ∷ I
-     , boxWidth ∷ I
-     , itemStyle ∷ I
-     , items ∷ I
-     , silent ∷ I
-     , tooltip ∷ I))))
+  (CoordinateSystemMixin
+   (BaseAnimationMixin
+    (MarkerMixin
+     (LegendHoverMixin
+      ( xAxisIndex ∷ I
+      , yAxisIndex ∷ I
+      , name ∷ I
+      , layout ∷ I
+      , boxWidth ∷ I
+      , itemStyle ∷ I
+      , items ∷ I
+      , silent ∷ I
+      , tooltip ∷ I)))))
 
 type CandlestickI =
   ZMixin
-  (BaseAnimationMixin
-   (MarkerMixin
-    (LegendHoverMixin
+  (CoordinateSystemMixin
+   (BaseAnimationMixin
+    (MarkerMixin
+     (LegendHoverMixin
      ( name ∷ I
      , items ∷ I
      , xAxisIndex ∷ I
      , yAxisIndex ∷ I
      , layout ∷ I
-     , itemStyle ∷ I))))
+     , itemStyle ∷ I)))))
 
 type HeatMapI =
   ZMixin
-  (MarkerMixin
-   ( name ∷ I
-   , xAxisIndex ∷ I
-   , yAxisIndex ∷ I
-   , geoIndex ∷ I
-   , blurSize ∷ I
-   , minOpacity ∷ I
-   , maxOpacity ∷ I
-   , items ∷ I
-   , label ∷ I
-   , itemStyle ∷ I
-   , silent ∷ I))
+  (CoordinateSystemMixin
+   (MarkerMixin
+    ( name ∷ I
+    , xAxisIndex ∷ I
+    , yAxisIndex ∷ I
+    , geoIndex ∷ I
+    , blurSize ∷ I
+    , minOpacity ∷ I
+    , maxOpacity ∷ I
+    , items ∷ I
+    , label ∷ I
+    , itemStyle ∷ I
+    , silent ∷ I)))
 
 type MapI =
   PositionMixin
@@ -851,64 +856,67 @@ type RegionI =
 
 type ParallelSeriesI =
   AnimationMixin
-  (ZMixin
-   ( parallelIndex ∷ I
-   , name ∷ I
-   , lineStyle ∷ R LineStyleI
-   , inactiveOpacity ∷ I
-   , activeOpacity ∷ I
-   , realtime ∷ I
-   , items ∷ I
-   , silent ∷ I))
+  (CoordinateSystemMixin
+   (ZMixin
+    ( parallelIndex ∷ I
+    , name ∷ I
+    , lineStyle ∷ R LineStyleI
+    , inactiveOpacity ∷ I
+    , activeOpacity ∷ I
+    , realtime ∷ I
+    , items ∷ I
+    , silent ∷ I)))
 
 type LinesI =
   ZMixin
-  (AnimationMixin
-   (MarkerMixin
-    (LargeMixin
-     ( name ∷ I
-     , xAxisIndex ∷ I
-     , yAxisIndex ∷ I
-     , geoIndex ∷ I
-     , polyline ∷ I
-     , effect ∷ I
-     , lineStyle ∷ R LineStyleI
-     , label ∷ I
-     , items ∷ I
-     , silent ∷ I))))
+  (CoordinateSystemMixin
+   (AnimationMixin
+    (MarkerMixin
+     (LargeMixin
+      ( name ∷ I
+      , xAxisIndex ∷ I
+      , yAxisIndex ∷ I
+      , geoIndex ∷ I
+      , polyline ∷ I
+      , effect ∷ I
+      , lineStyle ∷ R LineStyleI
+      , label ∷ I
+      , items ∷ I
+      , silent ∷ I)))))
 
 type GraphI =
   AnimationMixin
-  (ZMixin
-   (PositionMixin
-    (SizeMixin
-     (SymbolMixin
-      (MarkerMixin
-       (LegendHoverMixin
-        ( name ∷ I
-        , xAxisIndex ∷ I
-        , yAxisIndex ∷ I
-        , polarIndex ∷ I
-        , geoIndex ∷ I
-        , layout ∷ I
-        , force ∷ I
-        , roam ∷ I
-        , nodeScaleRatio ∷ I
-        , draggable ∷ I
-        , focusNodeAdjancency ∷ I
-        , itemStyle ∷ I
-        , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
-        , label ∷ I
-        , categories ∷ I
-        , items ∷ I
-        , nodes ∷ I
-        , links ∷ I
-        , edges ∷ I
-        , edgeLabel ∷ I
-        , edgeSymbols ∷ I
-        , edgeSymbolSize ∷ I
-        , circular ∷ I
-        , silent ∷ I)))))))
+  (CoordinateSystemMixin
+   (ZMixin
+    (PositionMixin
+     (SizeMixin
+      (SymbolMixin
+       (MarkerMixin
+        (LegendHoverMixin
+         ( name ∷ I
+         , xAxisIndex ∷ I
+         , yAxisIndex ∷ I
+         , polarIndex ∷ I
+         , geoIndex ∷ I
+         , layout ∷ I
+         , force ∷ I
+         , roam ∷ I
+         , nodeScaleRatio ∷ I
+         , draggable ∷ I
+         , focusNodeAdjancency ∷ I
+         , itemStyle ∷ I
+         , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
+         , label ∷ I
+         , categories ∷ I
+         , items ∷ I
+         , nodes ∷ I
+         , links ∷ I
+         , edges ∷ I
+         , edgeLabel ∷ I
+         , edgeSymbols ∷ I
+         , edgeSymbolSize ∷ I
+         , circular ∷ I
+         , silent ∷ I))))))))
 
 
 type EdgeLabelI = NormalAndEmphasis EdgeLabelInnerI

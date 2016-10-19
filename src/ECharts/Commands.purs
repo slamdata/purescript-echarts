@@ -26,14 +26,24 @@ grids = set "grid" <<< buildArr
 grid ∷ ∀ i. DSL TP.GridI → DSL (grid ∷ I|i)
 grid a = set "grid" $ buildObj a
 
+polar ∷ ∀ i. DSL TP.PolarI → DSL (polar ∷ I|i)
+polar a = set "polar" $ buildObj a
+
 legend ∷ ∀ i. DSL TP.LegendI → DSL (legend ∷ I|i)
 legend a = set "legend" $ buildObj a
 
 xAxis ∷ ∀ i. DSL TP.XAxisI → DSL (xAxis ∷ I|i)
 xAxis a = set "xAxis" $ buildObj a
 
+
 yAxis ∷ ∀ i. DSL TP.YAxisI → DSL (yAxis ∷ I|i)
 yAxis a = set "yAxis" $ buildObj a
+
+radiusAxis ∷ ∀ i. DSL TP.RadiusAxisI → DSL (radiusAxis ∷ I|i)
+radiusAxis a = set "radiusAxis" $ buildObj a
+
+angleAxis ∷ ∀ i. DSL TP.AngleAxisI → DSL (angleAxis ∷ I|i)
+angleAxis a = set "angleAxis" $ buildObj a
 
 color ∷ ∀ i. C.Color → DSL (color ∷ I|i)
 color a = set "color" $ toForeign $ C.toHexString a
@@ -954,3 +964,12 @@ buildOffsetCenter dsl =
 
 containLabel ∷ ∀ i. Boolean → DSL (containLabel ∷ I|i)
 containLabel = set "containLabel" <<< toForeign
+
+polarCoordinateSystem ∷ ∀ i. DSL (coordinateSystem ∷ I|i)
+polarCoordinateSystem = set "coordinateSystem" $ toForeign "polar"
+
+cartesianCoordinateSystem ∷ ∀ i. DSL (coordinateSystem ∷ I|i)
+cartesianCoordinateSystem = set "coordinateSystem" $ toForeign "cartesian2d"
+
+geoCoordinateSystem ∷ ∀ i. DSL (coordinateSystem ∷ I|i)
+geoCoordinateSystem = set "coordinateSystem" $ toForeign "geo"
