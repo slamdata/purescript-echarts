@@ -219,6 +219,9 @@ type TimelineI =
     , controlStyle ∷ I
     , items ∷ I)))
 
+type ParallelsI =
+  ( parallel ∷ I )
+
 type ParallelI =
   PositionMixin
   (ZMixin
@@ -608,6 +611,9 @@ type AxisLineI =
   , onZero ∷ I
   , lineStyle ∷ R LineStyleI)
 
+type ParallelAxesI =
+  ( addParallelAxis ∷ I )
+
 type YAxesI =
   ( addYAxis ∷ I )
 
@@ -863,6 +869,7 @@ type ParallelSeriesI =
     , lineStyle ∷ R LineStyleI
     , inactiveOpacity ∷ I
     , activeOpacity ∷ I
+    , parallelAxisDefault ∷ I
     , realtime ∷ I
     , items ∷ I
     , silent ∷ I)))

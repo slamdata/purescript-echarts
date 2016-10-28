@@ -35,7 +35,6 @@ legend a = set "legend" $ buildObj a
 xAxis ∷ ∀ i. DSL TP.XAxisI → DSL (xAxis ∷ I|i)
 xAxis a = set "xAxis" $ buildObj a
 
-
 yAxis ∷ ∀ i. DSL TP.YAxisI → DSL (yAxis ∷ I|i)
 yAxis a = set "yAxis" $ buildObj a
 
@@ -174,6 +173,9 @@ heatMap = set "heatmap" <<< buildObj
 map_ ∷ ∀ i. DSL TP.MapI → DSL (map ∷ I|i)
 map_ = set "map" <<< buildObj
 
+parallels ∷ ∀ i. DSL TP.ParallelsI → DSL (parallel ∷ I|i)
+parallels = set "parallel" <<< buildArr
+
 parallel ∷ ∀ i. DSL TP.ParallelI → DSL (parallel ∷ I|i)
 parallel = set "parallel" <<< buildObj
 
@@ -188,6 +190,9 @@ sankey = set "sankey" <<< buildObj
 
 funnel ∷ ∀ i. DSL TP.FunnelI → DSL (funnel ∷ I|i)
 funnel = set "funnel" <<< buildObj
+
+parallelSeries ∷ ∀ i. DSL TP.ParallelSeriesI → DSL (parallelSeries ∷ I|i)
+parallelSeries = set "parallel" <<< buildObj
 
 gauge ∷ ∀ i. DSL TP.GaugeI → DSL (gauge ∷ I|i)
 gauge = set "gauge" <<< buildObj
@@ -759,6 +764,15 @@ rotate = set "rotate" <<< toForeign
 fontFamily ∷ ∀ i. String → DSL (fontFamily ∷ I|i)
 fontFamily = set "fontFamily" <<< toForeign
 
+addParallelAxis ∷ ∀ i. DSL TP.ParallelAxisI → DSL (addParallelAxis ∷ I|i)
+addParallelAxis = set "" <<< buildObj
+
+parallelAxes ∷ ∀ i. DSL TP.ParallelAxesI → DSL (parallelAxis ∷ I|i)
+parallelAxes = set "parallelAxis" <<< buildArr
+
+parallelAxisDefault ∷ ∀ i. DSL TP.ParallelAxisI → DSL (parallelAxisDefault ∷ I|i)
+parallelAxisDefault = set "parallelAxisDefault" <<< buildObj
+
 yAxes ∷ ∀ i. DSL TP.YAxesI → DSL (yAxis ∷ I|i)
 yAxes = set "yAxis" <<< buildArr
 
@@ -833,6 +847,9 @@ gridIndex a = set "gridIndex" $ toForeign a
 
 radarIndex ∷ ∀ i. Number → DSL (radarIndex ∷ I|i)
 radarIndex = set "radarIndex" <<< toForeign
+
+parallelIndex ∷ ∀ i. Int → DSL (parallelIndex ∷ I|i)
+parallelIndex = set "parallelIndex" <<< toForeign
 
 treeMapNodeId ∷ ∀ i. String → DSL (treeMapNodeId ∷ I|i)
 treeMapNodeId = set "id" <<< toForeign
@@ -973,3 +990,12 @@ cartesianCoordinateSystem = set "coordinateSystem" $ toForeign "cartesian2d"
 
 geoCoordinateSystem ∷ ∀ i. DSL (coordinateSystem ∷ I|i)
 geoCoordinateSystem = set "coordinateSystem" $ toForeign "geo"
+
+dim ∷ ∀ i. Int → DSL (dim ∷ I|i)
+dim = set "dim" <<< toForeign
+
+nameLocationStart ∷ ∀ i. DSL (nameLocation ∷ I|i)
+nameLocationStart = set "nameLocation" $ toForeign "start"
+
+nameLocationEnd ∷ ∀ i. DSL (nameLocation ∷ I|i)
+nameLocationEnd = set "nameLocation" $ toForeign "end"
