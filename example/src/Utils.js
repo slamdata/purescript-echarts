@@ -1,5 +1,3 @@
-// module Utils
-
 exports.randomArrayImpl = function(NonEmpty) {
     return function(count) {
         return function() {
@@ -9,8 +7,8 @@ exports.randomArrayImpl = function(NonEmpty) {
             for (var i = 0; i < count; i++) {
                 result.push(Math.random());
             }
-            var head = result.unshift();
-            return NonEmpty(head)(result);
+            result.unshift();
+            return NonEmpty(Math.random())(result);
         };
     };
 };

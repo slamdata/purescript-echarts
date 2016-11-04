@@ -2,18 +2,17 @@
   "name": "purescript-echarts",
   "private": true,
   "devDependencies": {
-    "ecstatic": "^0.5.8",
-    "express": "^4.11.0"
+    "echarts": "^3.3.1",
+    "ecstatic": "^2.1.0",
+    "express": "^4.14.0"
   },
   "scripts": {
-    "copy-echarts": "cp bower_components/echarts/build/dist/echarts-all.js public/echarts-all.js",
-    "build": "pulp browserify --include example/src --to public/build.js --censor-lib --strict",
-    "serve": "node script/serve.js",
-    "example": "npm run copy-echarts && npm run build && npm run serve"
+    "build": "pulp browserify --include example/src --to public/build.js",
+    "serve": "node script/serve.js"
   },
   "dependencies": {
     "pulp": "^9.0.1",
-    "purescript": "^0.9.2",
+    "purescript": "^0.10.1",
     "purescript-psa": "^0.3.9"
   }
 }

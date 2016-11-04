@@ -10,7 +10,7 @@ import Prelude
 
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Random (RANDOM, random)
-import Control.Bind ((=<<), (<=<))
+import Control.Monad.Except (runExcept)
 
 import Data.Array ((!!), length)
 import Data.Int as Int
@@ -39,7 +39,7 @@ getElementById elementId = do
   win ← window
   doc ← document win
   el ← NEPN.getElementById elementId (htmlDocumentToNonElementParentNode doc)
-  pure $ either (const Nothing) Just $ readHTMLElement (toForeign el)
+  pure $ either (const Nothing) Just $ runExcept $ readHTMLElement (toForeign el)
 
 onLoad
   ∷ ∀ eff a

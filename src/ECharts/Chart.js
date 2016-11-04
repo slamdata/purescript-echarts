@@ -1,44 +1,52 @@
-// module ECharts.Chart
+var echarts = require("echarts");
 
-exports.initImpl = function(node, theme) {
+exports.initImpl = function(el) {
     return function() {
-        var chart = echarts.init(node, theme);
-        return chart;
+        return echarts.init(el);
     };
 };
 
-exports.setThemeImpl = function(args, chart) {
-    return function() {
-        chart.setTheme.apply(chart, args);
+exports.setOptionImpl = function(option) {
+    return function(chart) {
+        return function() {
+            chart.setOption(option, false, false);
+            return {};
+        };
     };
 };
 
-exports.getZRender = function(chart) {
-    return function() {
-        return chart.getZRender();
+exports.resetOptionImpl = function(option) {
+    return function(chart) {
+        return function() {
+            chart.setOption(option, true, false);
+            return {};
+        };
     };
 };
 
-exports.resize = function(chart) {
+exports.resizeImpl = function(chart) {
     return function() {
-        return chart.resize();
+        chart.resize();
+        return {};
     };
 };
 
-exports.refresh = function(chart) {
+exports.clearImpl = function(chart) {
     return function() {
-        return chart.refresh();
+        chart.clear();
+        return {};
     };
 };
 
-exports.clear = function(chart) {
+exports.disposeImpl = function(chart) {
     return function() {
-        return chart.clear();
+        chart.dispose();
+        return {};
     };
 };
 
-exports.dispose = function(chart) {
+exports.getOptionImpl = function(chart) {
     return function() {
-        return chart.dispose();
+        return chart.getOption();
     };
 };
