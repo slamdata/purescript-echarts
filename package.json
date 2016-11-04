@@ -2,9 +2,9 @@
   "name": "purescript-echarts",
   "private": true,
   "devDependencies": {
-    "echarts": "^3.2.2",
-    "ecstatic": "^0.5.8",
-    "express": "^4.11.0"
+    "echarts": "^3.3.1",
+    "ecstatic": "^2.1.0",
+    "express": "^4.14.0"
   },
   "scripts": {
     "build": "pulp browserify --include example/src --to public/build.js",
@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "pulp": "^9.0.1",
-    "purescript": "^0.9.2",
+    "purescript": "^0.10.1",
     "purescript-psa": "^0.3.9"
   }
 }
