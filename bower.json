@@ -1,6 +1,10 @@
 {
   "name": "purescript-echarts",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/slamdata/purescript-echarts.git"
+  },
   "authors": [
     "John A. De Goes <john@degoes.net> (http://degoes.net)",
     "Maxim Zimaliev <zimaliev@gmail.com>"
