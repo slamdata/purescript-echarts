@@ -2,9 +2,8 @@
 
 Purescript bindings for Baidu's [Enterprise Charts (Echarts) charting library](https://github.com/ecomfe/echarts).
 
-[![Latest release](http://img.shields.io/bower/v/purescript-echarts.svg)](https://github.com/slamdata/purescript-echarts/releases)
-[![Build Status](https://travis-ci.org/slamdata/purescript-echarts.svg?branch=master)](https://travis-ci.org/slamdata/purescript-echarts)
-[![Dependency Status](https://www.versioneye.com/user/projects/579df5c7aa78d5003c173910/badge.svg?style=flat)](https://www.versioneye.com/user/projects/579df5c7aa78d5003c173910)
+[![Latest release](http://img.shields.io/github/release/slamdata/purescript-echarts.svg)](https://github.com/slamdata/purescript-echarts/releases)
+[![Build status](https://travis-ci.org/slamdata/purescript-echarts.svg?branch=master)](https://travis-ci.org/slamdata/purescript-echarts)
 
 ## API
 
