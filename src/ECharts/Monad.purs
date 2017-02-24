@@ -26,19 +26,11 @@ newtype DSLMonad (i ∷ # !) a = DSL (Writer (Array (Tuple String Foreign)) a)
 unDSL ∷ ∀ i a. DSLMonad i a → Writer (Array (Tuple String Foreign)) a
 unDSL (DSL m) = m
 
-instance functorDSL ∷ Functor (DSLMonad i) where
-  map f (DSL o) = DSL $ map f o
-
-instance applyDSL ∷ Apply (DSLMonad i) where
-  apply (DSL f) (DSL o) = DSL $ apply f o
-
-instance applicativeDSL ∷ Applicative (DSLMonad i) where
-  pure = DSL <<< pure
-
-instance bindDSL ∷ Bind (DSLMonad i) where
-  bind (DSL o) f = DSL $ o >>= unDSL <<< f
-
-instance monadDSL ∷ Monad (DSLMonad i)
+derive newtype instance functorDSL ∷ Functor (DSLMonad i)
+derive newtype instance applyDSL ∷ Apply (DSLMonad i)
+derive newtype instance applicativeDSL ∷ Applicative (DSLMonad i)
+derive newtype instance bindDSL ∷ Bind (DSLMonad i)
+derive newtype instance monadDSL ∷ Monad (DSLMonad i)
 
 type DSL i = DSLMonad i Unit
 
@@ -50,7 +42,7 @@ get k (DSL cs) =
   F.foldl (foldFn k) Nothing $ execWriter cs
   where
   foldFn ∷ String → Maybe Foreign → Tuple String Foreign → Maybe Foreign
-  foldFn k Nothing (Tuple kk f) | k == kk = Just f
+  foldFn k' Nothing (Tuple kk f) | k' == kk = Just f
   foldFn _ a _ = a
 
 lastWithKeys ∷ ∀ i f. F.Foldable f ⇒ f String → DSL i → Maybe Foreign
@@ -58,7 +50,7 @@ lastWithKeys ks (DSL cs) =
   F.foldl (foldFn ks) Nothing $ Arr.reverse $ execWriter cs
   where
   foldFn ∷ f String → Maybe Foreign → Tuple String Foreign → Maybe Foreign
-  foldFn ks Nothing (Tuple kk f) | F.elem kk ks = Just f
+  foldFn ks' Nothing (Tuple kk f) | F.elem kk ks' = Just f
   foldFn _ a _ = a
 
 applyOnePair ∷ Tuple String Foreign → Foreign → Foreign
