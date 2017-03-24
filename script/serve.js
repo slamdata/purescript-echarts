@@ -1,6 +1,5 @@
 var express = require("express"),
-    http = require("http"),
-    ecstatic = require("ecstatic");
+    http = require("http");
 
 var runServer = function(taskName, serverPort, subdirectory) {
     if (taskName === undefined) {
