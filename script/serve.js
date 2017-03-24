@@ -18,6 +18,7 @@ var runServer = function(taskName, serverPort, subdirectory) {
 
 
     app.listen(serverPort);
+    console.log('Started listening to port: ' + serverPort)
 };
 
 runServer();
