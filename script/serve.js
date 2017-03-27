@@ -1,6 +1,5 @@
 var express = require("express"),
-    http = require("http"),
-    ecstatic = require("ecstatic");
+    http = require("http");
 
 var runServer = function(taskName, serverPort, subdirectory) {
     if (taskName === undefined) {
@@ -18,6 +17,7 @@ var runServer = function(taskName, serverPort, subdirectory) {
 
 
     app.listen(serverPort);
+    console.log('Started listening to port: ' + serverPort)
 };
 
 runServer();
