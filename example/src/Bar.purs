@@ -148,6 +148,6 @@ chart = do
   case mbEl of
     Nothing → DT.traceAnyA "There is no element with 'bar' id"
     Just el → do
-      ch ← EC.init el $ Nothing
+      ch ← EC.init el Nothing
       inp ← genInp
       EC.setOption (options inp)  ch
