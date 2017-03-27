@@ -7,7 +7,6 @@ module ECharts.Chart
   , dispose
   , clear
   , getOption
-  , Theme(..)
   ) where
 
 import Prelude
@@ -24,6 +23,7 @@ import DOM.HTML.Types (HTMLElement)
 
 import ECharts.Internal (undefinedValue)
 import ECharts.Monad (DSL, buildObj)
+import ECharts.Theme (Theme(..))
 import ECharts.Types.Phantom (OptionI)
 import ECharts.Types (Chart, ECHARTS)
 
@@ -31,8 +31,6 @@ foreign import initImpl
   ∷ ∀ e. HTMLElement
   → Foreign
   → Eff (dom ∷ DOM, echarts ∷ ECHARTS, err ∷ EXCEPTION|e) Chart
-
-data Theme = ByName String | FromObject Foreign
 
 init
   ∷ ∀ m e

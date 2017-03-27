@@ -78,11 +78,11 @@ options = do
           E.name "eight"
 
 
-chart ∷ ∀ e. Maybe EC.Theme → Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION|e) Unit
-chart theme = do
+chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION|e) Unit
+chart = do
   mbEl ← U.getElementById $ ElementId "pie"
   case mbEl of
     Nothing → DT.traceAnyA "There is no element with pie id"
     Just el → do
-      ch ← EC.init el theme
+      ch ← EC.init el Nothing
       EC.setOption options ch

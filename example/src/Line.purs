@@ -91,13 +91,13 @@ optStream acc =
     itemsSet ← effItemsSet
     pure $ E.series $ E.line itemsSet
 
-chart ∷ ∀ e. Maybe EC.Theme → Eff (now ∷ NOW, dom ∷ DOM, err ∷ EXCEPTION, echarts ∷ ET.ECHARTS, random ∷ RANDOM|e) Unit
-chart theme = do
+chart ∷ ∀ e. Eff (now ∷ NOW, dom ∷ DOM, err ∷ EXCEPTION, echarts ∷ ET.ECHARTS, random ∷ RANDOM|e) Unit
+chart = do
   mbEl ← U.getElementById $ ElementId "line"
   case mbEl of
     Nothing → DT.traceAnyA "There is no element with line id"
     Just el → do
-      ch ← EC.init el theme
+      ch ← EC.init el Nothing
       EC.setOption startOptions ch
       timeStart ← map toDateTime now
       valueStart ← random

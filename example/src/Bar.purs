@@ -142,12 +142,12 @@ genInp = F.for (Arr.range 0 10) \i → do
   four ← random <#> ((_ + 0.3) >>> U.precise 2.0)
   pure {label, one, two, three, four}
 
-chart ∷ ∀ e. Maybe EC.Theme → Eff (random ∷ RANDOM, dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION|e) Unit
-chart theme = do
+chart ∷ ∀ e. Eff (random ∷ RANDOM, dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION|e) Unit
+chart = do
   mbEl ← U.getElementById $ ElementId "bar"
   case mbEl of
     Nothing → DT.traceAnyA "There is no element with 'bar' id"
     Just el → do
-      ch ← EC.init el theme
+      ch ← EC.init el $ Nothing
       inp ← genInp
       EC.setOption (options inp)  ch

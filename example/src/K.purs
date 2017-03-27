@@ -40,11 +40,11 @@ options = do
       , [ 2360.75, 2382.48, 2347.89, 2383.76 ]
       ]
 
-chart ∷ ∀ e. Maybe EC.Theme → Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION|e) Unit
-chart theme = do
+chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION|e) Unit
+chart = do
   mbEl ← U.getElementById $ ElementId "k"
   case mbEl of
     Nothing → DT.traceAnyA "There is no element with 'k' id"
     Just el → do
-      ch ← EC.init el theme
+      ch ← EC.init el Nothing
       EC.setOption options ch
