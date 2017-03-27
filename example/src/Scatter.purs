@@ -91,13 +91,13 @@ options sinData cosData = do
       E.symbolSize 2
       E.items cosData
 
-chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION, random ∷ RANDOM|e) Unit
-chart = do
+chart ∷ ∀ e. Maybe EC.Theme → Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION, random ∷ RANDOM|e) Unit
+chart theme = do
   mbEl ← U.getElementById $ ElementId "scatter"
   case mbEl of
     Nothing → DT.traceAnyA "There is no element with scatter id"
     Just el → do
-      ch ← EC.init el
+      ch ← EC.init el theme
       sinData ← genSinData
       cosData ← genCosData
       EC.setOption (options sinData cosData) ch

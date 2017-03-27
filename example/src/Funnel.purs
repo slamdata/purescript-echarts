@@ -114,11 +114,11 @@ options = do
           E.name "five"
           E.value 80.0
 
-chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION|e) Unit
-chart = do
+chart ∷ ∀ e. Maybe EC.Theme → Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION|e) Unit
+chart theme = do
   mbEl ← U.getElementById $ ElementId "funnel"
   case mbEl of
     Nothing → DT.traceAnyA "There is no element with 'funnel' id"
     Just el → do
-      ch ← EC.init el
+      ch ← EC.init el theme
       EC.setOption options ch

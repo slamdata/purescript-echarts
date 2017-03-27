@@ -1,11 +1,13 @@
 module ECharts.Chart
   ( init
+  , registerTheme
   , setOption
   , resetOption
   , resize
   , dispose
   , clear
   , getOption
+  , Theme(..)
   ) where
 
 import Prelude
@@ -14,24 +16,38 @@ import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Class (class MonadEff, liftEff)
 import Control.Monad.Eff.Exception (EXCEPTION)
 
-import Data.Foreign (Foreign)
+import Data.Foreign (Foreign, toForeign)
+import Data.Maybe (Maybe(..))
 
 import DOM (DOM)
 import DOM.HTML.Types (HTMLElement)
 
+import ECharts.Internal (undefinedValue)
 import ECharts.Monad (DSL, buildObj)
 import ECharts.Types.Phantom (OptionI)
 import ECharts.Types (Chart, ECHARTS)
 
 foreign import initImpl
-  ∷ ∀ e. HTMLElement → Eff (dom ∷ DOM, echarts ∷ ECHARTS, err ∷ EXCEPTION|e) Chart
+  ∷ ∀ e. HTMLElement
+  → Foreign
+  → Eff (dom ∷ DOM, echarts ∷ ECHARTS, err ∷ EXCEPTION|e) Chart
+
+data Theme = ByName String | FromObject Foreign
 
 init
   ∷ ∀ m e
   . MonadEff (dom ∷ DOM, echarts ∷ ECHARTS, err ∷ EXCEPTION|e) m
   ⇒ HTMLElement
+  → Maybe Theme
   → m Chart
-init el = liftEff $ initImpl el
+init el Nothing =  liftEff  $ initImpl el (toForeign undefinedValue)
+init el (Just (ByName name)) =  liftEff  $ initImpl el (toForeign name)
+init el (Just (FromObject theme)) =  liftEff  $ initImpl el (toForeign theme)
+
+foreign import registerTheme
+  ∷ ∀ e. String
+  → Foreign
+  → Eff (echarts ∷ ECHARTS|e) Unit
 
 foreign import setOptionImpl
   ∷ ∀ e. Foreign → Chart → Eff (echarts ∷ ECHARTS, err ∷ EXCEPTION|e) Unit

@@ -117,13 +117,13 @@ options = do
       E.buildItems do
         F.for_ dataGZ (E.addItem <<< E.values)
 
-chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION|e) Unit
-chart = do
+chart ∷ ∀ e. Maybe EC.Theme → Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION|e) Unit
+chart theme = do
   mbEl ← U.getElementById $ ElementId "radar"
   case mbEl of
     Nothing → DT.traceAnyA "There is no element with 'radar' id"
     Just el → do
-      ch ← EC.init el
+      ch ← EC.init el theme
       EC.setOption options ch
 
 dataBJ ∷ Array (Array Number)

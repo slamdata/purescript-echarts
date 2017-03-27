@@ -1,8 +1,19 @@
 var echarts = require("echarts");
 
 exports.initImpl = function(el) {
-    return function() {
-        return echarts.init(el);
+    return function(theme) {
+        return function() {
+            return echarts.init(el, theme);
+        };
+    };
+};
+
+exports.registerTheme = function(name) {
+    return function(theme) {
+        return function() {
+            echarts.registerTheme(name, theme);
+            return {};
+        };
     };
 };
 

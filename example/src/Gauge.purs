@@ -163,13 +163,13 @@ dataStream =
 
 
 
-chart ∷ ∀ e. Eff (random ∷ RANDOM, dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION|e) Unit
-chart = do
+chart ∷ ∀ e. Maybe EC.Theme → Eff (random ∷ RANDOM, dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION|e) Unit
+chart theme = do
   mbEl ← U.getElementById $ ElementId "gauge"
   case mbEl of
     Nothing → DT.traceAnyA "There is no element with 'gauge' id"
     Just el → do
-      ch ← EC.init el
+      ch ← EC.init el theme
       EC.setOption (options initialVal) ch
       runSignal $ dataStream ~> \effVal → do
         val ← effVal
