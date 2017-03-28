@@ -7,7 +7,7 @@ import Control.Monad.Eff.Exception (EXCEPTION)
 import Control.Monad.Eff.Random (RANDOM)
 
 import Data.Array (zipWith)
-import Data.Maybe (Maybe(..))
+import Data.Maybe (Maybe(..), maybe)
 import Data.NonEmpty as NE
 import Data.Tuple (Tuple(..), uncurry)
 
@@ -17,6 +17,7 @@ import DOM (DOM)
 import DOM.Node.Types (ElementId(..))
 
 import ECharts.Chart as EC
+import ECharts.Theme as ETheme
 import ECharts.Types as ET
 import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
@@ -93,11 +94,17 @@ options sinData cosData = do
 
 chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION, random ∷ RANDOM|e) Unit
 chart = do
-  mbEl ← U.getElementById $ ElementId "scatter"
+  chart' (ElementId "scatter-1") Nothing
+  chart' (ElementId "scatter-2") (Just (ETheme.dark))
+  chart' (ElementId "scatter-3") (Just (ETheme.macarons))
+
+chart' ∷ ∀ e. ElementId → Maybe ETheme.Theme → Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION, random ∷ RANDOM|e) Unit
+chart' id theme = do
+  mbEl ← U.getElementById id
   case mbEl of
     Nothing → DT.traceAnyA "There is no element with scatter id"
     Just el → do
-      ch ← EC.init el
+      ch ← maybe EC.init EC.initWithTheme theme el
       sinData ← genSinData
       cosData ← genCosData
       EC.setOption (options sinData cosData) ch
