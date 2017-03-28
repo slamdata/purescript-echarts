@@ -1,7 +1,7 @@
 var echarts = require("echarts");
 
-exports.initImpl = function(el) {
-    return function(theme) {
+exports.initImpl = function(theme) {
+    return function(el) {
         return function() {
             return echarts.init(el, theme);
         };

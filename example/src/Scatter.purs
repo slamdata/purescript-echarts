@@ -7,7 +7,7 @@ import Control.Monad.Eff.Exception (EXCEPTION)
 import Control.Monad.Eff.Random (RANDOM)
 
 import Data.Array (zipWith)
-import Data.Maybe (Maybe(..))
+import Data.Maybe (Maybe(..), maybe)
 import Data.NonEmpty as NE
 import Data.Tuple (Tuple(..), uncurry)
 
@@ -104,7 +104,7 @@ chart' id theme = do
   case mbEl of
     Nothing → DT.traceAnyA "There is no element with scatter id"
     Just el → do
-      ch ← EC.init el theme
+      ch ← maybe EC.init EC.initWithTheme theme el
       sinData ← genSinData
       cosData ← genCosData
       EC.setOption (options sinData cosData) ch

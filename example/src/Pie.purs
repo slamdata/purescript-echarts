@@ -84,5 +84,5 @@ chart = do
   case mbEl of
     Nothing → DT.traceAnyA "There is no element with pie id"
     Just el → do
-      ch ← EC.init el Nothing
+      ch ← EC.init el
       EC.setOption options ch

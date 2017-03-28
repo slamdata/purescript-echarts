@@ -1,5 +1,6 @@
 module ECharts.Chart
   ( init
+  , initWithTheme
   , registerTheme
   , setOption
   , resetOption
@@ -16,7 +17,6 @@ import Control.Monad.Eff.Class (class MonadEff, liftEff)
 import Control.Monad.Eff.Exception (EXCEPTION)
 
 import Data.Foreign (Foreign, toForeign)
-import Data.Maybe (Maybe(..))
 
 import DOM (DOM)
 import DOM.HTML.Types (HTMLElement)
@@ -28,19 +28,25 @@ import ECharts.Types.Phantom (OptionI)
 import ECharts.Types (Chart, ECHARTS)
 
 foreign import initImpl
-  ∷ ∀ e. HTMLElement
-  → Foreign
+  ∷ ∀ e. Foreign
+  → HTMLElement
   → Eff (dom ∷ DOM, echarts ∷ ECHARTS, err ∷ EXCEPTION|e) Chart
 
 init
   ∷ ∀ m e
   . MonadEff (dom ∷ DOM, echarts ∷ ECHARTS, err ∷ EXCEPTION|e) m
   ⇒ HTMLElement
-  → Maybe Theme
   → m Chart
-init el Nothing =  liftEff  $ initImpl el (toForeign undefinedValue)
-init el (Just (ByName name)) =  liftEff  $ initImpl el (toForeign name)
-init el (Just (FromObject theme)) =  liftEff  $ initImpl el (toForeign theme)
+init el = liftEff $ initImpl undefinedValue el
+
+initWithTheme
+  ∷ ∀ m e
+  . MonadEff (dom ∷ DOM, echarts ∷ ECHARTS, err ∷ EXCEPTION|e) m
+  ⇒ Theme
+  → HTMLElement
+  → m Chart
+initWithTheme (ByName name) el = liftEff $ initImpl (toForeign name) el
+initWithTheme (FromObject theme) el = liftEff $ initImpl (toForeign theme) el
 
 foreign import registerTheme
   ∷ ∀ e. String
