@@ -6,28 +6,53 @@ module ECharts.Theme
   , roma
   , shine
   , vintage
+  , BuiltInTheme(..)
+  , parseBuiltInTheme
+  , builtInToTheme
   ) where
 
+import Prelude (($), (<>))
+import Data.Either (Either(..))
 import Data.Foreign (Foreign)
 
-foreign import forceExport :: Foreign
+foreign import forceExport ∷ Foreign
 
 data Theme = ByName String | FromObject Foreign
+data BuiltInTheme = Infographic | Macarons | Roma | Shine | Vintage | Dark
+
+parseBuiltInTheme ∷ String → Either String BuiltInTheme
+parseBuiltInTheme str = case str of
+  "infographic" → Right Infographic
+  "macarons" → Right Macarons
+  "roma" → Right Roma
+  "shine" → Right Shine
+  "vintage" → Right Vintage
+  "dark" → Right Dark
+  _ → Left $ "`" <> str <> "` is not builtin theme"
+
+builtInToTheme ∷ BuiltInTheme → Theme
+builtInToTheme = case _ of
+  Infographic → ByName "infographic"
+  Macarons → ByName "macarons"
+  Roma → ByName "roma"
+  Shine → ByName "shine"
+  Vintage → ByName "vintage"
+  Dark → ByName "dark"
 
 dark ∷ Theme
-dark = ByName "dark"
+dark = builtInToTheme Dark
 
 infographic ∷ Theme
-infographic = ByName "infographic"
+infographic = builtInToTheme Infographic
 
 macarons ∷ Theme
-macarons = ByName "macarons"
+macarons = builtInToTheme Macarons
 
 roma ∷ Theme
-roma = ByName "roma"
+roma = builtInToTheme Roma
 
 shine ∷ Theme
-shine = ByName "shine"
+shine = builtInToTheme Shine
 
 vintage ∷ Theme
-vintage = ByName "vintage"
+vintage = builtInToTheme Vintage
