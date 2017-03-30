@@ -7,30 +7,28 @@ module ECharts.Theme
   , shine
   , vintage
   , BuiltInTheme(..)
+  , parseBuiltInTheme
   , builtInToTheme
   ) where
 
-import Prelude
-
-import Data.Foreign (Foreign, ForeignError(..), fail, readString)
-import Data.Foreign.Class (class IsForeign)
+import Prelude (($), (<>))
+import Data.Either (Either(..))
+import Data.Foreign (Foreign)
 
 foreign import forceExport ∷ Foreign
 
 data Theme = ByName String | FromObject Foreign
 data BuiltInTheme = Infographic | Macarons | Roma | Shine | Vintage | Dark
 
-instance builtInThemeIsForeign ∷ IsForeign BuiltInTheme where
-  read f = do
-    str ← readString f
-    case str of
-      "infographic" → pure Infographic
-      "macarons" → pure Macarons
-      "roma" → pure Roma
-      "shine" → pure Shine
-      "vintage" → pure Vintage
-      "dark" → pure Dark
-      _ → fail $ ForeignError $ "Theme `" <> str <> "` is not supported"
+parseBuiltInTheme :: String -> Either String BuiltInTheme
+parseBuiltInTheme str = case str of
+  "infographic" → Right Infographic
+  "macarons" → Right Macarons
+  "roma" → Right Roma
+  "shine" → Right Shine
+  "vintage" → Right Vintage
+  "dark" → Right Dark
+  _ → Left $ "`" <> str <> "`is not builtin theme"
 
 builtInToTheme ∷ BuiltInTheme → Theme
 builtInToTheme = case _ of
