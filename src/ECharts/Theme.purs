@@ -20,7 +20,7 @@ foreign import forceExport ∷ Foreign
 data Theme = ByName String | FromObject Foreign
 data BuiltInTheme = Infographic | Macarons | Roma | Shine | Vintage | Dark
 
-parseBuiltInTheme :: String -> Either String BuiltInTheme
+parseBuiltInTheme ∷ String → Either String BuiltInTheme
 parseBuiltInTheme str = case str of
   "infographic" → Right Infographic
   "macarons" → Right Macarons
@@ -28,7 +28,7 @@ parseBuiltInTheme str = case str of
   "shine" → Right Shine
   "vintage" → Right Vintage
   "dark" → Right Dark
-  _ → Left $ "`" <> str <> "`is not builtin theme"
+  _ → Left $ "`" <> str <> "` is not builtin theme"
 
 builtInToTheme ∷ BuiltInTheme → Theme
 builtInToTheme = case _ of
