@@ -131,7 +131,7 @@ type FormatterInput =
   , name ∷ String
   , dataIndex ∷ Int
   , "data" ∷ Item -- ???
-  , value ∷ Number
+  , value ∷ Foreign
   , color ∷ String
   , percent ∷ Number
   , dataType ∷ String
@@ -144,7 +144,7 @@ type FormatterInputArrayValue =
   , name ∷ String
   , dataIndex ∷ Int
   , "data" ∷ Item
-  , value ∷ Array Number
+  , value ∷ Array Foreign
   , color ∷ String
   , percent ∷ Number
   }
