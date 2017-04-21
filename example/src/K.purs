@@ -40,7 +40,7 @@ options = do
       , [ 2360.75, 2382.48, 2347.89, 2383.76 ]
       ]
 
-chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION|e) Unit
+chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, exception ∷ EXCEPTION|e) Unit
 chart = do
   mbEl ← U.getElementById $ ElementId "k"
   case mbEl of

@@ -78,7 +78,7 @@ options = do
           E.name "eight"
 
 
-chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION|e) Unit
+chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, exception ∷ EXCEPTION|e) Unit
 chart = do
   mbEl ← U.getElementById $ ElementId "pie"
   case mbEl of

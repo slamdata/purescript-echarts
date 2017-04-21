@@ -142,7 +142,7 @@ genInp = F.for (Arr.range 0 10) \i → do
   four ← random <#> ((_ + 0.3) >>> U.precise 2.0)
   pure {label, one, two, three, four}
 
-chart ∷ ∀ e. Eff (random ∷ RANDOM, dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION|e) Unit
+chart ∷ ∀ e. Eff (random ∷ RANDOM, dom ∷ DOM, echarts ∷ ET.ECHARTS, exception ∷ EXCEPTION|e) Unit
 chart = do
   mbEl ← U.getElementById $ ElementId "bar"
   case mbEl of

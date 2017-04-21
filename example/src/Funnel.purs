@@ -114,7 +114,7 @@ options = do
           E.name "five"
           E.value 80.0
 
-chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION|e) Unit
+chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, exception ∷ EXCEPTION|e) Unit
 chart = do
   mbEl ← U.getElementById $ ElementId "funnel"
   case mbEl of

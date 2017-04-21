@@ -117,7 +117,7 @@ options = do
       E.buildItems do
         F.for_ dataGZ (E.addItem <<< E.values)
 
-chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION|e) Unit
+chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, exception ∷ EXCEPTION|e) Unit
 chart = do
   mbEl ← U.getElementById $ ElementId "radar"
   case mbEl of
