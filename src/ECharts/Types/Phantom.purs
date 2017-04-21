@@ -1,9 +1,11 @@
 module ECharts.Types.Phantom where
 
+import Control.Monad.Eff (kind Effect)
+
 -- | Phantom effect for DSL
-foreign import data I ∷ !
+foreign import data I ∷ Effect
 -- | Takes row of effects and returns an effect. Useful for emulating structural polymorphism.
-foreign import data R ∷ (# ! → !)
+foreign import data R ∷ (# Effect → Effect)
 
 -- | Open rows synonims are for mixins
 -- | closed rows are for complete dsls

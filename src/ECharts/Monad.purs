@@ -11,6 +11,7 @@ module ECharts.Monad
 
 import Prelude
 
+import Control.Monad.Eff (kind Effect)
 import Control.Monad.Writer (Writer, execWriter)
 import Control.Monad.Writer.Class (tell)
 
@@ -22,7 +23,7 @@ import Data.Tuple (Tuple(..), uncurry, snd)
 
 import ECharts.Internal (unsafeSetField, emptyObject)
 
-newtype DSLMonad (i ∷ # !) a = DSL (Writer (Array (Tuple String Foreign)) a)
+newtype DSLMonad (i ∷ # Effect) a = DSL (Writer (Array (Tuple String Foreign)) a)
 unDSL ∷ ∀ i a. DSLMonad i a → Writer (Array (Tuple String Foreign)) a
 unDSL (DSL m) = m
 
