@@ -92,13 +92,13 @@ options sinData cosData = do
       E.symbolSize 2
       E.items cosData
 
-chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION, random ∷ RANDOM|e) Unit
+chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, exception ∷ EXCEPTION, random ∷ RANDOM|e) Unit
 chart = do
   chart' (ElementId "scatter-1") Nothing
   chart' (ElementId "scatter-2") (Just (ETheme.dark))
   chart' (ElementId "scatter-3") (Just (ETheme.macarons))
 
-chart' ∷ ∀ e. ElementId → Maybe ETheme.Theme → Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION, random ∷ RANDOM|e) Unit
+chart' ∷ ∀ e. ElementId → Maybe ETheme.Theme → Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, exception ∷ EXCEPTION, random ∷ RANDOM|e) Unit
 chart' id theme = do
   mbEl ← U.getElementById id
   case mbEl of

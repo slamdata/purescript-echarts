@@ -91,7 +91,7 @@ optStream acc =
     itemsSet ← effItemsSet
     pure $ E.series $ E.line itemsSet
 
-chart ∷ ∀ e. Eff (now ∷ NOW, dom ∷ DOM, err ∷ EXCEPTION, echarts ∷ ET.ECHARTS, random ∷ RANDOM|e) Unit
+chart ∷ ∀ e. Eff (now ∷ NOW, dom ∷ DOM, exception ∷ EXCEPTION, echarts ∷ ET.ECHARTS, random ∷ RANDOM|e) Unit
 chart = do
   mbEl ← U.getElementById $ ElementId "line"
   case mbEl of

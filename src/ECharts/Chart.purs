@@ -30,18 +30,18 @@ import ECharts.Types (Chart, ECHARTS)
 foreign import initImpl
   ∷ ∀ e. Foreign
   → HTMLElement
-  → Eff (dom ∷ DOM, echarts ∷ ECHARTS, err ∷ EXCEPTION|e) Chart
+  → Eff (dom ∷ DOM, echarts ∷ ECHARTS, exception ∷ EXCEPTION|e) Chart
 
 init
   ∷ ∀ m e
-  . MonadEff (dom ∷ DOM, echarts ∷ ECHARTS, err ∷ EXCEPTION|e) m
+  . MonadEff (dom ∷ DOM, echarts ∷ ECHARTS, exception ∷ EXCEPTION|e) m
   ⇒ HTMLElement
   → m Chart
 init el = liftEff $ initImpl undefinedValue el
 
 initWithTheme
   ∷ ∀ m e
-  . MonadEff (dom ∷ DOM, echarts ∷ ECHARTS, err ∷ EXCEPTION|e) m
+  . MonadEff (dom ∷ DOM, echarts ∷ ECHARTS, exception ∷ EXCEPTION|e) m
   ⇒ Theme
   → HTMLElement
   → m Chart
@@ -54,11 +54,11 @@ foreign import registerTheme
   → Eff (echarts ∷ ECHARTS|e) Unit
 
 foreign import setOptionImpl
-  ∷ ∀ e. Foreign → Chart → Eff (echarts ∷ ECHARTS, err ∷ EXCEPTION|e) Unit
+  ∷ ∀ e. Foreign → Chart → Eff (echarts ∷ ECHARTS, exception ∷ EXCEPTION|e) Unit
 
 setOption
   ∷ ∀ m e
-  . MonadEff (echarts ∷ ECHARTS, err ∷ EXCEPTION|e) m
+  . MonadEff (echarts ∷ ECHARTS, exception ∷ EXCEPTION|e) m
   ⇒ DSL OptionI
   → Chart
   → m Unit
@@ -66,12 +66,12 @@ setOption opts chart = liftEff $ setOptionImpl (buildObj opts) chart
 
 
 foreign import resetOptionImpl
-  ∷ ∀ e. Foreign → Chart → Eff (echarts ∷ ECHARTS, err ∷ EXCEPTION|e) Unit
+  ∷ ∀ e. Foreign → Chart → Eff (echarts ∷ ECHARTS, exception ∷ EXCEPTION|e) Unit
 
 
 resetOption
   ∷ ∀ m e
-  . MonadEff (echarts ∷ ECHARTS, err ∷ EXCEPTION|e) m
+  . MonadEff (echarts ∷ ECHARTS, exception ∷ EXCEPTION|e) m
   ⇒ DSL OptionI
   → Chart
   → m Unit

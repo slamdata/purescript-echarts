@@ -163,7 +163,7 @@ dataStream =
 
 
 
-chart ∷ ∀ e. Eff (random ∷ RANDOM, dom ∷ DOM, echarts ∷ ET.ECHARTS, err ∷ EXCEPTION|e) Unit
+chart ∷ ∀ e. Eff (random ∷ RANDOM, dom ∷ DOM, echarts ∷ ET.ECHARTS, exception ∷ EXCEPTION|e) Unit
 chart = do
   mbEl ← U.getElementById $ ElementId "gauge"
   case mbEl of
