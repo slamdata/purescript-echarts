@@ -14,7 +14,7 @@ import Control.Monad.Except (runExcept)
 
 import Data.Array ((!!), length)
 import Data.Int as Int
-import Data.Maybe (Maybe(..))
+import Data.Maybe (Maybe(..), fromJust)
 import Data.Either (either)
 import Data.Tuple (Tuple(..))
 import Data.Foreign (toForeign)
@@ -30,6 +30,7 @@ import DOM.Node.NonElementParentNode as NEPN
 import DOM.Node.Types (ElementId)
 
 import Math (round, pow)
+import Partial.Unsafe (unsafePartial)
 
 getElementById
   ∷ ∀ eff
@@ -39,7 +40,7 @@ getElementById elementId = do
   win ← window
   doc ← document win
   el ← NEPN.getElementById elementId (htmlDocumentToNonElementParentNode doc)
-  pure $ either (const Nothing) Just $ runExcept $ readHTMLElement (toForeign el)
+  pure $ either (const Nothing) Just $ runExcept $ readHTMLElement (toForeign <<< unsafePartial fromJust $ el)
 
 onLoad
   ∷ ∀ eff a
