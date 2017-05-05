@@ -6,4 +6,4 @@
 public/*.js
 .psci_modules
 .psci
-
+.psc-ide-port
