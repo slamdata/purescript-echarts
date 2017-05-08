@@ -5,6 +5,8 @@ import Prelude
 import Color as C
 
 import Data.Array as Arr
+import Data.Date (Date, year, month, day)
+import Data.Enum (fromEnum)
 import Data.Foldable as F
 import Data.Foreign (toForeign)
 
@@ -113,6 +115,9 @@ addItem = set "" <<< buildObj
 buildItems ∷ ∀ i. DSL TP.ItemsI → DSL (items ∷ I|i)
 buildItems is = set "data" $ buildArr is
 
+calendarIndex ∷ ∀ i. Int → DSL (calendarIndex ∷ I|i)
+calendarIndex i = set "calendarIndex" $ toForeign i
+
 visibleContent ∷ ∀ i. Boolean → DSL (showContent ∷ I|i)
 visibleContent a = set "showContent" $ toForeign a
 
@@ -169,6 +174,9 @@ candlestick = set "candlestick" <<< buildObj
 
 heatMap ∷ ∀ i. DSL TP.HeatMapI → DSL (heatMap ∷ I|i)
 heatMap = set "heatmap" <<< buildObj
+
+calendarSpec ∷ ∀ i. DSL TP.CalendarSpecI → DSL (calendarSpec ∷ I|i)
+calendarSpec = set "calendar" <<< buildObj
 
 map_ ∷ ∀ i. DSL TP.MapI → DSL (map ∷ I|i)
 map_ = set "map" <<< buildObj
@@ -259,6 +267,9 @@ addValue = set "" <<< toForeign
 
 addStringValue ∷ ∀ i. String → DSL (addValue ∷ I|i)
 addStringValue = set "" <<< toForeign
+
+autoValue ∷ ∀ i. DSL (addValue ∷ I|i)
+autoValue = set "" $ toForeign "auto"
 
 buildNames ∷ ∀ i. DSL TP.NamesI → DSL (name ∷ I|i)
 buildNames = set "name" <<< buildArr
@@ -476,6 +487,9 @@ inverse a = set "inverse" $ toForeign a
 visualMap ∷ ∀ i. DSL TP.VisualMapI → DSL (visualMap ∷ I|i)
 visualMap a = set "visualMap" $ buildSeries a
 
+calendar ∷ ∀ i. DSL TP.CalendarI → DSL (calendar ∷ I|i)
+calendar a = set "calendar" $ buildSeries a
+
 continuous ∷ ∀ i. DSL TP.ContinuousVisualMapI → DSL (continuousVisualMap ∷ I|i)
 continuous a = set "continuous" $ buildObj a
 
@@ -586,6 +600,9 @@ readOnly = set "readOnly" <<< toForeign
 
 positionInside ∷ ∀ i. DSL (position ∷ I|i)
 positionInside = set "position" $ toForeign "inside"
+
+positionTop ∷ ∀ i. DSL (position ∷ I|i)
+positionTop = set "position" $ toForeign "top"
 
 labelLine ∷ ∀ i. DSL TP.LabelLineI → DSL (labelLine ∷ I|i)
 labelLine = set "labelLine" <<< buildObj
@@ -991,6 +1008,9 @@ cartesianCoordinateSystem = set "coordinateSystem" $ toForeign "cartesian2d"
 geoCoordinateSystem ∷ ∀ i. DSL (coordinateSystem ∷ I|i)
 geoCoordinateSystem = set "coordinateSystem" $ toForeign "geo"
 
+calendarCoordinateSystem ∷ ∀ i. DSL (coordinateSystem ∷ I|i)
+calendarCoordinateSystem = set "coordinateSystem" $ toForeign "calendar"
+
 dim ∷ ∀ i. Int → DSL (dim ∷ I|i)
 dim = set "dim" <<< toForeign
 
@@ -999,3 +1019,22 @@ nameLocationStart = set "nameLocation" $ toForeign "start"
 
 nameLocationEnd ∷ ∀ i. DSL (nameLocation ∷ I|i)
 nameLocationEnd = set "nameLocation" $ toForeign "end"
+
+buildCellSize ∷ ∀ i. DSL TP.ValuesI → DSL (cellSize ∷ I|i)
+buildCellSize = set "cellSize" <<< buildArr
+
+buildRange ∷ ∀ i. DSL TP.ValuesI → DSL (range ∷ I|i)
+buildRange = set "range" <<< buildArr
+
+addDateValue ∷ ∀ i. Date → DSL (addValue ∷ I|i)
+addDateValue dt =
+  set "" <<< toForeign
+    $ year' dt
+    <> "-"
+    <> month' dt
+    <> "-"
+    <> day' dt
+  where
+    year' = show <<< fromEnum <<< year
+    month' = show <<< fromEnum <<< month
+    day' = show <<< fromEnum <<< day

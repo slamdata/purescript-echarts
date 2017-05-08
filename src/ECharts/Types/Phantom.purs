@@ -130,7 +130,7 @@ type TooltipI =
    , showDelay ∷ I
    , hideDelay ∷ I
    , enterable ∷ I
-   , tooltipPosition ∷ I
+   , position ∷ I
    , transitionDuration ∷ I
    , formatter ∷ I
    , animation ∷ I
@@ -182,6 +182,7 @@ type OptionI =
   , brush ∷ I
   , toolbox ∷ I
   , visualMap ∷ I
+  , calendar :: I
   , radar ∷ I
   , polar ∷ I
   , radiusAxis ∷ I
@@ -346,6 +347,17 @@ type HandleStyleI =
 type VisualMapI =
   ( continuousVisualMap ∷ I
   , piecewiseVisualMap ∷ I)
+
+type CalendarI =
+  ( calendarSpec :: I )
+
+type CalendarSpecI =
+  PositionMixin
+  (ZMixin
+   (SizeMixin
+    ( range :: I
+    , cellSize :: I
+    , orient :: I )))
 
 type ContinuousVisualMapI =
   PositionMixin
@@ -823,6 +835,7 @@ type HeatMapI =
     ( name ∷ I
     , xAxisIndex ∷ I
     , yAxisIndex ∷ I
+    , calendarIndex :: I
     , geoIndex ∷ I
     , blurSize ∷ I
     , minOpacity ∷ I
