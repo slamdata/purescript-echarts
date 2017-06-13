@@ -1,58 +1,45 @@
 module ECharts.Theme
   ( Theme(..)
+  , BuiltInTheme
+  , builtInThemeName
   , dark
   , infographic
   , macarons
   , roma
   , shine
   , vintage
-  , BuiltInTheme(..)
-  , parseBuiltInTheme
-  , builtInToTheme
   ) where
 
-import Prelude (($), (<>))
 import Data.Either (Either(..))
 import Data.Foreign (Foreign)
 
-foreign import forceExport ∷ Foreign
+type Theme = Either BuiltInTheme Foreign
 
-data Theme = ByName String | FromObject Foreign
-data BuiltInTheme = Infographic | Macarons | Roma | Shine | Vintage | Dark
+foreign import data BuiltInTheme :: Type
 
-parseBuiltInTheme ∷ String → Either String BuiltInTheme
-parseBuiltInTheme str = case str of
-  "infographic" → Right Infographic
-  "macarons" → Right Macarons
-  "roma" → Right Roma
-  "shine" → Right Shine
-  "vintage" → Right Vintage
-  "dark" → Right Dark
-  _ → Left $ "`" <> str <> "` is not builtin theme"
+foreign import builtInThemeName :: BuiltInTheme -> String
 
-builtInToTheme ∷ BuiltInTheme → Theme
-builtInToTheme = case _ of
-  Infographic → ByName "infographic"
-  Macarons → ByName "macarons"
-  Roma → ByName "roma"
-  Shine → ByName "shine"
-  Vintage → ByName "vintage"
-  Dark → ByName "dark"
+dark :: Theme
+dark = Left _dark
 
-dark ∷ Theme
-dark = builtInToTheme Dark
+infographic :: Theme
+infographic = Left _infographic
 
-infographic ∷ Theme
-infographic = builtInToTheme Infographic
+macarons :: Theme
+macarons = Left _macarons
 
-macarons ∷ Theme
-macarons = builtInToTheme Macarons
+roma :: Theme
+roma = Left _roma
 
-roma ∷ Theme
-roma = builtInToTheme Roma
+shine :: Theme
+shine = Left _shine
 
-shine ∷ Theme
-shine = builtInToTheme Shine
+vintage :: Theme
+vintage = Left _vintage
 
-vintage ∷ Theme
-vintage = builtInToTheme Vintage
+foreign import _dark :: BuiltInTheme
+foreign import _infographic :: BuiltInTheme
+foreign import _macarons :: BuiltInTheme
+foreign import _roma :: BuiltInTheme
+foreign import _shine :: BuiltInTheme
+foreign import _vintage :: BuiltInTheme

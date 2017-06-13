@@ -15,17 +15,15 @@ import Prelude
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Class (class MonadEff, liftEff)
 import Control.Monad.Eff.Exception (EXCEPTION)
-
+import Data.Either (either)
 import Data.Foreign (Foreign, toForeign)
-
 import DOM (DOM)
 import DOM.HTML.Types (HTMLElement)
-
 import ECharts.Internal (undefinedValue)
 import ECharts.Monad (DSL, buildObj)
-import ECharts.Theme (Theme(..))
-import ECharts.Types.Phantom (OptionI)
+import ECharts.Theme (Theme, builtInThemeName)
 import ECharts.Types (Chart, ECHARTS)
+import ECharts.Types.Phantom (OptionI)
 
 foreign import initImpl
   ∷ ∀ e. Foreign
@@ -45,8 +43,7 @@ initWithTheme
   ⇒ Theme
   → HTMLElement
   → m Chart
-initWithTheme (ByName name) el = liftEff $ initImpl (toForeign name) el
-initWithTheme (FromObject theme) el = liftEff $ initImpl (toForeign theme) el
+initWithTheme theme el = liftEff $ initImpl (either (toForeign <<< builtInThemeName) toForeign theme) el
 
 foreign import registerTheme
   ∷ ∀ e. String
