@@ -7,7 +7,7 @@ Purescript bindings for Baidu's [Enterprise Charts (Echarts) charting library](h
 
 ## API
 
-This approach is drastically differs with __v2.0.0__.
+This approach drastically differs with __v2.0.0__.
 
 All basic echarts function are implemented as effectful functions. They are wrapped in `MonadEff` typeclass and could be used not only in `Eff` monad but in `Aff` and effectful transformers.
 
