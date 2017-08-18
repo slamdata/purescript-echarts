@@ -1,8 +1,10 @@
 module ECharts.Types where
 
 import Prelude
+
 import Control.Monad.Eff (kind Effect)
 import Data.Foreign (Foreign, toForeign)
+import Data.Variant as V
 
 foreign import data Chart ∷ Type
 
@@ -176,3 +178,37 @@ newtype Coord = Coord Foreign
 
 coord ∷ Number → Number → Coord
 coord x y = Coord $ toForeign [ x, y ]
+
+type EChartsEventR =
+  ( click ∷ Foreign
+  , dblclick ∷ Foreign
+  , mousedown ∷ Foreign
+  , mousemove ∷ Foreign
+  , mouseup ∷ Foreign
+  , mouseover ∷ Foreign
+  , mouseout ∷ Foreign
+  , legendselectchanged ∷ Foreign
+  , legendselected ∷ Foreign
+  , legendunselected ∷ Foreign
+  , datazoom ∷ Foreign
+  , datarangeselected ∷ Foreign
+  , timelinechanged ∷ Foreign
+  , timelineplaychanged ∷ Foreign
+  , restore ∷ Foreign
+  , dataviewchanged ∷ Foreign
+  , magictypechanged ∷ Foreign
+  , pieselectchanged ∷ Foreign
+  , pieselected ∷ Foreign
+  , pieunselected ∷ Foreign
+  , mapselectchanged ∷ Foreign
+  , mapselected ∷ Foreign
+  , mapunselected ∷ Foreign
+  , axisareaselected ∷ Foreign
+  , focusNodeAdjancency ∷ Foreign
+  , unfocusNodeAdjacency ∷ Foreign
+  , brush ∷ Foreign
+  , brushselected ∷ Foreign
+  )
+
+
+type EChartsEvent = V.Variant EChartsEventR

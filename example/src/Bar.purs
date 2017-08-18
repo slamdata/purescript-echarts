@@ -22,6 +22,7 @@ import ECharts.Types as ET
 import ECharts.Monad (DSL)
 import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
+import ECharts.Event as EE
 
 import Utils as U
 
@@ -151,3 +152,4 @@ chart = do
       ch ← EC.init el
       inp ← genInp
       EC.setOption (options inp)  ch
+      EE.listenAll ch DT.traceAnyA

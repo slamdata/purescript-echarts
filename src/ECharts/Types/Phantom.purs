@@ -441,6 +441,7 @@ type ToolboxI =
     , orient ∷ I
     , itemSize ∷ I
     , itemGap ∷ I
+    , showTitle ∷ I
     , iconStyle ∷ I)))
 
 type IconStyleI = NormalAndEmphasis IconStyleInnerI

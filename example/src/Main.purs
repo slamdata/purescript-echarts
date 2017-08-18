@@ -25,7 +25,15 @@ import HeatmapCalendar as HeatmapCalendar
 
 import Utils as U
 
-main ∷ ∀ e. Eff (now ∷ NOW, dom ∷ DOM, echarts ∷ ET.ECHARTS, exception ∷ EXCEPTION, random ∷ RANDOM|e) Unit
+main
+  ∷ ∀ e
+  . Eff ( now ∷ NOW
+        , dom ∷ DOM
+        , echarts ∷ ET.ECHARTS
+        , exception ∷ EXCEPTION
+        , random ∷ RANDOM
+        | e )
+      Unit
 main = U.onLoad do
   Line.chart
   Scatter.chart

@@ -7,11 +7,12 @@
   },
   "scripts": {
     "build": "pulp browserify --include example/src --to public/build.js",
-    "serve": "node script/serve.js"
+    "serve": "node script/serve.js",
+    "ide": "purs ide server"
   },
   "dependencies": {
-    "pulp": "^11.0.0",
-    "purescript": "^0.11.4",
-    "purescript-psa": "^0.5.0"
+    "pulp": "^11.0.2",
+    "purescript": "^0.11.6",
+    "purescript-psa": "^0.5.1"
   }
 }
