@@ -4,20 +4,16 @@ import Prelude
 
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Exception (EXCEPTION)
-
 import Data.Maybe (Maybe(..))
-
 import Debug.Trace as DT
-
 import DOM (DOM)
 import DOM.Node.Types (ElementId(..))
-
 import ECharts.Chart as EC
+import ECharts.Event as EE
 import ECharts.Types as ET
 import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
 import ECharts.Monad (DSL)
-
 import Utils as U
 
 options ∷ DSL ETP.OptionI
@@ -86,3 +82,4 @@ chart = do
     Just el → do
       ch ← EC.init el
       EC.setOption options ch
+      EE.listenAll ch DT.traceAnyA

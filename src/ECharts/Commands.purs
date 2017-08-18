@@ -70,6 +70,9 @@ shown = visible true
 hidden ∷ ∀ i. DSL (show ∷ I|i)
 hidden = visible false
 
+showTitle ∷ ∀ i. Boolean → DSL (showTitle ∷ I|i)
+showTitle a = set "showTitle" $ toForeign a
+
 textStyle ∷ ∀ i. DSL TP.TextStyleI → DSL (textStyle ∷ I|i)
 textStyle a = set "textStyle" $ buildObj a
 
@@ -372,6 +375,9 @@ label = set "label" <<< buildObj
 
 normalLabel ∷ ∀ i. DSL TP.LabelInnerI → DSL (normal ∷ R TP.LabelInnerI|i)
 normalLabel = normal
+
+precision ∷ ∀ i. Number → DSL (precision ∷ I|i)
+precision = set "precision" <<< toForeign
 
 emphasisLabel ∷ ∀ i. DSL TP.LabelInnerI → DSL (emphasis ∷ R TP.LabelInnerI|i)
 emphasisLabel = emphasis
@@ -898,6 +904,15 @@ markType = set "type" <<< toForeign
 margin ∷ ∀ i. Int → DSL (margin ∷ I|i)
 margin = set "margin" <<< toForeign
 
+markLine ∷ ∀ i. DSL TP.MarkLineI → DSL (markLine ∷ I|i)
+markLine = set "markLine" <<< buildObj
+
+markPoint ∷ ∀ i. DSL TP.MarkPointI → DSL (markPoint ∷ I|i)
+markPoint = set "markPoint" <<< buildObj
+
+markArea ∷ ∀ i. DSL TP.MarkAreaI → DSL (markArea ∷ I|i)
+markArea = set "markArea" <<< buildObj
+
 repulsion ∷ ∀ i. Number → DSL (repulsion ∷ I|i)
 repulsion = set "repulsion" <<< toForeign
 
@@ -933,6 +948,14 @@ colorSource = set "color" $ toForeign "source"
 
 colorTarget ∷ ∀ i. DSL (color ∷ I|i)
 colorTarget = set "target" $ toForeign "target"
+
+buildCoord ∷ ∀ i. DSL TP.PointI → DSL (coord ∷ I|i)
+buildCoord dsl =
+  let
+    xx = get "x" dsl
+    yy = get "y" dsl
+  in
+    set "coord" $ toForeign $ Arr.catMaybes [ xx, yy ]
 
 buildCenter ∷ ∀ i. DSL TP.PointI → DSL (center ∷ I|i)
 buildCenter dsl =
@@ -973,6 +996,15 @@ setY dsl =
 setZ ∷ ∀ i. DSL TP.DimensionI → DSL (z ∷ I|i)
 setZ dsl =
   F.traverse_ (set "z") $ lastWithKeys ["pixels", "percents"] dsl
+
+coordXIx ∷ ∀ i. Int → DSL (x ∷ I|i)
+coordXIx = set "x" <<< toForeign
+
+coordXValue ∷ ∀ i. String → DSL (x ∷ I|i)
+coordXValue = set "x" <<< toForeign
+
+coordY ∷ ∀ i. String → DSL (y ∷ I|i)
+coordY = set "y" <<< toForeign
 
 pixels ∷ ∀ i. Int → DSL (pixels ∷ I|i)
 pixels = set "pixels" <<< toForeign

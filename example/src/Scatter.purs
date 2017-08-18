@@ -81,6 +81,15 @@ options sinData cosData = do
 
   E.series do
     E.scatter do
+      E.markPoint do
+        E.label $ E.normal $ E.shown
+        E.buildItems $ E.addItem do
+          E.buildCoord do
+            E.coordXValue "6.0"
+            E.coordY "1.3"
+          E.symbolSize 30
+          E.symbol ET.Rect
+
       E.name "sin"
       E.large true
       E.symbolSize 3
