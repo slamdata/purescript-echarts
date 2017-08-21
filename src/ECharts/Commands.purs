@@ -118,7 +118,7 @@ addItem = set "" <<< buildObj
 buildItems ∷ ∀ i. DSL TP.ItemsI → DSL (items ∷ I|i)
 buildItems is = set "data" $ buildArr is
 
-buildMarkItems ∷ ∀ i. DSL TP.ItemsI → DSL (items ∷ I|i)
+buildMarkItems ∷ ∀ i. DSL TP.ItemsI → DSL (markItems ∷ I|i)
 buildMarkItems is = set "data" $ toForeign [ buildArr is ]
 
 calendarIndex ∷ ∀ i. Int → DSL (calendarIndex ∷ I|i)
