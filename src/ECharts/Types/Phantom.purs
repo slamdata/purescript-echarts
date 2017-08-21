@@ -1180,13 +1180,13 @@ type MarkLineI =
    , label ∷ I
    , silent ∷ I
    , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
-   , items ∷ I))
+   , markItems ∷ I))
 
 type MarkAreaI =
   AnimationMixin
   ( label ∷ I
   , itemStyle ∷ I
-  , items ∷ I)
+  , markItems ∷ I)
 
 type RippleEffectI =
   ( period ∷ I

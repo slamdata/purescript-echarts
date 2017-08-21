@@ -31,6 +31,21 @@ options = do
     E.min 2200.0
     E.scale true
   E.series $ E.candlestick do
+    E.markLine do
+      E.lineStyle $ E.normal do
+        E.solidLine
+      E.buildMarkItems do
+        E.addItem do
+          E.symbol ET.Diamond
+          E.buildCoord do
+            E.coordXValue "2013/1/24"
+            E.coordY "2200.00"
+        E.addItem do
+          E.symbol ET.Diamond
+          E.buildCoord do
+            E.coordXValue "2013/1/29"
+            E.coordY "2300.00"
+
     E.buildItems
       $ F.traverse_ (E.addItem <<< E.values)
       [ [ 2320.26, 2302.6, 2287.3, 2362.94 ]
