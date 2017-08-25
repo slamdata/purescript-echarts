@@ -4,7 +4,10 @@ import Prelude
 
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Exception (EXCEPTION)
+import Data.Foreign (toForeign)
 import Data.Maybe (Maybe(..))
+import Data.Symbol (SProxy(..))
+import Data.Variant as V
 import Debug.Trace as DT
 import DOM (DOM)
 import DOM.Node.Types (ElementId(..))
@@ -46,6 +49,7 @@ options = do
           E.name "three"
     E.pie do
       E.name "Outer"
+      E.selectedMode ET.Multiple
       E.radius $ ET.Radius { start: ET.Percent 40.0, end: ET.Percent 55.0 }
       E.buildItems do
         E.addItem do
@@ -83,3 +87,11 @@ chart = do
       ch ← EC.init el
       EC.setOption options ch
       EE.listenAll ch DT.traceAnyA
+      EE.dispatch
+        (V.inj (SProxy ∷ SProxy "pieselected")
+           $ toForeign { seriesIndex: [1]
+                       , seriesName: []
+                       , dataIndex: Nothing
+                       , name: Just "seven"
+                       })
+        ch

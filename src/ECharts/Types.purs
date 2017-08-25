@@ -4,7 +4,10 @@ import Prelude
 
 import Control.Monad.Eff (kind Effect)
 import Data.Foreign (Foreign, toForeign)
+import Data.Maybe (Maybe)
+import Data.Symbol (SProxy(..))
 import Data.Variant as V
+import Data.StrMap as SM
 
 foreign import data Chart ∷ Type
 
@@ -208,7 +211,8 @@ type EChartsEventR =
   , unfocusNodeAdjacency ∷ Foreign
   , brush ∷ Foreign
   , brushselected ∷ Foreign
+  , pieSelect ∷ Foreign
+  , pieUnSelect ∷ Foreign
   )
-
 
 type EChartsEvent = V.Variant EChartsEventR

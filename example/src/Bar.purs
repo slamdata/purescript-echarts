@@ -7,23 +7,23 @@ import Color as C
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Exception (EXCEPTION)
 import Control.Monad.Eff.Random (RANDOM, random)
-
-import Data.Array as Arr
-import Data.Traversable as F
-import Data.Maybe (Maybe(..))
-
-import Debug.Trace as DT
-
 import DOM (DOM)
 import DOM.Node.Types (ElementId(..))
-
+import Data.Array as Arr
+import Data.Foreign (toForeign)
+import Data.Maybe (Maybe(..))
+import Data.Newtype (wrap)
+import Data.Symbol (SProxy(..))
+import Data.Traversable as F
+import Data.Tuple (Tuple(..))
+import Data.Variant as V
+import Debug.Trace as DT
 import ECharts.Chart as EC
-import ECharts.Types as ET
-import ECharts.Monad (DSL)
-import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
 import ECharts.Event as EE
-
+import ECharts.Monad (DSL)
+import ECharts.Types as ET
+import ECharts.Types.Phantom as ETP
 import Utils as U
 
 itemStyle ∷ DSL ETP.ItemStyleI
@@ -153,3 +153,23 @@ chart = do
       inp ← genInp
       EC.setOption (options inp)  ch
       EE.listenAll ch DT.traceAnyA
+      EE.dispatch (V.inj (SProxy ∷ SProxy "brush") $ toForeign evt) ch
+  where
+  evt =
+    { batch:
+      [ { areas:
+          [ { brushType: "rect"
+            , brushMode: "single"
+            , range:
+                [ [ 610
+                  , 885
+                  ]
+                , [ 236
+                  , 423
+                  ]
+                ]
+            }
+          ]
+        }
+      ]
+    }

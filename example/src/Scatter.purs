@@ -22,10 +22,9 @@ import ECharts.Types as ET
 import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
 import ECharts.Monad (DSL)
-
 import Math (cos, sin, (%))
-
 import Utils as U
+import Unsafe.Coerce (unsafeCoerce)
 
 genSinData ∷ ∀ e. Eff (random ∷ RANDOM|e) (Array ET.Item)
 genSinData = do
