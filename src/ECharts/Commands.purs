@@ -220,6 +220,12 @@ xAxisIndex a = set "xAxisIndex" $ toForeign a
 yAxisIndex ∷ ∀ i. Int → DSL (yAxisIndex ∷ I|i)
 yAxisIndex a = set "yAxisIndex" $ toForeign a
 
+xAxisAllIndices ∷ ∀ i. DSL (xAxisIndex ∷ I|i)
+xAxisAllIndices = set "xAxisIndex" $ toForeign "all"
+
+yAxisAllIndices ∷ ∀ i. DSL (yAxisIndex ∷ I|i)
+yAxisAllIndices = set "yAxisIndex" $ toForeign "all"
+
 polarIndex ∷ ∀ i. Int → DSL (polarIndex ∷ I|i)
 polarIndex a = set "polarIndex" $ toForeign a
 

@@ -43,7 +43,8 @@ initWithTheme
   ⇒ Theme
   → HTMLElement
   → m Chart
-initWithTheme theme el = liftEff $ initImpl (either (toForeign <<< builtInThemeName) toForeign theme) el
+initWithTheme theme el =
+  liftEff $ initImpl (either (toForeign <<< builtInThemeName) toForeign theme) el
 
 foreign import registerTheme
   ∷ ∀ e. String

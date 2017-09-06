@@ -3,7 +3,7 @@ var echarts = require("echarts");
 exports.initImpl = function(theme) {
     return function(el) {
         return function() {
-            return echarts.init(el, theme);
+            return echarts.init(el,theme);
         };
     };
 };
@@ -19,7 +19,7 @@ exports.registerTheme = function(name) {
         return function() {
             // if value is not `undefined` and is not of type `string` then it must be `Foreign` for which we only permit plain Objects.
             if (theme !== undefined && typeof theme !== 'string' && !isObject(theme)) {
-                throw new TypeError('Theme must be an Object')
+                throw new TypeError('Theme must be an Object');
             }
             echarts.registerTheme(name, theme);
         };
@@ -38,6 +38,8 @@ exports.setOptionImpl = function(option) {
 exports.resetOptionImpl = function(option) {
     return function(chart) {
         return function() {
+            console.log("reset option")
+            console.log(option)
             chart.setOption(option, true, false);
             return {};
         };

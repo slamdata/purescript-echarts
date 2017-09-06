@@ -7,6 +7,7 @@ import Control.Monad.Eff.Exception (EXCEPTION)
 import Data.Foreign (toForeign)
 import Data.Maybe (Maybe(..))
 import Data.Symbol (SProxy(..))
+import Data.StrMap as SM
 import Data.Variant as V
 import Debug.Trace as DT
 import DOM (DOM)
@@ -89,9 +90,15 @@ chart = do
       EE.listenAll ch DT.traceAnyA
       EE.dispatch
         (V.inj (SProxy ∷ SProxy "pieselected")
-           $ toForeign { seriesIndex: [1]
-                       , seriesName: []
-                       , dataIndex: Nothing
-                       , name: Just "seven"
-                       })
+           $  { seriesIndex: 1
+              , seriesName: "Outer"
+              , name: "seven"
+              , dataIndex: 4
+              })
         ch
+--      EE.dispatch
+--        (V.inj (SProxy ∷ SProxy "legendselectchanged")
+--           $ { name: "seven"
+--             , selected: SM.empty
+--             })
+--        ch
