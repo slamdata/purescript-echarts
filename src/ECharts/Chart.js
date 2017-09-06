@@ -38,8 +38,6 @@ exports.setOptionImpl = function(option) {
 exports.resetOptionImpl = function(option) {
     return function(chart) {
         return function() {
-            console.log("reset option")
-            console.log(option)
             chart.setOption(option, true, false);
             return {};
         };

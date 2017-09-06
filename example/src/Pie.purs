@@ -96,9 +96,3 @@ chart = do
               , dataIndex: 4
               })
         ch
---      EE.dispatch
---        (V.inj (SProxy ∷ SProxy "legendselectchanged")
---           $ { name: "seven"
---             , selected: SM.empty
---             })
---        ch

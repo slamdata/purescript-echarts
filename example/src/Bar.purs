@@ -87,9 +87,9 @@ options inp = do
     E.inverse true
     E.splitArea E.hidden
 
---  E.grid do
---    E.left $ ET.Pixel 100
-{-
+  E.grid do
+    E.left $ ET.Pixel 100
+
   E.visualMap do
     E.continuous do
       E.dimension 1
@@ -108,7 +108,6 @@ options inp = do
       E.controller do
         E.inRange do
           F.for_ (C.fromHexString "#2f4554") E.color
--}
   E.series do
     E.bar do
       E.name "bar"
@@ -155,23 +154,3 @@ chart = do
       EC.setOption (options inp)  ch
       EC.getOption ch >>= DT.traceAnyA
       EE.listenAll ch DT.traceAnyA
---      EE.dispatch (V.inj (SProxy ∷ SProxy "brush") $ toForeign evt) ch
-  where
-  evt =
-    { batch:
-      [ { areas:
-          [ { brushType: "rect"
-            , brushMode: "single"
-            , coordRange:
-                [ [ 0
-                  , 1
-                  ]
-                , [ 0
-                  , 1
-                  ]
-                ]
-            }
-          ]
-        }
-      ]
-    }
