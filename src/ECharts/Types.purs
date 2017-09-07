@@ -5,6 +5,7 @@ import Prelude
 import Control.Monad.Eff (kind Effect)
 import Data.Foreign (Foreign, toForeign)
 import Data.Variant as V
+import Data.StrMap as SM
 
 foreign import data Chart ∷ Type
 
@@ -179,36 +180,70 @@ newtype Coord = Coord Foreign
 coord ∷ Number → Number → Coord
 coord x y = Coord $ toForeign [ x, y ]
 
+type LegendEventR =
+  { name ∷ String
+  , selected ∷ SM.StrMap Boolean
+  }
+
+type DataRangeEventR =
+  { visualMapId ∷ String
+  , selected ∷ Array Number
+  }
+
+type ClickEventR =
+  { seriesName ∷ String
+  , name ∷ String
+  , dataIndex ∷ Int
+  , seriesIndex ∷ Int
+  }
+
+type BrushEventAreaR =
+  { brushType ∷ String
+  , panelId ∷ String
+  , coordRange ∷ Array Foreign
+  , xAxisData ∷ Array String
+  , yAxisData ∷ Array String
+  , gridIndex ∷ Int
+  }
+
+type BrushEventR =
+  { areas ∷ Array BrushEventAreaR
+  , titleTexts ∷ Array String
+  }
+
 type EChartsEventR =
-  ( click ∷ Foreign
+  ( click ∷ ClickEventR
   , dblclick ∷ Foreign
   , mousedown ∷ Foreign
   , mousemove ∷ Foreign
   , mouseup ∷ Foreign
   , mouseover ∷ Foreign
   , mouseout ∷ Foreign
-  , legendselectchanged ∷ Foreign
-  , legendselected ∷ Foreign
-  , legendunselected ∷ Foreign
+  , legendselectchanged ∷ LegendEventR
+  , legendselected ∷ LegendEventR
+  , legendunselected ∷ LegendEventR
   , datazoom ∷ Foreign
-  , datarangeselected ∷ Foreign
+  , datarangeselected ∷ DataRangeEventR
   , timelinechanged ∷ Foreign
   , timelineplaychanged ∷ Foreign
   , restore ∷ Foreign
   , dataviewchanged ∷ Foreign
   , magictypechanged ∷ Foreign
-  , pieselectchanged ∷ Foreign
-  , pieselected ∷ Foreign
-  , pieunselected ∷ Foreign
+  -- This is not absolutely accurate, but working with pieselectchanged
+  -- is too painful
+  , pieselectchanged ∷ ClickEventR
+  , pieselected ∷ ClickEventR
+  , pieunselected ∷ ClickEventR
   , mapselectchanged ∷ Foreign
   , mapselected ∷ Foreign
   , mapunselected ∷ Foreign
   , axisareaselected ∷ Foreign
   , focusNodeAdjancency ∷ Foreign
   , unfocusNodeAdjacency ∷ Foreign
-  , brush ∷ Foreign
-  , brushselected ∷ Foreign
+  , brush ∷ BrushEventR
+  , brushselected ∷ BrushEventR
+  , pieSelect ∷ Foreign
+  , pieUnSelect ∷ Foreign
   )
-
 
 type EChartsEvent = V.Variant EChartsEventR

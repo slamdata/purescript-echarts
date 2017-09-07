@@ -7,23 +7,18 @@ import Color as C
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Exception (EXCEPTION)
 import Control.Monad.Eff.Random (RANDOM, random)
-
-import Data.Array as Arr
-import Data.Traversable as F
-import Data.Maybe (Maybe(..))
-
-import Debug.Trace as DT
-
 import DOM (DOM)
 import DOM.Node.Types (ElementId(..))
-
+import Data.Array as Arr
+import Data.Maybe (Maybe(..))
+import Data.Traversable as F
+import Debug.Trace as DT
 import ECharts.Chart as EC
-import ECharts.Types as ET
-import ECharts.Monad (DSL)
-import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
 import ECharts.Event as EE
-
+import ECharts.Monad (DSL)
+import ECharts.Types as ET
+import ECharts.Types.Phantom as ETP
 import Utils as U
 
 itemStyle ∷ DSL ETP.ItemStyleI
@@ -73,6 +68,7 @@ options inp = do
           E.magicTiled
       E.dataView $ pure unit
 
+
   E.xAxis do
     E.name "X Axis"
     E.axisLine do
@@ -107,7 +103,6 @@ options inp = do
       E.controller do
         E.inRange do
           F.for_ (C.fromHexString "#2f4554") E.color
-
   E.series do
     E.bar do
       E.name "bar"
@@ -152,4 +147,5 @@ chart = do
       ch ← EC.init el
       inp ← genInp
       EC.setOption (options inp)  ch
+      EC.getOption ch >>= DT.traceAnyA
       EE.listenAll ch DT.traceAnyA

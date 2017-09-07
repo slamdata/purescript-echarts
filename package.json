@@ -2,7 +2,7 @@
   "name": "purescript-echarts",
   "private": true,
   "devDependencies": {
-    "echarts": "3.5.4",
+    "echarts": "cryogenian/echarts#item-value-unshift-prebuild",
     "express": "^4.14.0"
   },
   "scripts": {

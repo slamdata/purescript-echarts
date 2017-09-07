@@ -220,6 +220,12 @@ xAxisIndex a = set "xAxisIndex" $ toForeign a
 yAxisIndex ∷ ∀ i. Int → DSL (yAxisIndex ∷ I|i)
 yAxisIndex a = set "yAxisIndex" $ toForeign a
 
+xAxisAllIndices ∷ ∀ i. DSL (xAxisIndex ∷ I|i)
+xAxisAllIndices = set "xAxisIndex" $ toForeign "all"
+
+yAxisAllIndices ∷ ∀ i. DSL (yAxisIndex ∷ I|i)
+yAxisAllIndices = set "yAxisIndex" $ toForeign "all"
+
 polarIndex ∷ ∀ i. Int → DSL (polarIndex ∷ I|i)
 polarIndex a = set "polarIndex" $ toForeign a
 
@@ -430,32 +436,68 @@ textMiddle = set "textBaseline" $ toForeign "middle"
 brush ∷ ∀ i. DSL TP.BrushI → DSL (brush ∷ I|i)
 brush = set "brush" <<< buildObj
 
+brushType ∷ ∀ i. DSL TP.BrushToolboxI → DSL (brushType ∷ I|i)
+brushType a = set "type" $ buildArr a
+
 brushToolbox ∷ ∀ i. DSL TP.BrushToolboxI → DSL (brushToolbox ∷ I|i)
 brushToolbox a =  set "toolbox" $ buildArr a
+
+brushModeSingle ∷ ∀ i. DSL (brushMode ∷ I|i)
+brushModeSingle = set "brushMode" $ toForeign "single"
+
+brushIcons ∷ ∀ i. DSL TP.BFFieldI → DSL (bfIcon ∷ I|i)
+brushIcons a = set "icon" $ buildObj a
+
+brushTitle ∷ ∀ i. DSL TP.BFFieldI → DSL (bfTitle ∷ I|i)
+brushTitle a = set "title" $ buildObj a
+
+brushModeMultiple ∷ ∀ i. DSL (brushMode ∷ I|i)
+brushModeMultiple = set "brushMode" $ toForeign "multiple"
 
 rect ∷ ∀ i. DSL (tool ∷ I|i)
 rect = set "" $ toForeign "rect"
 
+setRect ∷ ∀ i. String → DSL (rect ∷ I|i)
+setRect a = set "rect" $ toForeign a
+
 polygon ∷ ∀ i. DSL (tool ∷ I|i)
 polygon = set "" $ toForeign "polygon"
+
+setPolygon ∷ ∀ i. String → DSL (polygon ∷ I|i)
+setPolygon a = set "polygon" $ toForeign a
 
 lineX ∷ ∀ i. DSL (tool ∷ I|i)
 lineX = set "" $ toForeign "lineX"
 
+setLineX ∷ ∀ i. String → DSL (lineX ∷ I|i)
+setLineX a = set "lineX" $ toForeign a
+
 lineY ∷ ∀ i. DSL (tool ∷ I|i)
 lineY = set "" $ toForeign "lineY"
+
+setLineY ∷ ∀ i. String → DSL (lineY ∷ I|i)
+setLineY a = set "lineY" $ toForeign a
 
 keep ∷ ∀ i. DSL (tool ∷ I|i)
 keep = set "" $ toForeign "keep"
 
+setKeep ∷ ∀ i. String → DSL (keep ∷ I|i)
+setKeep a = set "keep" $ toForeign a
+
 clear ∷ ∀ i. DSL (tool ∷ I|i)
 clear = set "" $ toForeign "clear"
+
+setClear ∷ ∀ i. String → DSL (clear ∷ I|i)
+setClear a = set "clear" $ toForeign a
 
 toolbox ∷ ∀ i. DSL TP.ToolboxI → DSL (toolbox ∷ I|i)
 toolbox a = set "toolbox" $ buildObj a
 
 feature ∷ ∀ i. DSL TP.FeatureI → DSL (feature ∷ I|i)
 feature a = set "feature" $ buildObj a
+
+brushFeature ∷ ∀ i. DSL TP.BrushFeatureI → DSL (brush ∷ I|i)
+brushFeature a = set "brush" $ buildObj a
 
 magicType ∷ ∀ i. DSL TP.MagicTypeI → DSL (magicType ∷ I|i)
 magicType a = set "magicType" $ buildObj a
