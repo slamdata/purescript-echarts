@@ -1,4 +1,4 @@
-module ECharts.Event where
+module ECharts.Event (listenAll, dispatch, on_) where
 
 import Prelude
 
