@@ -4,10 +4,8 @@ import Prelude
 
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Exception (EXCEPTION)
-import Data.Foreign (toForeign)
 import Data.Maybe (Maybe(..))
 import Data.Symbol (SProxy(..))
-import Data.StrMap as SM
 import Data.Variant as V
 import Debug.Trace as DT
 import DOM (DOM)

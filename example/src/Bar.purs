@@ -10,13 +10,8 @@ import Control.Monad.Eff.Random (RANDOM, random)
 import DOM (DOM)
 import DOM.Node.Types (ElementId(..))
 import Data.Array as Arr
-import Data.Foreign (toForeign)
 import Data.Maybe (Maybe(..))
-import Data.Newtype (wrap)
-import Data.Symbol (SProxy(..))
 import Data.Traversable as F
-import Data.Tuple (Tuple(..))
-import Data.Variant as V
 import Debug.Trace as DT
 import ECharts.Chart as EC
 import ECharts.Commands as E

@@ -5,17 +5,13 @@ import Prelude
 import Control.Monad.Eff (Eff)
 import Control.Monad.Eff.Exception (EXCEPTION)
 import Control.Monad.Eff.Random (RANDOM)
-
 import Data.Array (zipWith)
 import Data.Maybe (Maybe(..), maybe)
 import Data.NonEmpty as NE
 import Data.Tuple (Tuple(..), uncurry)
-
 import Debug.Trace as DT
-
 import DOM (DOM)
 import DOM.Node.Types (ElementId(..))
-
 import ECharts.Chart as EC
 import ECharts.Theme as ETheme
 import ECharts.Types as ET
@@ -24,7 +20,6 @@ import ECharts.Commands as E
 import ECharts.Monad (DSL)
 import Math (cos, sin, (%))
 import Utils as U
-import Unsafe.Coerce (unsafeCoerce)
 
 genSinData ∷ ∀ e. Eff (random ∷ RANDOM|e) (Array ET.Item)
 genSinData = do

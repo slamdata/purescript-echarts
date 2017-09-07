@@ -8,10 +8,8 @@ import Control.Monad.Except (runExcept)
 import Data.Foldable (for_)
 import Data.Foreign (Foreign, readString)
 import Data.Foreign.Index (readProp)
-import Data.Maybe as M
 import Data.List as L
 import Data.Record.Unsafe as R
-import Data.StrMap as SM
 import Data.Tuple (Tuple(..), fst, snd)
 import Data.Variant.Internal (RLProxy(..), variantTags, class VariantTags)
 import ECharts.Types (EChartsEvent, EChartsEventR, Chart, ECHARTS)
@@ -43,10 +41,8 @@ listenAll chart cb = liftEff $
   toEChartsEvent = unsafeCoerce
 
 foreign import dispatchAction_
-  ∷ ∀ e a b action
-  . SM.StrMap (Array String) -- mapping from action type to keys that are maybe's
-  → ( b → (a → b) → M.Maybe a → b ) -- maybe
-  → action
+  ∷ ∀ e action
+  . action
   → Chart
   → Eff ( echarts ∷ ECHARTS |e ) Unit
 
@@ -57,18 +53,8 @@ dispatch
   → Chart
   → m Unit
 dispatch vaction chart =
-  liftEff $ dispatchAction_ strmapConfig M.maybe action chart
+  liftEff $ dispatchAction_ action chart
   where
-  strmapConfig = SM.fromFoldable
-    [ Tuple "highlight" ["name", "dataIndex"]
-    , Tuple "downplay" ["name", "dataIndex"]
-    , Tuple "mapSelect" ["name", "dataIndex"]
-    , Tuple "mapUnSelect" ["name", "dataIndex"]
-    , Tuple "mapToggleSelect" ["name", "dataIndex"]
-    , Tuple "focusNodeAdjacency" ["seriesId", "seriesIndex", "seriesName"]
-    , Tuple "unfocusNodeAdjacency" ["seriesId", "seriesIndex", "seriesName"]
-    ]
-
   variantPair ∷ Tuple String {}
   variantPair = unsafeCoerce vaction
 

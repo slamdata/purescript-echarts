@@ -3,7 +3,7 @@ var echarts = require("echarts");
 exports.initImpl = function(theme) {
     return function(el) {
         return function() {
-            return echarts.init(el,theme);
+            return echarts.init(el, theme);
         };
     };
 };
