@@ -96,7 +96,11 @@ exports.on_ = function(chart) {
 exports.dispatchAction_ = function(action) {
     return function(chart) {
         return function() {
-            return chart.dispatchAction(action);
+            try {
+                return chart.dispatchAction(action);
+            } finally {
+                return;
+            }
         };
     };
 }
