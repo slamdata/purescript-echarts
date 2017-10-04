@@ -20,7 +20,7 @@ import ECharts.Chart as EC
 import ECharts.Types as ET
 import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
-import ECharts.Monad (DSL)
+import ECharts.Monad (DSL', interpret)
 
 import Partial.Unsafe (unsafePartial)
 import Utils as U
@@ -48,14 +48,14 @@ arrValues =
   , [ "2017-02-24", "528" ], [ "2017-02-25", "859" ], [ "2017-02-26", "802" ]
   , [ "2017-02-27", "992" ], [ "2017-02-28", "342" ] ]
 
-values ∷ ∀ i. Array (DSL (value ∷ ETP.I|i))
+values ∷ ∀ i. Array (DSL' (value ∷ ETP.I|i))
 values = A.catMaybes $ arrValues <#> case _ of
   [x, y] → pure $ E.buildValues do
     E.addStringValue x
     E.addStringValue y
   _ → Nothing
 
-options ∷ DSL ETP.OptionI
+options ∷ DSL' ETP.OptionI
 options = do
   E.tooltip do
     E.positionTop
@@ -105,4 +105,4 @@ chart = do
     Nothing → DT.traceAnyA "There is no element with 'heatmap-calendar' id"
     Just el → do
       ch ← EC.init el
-      EC.setOption options ch
+      EC.setOption (interpret options) ch

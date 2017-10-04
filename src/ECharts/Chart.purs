@@ -20,10 +20,8 @@ import Data.Foreign (Foreign, toForeign)
 import DOM (DOM)
 import DOM.HTML.Types (HTMLElement)
 import ECharts.Internal (undefinedValue)
-import ECharts.Monad (DSL, buildObj)
 import ECharts.Theme (Theme, builtInThemeName)
-import ECharts.Types (Chart, ECHARTS)
-import ECharts.Types.Phantom (OptionI)
+import ECharts.Types (Chart, ECHARTS, Option)
 
 foreign import initImpl
   ∷ ∀ e. Foreign
@@ -52,28 +50,28 @@ foreign import registerTheme
   → Eff (echarts ∷ ECHARTS|e) Unit
 
 foreign import setOptionImpl
-  ∷ ∀ e. Foreign → Chart → Eff (echarts ∷ ECHARTS, exception ∷ EXCEPTION|e) Unit
+  ∷ ∀ e. Option → Chart → Eff (echarts ∷ ECHARTS, exception ∷ EXCEPTION|e) Unit
 
 setOption
   ∷ ∀ m e
   . MonadEff (echarts ∷ ECHARTS, exception ∷ EXCEPTION|e) m
-  ⇒ DSL OptionI
+  ⇒ Option
   → Chart
   → m Unit
-setOption opts chart = liftEff $ setOptionImpl (buildObj opts) chart
+setOption opts chart = liftEff $ setOptionImpl opts chart
 
 
 foreign import resetOptionImpl
-  ∷ ∀ e. Foreign → Chart → Eff (echarts ∷ ECHARTS, exception ∷ EXCEPTION|e) Unit
+  ∷ ∀ e. Option → Chart → Eff (echarts ∷ ECHARTS, exception ∷ EXCEPTION|e) Unit
 
 
 resetOption
   ∷ ∀ m e
   . MonadEff (echarts ∷ ECHARTS, exception ∷ EXCEPTION|e) m
-  ⇒ DSL OptionI
+  ⇒ Option
   → Chart
   → m Unit
-resetOption opts chart = liftEff $ resetOptionImpl (buildObj opts) chart
+resetOption opts chart = liftEff $ resetOptionImpl opts chart
 
 
 foreign import resizeImpl

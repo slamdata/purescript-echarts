@@ -16,11 +16,11 @@ import ECharts.Chart as EC
 import ECharts.Types as ET
 import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
-import ECharts.Monad (DSL)
+import ECharts.Monad (DSL', interpret)
 
 import Utils as U
 
-options ∷ DSL ETP.OptionI
+options ∷ DSL' ETP.OptionI
 options = do
   E.title $ E.text "Graph"
   E.tooltip $ pure unit
@@ -96,4 +96,4 @@ chart = do
     Nothing → DT.traceAnyA "There is no element with 'graph' id"
     Just el → do
       ch ← EC.init el
-      EC.setOption options ch
+      EC.setOption (interpret options) ch

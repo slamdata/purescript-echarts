@@ -17,7 +17,7 @@ import ECharts.Theme as ETheme
 import ECharts.Types as ET
 import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
-import ECharts.Monad (DSL)
+import ECharts.Monad (DSL', interpret)
 import Math (cos, sin, (%))
 import Utils as U
 
@@ -46,7 +46,7 @@ genCosData = do
       $ Tuple i (U.precise 3.0 $ cos i - i * (if i % 2.0 > 0.0 then 0.1 else -0.1) * rnd)
   pure $ map mapfn randoms
 
-options ∷ Array ET.Item → Array ET.Item → DSL ETP.OptionI
+options ∷ Array ET.Item → Array ET.Item → DSL' ETP.OptionI
 options sinData cosData = do
   E.title do
     E.text "SIN and COS random scatter"
@@ -110,4 +110,4 @@ chart' id theme = do
       ch ← maybe EC.init EC.initWithTheme theme el
       sinData ← genSinData
       cosData ← genCosData
-      EC.setOption (options sinData cosData) ch
+      EC.setOption (interpret $ options sinData cosData) ch

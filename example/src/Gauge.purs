@@ -17,14 +17,14 @@ import ECharts.Chart as EC
 import ECharts.Types as ET
 import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
-import ECharts.Monad (DSL)
+import ECharts.Monad (DSL', interpret)
 
 import Signal (Signal, runSignal, (~>))
 import Signal.Time (every)
 
 import Utils as U
 
-options ∷ {speed ∷ Number, r ∷ Number, gas ∷ Number, water ∷ Number} → DSL ETP.OptionI
+options ∷ {speed ∷ Number, r ∷ Number, gas ∷ Number, water ∷ Number} → DSL' ETP.OptionI
 options obj = do
   E.tooltip $ E.formatterString "{a} <br />{c} {b}"
 
@@ -170,7 +170,7 @@ chart = do
     Nothing → DT.traceAnyA "There is no element with 'gauge' id"
     Just el → do
       ch ← EC.init el
-      EC.setOption (options initialVal) ch
+      EC.setOption (interpret $ options initialVal) ch
       runSignal $ dataStream ~> \effVal → do
         val ← effVal
-        EC.setOption (options val) ch
+        EC.setOption (interpret $ options val) ch

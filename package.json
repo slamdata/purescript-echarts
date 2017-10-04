@@ -3,7 +3,7 @@
   "private": true,
   "devDependencies": {
     "echarts": "cryogenian/echarts#item-value-unshift-prebuild",
-    "express": "^4.14.0"
+    "express": "^4.16.1"
   },
   "scripts": {
     "build": "pulp browserify --include example/src --to public/build.js",
@@ -11,7 +11,7 @@
     "ide": "purs ide server"
   },
   "dependencies": {
-    "pulp": "^11.0.2",
+    "pulp": "^12.0.1",
     "purescript": "^0.11.6",
     "purescript-psa": "^0.5.1"
   }

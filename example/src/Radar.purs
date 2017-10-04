@@ -19,17 +19,17 @@ import ECharts.Chart as EC
 import ECharts.Types as ET
 import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
-import ECharts.Monad (DSL)
+import ECharts.Monad (DSL', interpret)
 
 import Utils as U
 
-lineStyle ∷ DSL ETP.LineStylePairI
+lineStyle ∷ DSL' ETP.LineStylePairI
 lineStyle = E.normalLineStyle do
   E.width 1
   E.opacity 0.5
 
 
-options ∷ DSL ETP.OptionI
+options ∷ DSL' ETP.OptionI
 options = do
   F.for_ (C.fromHexString "#161627") E.backgroundColor
 
@@ -124,7 +124,7 @@ chart = do
     Nothing → DT.traceAnyA "There is no element with 'radar' id"
     Just el → do
       ch ← EC.init el
-      EC.setOption options ch
+      EC.setOption (interpret options) ch
 
 dataBJ ∷ Array (Array Number)
 dataBJ =
