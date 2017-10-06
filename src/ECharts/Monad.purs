@@ -2,11 +2,21 @@ module ECharts.Monad where
 
 import Prelude
 
+import Control.Alt (class Alt)
 import Control.Alternative (class Alternative)
+import Control.MonadPlus (class MonadPlus)
+import Control.MonadZero (class MonadZero)
+import Control.Monad.Cont.Class (class MonadCont)
+import Control.Monad.Eff.Class (class MonadEff)
+import Control.Monad.Aff.Class (class MonadAff)
+import Control.Monad.Error.Class (class MonadError, class MonadThrow)
+import Control.Monad.Reader.Class (class MonadAsk, class MonadReader)
+import Control.Monad.State.Class (class MonadState)
 import Control.Monad.Eff (kind Effect)
+import Control.Monad.Rec.Class (class MonadRec)
 import Control.Monad.Writer.Trans (WriterT(..), execWriterT)
 import Control.Monad.Writer.Class (class MonadTell, class MonadWriter, tell)
-import Control.Plus (empty)
+import Control.Plus (class Plus, empty)
 import Data.Array as Arr
 import Data.Foldable as F
 import Data.Identity (Identity)
@@ -39,8 +49,36 @@ derive newtype instance monadDSL
   ∷ Monad m ⇒ Monad (CommandsT i m)
 derive newtype instance monadTellCommandsT
   ∷ Monad m ⇒ MonadTell (Array (Tuple String Foreign)) (CommandsT i m)
-derive newtype instance monadWriterCommandsTn
+derive newtype instance monadWriterCommandsT
   ∷ Monad m ⇒ MonadWriter (Array (Tuple String Foreign)) (CommandsT i m)
+derive newtype instance plusCommandsT
+  ∷ Plus m ⇒ Plus (CommandsT i m)
+derive newtype instance altCommandsT
+  ∷ Alt m ⇒ Alt (CommandsT i m)
+derive newtype instance alternativeCommandsT
+  ∷ Alternative m ⇒ Alternative (CommandsT i m)
+derive newtype instance monadRecCommandsT
+  ∷ MonadRec m ⇒ MonadRec (CommandsT i m)
+derive newtype instance monadZeroCommandsT
+  ∷ MonadZero m ⇒ MonadZero (CommandsT i m)
+derive newtype instance monadPlusCommandsT
+  ∷ MonadPlus m ⇒ MonadPlus (CommandsT i m)
+derive newtype instance monadAffCommandsT
+  ∷ MonadAff e m ⇒ MonadAff e (CommandsT i m)
+derive newtype instance monadEffCommandsT
+  ∷ MonadEff e m ⇒ MonadEff e (CommandsT i m)
+derive newtype instance monadContCommandsT
+  ∷ MonadCont m ⇒ MonadCont (CommandsT i m)
+derive newtype instance monadThrowCommandsT
+  ∷ MonadThrow e m ⇒ MonadThrow e (CommandsT i m)
+derive newtype instance monadErrorCommandsT
+  ∷ MonadError e m ⇒ MonadError e (CommandsT i m)
+derive newtype instance monadAskCommandsT
+  ∷ MonadAsk r m ⇒ MonadAsk r (CommandsT i m)
+derive newtype instance monadReaderCommandsT
+  ∷ MonadReader r m ⇒ MonadReader r (CommandsT i m)
+derive newtype instance monadStateCommandsT
+  ∷ MonadState s m ⇒ MonadState s (CommandsT i m)
 
 lift ∷ ∀ m i a. Monad m ⇒ m a → CommandsT i m a
 lift a = CommandsT $ WriterT do

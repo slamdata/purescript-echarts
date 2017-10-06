@@ -597,24 +597,25 @@ type SeriesI =
 -- | xAxis and yAxis has different position type
 type AxisI i =
   ZMixin
-  (MinMaxMixin
-   ( axisType ∷ I
-   , items ∷ I
-   , axisTick ∷ I
-   , axisLabel ∷ I
-   , name ∷ I
-   , scale ∷ I
-   , boundaryGap ∷ I
-   , silent ∷ I
-   , splitLine ∷ I
-   , splitArea ∷ I
-   , axisLine ∷ I
-   , interval ∷ I
-   , inverse ∷ I
-   , splitNumber ∷ I
-   , minInterval ∷ I
-   , triggerEvent ∷ I
-   | i))
+  (NameStyleMixin
+   (MinMaxMixin
+    ( axisType ∷ I
+    , items ∷ I
+    , axisTick ∷ I
+    , axisLabel ∷ I
+    , name ∷ I
+    , scale ∷ I
+    , boundaryGap ∷ I
+    , silent ∷ I
+    , splitLine ∷ I
+    , splitArea ∷ I
+    , axisLine ∷ I
+    , interval ∷ I
+    , inverse ∷ I
+    , splitNumber ∷ I
+    , minInterval ∷ I
+    , triggerEvent ∷ I
+    | i)))
 
 type SplitAreaI =
   ( show ∷ I
