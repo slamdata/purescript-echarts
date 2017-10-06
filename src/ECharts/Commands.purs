@@ -1119,11 +1119,11 @@ buildRange = set "range" <=< buildArr
 addDateValue ∷ ∀ i m. Monad m ⇒ Date → DSL (addValue ∷ I|i) m
 addDateValue dt =
  set "" <<< toForeign
-  $ year' dt
-  <> "-"
-  <> month' dt
-  <> "-"
-  <> day' dt
+   $ year' dt
+   <> "-"
+   <> month' dt
+   <> "-"
+   <> day' dt
  where
  year' = show <<< fromEnum <<< year
  month' = show <<< fromEnum <<< month
