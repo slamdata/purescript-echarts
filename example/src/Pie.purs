@@ -15,10 +15,10 @@ import ECharts.Event as EE
 import ECharts.Types as ET
 import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
-import ECharts.Monad (DSL)
+import ECharts.Monad (DSL', interpret)
 import Utils as U
 
-options ∷ DSL ETP.OptionI
+options ∷ DSL' ETP.OptionI
 options = do
   E.tooltip do
     E.trigger ET.ItemTrigger
@@ -84,7 +84,7 @@ chart = do
     Nothing → DT.traceAnyA "There is no element with pie id"
     Just el → do
       ch ← EC.init el
-      EC.setOption options ch
+      EC.setOption (interpret options) ch
       EE.listenAll ch DT.traceAnyA
       EE.dispatch
         (V.inj (SProxy ∷ SProxy "pieselected")

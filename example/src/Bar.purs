@@ -16,12 +16,12 @@ import Debug.Trace as DT
 import ECharts.Chart as EC
 import ECharts.Commands as E
 import ECharts.Event as EE
-import ECharts.Monad (DSL)
+import ECharts.Monad (DSL', interpret)
 import ECharts.Types as ET
 import ECharts.Types.Phantom as ETP
 import Utils as U
 
-itemStyle ∷ DSL ETP.ItemStyleI
+itemStyle ∷ DSL' ETP.ItemStyleI
 itemStyle = do
   E.normalItemStyle $ pure unit
   E.emphasisItemStyle do
@@ -39,7 +39,7 @@ type OptionInput =
   , four ∷ Number
   }
 
-options ∷ Array OptionInput → DSL ETP.OptionI
+options ∷ Array OptionInput → DSL' ETP.OptionI
 options inp = do
   F.for_ (C.fromHexString "#eee") E.backgroundColor
 
@@ -146,6 +146,6 @@ chart = do
     Just el → do
       ch ← EC.init el
       inp ← genInp
-      EC.setOption (options inp)  ch
+      EC.setOption (interpret $ options inp)  ch
       EC.getOption ch >>= DT.traceAnyA
       EE.listenAll ch DT.traceAnyA

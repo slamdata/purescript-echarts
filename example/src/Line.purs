@@ -23,7 +23,7 @@ import Debug.Trace as DT
 import ECharts.Chart as EC
 import ECharts.Types as ET
 import ECharts.Commands as E
-import ECharts.Monad (DSL)
+import ECharts.Monad (DSL', interpret)
 import ECharts.Types.Phantom (I)
 import ECharts.Types.Phantom as ETP
 
@@ -32,7 +32,7 @@ import Signal.Time (every)
 
 import Utils as U
 
-startOptions ∷ DSL ETP.OptionI
+startOptions ∷ DSL' ETP.OptionI
 startOptions = do
   E.title do
     E.text "Dynamic line"
@@ -58,11 +58,11 @@ startOptions = do
 type Accum =
   { dt ∷ D.DateTime
   , value ∷ Number
-  , values ∷ Array (DSL ETP.ItemI)
+  , values ∷ Array (DSL' ETP.ItemI)
   }
 
 dataStream
-  ∷ ∀ e i. Accum → Signal (Eff (random ∷ RANDOM|e) (DSL (items ∷ I|i)))
+  ∷ ∀ e i. Accum → Signal (Eff (random ∷ RANDOM|e) (DSL' (items ∷ I|i)))
 dataStream start =
   accumStream ~> map (E.itemsDSL <<< _.values)
   where
@@ -78,14 +78,14 @@ dataStream start =
       newTimeLabel = either (const $ "Incorrect date") id $ FDT.formatDateTime "YYYY-MM-DD" newTime
       newValue = acc.value + (ran * 21.0 - 10.0)
 
-      newItem ∷ DSL ETP.ItemI
+      newItem ∷ DSL' ETP.ItemI
       newItem = do
         E.name newTimeLabel
         E.valuePair newTimeLabel newValue
 
     pure { value: newValue, dt: newTime, values: [newItem] <> acc.values }
 
-optStream ∷ ∀ e. Accum → Signal (Eff (now ∷ NOW, random ∷ RANDOM|e) (DSL ETP.OptionI))
+optStream ∷ ∀ e. Accum → Signal (Eff (now ∷ NOW, random ∷ RANDOM|e) (DSL' ETP.OptionI))
 optStream acc =
   dataStream acc ~> \effItemsSet → do
     itemsSet ← effItemsSet
@@ -98,9 +98,9 @@ chart = do
     Nothing → DT.traceAnyA "There is no element with line id"
     Just el → do
       ch ← EC.init el
-      EC.setOption startOptions ch
+      EC.setOption (interpret startOptions) ch
       timeStart ← map toDateTime now
       valueStart ← random
       runSignal $ optStream {dt: timeStart, value: valueStart, values: []} ~> \effOpt → do
         opt ← effOpt
-        EC.setOption opt ch
+        EC.setOption (interpret opt) ch

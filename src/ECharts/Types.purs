@@ -247,3 +247,4 @@ type EChartsEventR =
   )
 
 type EChartsEvent = V.Variant EChartsEventR
+newtype Option = Option Foreign

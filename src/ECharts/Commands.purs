@@ -3,1115 +3,1128 @@ module ECharts.Commands where
 import Prelude
 
 import Color as C
-
 import Data.Array as Arr
 import Data.Date (Date, year, month, day)
 import Data.Enum (fromEnum)
-import Data.Foldable as F
-import Data.Foreign (toForeign)
-
+import Data.Traversable as F
+import Data.Foreign (toForeign, Foreign)
 import ECharts.Monad (DSL, set, buildObj, buildSeries, buildArr, get, lastWithKeys)
 import ECharts.Types as T
 import ECharts.Types.Phantom (I, R)
 import ECharts.Types.Phantom as TP
 import ECharts.Internal (undefinedValue)
 
-series ∷ ∀ i. DSL TP.SeriesI → DSL (series ∷ I|i)
-series a = set "series" $ buildSeries a
+series ∷ ∀ i m. Monad m ⇒ DSL TP.SeriesI m → DSL (series ∷ I|i) m
+series a = set "series" =<< buildSeries a
 
-tooltip ∷ ∀ i. DSL TP.TooltipI → DSL (tooltip ∷ I|i)
-tooltip a = set "tooltip" $ buildObj a
+tooltip ∷ ∀ i m. Monad m ⇒ DSL TP.TooltipI m → DSL (tooltip ∷ I|i) m
+tooltip a = set "tooltip" =<< buildObj a
 
-grids ∷ ∀ i. DSL TP.GridsI → DSL (grid ∷ I|i)
-grids = set "grid" <<< buildArr
+grids ∷ ∀ i m. Monad m ⇒ DSL TP.GridsI m → DSL (grid ∷ I|i) m
+grids = set "grid" <=< buildArr
 
-grid ∷ ∀ i. DSL TP.GridI → DSL (grid ∷ I|i)
-grid a = set "grid" $ buildObj a
+grid ∷ ∀ i m. Monad m ⇒ DSL TP.GridI m → DSL (grid ∷ I|i) m
+grid a = set "grid" =<< buildObj a
 
-polar ∷ ∀ i. DSL TP.PolarI → DSL (polar ∷ I|i)
-polar a = set "polar" $ buildObj a
+polar ∷ ∀ i m. Monad m ⇒ DSL TP.PolarI m → DSL (polar ∷ I|i) m
+polar a = set "polar" =<< buildObj a
 
-legend ∷ ∀ i. DSL TP.LegendI → DSL (legend ∷ I|i)
-legend a = set "legend" $ buildObj a
+legend ∷ ∀ i m. Monad m ⇒ DSL TP.LegendI m → DSL (legend ∷ I|i) m
+legend a = set "legend" =<< buildObj a
 
-xAxis ∷ ∀ i. DSL TP.XAxisI → DSL (xAxis ∷ I|i)
-xAxis a = set "xAxis" $ buildObj a
+xAxis ∷ ∀ i m. Monad m ⇒ DSL TP.XAxisI m → DSL (xAxis ∷ I|i) m
+xAxis a = set "xAxis" =<< buildObj a
 
-yAxis ∷ ∀ i. DSL TP.YAxisI → DSL (yAxis ∷ I|i)
-yAxis a = set "yAxis" $ buildObj a
+yAxis ∷ ∀ i m. Monad m ⇒ DSL TP.YAxisI m → DSL (yAxis ∷ I|i) m
+yAxis a = set "yAxis" =<< buildObj a
 
-radiusAxis ∷ ∀ i. DSL TP.RadiusAxisI → DSL (radiusAxis ∷ I|i)
-radiusAxis a = set "radiusAxis" $ buildObj a
+radiusAxis ∷ ∀ i m. Monad m ⇒ DSL TP.RadiusAxisI m → DSL (radiusAxis ∷ I|i) m
+radiusAxis a = set "radiusAxis" =<< buildObj a
 
-angleAxis ∷ ∀ i. DSL TP.AngleAxisI → DSL (angleAxis ∷ I|i)
-angleAxis a = set "angleAxis" $ buildObj a
+angleAxis ∷ ∀ i m. Monad m ⇒ DSL TP.AngleAxisI m → DSL (angleAxis ∷ I|i) m
+angleAxis a = set "angleAxis" =<< buildObj a
 
-color ∷ ∀ i. C.Color → DSL (color ∷ I|i)
+color ∷ ∀ i m. Monad m ⇒ C.Color → DSL (color ∷ I|i) m
 color a = set "color" $ toForeign $ C.toHexString a
 
-colors ∷ ∀ i f. F.Foldable f ⇒ f C.Color → DSL (color ∷ I|i)
+colors ∷ ∀ i f m. Monad m ⇒ F.Foldable f ⇒ f C.Color → DSL (color ∷ I|i) m
 colors a = set "color" $ toForeign $ F.foldMap (Arr.singleton <<< C.toHexString) a
 
-rgbaColors ∷ ∀ i f. F.Foldable f ⇒ f C.Color → DSL (color ∷ I|i)
+rgbaColors ∷ ∀ i f m. Monad m ⇒ F.Foldable f ⇒ f C.Color → DSL (color ∷ I|i) m
 rgbaColors a = set "color" $ toForeign $ F.foldMap (Arr.singleton <<< C.cssStringRGBA) a
 
-rgbaColor ∷ ∀ i. C.Color → DSL (color ∷ I|i)
+rgbaColor ∷ ∀ i m. Monad m ⇒ C.Color → DSL (color ∷ I|i) m
 rgbaColor a = set "color" $ toForeign $ C.cssStringRGBA a
 
-backgroundColor ∷ ∀ i. C.Color → DSL (backgroundColor ∷ I|i)
+backgroundColor ∷ ∀ i m. Monad m ⇒ C.Color → DSL (backgroundColor ∷ I|i) m
 backgroundColor a = set "backgroundColor" $ toForeign $ C.toHexString a
 
-visible ∷ ∀ i. Boolean → DSL (show ∷ I|i)
+visible ∷ ∀ i m. Monad m ⇒ Boolean → DSL (show ∷ I|i) m
 visible a = set "show" $ toForeign a
 
-shown ∷ ∀ i. DSL (show ∷ I|i)
+shown ∷ ∀ i m. Monad m ⇒ DSL (show ∷ I|i) m
 shown = visible true
 
-hidden ∷ ∀ i. DSL (show ∷ I|i)
+hidden ∷ ∀ i m. Monad m ⇒ DSL (show ∷ I|i) m
 hidden = visible false
 
-showTitle ∷ ∀ i. Boolean → DSL (showTitle ∷ I|i)
+showTitle ∷ ∀ i m. Monad m ⇒ Boolean → DSL (showTitle ∷ I|i) m
 showTitle a = set "showTitle" $ toForeign a
 
-textStyle ∷ ∀ i. DSL TP.TextStyleI → DSL (textStyle ∷ I|i)
-textStyle a = set "textStyle" $ buildObj a
+textStyle ∷ ∀ i m. Monad m ⇒ DSL TP.TextStyleI m → DSL (textStyle ∷ I|i) m
+textStyle a = set "textStyle" =<< buildObj a
 
-subtextStyle ∷ ∀ i. DSL TP.TextStyleI → DSL (subtextStyle ∷ I|i)
-subtextStyle a = set "subtextStyle" $ buildObj a
+subtextStyle ∷ ∀ i m. Monad m ⇒ DSL TP.TextStyleI m → DSL (subtextStyle ∷ I|i) m
+subtextStyle a = set "subtextStyle" =<< buildObj a
 
-left ∷ ∀ i. T.PixelOrPercent → DSL (left ∷ I|i)
+left ∷ ∀ i m. Monad m ⇒ T.PixelOrPercent → DSL (left ∷ I|i) m
 left a = set "left" $ T.pixelOrPercentToForeign a
 
-right ∷ ∀ i. T.PixelOrPercent → DSL (right ∷ I|i)
+right ∷ ∀ i m. Monad m ⇒ T.PixelOrPercent → DSL (right ∷ I|i) m
 right a = set "right" $ T.pixelOrPercentToForeign a
 
-top ∷ ∀ i. T.PixelOrPercent → DSL (top ∷ I|i)
+top ∷ ∀ i m. Monad m ⇒ T.PixelOrPercent → DSL (top ∷ I|i) m
 top a = set "top" $ T.pixelOrPercentToForeign a
 
-topTop ∷ ∀ i. DSL (top ∷ I|i)
+topTop ∷ ∀ i m. Monad m ⇒ DSL (top ∷ I|i) m
 topTop = set "top" $ toForeign "top"
 
-topMiddle ∷ ∀ i. DSL (top ∷ I|i)
+topMiddle ∷ ∀ i m. Monad m ⇒ DSL (top ∷ I|i) m
 topMiddle = set "top" $ toForeign "middle"
 
-topBottom ∷ ∀ i. DSL (top ∷ I|i)
+topBottom ∷ ∀ i m. Monad m ⇒ DSL (top ∷ I|i) m
 topBottom = set "top" $ toForeign "bottom"
 
-bottom ∷ ∀ i. T.PixelOrPercent → DSL (bottom ∷ I|i)
+bottom ∷ ∀ i m. Monad m ⇒ T.PixelOrPercent → DSL (bottom ∷ I|i) m
 bottom a = set "bottom" $ T.pixelOrPercentToForeign a
 
-bottomPx ∷ ∀ i. Int → DSL (bottom ∷ I|i)
+bottomPx ∷ ∀ i m. Monad m ⇒ Int → DSL (bottom ∷ I|i) m
 bottomPx = set "bottom" <<< toForeign
 
-orient ∷ ∀ i. T.Orient → DSL (orient ∷ I|i)
+orient ∷ ∀ i m. Monad m ⇒ T.Orient → DSL (orient ∷ I|i) m
 orient a = set "orient" $ T.orientToForeign a
 
-items ∷ ∀ i f. F.Foldable f ⇒ f T.Item → DSL (items ∷ I|i)
+items ∷ ∀ i f m. Monad m ⇒ F.Foldable f ⇒ f T.Item → DSL (items ∷ I|i) m
 items a = set "data" $ toForeign $ F.foldMap (Arr.singleton <<< toForeign) a
 
-itemsDSL ∷ ∀ i f. F.Foldable f ⇒ f (DSL TP.ItemI) → DSL (items ∷ I|i)
-itemsDSL a = set "data" $ toForeign $ F.foldMap (Arr.singleton <<< T.Item <<< buildObj) a
+itemsDSL ∷ ∀ i f m. Monad m ⇒ F.Traversable f ⇒ f (DSL TP.ItemI m) → DSL (items ∷ I|i) m
+itemsDSL a = do
+  is ← F.for a $ buildObj
+  set "data" $ toForeign is
 
-addItem ∷ ∀ i. DSL TP.ItemI → DSL (item ∷ I|i)
-addItem = set "" <<< buildObj
+addItem ∷ ∀ i m. Monad m ⇒ DSL TP.ItemI m → DSL (item ∷ I|i) m
+addItem = set "" <=< buildObj
 
-buildItems ∷ ∀ i. DSL TP.ItemsI → DSL (items ∷ I|i)
-buildItems is = set "data" $ buildArr is
+buildItems ∷ ∀ i m. Monad m ⇒ DSL TP.ItemsI m → DSL (items ∷ I|i) m
+buildItems = set "data" <=< buildArr
 
-buildMarkItems ∷ ∀ i. DSL TP.ItemsI → DSL (markItems ∷ I|i)
+buildMarkItems ∷ ∀ i m. Monad m ⇒ DSL TP.ItemsI m → DSL (markItems ∷ I|i) m
 buildMarkItems is = set "data" $ toForeign [ buildArr is ]
 
-calendarIndex ∷ ∀ i. Int → DSL (calendarIndex ∷ I|i)
+calendarIndex ∷ ∀ i m. Monad m ⇒ Int → DSL (calendarIndex ∷ I|i) m
 calendarIndex i = set "calendarIndex" $ toForeign i
 
-visibleContent ∷ ∀ i. Boolean → DSL (showContent ∷ I|i)
+visibleContent ∷ ∀ i m. Monad m ⇒ Boolean → DSL (showContent ∷ I|i) m
 visibleContent a = set "showContent" $ toForeign a
 
-showContent ∷ ∀ i. DSL (showContent ∷ I|i)
+showContent ∷ ∀ i m. Monad m ⇒ DSL (showContent ∷ I|i) m
 showContent = visibleContent true
 
-hideContent ∷ ∀ i. DSL (showContent ∷ I|i)
+hideContent ∷ ∀ i m. Monad m ⇒ DSL (showContent ∷ I|i) m
 hideContent = visibleContent false
 
-alwaysShowContent ∷ ∀ i. Boolean → DSL (alwaysShowContent ∷ I|i)
+alwaysShowContent ∷ ∀ i m. Monad m ⇒ Boolean → DSL (alwaysShowContent ∷ I|i) m
 alwaysShowContent a = set "alwaysShowContent" $ toForeign a
 
-trigger ∷ ∀ i. T.TooltipTrigger → DSL (trigger ∷ I|i)
+trigger ∷ ∀ i m. Monad m ⇒ T.TooltipTrigger → DSL (trigger ∷ I|i) m
 trigger a = set "trigger" $ T.tooltipTriggerToForeign a
 
-triggerOnMouseMove ∷ ∀ i. DSL (triggerOn ∷ I|i)
+triggerOnMouseMove ∷ ∀ i m. Monad m ⇒ DSL (triggerOn ∷ I|i) m
 triggerOnMouseMove = set "triggerOn" $ toForeign "mousemove"
 
-triggerOnClick ∷ ∀ i. DSL (triggerOn ∷ I|i)
+triggerOnClick ∷ ∀ i m. Monad m ⇒ DSL (triggerOn ∷ I|i) m
 triggerOnClick = set "triggerOn" $ toForeign "click"
 
-triggerAxis ∷ ∀ i. DSL (trigger ∷ I|i)
+triggerAxis ∷ ∀ i m. Monad m ⇒ DSL (trigger ∷ I|i) m
 triggerAxis = set "trigger" $ toForeign "axis"
 
-triggerItem ∷ ∀ i. DSL (trigger ∷ I|i)
+triggerItem ∷ ∀ i m. Monad m ⇒ DSL (trigger ∷ I|i) m
 triggerItem = set "trigger" $ toForeign "item"
 
-triggerEvent ∷ ∀ i. Boolean → DSL (trigger ∷ I|i)
+triggerEvent ∷ ∀ i m. Monad m ⇒ Boolean → DSL (trigger ∷ I|i) m
 triggerEvent a = set "triggerEvent" $ toForeign a
 
-pie ∷ ∀ i. DSL TP.PieSeriesI → DSL (pie ∷ I|i)
-pie = set "pie" <<< buildObj
+pie ∷ ∀ i m. Monad m ⇒ DSL TP.PieSeriesI m → DSL (pie ∷ I|i) m
+pie = set "pie" <=< buildObj
 
-line ∷ ∀ i. DSL TP.LineSeriesI → DSL (line ∷ I|i)
-line = set "line" <<< buildObj
+line ∷ ∀ i m. Monad m ⇒ DSL TP.LineSeriesI m → DSL (line ∷ I|i) m
+line = set "line" <=< buildObj
 
-bar ∷ ∀ i. DSL TP.BarSeriesI → DSL (bar ∷ I|i)
-bar = set "bar" <<< buildObj
+bar ∷ ∀ i m. Monad m ⇒ DSL TP.BarSeriesI m → DSL (bar ∷ I|i) m
+bar = set "bar" <=< buildObj
 
-scatter ∷ ∀ i. DSL TP.ScatterI → DSL (scatter ∷ I|i)
-scatter = set "scatter" <<< buildObj
+scatter ∷ ∀ i m. Monad m ⇒ DSL TP.ScatterI m → DSL (scatter ∷ I|i) m
+scatter = set "scatter" <=< buildObj
 
-effectScatter ∷ ∀ i. DSL TP.EffectScatterI → DSL (effectScatter ∷ I|i)
-effectScatter = set "effectScatter" <<< buildObj
+effectScatter ∷ ∀ i m. Monad m ⇒ DSL TP.EffectScatterI m → DSL (effectScatter ∷ I|i) m
+effectScatter = set "effectScatter" <=< buildObj
 
-treeMap ∷ ∀ i. DSL TP.TreeMapI → DSL (treeMap ∷ I|i)
-treeMap = set "treemap" <<< buildObj
+treeMap ∷ ∀ i m. Monad m ⇒ DSL TP.TreeMapI m → DSL (treeMap ∷ I|i) m
+treeMap = set "treemap" <=< buildObj
 
-boxPlot ∷ ∀ i. DSL TP.BoxPlotI → DSL (boxPlot ∷ I|i)
-boxPlot = set "boxplot" <<< buildObj
+boxPlot ∷ ∀ i m. Monad m ⇒ DSL TP.BoxPlotI m → DSL (boxPlot ∷ I|i) m
+boxPlot = set "boxplot" <=< buildObj
 
-candlestick ∷ ∀ i. DSL TP.CandlestickI → DSL (candlestick ∷ I|i)
-candlestick = set "candlestick" <<< buildObj
+candlestick ∷ ∀ i m. Monad m ⇒ DSL TP.CandlestickI m → DSL (candlestick ∷ I|i) m
+candlestick = set "candlestick" <=< buildObj
 
-heatMap ∷ ∀ i. DSL TP.HeatMapI → DSL (heatMap ∷ I|i)
-heatMap = set "heatmap" <<< buildObj
+heatMap ∷ ∀ i m. Monad m ⇒ DSL TP.HeatMapI m → DSL (heatMap ∷ I|i) m
+heatMap = set "heatmap" <=< buildObj
 
-calendarSpec ∷ ∀ i. DSL TP.CalendarSpecI → DSL (calendarSpec ∷ I|i)
-calendarSpec = set "calendar" <<< buildObj
+calendarSpec ∷ ∀ i m. Monad m ⇒ DSL TP.CalendarSpecI m → DSL (calendarSpec ∷ I|i) m
+calendarSpec = set "calendar" <=< buildObj
 
-map_ ∷ ∀ i. DSL TP.MapI → DSL (map ∷ I|i)
-map_ = set "map" <<< buildObj
+map_ ∷ ∀ i m. Monad m ⇒ DSL TP.MapI m → DSL (map ∷ I|i) m
+map_ = set "map" <=< buildObj
 
-parallels ∷ ∀ i. DSL TP.ParallelsI → DSL (parallel ∷ I|i)
-parallels = set "parallel" <<< buildArr
+parallels ∷ ∀ i m. Monad m ⇒ DSL TP.ParallelsI m → DSL (parallel ∷ I|i) m
+parallels = set "parallel" <=< buildArr
 
-parallel ∷ ∀ i. DSL TP.ParallelI → DSL (parallel ∷ I|i)
-parallel = set "parallel" <<< buildObj
+parallel ∷ ∀ i m. Monad m ⇒ DSL TP.ParallelI m → DSL (parallel ∷ I|i) m
+parallel = set "parallel" <=< buildObj
 
-lines ∷ ∀ i. DSL TP.LinesI → DSL (lines ∷ I|i)
-lines = set "lines" <<< buildObj
+lines ∷ ∀ i m. Monad m ⇒ DSL TP.LinesI m → DSL (lines ∷ I|i) m
+lines = set "lines" <=< buildObj
 
-graph ∷ ∀ i. DSL TP.GraphI → DSL (graph ∷ I|i)
-graph = set "graph" <<< buildObj
+graph ∷ ∀ i m. Monad m ⇒ DSL TP.GraphI m → DSL (graph ∷ I|i) m
+graph = set "graph" <=< buildObj
 
-sankey ∷ ∀ i. DSL TP.SankeyI → DSL (sankey ∷ I|i)
-sankey = set "sankey" <<< buildObj
+sankey ∷ ∀ i m. Monad m ⇒ DSL TP.SankeyI m → DSL (sankey ∷ I|i) m
+sankey = set "sankey" <=< buildObj
 
-funnel ∷ ∀ i. DSL TP.FunnelI → DSL (funnel ∷ I|i)
-funnel = set "funnel" <<< buildObj
+funnel ∷ ∀ i m. Monad m ⇒ DSL TP.FunnelI m → DSL (funnel ∷ I|i) m
+funnel = set "funnel" <=< buildObj
 
-parallelSeries ∷ ∀ i. DSL TP.ParallelSeriesI → DSL (parallelSeries ∷ I|i)
-parallelSeries = set "parallel" <<< buildObj
+parallelSeries ∷ ∀ i m. Monad m ⇒ DSL TP.ParallelSeriesI m → DSL (parallelSeries ∷ I|i) m
+parallelSeries = set "parallel" <=< buildObj
 
-gauge ∷ ∀ i. DSL TP.GaugeI → DSL (gauge ∷ I|i)
-gauge = set "gauge" <<< buildObj
+gauge ∷ ∀ i m. Monad m ⇒ DSL TP.GaugeI m → DSL (gauge ∷ I|i) m
+gauge = set "gauge" <=< buildObj
 
-radarSeries ∷ ∀ i. DSL TP.RadarSeriesI → DSL (radarSeries ∷ I|i)
-radarSeries = set "radar" <<< buildObj
+radarSeries ∷ ∀ i m. Monad m ⇒ DSL TP.RadarSeriesI m → DSL (radarSeries ∷ I|i) m
+radarSeries = set "radar" <=< buildObj
 
-xAxisIndex ∷ ∀ i. Int → DSL (xAxisIndex ∷ I|i)
+xAxisIndex ∷ ∀ i m. Monad m ⇒ Int → DSL (xAxisIndex ∷ I|i) m
 xAxisIndex a = set "xAxisIndex" $ toForeign a
 
-yAxisIndex ∷ ∀ i. Int → DSL (yAxisIndex ∷ I|i)
+yAxisIndex ∷ ∀ i m. Monad m ⇒ Int → DSL (yAxisIndex ∷ I|i) m
 yAxisIndex a = set "yAxisIndex" $ toForeign a
 
-xAxisAllIndices ∷ ∀ i. DSL (xAxisIndex ∷ I|i)
+xAxisAllIndices ∷ ∀ i m. Monad m ⇒ DSL (xAxisIndex ∷ I|i) m
 xAxisAllIndices = set "xAxisIndex" $ toForeign "all"
 
-yAxisAllIndices ∷ ∀ i. DSL (yAxisIndex ∷ I|i)
+yAxisAllIndices ∷ ∀ i m. Monad m ⇒ DSL (yAxisIndex ∷ I|i) m
 yAxisAllIndices = set "yAxisIndex" $ toForeign "all"
 
-polarIndex ∷ ∀ i. Int → DSL (polarIndex ∷ I|i)
+polarIndex ∷ ∀ i m. Monad m ⇒ Int → DSL (polarIndex ∷ I|i) m
 polarIndex a = set "polarIndex" $ toForeign a
 
-symbol ∷ ∀ i. T.Symbol → DSL (symbol ∷ I|i)
+symbol ∷ ∀ i m. Monad m ⇒ T.Symbol → DSL (symbol ∷ I|i) m
 symbol a = set "symbol" $ T.symbolToForeign a
 
-symbolSize ∷ ∀ i. Int → DSL (symbolSize ∷ I|i)
+symbolSize ∷ ∀ i m. Monad m ⇒ Int → DSL (symbolSize ∷ I|i) m
 symbolSize a = set "symbolSize" $ toForeign a
 
-smooth ∷ ∀ i. Boolean → DSL (smooth ∷ I|i)
+smooth ∷ ∀ i m. Monad m ⇒ Boolean → DSL (smooth ∷ I|i) m
 smooth a = set "smooth" $ toForeign a
 
-name ∷ ∀ i. String → DSL (name ∷ I|i)
+name ∷ ∀ i m. Monad m ⇒ String → DSL (name ∷ I|i) m
 name a = set "name" $ toForeign a
 
-stack ∷ ∀ i. String → DSL (stack ∷ I|i)
+stack ∷ ∀ i m. Monad m ⇒ String → DSL (stack ∷ I|i) m
 stack a = set "stack" $ toForeign a
 
-center ∷ ∀ i. T.Point → DSL (center ∷ I|i)
+center ∷ ∀ i m. Monad m ⇒ T.Point → DSL (center ∷ I|i) m
 center a = set "center" $ T.pointToForeign a
 
-radius ∷ ∀ i. T.Radius → DSL (radius ∷ I|i)
+radius ∷ ∀ i m. Monad m ⇒ T.Radius → DSL (radius ∷ I|i) m
 radius a = set "radius" $ T.radiusToForeign a
 
-singleValueRadius ∷ ∀ i. T.SingleValueRadius → DSL (radius ∷ I|i)
+singleValueRadius ∷ ∀ i m. Monad m ⇒ T.SingleValueRadius → DSL (radius ∷ I|i) m
 singleValueRadius a = set "radius" $ T.singleValueRadiusToForeign a
 
-startAngle ∷ ∀ i. Number → DSL (startAngle ∷ I|i)
+startAngle ∷ ∀ i m. Monad m ⇒ Number → DSL (startAngle ∷ I|i) m
 startAngle a = set "startAngle" $ toForeign a
 
-axisTick ∷ ∀ i. DSL TP.AxisTickI → DSL (axisTick ∷ I|i)
-axisTick = set "axisTick" <<< buildObj
+axisTick ∷ ∀ i m. Monad m ⇒ DSL TP.AxisTickI m → DSL (axisTick ∷ I|i) m
+axisTick = set "axisTick" <=< buildObj
 
-axisLabel ∷ ∀ i. DSL TP.AxisLabelI → DSL (axisLabel ∷ I|i)
-axisLabel = set "axisLabel" <<< buildObj
+axisLabel ∷ ∀ i m. Monad m ⇒ DSL TP.AxisLabelI m → DSL (axisLabel ∷ I|i) m
+axisLabel = set "axisLabel" <=< buildObj
 
-axisType ∷ ∀ i. T.AxisType → DSL (axisType ∷ I|i)
+axisType ∷ ∀ i m. Monad m ⇒ T.AxisType → DSL (axisType ∷ I|i) m
 axisType a = set "type" $ T.axisTypeToForeign a
 
-value ∷ ∀ i. Number → DSL (value ∷ I|i)
+value ∷ ∀ i m. Monad m ⇒ Number → DSL (value ∷ I|i) m
 value a = set "value" $ toForeign a
 
-values ∷ ∀ i f. F.Foldable f ⇒ f Number → DSL (value ∷ I|i)
+values ∷ ∀ i f m. Monad m ⇒ F.Foldable f ⇒ f Number → DSL (value ∷ I|i) m
 values = set "value" <<< toForeign <<< F.foldMap Arr.singleton
 
-buildValues ∷ ∀ i. DSL TP.ValuesI → DSL (value ∷ I|i)
-buildValues = set "value" <<< buildArr
+buildValues ∷ ∀ i m. Monad m ⇒ DSL TP.ValuesI m → DSL (value ∷ I|i) m
+buildValues = set "value" <=< buildArr
 
-addValue ∷ ∀ i. Number → DSL (addValue ∷ I|i)
+addValue ∷ ∀ i m. Monad m ⇒ Number → DSL (addValue ∷ I|i) m
 addValue = set "" <<< toForeign
 
-addStringValue ∷ ∀ i. String → DSL (addValue ∷ I|i)
+addStringValue ∷ ∀ i m. Monad m ⇒ String → DSL (addValue ∷ I|i) m
 addStringValue = set "" <<< toForeign
 
-autoValue ∷ ∀ i. DSL (addValue ∷ I|i)
+autoValue ∷ ∀ i m. Monad m ⇒ DSL (addValue ∷ I|i) m
 autoValue = set "" $ toForeign "auto"
 
-buildNames ∷ ∀ i. DSL TP.NamesI → DSL (name ∷ I|i)
-buildNames = set "name" <<< buildArr
+buildNames ∷ ∀ i m. Monad m ⇒ DSL TP.NamesI m → DSL (name ∷ I|i) m
+buildNames = set "name" <=< buildArr
 
-addName ∷ ∀ i. String → DSL (addName ∷ I|i)
+addName ∷ ∀ i m. Monad m ⇒ String → DSL (addName ∷ I|i) m
 addName = set "" <<< toForeign
 
-missingValue ∷ ∀ i. DSL (addValue ∷ I|i)
+missingValue ∷ ∀ i m. Monad m ⇒ DSL (addValue ∷ I|i) m
 missingValue = set "" undefinedValue
 
-missingName ∷ ∀ i. DSL (addName ∷ I|i)
+missingName ∷ ∀ i m. Monad m ⇒ DSL (addName ∷ I|i) m
 missingName = set "" undefinedValue
 
-valuePair ∷ ∀ i. String → Number → DSL (value ∷ I|i)
+valuePair ∷ ∀ i m. Monad m ⇒ String → Number → DSL (value ∷ I|i) m
 valuePair a b = set "value" $ toForeign [toForeign a, toForeign b]
 
-titles ∷ ∀ i. DSL TP.TitlesI → DSL (title ∷ I|i)
-titles = set "title" <<< buildArr
+titles ∷ ∀ i m. Monad m ⇒ DSL TP.TitlesI m → DSL (title ∷ I|i) m
+titles = set "title" <=< buildArr
 
-title ∷ ∀ i. DSL TP.TitleI → DSL (title ∷ I|i)
-title = set "title" <<< buildObj
+title ∷ ∀ i m. Monad m ⇒ DSL TP.TitleI m → DSL (title ∷ I|i) m
+title = set "title" <=< buildObj
 
-text ∷ ∀ i. String → DSL (text ∷ I|i)
+text ∷ ∀ i m. Monad m ⇒ String → DSL (text ∷ I|i) m
 text a = set "text" $ toForeign a
 
-showDelay ∷ ∀ i. Number → DSL (showDelay ∷ I|i)
+showDelay ∷ ∀ i m. Monad m ⇒ Number → DSL (showDelay ∷ I|i) m
 showDelay a = set "showDelay" $ toForeign a
 
-hideDelay ∷ ∀ i. Number → DSL (hideDelay ∷ I|i)
+hideDelay ∷ ∀ i m. Monad m ⇒ Number → DSL (hideDelay ∷ I|i) m
 hideDelay a = set "hideDelay" $ toForeign a
 
-pointerType ∷ ∀ i. T.PointerType → DSL (pointerType ∷ I|i)
+pointerType ∷ ∀ i m. Monad m ⇒ T.PointerType → DSL (pointerType ∷ I|i) m
 pointerType a = set "type" $ T.pointerTypeToForeign a
 
-zlevel ∷ ∀ i. Int → DSL (zlevel ∷ I|i)
+zlevel ∷ ∀ i m. Monad m ⇒ Int → DSL (zlevel ∷ I|i) m
 zlevel a = set "zlevel" $ toForeign a
 
-lineType ∷ ∀ i. T.LineType → DSL (lineType ∷ I|i)
+lineType ∷ ∀ i m. Monad m ⇒ T.LineType → DSL (lineType ∷ I|i) m
 lineType a = set "type" $ toForeign a
 
-width ∷ ∀ i. Int → DSL (width ∷ I|i)
+width ∷ ∀ i m. Monad m ⇒ Int → DSL (width ∷ I|i) m
 width a = set "width" $ toForeign a
 
-widthPct ∷ ∀ i. Number → DSL (width ∷ I|i)
+widthPct ∷ ∀ i m. Monad m ⇒ Number → DSL (width ∷ I|i) m
 widthPct = set "width" <<< toForeign <<< (_ <> "%") <<< show
 
-axisPointer ∷ ∀ i. DSL TP.AxisPointerI → DSL (axisPointer ∷ I|i)
-axisPointer = set "axisPointer" <<< buildObj
+axisPointer ∷ ∀ i m. Monad m ⇒ DSL TP.AxisPointerI m → DSL (axisPointer ∷ I|i) m
+axisPointer = set "axisPointer" <=< buildObj
 
-scale ∷ ∀ i. Boolean → DSL (scale ∷ I|i)
+scale ∷ ∀ i m. Monad m ⇒ Boolean → DSL (scale ∷ I|i) m
 scale a = set "scale" $ toForeign a
 
-large ∷ ∀ i. Boolean → DSL (large ∷ I|i)
+large ∷ ∀ i m. Monad m ⇒ Boolean → DSL (large ∷ I|i) m
 large a = set "large" $ toForeign a
 
-formatterAxis ∷ ∀ i. (Array T.FormatterInput → String) → DSL (formatter ∷ I|i)
+formatterAxis ∷ ∀ i m. Monad m ⇒ (Array T.FormatterInput → String) → DSL (formatter ∷ I|i) m
 formatterAxis a = set "formatter" $ toForeign a
 
-formatterAxisArrayValue ∷ ∀ i. (Array T.FormatterInputArrayValue → String) → DSL (formatter ∷ I|i)
+formatterAxisArrayValue
+  ∷ ∀ i m. Monad m ⇒ (Array T.FormatterInputArrayValue → String) → DSL (formatter ∷ I|i) m
 formatterAxisArrayValue a = set "formatter" $ toForeign a
 
-formatterItem ∷ ∀ i. (T.FormatterInput → String) → DSL (formatter ∷ I|i)
+formatterItem
+  ∷ ∀ i m. Monad m ⇒ (T.FormatterInput → String) → DSL (formatter ∷ I|i) m
 formatterItem a = set "formatter" $ toForeign a
 
-formatterItemArrayValue ∷ ∀ i. (T.FormatterInputArrayValue → String) → DSL (formatter ∷ I|i)
+formatterItemArrayValue
+  ∷ ∀ i m. Monad m ⇒ (T.FormatterInputArrayValue → String) → DSL (formatter ∷ I|i) m
 formatterItemArrayValue a = set "formatter" $ toForeign a
 
-formatterString ∷ ∀ i. String → DSL (formatter ∷ I|i)
+formatterString ∷ ∀ i m. Monad m ⇒ String → DSL (formatter ∷ I|i) m
 formatterString a = set "formatter" $ toForeign a
 
-formatterValue ∷ ∀ i. (Number → String) → DSL (formatter ∷ I|i)
+formatterValue ∷ ∀ i m. Monad m ⇒ (Number → String) → DSL (formatter ∷ I|i) m
 formatterValue = set "formatter" <<< toForeign
 
-animationEnabled ∷ ∀ i. Boolean → DSL (animation ∷ I|i)
+animationEnabled ∷ ∀ i m. Monad m ⇒ Boolean → DSL (animation ∷ I|i) m
 animationEnabled a = set "animation" $ toForeign a
 
-splitLine ∷ ∀ i. DSL TP.SplitLineI → DSL (splitLine ∷ I|i)
-splitLine = set "splitLine" <<< buildObj
+splitLine ∷ ∀ i m. Monad m ⇒ DSL TP.SplitLineI m → DSL (splitLine ∷ I|i) m
+splitLine = set "splitLine" <=< buildObj
 
-boundaryGap ∷ ∀ i. T.Point → DSL (boundaryGap ∷ I|i)
+boundaryGap ∷ ∀ i m. Monad m ⇒ T.Point → DSL (boundaryGap ∷ I|i) m
 boundaryGap a = set "boundaryGap" $ T.pointToForeign a
 
-disabledBoundaryGap ∷ ∀ i. DSL (boundaryGap ∷ I|i)
+disabledBoundaryGap ∷ ∀ i m. Monad m ⇒ DSL (boundaryGap ∷ I|i) m
 disabledBoundaryGap = set "boundaryGap" $ toForeign false
 
-enabledBoundaryGap ∷ ∀ i. DSL (boundaryGap ∷ I|i)
+enabledBoundaryGap ∷ ∀ i m. Monad m ⇒ DSL (boundaryGap ∷ I|i) m
 enabledBoundaryGap = set "boundaryGap" $ toForeign true
 
-hoverAnimationEnabled ∷ ∀ i. Boolean → DSL (hoverAnimation ∷ I|i)
+hoverAnimationEnabled ∷ ∀ i m. Monad m ⇒ Boolean → DSL (hoverAnimation ∷ I|i) m
 hoverAnimationEnabled a = set "hoverAnimation" $ toForeign a
 
-showSymbol ∷ ∀ i. Boolean → DSL (showSymbol ∷ I|i)
+showSymbol ∷ ∀ i m. Monad m ⇒ Boolean → DSL (showSymbol ∷ I|i) m
 showSymbol a = set "showSymbol" $ toForeign a
 
-selectedMode ∷ ∀ i. T.SelectedMode → DSL (selectedMode ∷ I|i)
+selectedMode ∷ ∀ i m. Monad m ⇒ T.SelectedMode → DSL (selectedMode ∷ I|i) m
 selectedMode a = set "selectedMode" $ T.selectedModeToForeign a
 
-label ∷ ∀ i. DSL TP.LabelI → DSL (label ∷ I|i)
-label = set "label" <<< buildObj
+label ∷ ∀ i m. Monad m ⇒ DSL TP.LabelI m → DSL (label ∷ I|i) m
+label = set "label" <=< buildObj
 
-normalLabel ∷ ∀ i. DSL TP.LabelInnerI → DSL (normal ∷ R TP.LabelInnerI|i)
+normalLabel ∷ ∀ i m. Monad m ⇒ DSL TP.LabelInnerI m → DSL (normal ∷ R TP.LabelInnerI|i) m
 normalLabel = normal
 
-precision ∷ ∀ i. Number → DSL (precision ∷ I|i)
+precision ∷ ∀ i m. Monad m ⇒ Number → DSL (precision ∷ I|i) m
 precision = set "precision" <<< toForeign
 
-emphasisLabel ∷ ∀ i. DSL TP.LabelInnerI → DSL (emphasis ∷ R TP.LabelInnerI|i)
+emphasisLabel ∷ ∀ i m. Monad m ⇒ DSL TP.LabelInnerI m → DSL (emphasis ∷ R TP.LabelInnerI|i) m
 emphasisLabel = emphasis
 
-selected ∷ ∀ i. Boolean → DSL (selected ∷ I|i)
+selected ∷ ∀ i m. Monad m ⇒ Boolean → DSL (selected ∷ I|i) m
 selected a = set "selected" $ toForeign a
 
-leftPosition ∷ ∀ i. T.HorizontalPosition → DSL (left ∷ I|i)
+leftPosition ∷ ∀ i m. Monad m ⇒ T.HorizontalPosition → DSL (left ∷ I|i) m
 leftPosition a = set "left" $ T.horizontalPositionToForeign a
 
-alignLeft ∷ ∀ i. DSL (align ∷ I|i)
+alignLeft ∷ ∀ i m. Monad m ⇒ DSL (align ∷ I|i) m
 alignLeft = set "align" $ toForeign "left"
 
-alignRight ∷ ∀ i. DSL (align ∷ I|i)
+alignRight ∷ ∀ i m. Monad m ⇒ DSL (align ∷ I|i) m
 alignRight = set "align" $ toForeign "right"
 
-alignAuto ∷ ∀ i. DSL (align ∷ I|i)
+alignAuto ∷ ∀ i m. Monad m ⇒ DSL (align ∷ I|i) m
 alignAuto = set "align" $ toForeign "auto"
 
-funnelLeft ∷ ∀ i. DSL (funnelAlign ∷ I|i)
+funnelLeft ∷ ∀ i m. Monad m ⇒ DSL (funnelAlign ∷ I|i) m
 funnelLeft = set "funnelAlign" $ toForeign "left"
 
-funnelRight ∷ ∀ i. DSL (funnelAlign ∷ I|i)
+funnelRight ∷ ∀ i m. Monad m ⇒ DSL (funnelAlign ∷ I|i) m
 funnelRight = set "funnelAlign" $ toForeign "right"
 
-funnelCenter ∷ ∀ i. DSL (funnelAlign ∷ I|i)
+funnelCenter ∷ ∀ i m. Monad m ⇒ DSL (funnelAlign ∷ I|i) m
 funnelCenter = set "funnelAlign" $ toForeign "center"
 
-textLeft ∷ ∀ i. DSL (textAlign ∷ I|i)
+textLeft ∷ ∀ i m. Monad m ⇒ DSL (textAlign ∷ I|i) m
 textLeft = set "textAlign" $ toForeign "left"
 
-textRight ∷ ∀ i. DSL (textAlign ∷ I|i)
+textRight ∷ ∀ i m. Monad m ⇒ DSL (textAlign ∷ I|i) m
 textRight = set "textAlign" $ toForeign "right"
 
-textCenter ∷ ∀ i. DSL (textAlign ∷ I|i)
+textCenter ∷ ∀ i m. Monad m ⇒ DSL (textAlign ∷ I|i) m
 textCenter = set "textAlign" $ toForeign "center"
 
-textTop ∷ ∀ i. DSL (textBaseline ∷ I|i)
+textTop ∷ ∀ i m. Monad m ⇒ DSL (textBaseline ∷ I|i) m
 textTop = set "textBaseline" $ toForeign "top"
 
-textBottom ∷ ∀ i. DSL (textBaseline ∷ I|i)
+textBottom ∷ ∀ i m. Monad m ⇒ DSL (textBaseline ∷ I|i) m
 textBottom = set "textBaseline" $ toForeign "bottom"
 
-textMiddle ∷ ∀ i. DSL (textBaseline ∷ I|i)
+textMiddle ∷ ∀ i m. Monad m ⇒ DSL (textBaseline ∷ I|i) m
 textMiddle = set "textBaseline" $ toForeign "middle"
 
-brush ∷ ∀ i. DSL TP.BrushI → DSL (brush ∷ I|i)
-brush = set "brush" <<< buildObj
+brush ∷ ∀ i m. Monad m ⇒ DSL TP.BrushI m → DSL (brush ∷ I|i) m
+brush = set "brush" <=< buildObj
 
-brushType ∷ ∀ i. DSL TP.BrushToolboxI → DSL (brushType ∷ I|i)
-brushType a = set "type" $ buildArr a
+brushType ∷ ∀ i m. Monad m ⇒ DSL TP.BrushToolboxI m → DSL (brushType ∷ I|i) m
+brushType = set "type" <=< buildArr
 
-brushToolbox ∷ ∀ i. DSL TP.BrushToolboxI → DSL (brushToolbox ∷ I|i)
-brushToolbox a =  set "toolbox" $ buildArr a
+brushToolbox ∷ ∀ i m. Monad m ⇒ DSL TP.BrushToolboxI m → DSL (brushToolbox ∷ I|i) m
+brushToolbox = set "toolbox" <=< buildArr
 
-brushModeSingle ∷ ∀ i. DSL (brushMode ∷ I|i)
+brushModeSingle ∷ ∀ i m. Monad m ⇒ DSL (brushMode ∷ I|i) m
 brushModeSingle = set "brushMode" $ toForeign "single"
 
-brushIcons ∷ ∀ i. DSL TP.BFFieldI → DSL (bfIcon ∷ I|i)
-brushIcons a = set "icon" $ buildObj a
+brushIcons ∷ ∀ i m. Monad m ⇒ DSL TP.BFFieldI m → DSL (bfIcon ∷ I|i) m
+brushIcons a = set "icon" =<< buildObj a
 
-brushTitle ∷ ∀ i. DSL TP.BFFieldI → DSL (bfTitle ∷ I|i)
-brushTitle a = set "title" $ buildObj a
+brushTitle ∷ ∀ i m. Monad m ⇒ DSL TP.BFFieldI m → DSL (bfTitle ∷ I|i) m
+brushTitle a = set "title" =<< buildObj a
 
-brushModeMultiple ∷ ∀ i. DSL (brushMode ∷ I|i)
+brushModeMultiple ∷ ∀ i m. Monad m ⇒ DSL (brushMode ∷ I|i) m
 brushModeMultiple = set "brushMode" $ toForeign "multiple"
 
-rect ∷ ∀ i. DSL (tool ∷ I|i)
+rect ∷ ∀ i m. Monad m ⇒ DSL (tool ∷ I|i) m
 rect = set "" $ toForeign "rect"
 
-setRect ∷ ∀ i. String → DSL (rect ∷ I|i)
+setRect ∷ ∀ i m. Monad m ⇒ String → DSL (rect ∷ I|i) m
 setRect a = set "rect" $ toForeign a
 
-polygon ∷ ∀ i. DSL (tool ∷ I|i)
+polygon ∷ ∀ i m. Monad m ⇒ DSL (tool ∷ I|i) m
 polygon = set "" $ toForeign "polygon"
 
-setPolygon ∷ ∀ i. String → DSL (polygon ∷ I|i)
+setPolygon ∷ ∀ i m. Monad m ⇒ String → DSL (polygon ∷ I|i) m
 setPolygon a = set "polygon" $ toForeign a
 
-lineX ∷ ∀ i. DSL (tool ∷ I|i)
+lineX ∷ ∀ i m. Monad m ⇒ DSL (tool ∷ I|i) m
 lineX = set "" $ toForeign "lineX"
 
-setLineX ∷ ∀ i. String → DSL (lineX ∷ I|i)
+setLineX ∷ ∀ i m. Monad m ⇒ String → DSL (lineX ∷ I|i) m
 setLineX a = set "lineX" $ toForeign a
 
-lineY ∷ ∀ i. DSL (tool ∷ I|i)
+lineY ∷ ∀ i m. Monad m ⇒ DSL (tool ∷ I|i) m
 lineY = set "" $ toForeign "lineY"
 
-setLineY ∷ ∀ i. String → DSL (lineY ∷ I|i)
+setLineY ∷ ∀ i m. Monad m ⇒ String → DSL (lineY ∷ I|i) m
 setLineY a = set "lineY" $ toForeign a
 
-keep ∷ ∀ i. DSL (tool ∷ I|i)
+keep ∷ ∀ i m. Monad m ⇒ DSL (tool ∷ I|i) m
 keep = set "" $ toForeign "keep"
 
-setKeep ∷ ∀ i. String → DSL (keep ∷ I|i)
+setKeep ∷ ∀ i m. Monad m ⇒ String → DSL (keep ∷ I|i) m
 setKeep a = set "keep" $ toForeign a
 
-clear ∷ ∀ i. DSL (tool ∷ I|i)
+clear ∷ ∀ i m. Monad m ⇒ DSL (tool ∷ I|i) m
 clear = set "" $ toForeign "clear"
 
-setClear ∷ ∀ i. String → DSL (clear ∷ I|i)
+setClear ∷ ∀ i m. Monad m ⇒ String → DSL (clear ∷ I|i) m
 setClear a = set "clear" $ toForeign a
 
-toolbox ∷ ∀ i. DSL TP.ToolboxI → DSL (toolbox ∷ I|i)
-toolbox a = set "toolbox" $ buildObj a
+toolbox ∷ ∀ i m. Monad m ⇒ DSL TP.ToolboxI m → DSL (toolbox ∷ I|i) m
+toolbox a = set "toolbox" =<< buildObj a
 
-feature ∷ ∀ i. DSL TP.FeatureI → DSL (feature ∷ I|i)
-feature a = set "feature" $ buildObj a
+feature ∷ ∀ i m. Monad m ⇒ DSL TP.FeatureI m → DSL (feature ∷ I|i) m
+feature a = set "feature" =<< buildObj a
 
-brushFeature ∷ ∀ i. DSL TP.BrushFeatureI → DSL (brush ∷ I|i)
-brushFeature a = set "brush" $ buildObj a
+brushFeature ∷ ∀ i m. Monad m ⇒ DSL TP.BrushFeatureI m → DSL (brush ∷ I|i) m
+brushFeature a = set "brush" =<< buildObj a
 
-magicType ∷ ∀ i. DSL TP.MagicTypeI → DSL (magicType ∷ I|i)
-magicType a = set "magicType" $ buildObj a
+magicType ∷ ∀ i m. Monad m ⇒ DSL TP.MagicTypeI m → DSL (magicType ∷ I|i) m
+magicType a = set "magicType" =<< buildObj a
 
-magics ∷ ∀ i. DSL TP.MagicsI → DSL (magics ∷ I|i)
-magics a = set "type" $ buildArr a
+magics ∷ ∀ i m. Monad m ⇒ DSL TP.MagicsI m → DSL (magics ∷ I|i) m
+magics a = set "type" =<< buildArr a
 
-magicLine ∷ ∀ i. DSL (magic ∷ I|i)
+magicLine ∷ ∀ i m. Monad m ⇒ DSL (magic ∷ I|i) m
 magicLine = set "" $ toForeign "line"
 
-magicBar ∷ ∀ i. DSL (magic ∷ I|i)
+magicBar ∷ ∀ i m. Monad m ⇒ DSL (magic ∷ I|i) m
 magicBar = set "" $ toForeign "bar"
 
-magicStack ∷ ∀ i. DSL (magic ∷ I|i)
+magicStack ∷ ∀ i m. Monad m ⇒ DSL (magic ∷ I|i) m
 magicStack = set "" $ toForeign "stack"
 
-magicTiled ∷ ∀ i. DSL (magic ∷ I|i)
+magicTiled ∷ ∀ i m. Monad m ⇒ DSL (magic ∷ I|i) m
 magicTiled = set "" $ toForeign "tiled"
 
-dataView ∷ ∀ i. DSL TP.DataViewI → DSL (dataView ∷ I|i)
-dataView a = set "dataView" $ buildObj a
+dataView ∷ ∀ i m. Monad m ⇒ DSL TP.DataViewI m → DSL (dataView ∷ I|i) m
+dataView a = set "dataView" =<< buildObj a
 
-splitArea ∷ ∀ i. DSL TP.SplitAreaI → DSL (splitArea ∷ I|i)
-splitArea a = set "splitArea" $ buildObj a
+splitArea ∷ ∀ i m. Monad m ⇒ DSL TP.SplitAreaI m → DSL (splitArea ∷ I|i) m
+splitArea a = set "splitArea" =<< buildObj a
 
-axisLine ∷ ∀ i. DSL TP.AxisLineI → DSL (axisLine ∷ I|i)
-axisLine a = set "axisLine" $ buildObj a
+axisLine ∷ ∀ i m. Monad m ⇒ DSL TP.AxisLineI m → DSL (axisLine ∷ I|i) m
+axisLine a = set "axisLine" =<< buildObj a
 
-silent ∷ ∀ i. Boolean → DSL (silent ∷ I|i)
+silent ∷ ∀ i m. Monad m ⇒ Boolean → DSL (silent ∷ I|i) m
 silent a = set "silent" $ toForeign a
 
-onZero ∷ ∀ i. Boolean → DSL (onZero ∷ I|i)
+onZero ∷ ∀ i m. Monad m ⇒ Boolean → DSL (onZero ∷ I|i) m
 onZero a = set "onZero" $ toForeign a
 
-inverse ∷ ∀ i. Boolean → DSL (inverse ∷ I|i)
+inverse ∷ ∀ i m. Monad m ⇒ Boolean → DSL (inverse ∷ I|i) m
 inverse a = set "inverse" $ toForeign a
 
-visualMap ∷ ∀ i. DSL TP.VisualMapI → DSL (visualMap ∷ I|i)
-visualMap a = set "visualMap" $ buildSeries a
+visualMap ∷ ∀ i m. Monad m ⇒ DSL TP.VisualMapI m → DSL (visualMap ∷ I|i) m
+visualMap a = set "visualMap" =<< buildSeries a
 
-calendar ∷ ∀ i. DSL TP.CalendarI → DSL (calendar ∷ I|i)
-calendar a = set "calendar" $ buildSeries a
+calendar ∷ ∀ i m. Monad m ⇒ DSL TP.CalendarI m → DSL (calendar ∷ I|i) m
+calendar a = set "calendar" =<< buildSeries a
 
-continuous ∷ ∀ i. DSL TP.ContinuousVisualMapI → DSL (continuousVisualMap ∷ I|i)
-continuous a = set "continuous" $ buildObj a
+continuous ∷ ∀ i m. Monad m ⇒ DSL TP.ContinuousVisualMapI m → DSL (continuousVisualMap ∷ I|i) m
+continuous a = set "continuous" =<< buildObj a
 
-dimension ∷ ∀ i. Int → DSL (dimension ∷ I|i)
+dimension ∷ ∀ i m. Monad m ⇒ Int → DSL (dimension ∷ I|i) m
 dimension a = set "dimension" $ toForeign a
 
-textPair ∷ ∀ i. String → String → DSL (textPair ∷ I|i)
+textPair ∷ ∀ i m. Monad m ⇒ String → String → DSL (textPair ∷ I|i) m
 textPair high low = set "text" $ toForeign [high, low]
 
-itemHeight ∷ ∀ i. Number → DSL (itemHeight ∷ I|i)
+itemHeight ∷ ∀ i m. Monad m ⇒ Number → DSL (itemHeight ∷ I|i) m
 itemHeight a = set "itemHeight" $ toForeign a
 
-itemWidth ∷ ∀ i. Number → DSL (itemWidth ∷ I|i)
+itemWidth ∷ ∀ i m. Monad m ⇒ Number → DSL (itemWidth ∷ I|i) m
 itemWidth a = set "itemWidth" $ toForeign a
 
-calculable ∷ ∀ i. Boolean → DSL (calculable ∷ I|i)
+calculable ∷ ∀ i m. Monad m ⇒ Boolean → DSL (calculable ∷ I|i) m
 calculable a = set "calculable" $ toForeign a
 
-min ∷ ∀ i. Number → DSL (min ∷ I|i)
+min ∷ ∀ i m. Monad m ⇒ Number → DSL (min ∷ I|i) m
 min a = set "min" $ toForeign a
 
-max ∷ ∀ i. Number → DSL (max ∷ I|i)
+max ∷ ∀ i m. Monad m ⇒ Number → DSL (max ∷ I|i) m
 max a = set "max" $ toForeign a
 
-inRange ∷ ∀ i. DSL TP.InOutRangeI → DSL (inRange ∷ I|i)
-inRange a = set "inRange" $ buildObj a
+inRange ∷ ∀ i m. Monad m ⇒ DSL TP.InOutRangeI m → DSL (inRange ∷ I|i) m
+inRange a = set "inRange" =<< buildObj a
 
-outOfRange ∷ ∀ i. DSL TP.InOutRangeI → DSL (outOfRange ∷ I|i)
-outOfRange a = set "outOfRange" $ buildObj a
+outOfRange ∷ ∀ i m. Monad m ⇒ DSL TP.InOutRangeI m → DSL (outOfRange ∷ I|i) m
+outOfRange a = set "outOfRange" =<< buildObj a
 
-controller ∷ ∀ i. DSL TP.ControllerI → DSL (controller ∷ I|i)
-controller a = set "controller" $ buildObj a
+controller ∷ ∀ i m. Monad m ⇒ DSL TP.ControllerI m → DSL (controller ∷ I|i) m
+controller a = set "controller" =<< buildObj a
 
-colorLightness ∷ ∀ i. Number → Number → DSL (colorLightness ∷ I|i)
+colorLightness ∷ ∀ i m. Monad m ⇒ Number → Number → DSL (colorLightness ∷ I|i) m
 colorLightness a b = set "colorLightness" $ toForeign [a, b]
 
-itemStyle ∷ ∀ i. DSL TP.ItemStyleI → DSL (itemStyle ∷ I|i)
-itemStyle a = set "itemStyle" $ buildObj a
+itemStyle ∷ ∀ i m. Monad m ⇒ DSL TP.ItemStyleI m → DSL (itemStyle ∷ I|i) m
+itemStyle a = set "itemStyle" =<< buildObj a
 
-normalItemStyle ∷ ∀ i. DSL TP.IStyleI → DSL (normal ∷ R TP.IStyleI|i)
+normalItemStyle ∷ ∀ i m. Monad m ⇒ DSL TP.IStyleI m → DSL (normal ∷ R TP.IStyleI|i) m
 normalItemStyle = normal
 
-emphasisItemStyle ∷ ∀ i. DSL TP.IStyleI → DSL (emphasis ∷ R TP.IStyleI|i)
+emphasisItemStyle ∷ ∀ i m. Monad m ⇒ DSL TP.IStyleI m → DSL (emphasis ∷ R TP.IStyleI|i) m
 emphasisItemStyle = emphasis
 
-barBorderWidth ∷ ∀ i. Number → DSL (barBorderWidth ∷ I|i)
+barBorderWidth ∷ ∀ i m. Monad m ⇒ Number → DSL (barBorderWidth ∷ I|i) m
 barBorderWidth a = set "barBorderWidth" $ toForeign a
 
-shadowBlur ∷ ∀ i. Number → DSL (shadowBlur ∷ I|i)
+shadowBlur ∷ ∀ i m. Monad m ⇒ Number → DSL (shadowBlur ∷ I|i) m
 shadowBlur a = set "shadowBlur" $ toForeign a
 
-shadowOffsetX ∷ ∀ i. Number → DSL (shadowOffsetX ∷ I|i)
+shadowOffsetX ∷ ∀ i m. Monad m ⇒ Number → DSL (shadowOffsetX ∷ I|i) m
 shadowOffsetX a = set "shadowOffsetX" $ toForeign a
 
-shadowOffsetY ∷ ∀ i. Number → DSL (shadowOffsetY ∷ I|i)
+shadowOffsetY ∷ ∀ i m. Monad m ⇒ Number → DSL (shadowOffsetY ∷ I|i) m
 shadowOffsetY a = set "shadowOffsetY" $ toForeign a
 
-shadowColor ∷ ∀ i. C.Color → DSL (shadowColor ∷ I|i)
+shadowColor ∷ ∀ i m. Monad m ⇒ C.Color → DSL (shadowColor ∷ I|i) m
 shadowColor a = set "shadowColor" $ toForeign $ C.cssStringRGBA a
 
-restore ∷ ∀ i. DSL TP.RestoreI → DSL (restore ∷ I|i)
-restore = set "restore" <<< buildObj
+restore ∷ ∀ i m. Monad m ⇒ DSL TP.RestoreI m → DSL (restore ∷ I|i) m
+restore = set "restore" <=< buildObj
 
-saveAsImage ∷ ∀ i. DSL TP.SaveAsImageI → DSL (saveAsImage ∷ I|i)
-saveAsImage = set "saveAsImage" <<< buildObj
+saveAsImage ∷ ∀ i m. Monad m ⇒ DSL TP.SaveAsImageI m → DSL (saveAsImage ∷ I|i) m
+saveAsImage = set "saveAsImage" <=< buildObj
 
-z ∷ ∀ i. Int → DSL (z ∷ I|i)
+z ∷ ∀ i m. Monad m ⇒ Int → DSL (z ∷ I|i) m
 z = set "z" <<< toForeign
 
-splitNumber ∷ ∀ i. Int → DSL (splitNumber ∷ I|i)
+splitNumber ∷ ∀ i m. Monad m ⇒ Int → DSL (splitNumber ∷ I|i) m
 splitNumber = set "splitNumber" <<< toForeign
 
-gaugeRadius ∷ ∀ i. T.PixelOrPercent → DSL (gaugeRadius ∷ I|i)
+gaugeRadius ∷ ∀ i m. Monad m ⇒ T.PixelOrPercent → DSL (gaugeRadius ∷ I|i) m
 gaugeRadius = set "radius" <<< T.pixelOrPercentToForeign
 
-detail ∷ ∀ i. DSL TP.DetailI → DSL (detail ∷ I|i)
-detail = set "detail" <<< buildObj
+detail ∷ ∀ i m. Monad m ⇒ DSL TP.DetailI m → DSL (detail ∷ I|i) m
+detail = set "detail" <=< buildObj
 
-endAngle ∷ ∀ i. Number → DSL (endAngle ∷ I|i)
+endAngle ∷ ∀ i m. Monad m ⇒ Number → DSL (endAngle ∷ I|i) m
 endAngle = set "endAngle" <<< toForeign
 
-gaugePointer ∷ ∀ i. DSL TP.GaugePointerI → DSL (gaugePointer ∷ I|i)
-gaugePointer = set "pointer" <<< buildObj
+gaugePointer ∷ ∀ i m. Monad m ⇒ DSL TP.GaugePointerI m → DSL (gaugePointer ∷ I|i) m
+gaugePointer = set "pointer" <=< buildObj
 
-length ∷ ∀ i. Int → DSL (length ∷ I|i)
+length ∷ ∀ i m. Monad m ⇒ Int → DSL (length ∷ I|i) m
 length = set "length" <<< toForeign
 
-autoColor ∷ ∀ i. DSL (color ∷ I|i)
+autoColor ∷ ∀ i m. Monad m ⇒ DSL (color ∷ I|i) m
 autoColor = set "color" $ toForeign "auto"
 
-bolderFontWeight ∷ ∀ i. DSL (fontWeight ∷ I|i)
+bolderFontWeight ∷ ∀ i m. Monad m ⇒ DSL (fontWeight ∷ I|i) m
 bolderFontWeight = set "fontWeight" $ toForeign "bolder"
 
-fontSize ∷ ∀ i. Int → DSL (fontSize ∷ I|i)
+fontSize ∷ ∀ i m. Monad m ⇒ Int → DSL (fontSize ∷ I|i) m
 fontSize = set "fontSize" <<< toForeign
 
-italicFontStyle ∷ ∀ i. DSL (fontStyle ∷ I|i)
+italicFontStyle ∷ ∀ i m. Monad m ⇒ DSL (fontStyle ∷ I|i) m
 italicFontStyle = set "fontStyle" $ toForeign "italic"
 
-offsetCenter ∷ ∀ i. T.Point → DSL (offsetCenter ∷ I|i)
+offsetCenter ∷ ∀ i m. Monad m ⇒ T.Point → DSL (offsetCenter ∷ I|i) m
 offsetCenter = set "offsetCenter" <<< T.pointToForeign
 
-subtext ∷ ∀ i. String → DSL (subtext ∷ I|i)
+subtext ∷ ∀ i m. Monad m ⇒ String → DSL (subtext ∷ I|i) m
 subtext = set "subtext" <<< toForeign
 
-readOnly ∷ ∀ i. Boolean → DSL (readOnly ∷ I|i)
+readOnly ∷ ∀ i m. Monad m ⇒ Boolean → DSL (readOnly ∷ I|i) m
 readOnly = set "readOnly" <<< toForeign
 
-positionInside ∷ ∀ i. DSL (position ∷ I|i)
+positionInside ∷ ∀ i m. Monad m ⇒ DSL (position ∷ I|i) m
 positionInside = set "position" $ toForeign "inside"
 
-positionTop ∷ ∀ i. DSL (position ∷ I|i)
+positionTop ∷ ∀ i m. Monad m ⇒ DSL (position ∷ I|i) m
 positionTop = set "position" $ toForeign "top"
 
-labelLine ∷ ∀ i. DSL TP.LabelLineI → DSL (labelLine ∷ I|i)
-labelLine = set "labelLine" <<< buildObj
+labelLine ∷ ∀ i m. Monad m ⇒ DSL TP.LabelLineI m → DSL (labelLine ∷ I|i) m
+labelLine = set "labelLine" <=< buildObj
 
-normalLabelLine ∷ ∀ i. DSL TP.LabelLineInnerI → DSL (normal ∷ R TP.LabelLineInnerI|i)
+normalLabelLine ∷ ∀ i m. Monad m ⇒ DSL TP.LabelLineInnerI m → DSL (normal ∷ R TP.LabelLineInnerI|i) m
 normalLabelLine = normal
 
-emphasisLabelLine ∷ ∀ i. DSL TP.LabelLineInnerI → DSL (emphasis ∷ R TP.LabelLineInnerI|i)
+emphasisLabelLine
+  ∷ ∀ i m. Monad m ⇒ DSL TP.LabelLineInnerI m → DSL (emphasis ∷ R TP.LabelLineInnerI|i) m
 emphasisLabelLine = emphasis
 
-opacity ∷ ∀ i. Number → DSL (opacity ∷ I|i)
+opacity ∷ ∀ i m. Monad m ⇒ Number → DSL (opacity ∷ I|i) m
 opacity = set "opacity" <<< toForeign
 
-maxSize ∷ ∀ i. Int → DSL (maxSize ∷ I|i)
+maxSize ∷ ∀ i m. Monad m ⇒ Int → DSL (maxSize ∷ I|i) m
 maxSize = set "maxSize" <<< toForeign
 
-maxSizePct ∷ ∀ i. Number → DSL (maxSize ∷ I|i)
+maxSizePct ∷ ∀ i m. Monad m ⇒ Number → DSL (maxSize ∷ I|i) m
 maxSizePct = set "maxSize" <<< toForeign <<< (_ <> "%") <<< show
 
-borderColor ∷ ∀ i. C.Color → DSL (borderColor ∷ I|i)
+borderColor ∷ ∀ i m. Monad m ⇒ C.Color → DSL (borderColor ∷ I|i) m
 borderColor = set "borderColor" <<< toForeign <<< C.toHexString
 
-borderWidth ∷ ∀ i. Int → DSL (borderWidth ∷ I|i)
+borderWidth ∷ ∀ i m. Monad m ⇒ Int → DSL (borderWidth ∷ I|i) m
 borderWidth = set "borderWidth" <<< toForeign
 
-normalLineStyle ∷ ∀ i. DSL TP.LineStyleI → DSL (normal ∷ R TP.LineStyleI|i)
+normalLineStyle ∷ ∀ i m. Monad m ⇒ DSL TP.LineStyleI m → DSL (normal ∷ R TP.LineStyleI|i) m
 normalLineStyle = normal
 
-emphasisLineStyle ∷ ∀ i. DSL TP.LineStyleI → DSL (emphasis ∷ R TP.LineStyleI|i)
+emphasisLineStyle ∷ ∀ i m. Monad m ⇒ DSL TP.LineStyleI m → DSL (emphasis ∷ R TP.LineStyleI|i) m
 emphasisLineStyle = emphasis
 
-leftCenter ∷ ∀ i. DSL (left ∷ I|i)
+leftCenter ∷ ∀ i m. Monad m ⇒ DSL (left ∷ I|i) m
 leftCenter = set "left" $ toForeign "center"
 
-leftLeft ∷ ∀ i. DSL (left ∷ I|i)
+leftLeft ∷ ∀ i m. Monad m ⇒ DSL (left ∷ I|i) m
 leftLeft = set "left" $ toForeign "left"
 
-leftRight ∷ ∀ i. DSL (left ∷ I|i)
+leftRight ∷ ∀ i m. Monad m ⇒ DSL (left ∷ I|i) m
 leftRight = set "left" $ toForeign "right"
 
-itemGap ∷ ∀ i. Int → DSL (itemGap ∷ I|i)
+itemGap ∷ ∀ i m. Monad m ⇒ Int → DSL (itemGap ∷ I|i) m
 itemGap = set "itemGap" <<< toForeign
 
-indicators ∷ ∀ i. DSL TP.IndicatorsI → DSL (indicators ∷ I|i)
-indicators = set "indicator" <<< buildArr
+indicators ∷ ∀ i m. Monad m ⇒ DSL TP.IndicatorsI m → DSL (indicators ∷ I|i) m
+indicators = set "indicator" <=< buildArr
 
-indicator ∷ ∀ i. DSL TP.IndicatorI → DSL (indicator ∷ I|i)
-indicator = set "" <<< buildObj
+indicator ∷ ∀ i m. Monad m ⇒ DSL TP.IndicatorI m → DSL (indicator ∷ I|i) m
+indicator = set "" <=< buildObj
 
-radarName ∷ ∀ i. DSL TP.RadarNameI → DSL (radarName ∷ I|i)
-radarName = set "name" <<< buildObj
+radarName ∷ ∀ i m. Monad m ⇒ DSL TP.RadarNameI m → DSL (radarName ∷ I|i) m
+radarName = set "name" <=< buildObj
 
-nameGap ∷ ∀ i. Number → DSL (nameGap ∷ I|i)
+nameGap ∷ ∀ i m. Monad m ⇒ Number → DSL (nameGap ∷ I|i) m
 nameGap = set "nameGap" <<< toForeign
 
-polygonShape ∷ ∀ i. DSL (shape ∷ I|i)
+polygonShape ∷ ∀ i m. Monad m ⇒ DSL (shape ∷ I|i) m
 polygonShape = set "shape" $ toForeign "polygon"
 
-circleShape ∷ ∀ i. DSL (shape ∷ I|i)
+circleShape ∷ ∀ i m. Monad m ⇒ DSL (shape ∷ I|i) m
 circleShape = set "shape" $ toForeign "circle"
 
-lineStylePair ∷ ∀ i. DSL TP.LineStylePairI → DSL (lineStyle ∷ R TP.LineStylePairI|i)
+lineStylePair ∷ ∀ i m. Monad m ⇒ DSL TP.LineStylePairI m → DSL (lineStyle ∷ R TP.LineStylePairI|i) m
 lineStylePair = lineStyle
 
-areaStylePair ∷ ∀ i. DSL TP.AreaStylePairI → DSL (areaStyle ∷ R TP.AreaStylePairI|i)
+areaStylePair ∷ ∀ i m. Monad m ⇒ DSL TP.AreaStylePairI m → DSL (areaStyle ∷ R TP.AreaStylePairI|i) m
 areaStylePair = areaStyle
 
-normalAreaStyle ∷ ∀ i. DSL TP.AreaStyleI → DSL (normal ∷ R TP.AreaStyleI|i)
+normalAreaStyle ∷ ∀ i m. Monad m ⇒ DSL TP.AreaStyleI m → DSL (normal ∷ R TP.AreaStyleI|i) m
 normalAreaStyle = normal
 
-emphasisAreaStyle ∷ ∀ i.DSL TP.AreaStyleI → DSL (emphasis ∷ R TP.AreaStyleI|i)
+emphasisAreaStyle ∷ ∀ i m. Monad m ⇒ DSL TP.AreaStyleI m → DSL (emphasis ∷ R TP.AreaStyleI|i) m
 emphasisAreaStyle = emphasis
 
-radars ∷ ∀ i. DSL TP.RadarsI → DSL (radar ∷ I|i)
-radars = set "radar" <<< buildArr
+radars ∷ ∀ i m. Monad m ⇒ DSL TP.RadarsI m → DSL (radar ∷ I|i) m
+radars = set "radar" <=< buildArr
 
-radar ∷ ∀ i. DSL TP.RadarI → DSL (radar ∷ I|i)
-radar = set "radar" <<< buildObj
+radar ∷ ∀ i m. Monad m ⇒ DSL TP.RadarI m → DSL (radar ∷ I|i) m
+radar = set "radar" <=< buildObj
 
-ascending ∷ ∀ i. DSL (sort ∷ I|i)
+ascending ∷ ∀ i m. Monad m ⇒ DSL (sort ∷ I|i) m
 ascending = set "sort" $ toForeign "ascending"
 
-descending ∷ ∀ i. DSL (sort ∷ I|i)
+descending ∷ ∀ i m. Monad m ⇒ DSL (sort ∷ I|i) m
 descending = set "sort" $ toForeign "descending"
 
-animationDurationUpdate ∷ ∀ i. Int → DSL (animationDurationUpdate ∷ I|i)
+animationDurationUpdate ∷ ∀ i m. Monad m ⇒ Int → DSL (animationDurationUpdate ∷ I|i) m
 animationDurationUpdate = set "animationDurationUpdate" <<< toForeign
 
-animationEasingUpdateQuinticInOut ∷ ∀ i. DSL (animationEasingUpdate ∷ I|i)
+animationEasingUpdateQuinticInOut ∷ ∀ i m. Monad m ⇒ DSL (animationEasingUpdate ∷ I|i) m
 animationEasingUpdateQuinticInOut = set "animationEasingUpdate" $ toForeign "quinticInOut"
 
-roam ∷ ∀ i. Boolean → DSL (roam ∷ I|i)
+roam ∷ ∀ i m. Monad m ⇒ Boolean → DSL (roam ∷ I|i) m
 roam = set "roam" <<< toForeign
 
-edgeSymbols ∷ ∀ i. DSL TP.EdgeSymbolsI → DSL (edgeSymbols ∷ I|i)
-edgeSymbols = set "edgeSymbol" <<< buildArr
+edgeSymbols ∷ ∀ i m. Monad m ⇒ DSL TP.EdgeSymbolsI m → DSL (edgeSymbols ∷ I|i) m
+edgeSymbols = set "edgeSymbol" <=< buildArr
 
-circleEdgeSymbol ∷ ∀ i. DSL (edgeSymbol ∷ I|i)
+circleEdgeSymbol ∷ ∀ i m. Monad m ⇒ DSL (edgeSymbol ∷ I|i) m
 circleEdgeSymbol = set "" $ toForeign "circle"
 
-arrowEdgeSymbol ∷ ∀ i. DSL (edgeSymbol ∷ I|i)
+arrowEdgeSymbol ∷ ∀ i m. Monad m ⇒ DSL (edgeSymbol ∷ I|i) m
 arrowEdgeSymbol = set "" $ toForeign "arrow"
 
-edgeSymbolSize ∷ ∀ i. Int → DSL (edgeSymbolSize ∷ I|i)
+edgeSymbolSize ∷ ∀ i m. Monad m ⇒ Int → DSL (edgeSymbolSize ∷ I|i) m
 edgeSymbolSize = set "edgeSymbolSize" <<< toForeign
 
-edgeSymbolSizes ∷ ∀ i. Int → Int → DSL (edgeSymbolSize ∷ I|i)
+edgeSymbolSizes ∷ ∀ i m. Monad m ⇒ Int → Int → DSL (edgeSymbolSize ∷ I|i) m
 edgeSymbolSizes a b = set "edgeSymbolSize" $ toForeign [a, b]
 
-buildLinks ∷ ∀ i. DSL TP.LinksI → DSL (links ∷ I|i)
-buildLinks = set "links" <<< buildArr
+buildLinks ∷ ∀ i m. Monad m ⇒ DSL TP.LinksI m → DSL (links ∷ I|i) m
+buildLinks = set "links" <=< buildArr
 
-addLink ∷ ∀ i. DSL TP.LinkI → DSL (link ∷ I|i)
-addLink = set "" <<< buildObj
+addLink ∷ ∀ i m. Monad m ⇒ DSL TP.LinkI m → DSL (link ∷ I|i) m
+addLink = set "" <=< buildObj
 
-links ∷ ∀ i. Array { source ∷ String, target ∷ String } → DSL (links ∷ I|i)
+links ∷ ∀ i m. Monad m ⇒ Array { source ∷ String, target ∷ String } → DSL (links ∷ I|i) m
 links = set "links" <<< toForeign
 
-edgeLabel ∷ ∀ i. DSL TP.EdgeLabelI → DSL (edgeLabel ∷ I|i)
-edgeLabel = set "edgeLabel" <<< buildObj
+edgeLabel ∷ ∀ i m. Monad m ⇒ DSL TP.EdgeLabelI m → DSL (edgeLabel ∷ I|i) m
+edgeLabel = set "edgeLabel" <=< buildObj
 
-normalEdgeLabel ∷ ∀ i. DSL TP.EdgeLabelInnerI → DSL (normal ∷ R TP.EdgeLabelInnerI|i)
+normalEdgeLabel ∷ ∀ i m. Monad m ⇒ DSL TP.EdgeLabelInnerI m → DSL (normal ∷ R TP.EdgeLabelInnerI|i) m
 normalEdgeLabel = normal
 
-emphasisEdgeLabel ∷ ∀ i. DSL TP.EdgeLabelInnerI → DSL (emphasis ∷ R TP.EdgeLabelInnerI|i)
+emphasisEdgeLabel ∷ ∀ i m. Monad m ⇒ DSL TP.EdgeLabelInnerI m → DSL (emphasis ∷ R TP.EdgeLabelInnerI|i) m
 emphasisEdgeLabel = emphasis
 
-x ∷ ∀ i. Number → DSL (x ∷ I|i)
+x ∷ ∀ i m. Monad m ⇒ Number → DSL (x ∷ I|i) m
 x = set "x" <<< toForeign
 
-y ∷ ∀ i. Number → DSL (y ∷ I|i)
+y ∷ ∀ i m. Monad m ⇒ Number → DSL (y ∷ I|i) m
 y = set "y" <<< toForeign
 
-curveness ∷ ∀ i. Number → DSL (curveness ∷ I|i)
+curveness ∷ ∀ i m. Monad m ⇒ Number → DSL (curveness ∷ I|i) m
 curveness = set "curveness" <<< toForeign
 
-symbolSizes ∷ ∀ i. Int → Int → DSL (symbolSize ∷ I|i)
+symbolSizes ∷ ∀ i m. Monad m ⇒ Int → Int → DSL (symbolSize ∷ I|i) m
 symbolSizes a b = set "symbolSize" $ toForeign [a, b]
 
-symbolSizeArrFunc ∷ ∀ i. (Array Number → Number) → DSL (symbolSize ∷ I|i)
+symbolSizeArrFunc ∷ ∀ i m. Monad m ⇒ (Array Number → Number) → DSL (symbolSize ∷ I|i) m
 symbolSizeArrFunc fn = set "symbolSize" $ toForeign fn
 
-sourceIx ∷ ∀ i. Int → DSL (source ∷ I|i)
+sourceIx ∷ ∀ i m. Monad m ⇒ Int → DSL (source ∷ I|i) m
 sourceIx = set "source" <<< toForeign
 
-targetIx ∷ ∀ i. Int → DSL (target ∷ I|i)
+targetIx ∷ ∀ i m. Monad m ⇒ Int → DSL (target ∷ I|i) m
 targetIx = set "target" <<< toForeign
 
-sourceName ∷ ∀ i. String → DSL (source ∷ I|i)
+sourceName ∷ ∀ i m. Monad m ⇒ String → DSL (source ∷ I|i) m
 sourceName = set "source" <<< toForeign
 
-targetName ∷ ∀ i. String → DSL (target ∷ I|i)
+targetName ∷ ∀ i m. Monad m ⇒ String → DSL (target ∷ I|i) m
 targetName = set "target" <<< toForeign
 
-subtargetName ∷ ∀ i. String → DSL (subtarget ∷ I|i)
+subtargetName ∷ ∀ i m. Monad m ⇒ String → DSL (subtarget ∷ I|i) m
 subtargetName = set "subtarget" <<< toForeign
 
-layoutNone ∷ ∀ i. DSL (layout ∷ I|i)
+layoutNone ∷ ∀ i m. Monad m ⇒ DSL (layout ∷ I|i) m
 layoutNone = set "layout" $ toForeign "none"
 
-layoutCircular ∷ ∀ i. DSL (layout ∷ I|i)
+layoutCircular ∷ ∀ i m. Monad m ⇒ DSL (layout ∷ I|i) m
 layoutCircular = set "layout" $ toForeign "circular"
 
-layoutForce ∷ ∀ i. DSL (layout ∷ I|i)
+layoutForce ∷ ∀ i m. Monad m ⇒ DSL (layout ∷ I|i) m
 layoutForce = set "layout" $ toForeign "force"
 
-missingSeries ∷ ∀ i. DSL (missing ∷ I|i)
+missingSeries ∷ ∀ i m. Monad m ⇒ DSL (missing ∷ I|i) m
 missingSeries = set "" undefinedValue
 
-missingItem ∷ ∀ i. DSL (item ∷ I|i)
+missingItem ∷ ∀ i m. Monad m ⇒ DSL (item ∷ I|i) m
 missingItem = set "" undefinedValue
 
-rotate ∷ ∀ i. Number → DSL (rotate ∷ I|i)
+rotate ∷ ∀ i m. Monad m ⇒ Number → DSL (rotate ∷ I|i) m
 rotate = set "rotate" <<< toForeign
 
-fontFamily ∷ ∀ i. String → DSL (fontFamily ∷ I|i)
+fontFamily ∷ ∀ i m. Monad m ⇒ String → DSL (fontFamily ∷ I|i) m
 fontFamily = set "fontFamily" <<< toForeign
 
-addParallelAxis ∷ ∀ i. DSL TP.ParallelAxisI → DSL (addParallelAxis ∷ I|i)
-addParallelAxis = set "" <<< buildObj
+addParallelAxis ∷ ∀ i m. Monad m ⇒ DSL TP.ParallelAxisI m → DSL (addParallelAxis ∷ I|i) m
+addParallelAxis = set "" <=< buildObj
 
-parallelAxes ∷ ∀ i. DSL TP.ParallelAxesI → DSL (parallelAxis ∷ I|i)
-parallelAxes = set "parallelAxis" <<< buildArr
+parallelAxes ∷ ∀ i m. Monad m ⇒ DSL TP.ParallelAxesI m → DSL (parallelAxis ∷ I|i) m
+parallelAxes = set "parallelAxis" <=< buildArr
 
-parallelAxisDefault ∷ ∀ i. DSL TP.ParallelAxisI → DSL (parallelAxisDefault ∷ I|i)
-parallelAxisDefault = set "parallelAxisDefault" <<< buildObj
+parallelAxisDefault ∷ ∀ i m. Monad m ⇒ DSL TP.ParallelAxisI m → DSL (parallelAxisDefault ∷ I|i) m
+parallelAxisDefault = set "parallelAxisDefault" <=< buildObj
 
-yAxes ∷ ∀ i. DSL TP.YAxesI → DSL (yAxis ∷ I|i)
-yAxes = set "yAxis" <<< buildArr
+yAxes ∷ ∀ i m. Monad m ⇒ DSL TP.YAxesI m → DSL (yAxis ∷ I|i) m
+yAxes = set "yAxis" <=< buildArr
 
-xAxes ∷ ∀ i. DSL TP.XAxesI → DSL (xAxis ∷ I|i)
-xAxes = set "xAxis" <<< buildArr
+xAxes ∷ ∀ i m. Monad m ⇒ DSL TP.XAxesI m → DSL (xAxis ∷ I|i) m
+xAxes = set "xAxis" <=< buildArr
 
-addYAxis ∷ ∀ i. DSL TP.YAxisI → DSL (addYAxis ∷ I|i)
-addYAxis = set "" <<< buildObj
+addYAxis ∷ ∀ i m. Monad m ⇒ DSL TP.YAxisI m → DSL (addYAxis ∷ I|i) m
+addYAxis = set "" <=< buildObj
 
-addXAxis ∷ ∀ i. DSL TP.XAxisI → DSL (addXAxis ∷ I|i)
-addXAxis = set "" <<< buildObj
+addXAxis ∷ ∀ i m. Monad m ⇒ DSL TP.XAxisI m → DSL (addXAxis ∷ I|i) m
+addXAxis = set "" <=< buildObj
 
-interval ∷ ∀ i. Int → DSL (interval ∷ I|i)
+interval ∷ ∀ i m. Monad m ⇒ Int → DSL (interval ∷ I|i) m
 interval = set "interval" <<< toForeign
 
-lineAxisPointer ∷ ∀ i. DSL (axisPointerType ∷ I|i)
+lineAxisPointer ∷ ∀ i m. Monad m ⇒ DSL (axisPointerType ∷ I|i) m
 lineAxisPointer = set "type" $ toForeign "line"
 
-crossAxisPointer ∷ ∀ i. DSL (axisPointerType ∷ I|i)
+crossAxisPointer ∷ ∀ i m. Monad m ⇒ DSL (axisPointerType ∷ I|i) m
 crossAxisPointer = set "type" $ toForeign "cross"
 
-solidLine ∷ ∀ i. DSL (lineType ∷ I|i)
+solidLine ∷ ∀ i m. Monad m ⇒ DSL (lineType ∷ I|i) m
 solidLine = set "type" $ toForeign "solid"
 
-dashedLine ∷ ∀ i. DSL (lineType ∷ I|i)
+dashedLine ∷ ∀ i m. Monad m ⇒ DSL (lineType ∷ I|i) m
 dashedLine = set "type" $ toForeign "dashed"
 
-dottedLine ∷ ∀ i. DSL (lineType ∷ I|i)
+dottedLine ∷ ∀ i m. Monad m ⇒ DSL (lineType ∷ I|i) m
 dottedLine = set "type" $ toForeign "dotted"
 
-widthNum ∷ ∀ i. Number → DSL (width ∷ I|i)
+widthNum ∷ ∀ i m. Monad m ⇒ Number → DSL (width ∷ I|i) m
 widthNum = set "width" <<< toForeign
 
-crossStyle ∷ ∀ i. DSL TP.CrossStyleI → DSL (crossStyle ∷ I|i)
-crossStyle = set "crossStyle" <<< buildObj
+crossStyle ∷ ∀ i m. Monad m ⇒ DSL TP.CrossStyleI m → DSL (crossStyle ∷ I|i) m
+crossStyle = set "crossStyle" <=< buildObj
 
-normal ∷ ∀ p i. DSL p → DSL (normal ∷ R p |i)
-normal = set "normal" <<< buildObj
+normal ∷ ∀ p i m. Monad m ⇒ DSL p m → DSL (normal ∷ R p |i) m
+normal = set "normal" <=< buildObj
 
-lineStyle ∷ ∀ ρ i. DSL ρ → DSL (lineStyle ∷ R ρ |i)
-lineStyle = set "lineStyle" <<< buildObj
+lineStyle ∷ ∀ ρ i m. Monad m ⇒ DSL ρ m → DSL (lineStyle ∷ R ρ |i) m
+lineStyle = set "lineStyle" <=< buildObj
 
-areaStyle ∷ ∀ ρ i. DSL ρ → DSL (areaStyle ∷ R ρ |i)
-areaStyle = set "areaStyle" <<< buildObj
+areaStyle ∷ ∀ ρ i m. Monad m ⇒ DSL ρ m → DSL (areaStyle ∷ R ρ |i) m
+areaStyle = set "areaStyle" <=< buildObj
 
-emphasis ∷ ∀ p i. DSL p → DSL (emphasis ∷ R p|i)
-emphasis = set "emphasis" <<< buildObj
+emphasis ∷ ∀ ρ i m. Monad m ⇒ DSL ρ m → DSL (emphasis ∷ R ρ|i) m
+emphasis = set "emphasis" <=< buildObj
 
-heightPixelOrPercent ∷ ∀ i. T.PixelOrPercent → DSL (height ∷ I|i)
+heightPixelOrPercent ∷ ∀ i m. Monad m ⇒ T.PixelOrPercent → DSL (height ∷ I|i) m
 heightPixelOrPercent = set "height" <<< T.pixelOrPercentToForeign
 
-heightPct ∷ ∀ i. Number → DSL (width ∷ I|i)
+heightPct ∷ ∀ i m. Monad m ⇒ Number → DSL (width ∷ I|i) m
 heightPct = set "height" <<< toForeign <<< (_ <> "%") <<< show
 
-widthPixelOrPercent ∷ ∀ i. T.PixelOrPercent → DSL (width ∷ I|i)
+widthPixelOrPercent ∷ ∀ i m. Monad m ⇒ T.PixelOrPercent → DSL (width ∷ I|i) m
 widthPixelOrPercent = set "width" <<< T.pixelOrPercentToForeign
 
-padding ∷ ∀ i. Number → DSL (padding ∷ I|i)
+padding ∷ ∀ i m. Monad m ⇒ Number → DSL (padding ∷ I|i) m
 padding = set "padding" <<< toForeign
 
-enterable ∷ ∀ i. Boolean → DSL (enterable ∷ I|i)
+enterable ∷ ∀ i m. Monad m ⇒ Boolean → DSL (enterable ∷ I|i) m
 enterable = set "enterable" <<< toForeign
 
-transitionDuration ∷ ∀ i. Number → DSL (transitionDuration ∷ I|i)
+transitionDuration ∷ ∀ i m. Monad m ⇒ Number → DSL (transitionDuration ∷ I|i) m
 transitionDuration = set "transitionDuration" <<< toForeign
 
-extraCssText ∷ ∀ i. String → DSL (extraCssText ∷ I|i)
+extraCssText ∷ ∀ i m. Monad m ⇒ String → DSL (extraCssText ∷ I|i) m
 extraCssText = set "extraCssText" <<< toForeign
 
-gridIndex ∷ ∀ i. Int → DSL (gridIndex ∷ I|i)
+gridIndex ∷ ∀ i m. Monad m ⇒ Int → DSL (gridIndex ∷ I|i) m
 gridIndex a = set "gridIndex" $ toForeign a
 
-radarIndex ∷ ∀ i. Number → DSL (radarIndex ∷ I|i)
+radarIndex ∷ ∀ i m. Monad m ⇒ Number → DSL (radarIndex ∷ I|i) m
 radarIndex = set "radarIndex" <<< toForeign
 
-parallelIndex ∷ ∀ i. Int → DSL (parallelIndex ∷ I|i)
+parallelIndex ∷ ∀ i m. Monad m ⇒ Int → DSL (parallelIndex ∷ I|i) m
 parallelIndex = set "parallelIndex" <<< toForeign
 
-treeMapNodeId ∷ ∀ i. String → DSL (treeMapNodeId ∷ I|i)
+treeMapNodeId ∷ ∀ i m. Monad m ⇒ String → DSL (treeMapNodeId ∷ I|i) m
 treeMapNodeId = set "id" <<< toForeign
 
-visualDimension ∷ ∀ i. Int → DSL (visualDimension ∷ I|i)
+visualDimension ∷ ∀ i m. Monad m ⇒ Int → DSL (visualDimension ∷ I|i) m
 visualDimension = set "visualDimension" <<< toForeign
 
-visibleMin ∷ ∀ i. Number → DSL (visibleMin ∷ I|i)
+visibleMin ∷ ∀ i m. Monad m ⇒ Number → DSL (visibleMin ∷ I|i) m
 visibleMin = set "visibleMin" <<< toForeign
 
-childVisibleMin ∷ ∀ i. Number → DSL (childVisibleMin ∷ I|i)
+childVisibleMin ∷ ∀ i m. Monad m ⇒ Number → DSL (childVisibleMin ∷ I|i) m
 childVisibleMin = set "childVisibleMin" <<< toForeign
 
-category ∷ ∀ i. Int → DSL (category ∷ I|i)
+category ∷ ∀ i m. Monad m ⇒ Int → DSL (category ∷ I|i) m
 category = set "category" <<< toForeign
 
-coords ∷ ∀ i f. F.Foldable f ⇒ f T.Coord → DSL (coords ∷ I|i)
+coords ∷ ∀ i f m. Monad m ⇒ F.Foldable f ⇒ f T.Coord → DSL (coords ∷ I|i) m
 coords a = set "coords" $ toForeign $ F.foldMap (Arr.singleton <<< toForeign) a
 
-valueIndex ∷ ∀ i. Number → DSL (valueIndex ∷ I|i)
+valueIndex ∷ ∀ i m. Monad m ⇒ Number → DSL (valueIndex ∷ I|i) m
 valueIndex = set "valueIndex" <<< toForeign
 
-valueDim ∷ ∀ i. String → DSL (valueDim ∷ I|i)
+valueDim ∷ ∀ i m. Monad m ⇒ String → DSL (valueDim ∷ I|i) m
 valueDim = set "valueDim" <<< toForeign
 
-markType ∷ ∀ i. String → DSL (markType ∷ I|i)
+markType ∷ ∀ i m. Monad m ⇒ String → DSL (markType ∷ I|i) m
 markType = set "type" <<< toForeign
 
-margin ∷ ∀ i. Int → DSL (margin ∷ I|i)
+margin ∷ ∀ i m. Monad m ⇒ Int → DSL (margin ∷ I|i) m
 margin = set "margin" <<< toForeign
 
-markLine ∷ ∀ i. DSL TP.MarkLineI → DSL (markLine ∷ I|i)
-markLine = set "markLine" <<< buildObj
+markLine ∷ ∀ i m. Monad m ⇒ DSL TP.MarkLineI m → DSL (markLine ∷ I|i) m
+markLine = set "markLine" <=< buildObj
 
-markPoint ∷ ∀ i. DSL TP.MarkPointI → DSL (markPoint ∷ I|i)
-markPoint = set "markPoint" <<< buildObj
+markPoint ∷ ∀ i m. Monad m ⇒ DSL TP.MarkPointI m → DSL (markPoint ∷ I|i) m
+markPoint = set "markPoint" <=< buildObj
 
-markArea ∷ ∀ i. DSL TP.MarkAreaI → DSL (markArea ∷ I|i)
-markArea = set "markArea" <<< buildObj
+markArea ∷ ∀ i m. Monad m ⇒ DSL TP.MarkAreaI m → DSL (markArea ∷ I|i) m
+markArea = set "markArea" <=< buildObj
 
-repulsion ∷ ∀ i. Number → DSL (repulsion ∷ I|i)
+repulsion ∷ ∀ i m. Monad m ⇒ Number → DSL (repulsion ∷ I|i) m
 repulsion = set "repulsion" <<< toForeign
 
-gravity ∷ ∀ i. Number → DSL (gravity ∷ I|i)
+gravity ∷ ∀ i m. Monad m ⇒ Number → DSL (gravity ∷ I|i) m
 gravity = set "gravity" <<< toForeign
 
-edgeLength ∷ ∀ i. Number → DSL (edgeLength ∷ I|i)
+edgeLength ∷ ∀ i m. Monad m ⇒ Number → DSL (edgeLength ∷ I|i) m
 edgeLength = set "edgeLength" <<< toForeign
 
-edgeLengths ∷ ∀ i. Number → Number → DSL (edgeLength ∷ I|i)
+edgeLengths ∷ ∀ i m. Monad m ⇒ Number → Number → DSL (edgeLength ∷ I|i) m
 edgeLengths a b = set "edgeLength" $ toForeign [ a, b ]
 
-layoutAnimation ∷ ∀ i. Boolean → DSL (layoutAnimation ∷ I|i)
+layoutAnimation ∷ ∀ i m. Monad m ⇒ Boolean → DSL (layoutAnimation ∷ I|i) m
 layoutAnimation = set "layoutAnimation" <<< toForeign
 
-circular ∷ ∀ i. DSL TP.CircularI → DSL (circular ∷ I|i)
-circular = set "circular" <<< buildObj
+circular ∷ ∀ i m. Monad m ⇒ DSL TP.CircularI m → DSL (circular ∷ I|i) m
+circular = set "circular" <=< buildObj
 
-rotateLabel ∷ ∀ i. Boolean → DSL (rotateLabel ∷ I|i)
+rotateLabel ∷ ∀ i m. Monad m ⇒ Boolean → DSL (rotateLabel ∷ I|i) m
 rotateLabel = set "rotateLabel" <<< toForeign
 
-force ∷ ∀ i. DSL TP.ForceI → DSL (force ∷ I|i)
-force = set "force" <<< buildObj
+force ∷ ∀ i m. Monad m ⇒ DSL TP.ForceI m → DSL (force ∷ I|i) m
+force = set "force" <=< buildObj
 
-buildCategories ∷ ∀ i. DSL TP.CategoriesI → DSL (categories ∷ I|i)
-buildCategories is = set "categories" $ buildArr is
+buildCategories ∷ ∀ i m. Monad m ⇒ DSL TP.CategoriesI m → DSL (categories ∷ I|i) m
+buildCategories = set "categories" <=< buildArr
 
-addCategory ∷ ∀ i. DSL TP.CategoryI → DSL (category ∷ I|i)
-addCategory = set "" <<< buildObj
+addCategory ∷ ∀ i m. Monad m ⇒ DSL TP.CategoryI m → DSL (category ∷ I|i) m
+addCategory = set "" <=< buildObj
 
-colorSource ∷ ∀ i. DSL (color ∷ I|i)
+colorSource ∷ ∀ i m. Monad m ⇒ DSL (color ∷ I|i) m
 colorSource = set "color" $ toForeign "source"
 
-colorTarget ∷ ∀ i. DSL (color ∷ I|i)
+colorTarget ∷ ∀ i m. Monad m ⇒ DSL (color ∷ I|i) m
 colorTarget = set "target" $ toForeign "target"
 
-buildCoord ∷ ∀ i. DSL TP.PointI → DSL (coord ∷ I|i)
-buildCoord dsl =
-  let
-    xx = get "x" dsl
-    yy = get "y" dsl
-  in
-    set "coord" $ toForeign $ Arr.catMaybes [ xx, yy ]
+buildCoord ∷ ∀ i m. Monad m ⇒ DSL TP.PointI m → DSL (coord ∷ I|i) m
+buildCoord dsl = do
+  xx ← get "x" dsl
+  yy ← get "y" dsl
+  set "coord" $ toForeign $ Arr.catMaybes [ xx, yy ]
 
-buildCenter ∷ ∀ i. DSL TP.PointI → DSL (center ∷ I|i)
-buildCenter dsl =
-  let
-    xx = get "x" dsl
-    yy = get "y" dsl
-  in
-    set "center" $ toForeign $ Arr.catMaybes [ xx, yy ]
+buildCenter ∷ ∀ i m. Monad m ⇒ DSL TP.PointI m → DSL (center ∷ I|i) m
+buildCenter dsl = do
+  xx ← get "x" dsl
+  yy ← get "y" dsl
+  set "center" $ toForeign $ Arr.catMaybes [ xx, yy ]
 
-buildRadius ∷ ∀ i. DSL TP.RadiusI → DSL (radius ∷ I|i)
-buildRadius dsl =
-  let
-    s = get "start" dsl
-    e = get "end" dsl
-  in
-    set "radius" $ toForeign $ Arr.catMaybes [ s, e ]
+buildRadius ∷ ∀ i m. Monad m ⇒ DSL TP.RadiusI m → DSL (radius ∷ I|i) m
+buildRadius dsl = do
+ s ← get "start" dsl
+ e ← get "end" dsl
+ set "radius" $ toForeign $ Arr.concat [s, e]
 
-setStart ∷ ∀ i. DSL TP.DimensionI → DSL (start ∷ I|i)
-setStart dsl =
-  F.traverse_ (set "start") $ lastWithKeys ["pixels", "percents"] dsl
+setStart ∷ ∀ i m. Monad m ⇒ DSL TP.DimensionI m → DSL (start ∷ I|i) m
+setStart dsl = do
+  keys ← lastWithKeys ["pixels", "percents"] dsl
+  F.for_ (keys ∷ Array Foreign) $ set "start"
 
-setEnd ∷ ∀ i. DSL TP.DimensionI → DSL (end ∷ I|i)
-setEnd dsl =
-  F.traverse_ (set "end") $ lastWithKeys ["pixels", "percents"] dsl
+setEnd ∷ ∀ i m. Monad m ⇒ DSL TP.DimensionI m → DSL (end ∷ I|i) m
+setEnd dsl = do
+  keys ← lastWithKeys ["pixels", "percents"] dsl
+  F.for_ (keys ∷ Array Foreign) $ set "end"
 
-setBarWidth ∷ ∀ i. DSL TP.DimensionI → DSL (barWidth ∷ I|i)
-setBarWidth dsl =
-  F.traverse_ (set "barWidth") $ lastWithKeys ["pixels", "percents"] dsl
+setBarWidth ∷ ∀ i m. Monad m ⇒ DSL TP.DimensionI m → DSL (barWidth ∷ I|i) m
+setBarWidth dsl = do
+  keys ← lastWithKeys ["pixels", "percents"] dsl
+  F.for_ (keys ∷ Array Foreign) $ set "barWidth"
 
-setX ∷ ∀ i. DSL TP.DimensionI → DSL (x ∷ I|i)
-setX dsl =
-  F.traverse_ (set "x") $ lastWithKeys ["pixels", "percents"] dsl
+setX ∷ ∀ i m. Monad m ⇒ DSL TP.DimensionI m → DSL (x ∷ I|i) m
+setX dsl = do
+  keys ← lastWithKeys ["pixels", "percents"] dsl
+  F.for_ (keys ∷ Array Foreign) $ set "x"
 
-setY ∷ ∀ i. DSL TP.DimensionI → DSL (y ∷ I|i)
-setY dsl =
-  F.traverse_ (set "y") $ lastWithKeys ["pixels", "percents"] dsl
+setY ∷ ∀ i m. Monad m ⇒ DSL TP.DimensionI m → DSL (y ∷ I|i) m
+setY dsl = do
+  keys ← lastWithKeys ["pixels", "percents"] dsl
+  F.for_ (keys ∷ Array Foreign) $ set "y"
 
-setZ ∷ ∀ i. DSL TP.DimensionI → DSL (z ∷ I|i)
-setZ dsl =
-  F.traverse_ (set "z") $ lastWithKeys ["pixels", "percents"] dsl
+setZ ∷ ∀ i m. Monad m ⇒ DSL TP.DimensionI m → DSL (z ∷ I|i) m
+setZ dsl = do
+  keys ← lastWithKeys ["pixels", "percents"] dsl
+  F.for_ (keys ∷ Array Foreign) $ set "z"
 
-coordXIx ∷ ∀ i. Int → DSL (x ∷ I|i)
+coordXIx ∷ ∀ i m. Monad m ⇒ Int → DSL (x ∷ I|i) m
 coordXIx = set "x" <<< toForeign
 
-coordXValue ∷ ∀ i. String → DSL (x ∷ I|i)
+coordXValue ∷ ∀ i m. Monad m ⇒ String → DSL (x ∷ I|i) m
 coordXValue = set "x" <<< toForeign
 
-coordY ∷ ∀ i. String → DSL (y ∷ I|i)
+coordY ∷ ∀ i m. Monad m ⇒ String → DSL (y ∷ I|i) m
 coordY = set "y" <<< toForeign
 
-pixels ∷ ∀ i. Int → DSL (pixels ∷ I|i)
+pixels ∷ ∀ i m. Monad m ⇒ Int → DSL (pixels ∷ I|i) m
 pixels = set "pixels" <<< toForeign
 
-percents ∷ ∀ i. Number → DSL (percents ∷ I|i)
+percents ∷ ∀ i m. Monad m ⇒ Number → DSL (percents ∷ I|i) m
 percents = set "percents" <<< toForeign <<< (_ <> "%") <<< show
 
-setWidth ∷ ∀ i. DSL TP.DimensionI → DSL (width ∷ I|i)
-setWidth dsl =
-  F.traverse_ (set "width") $ lastWithKeys ["pixels", "percents"] dsl
+setWidth ∷ ∀ i m. Monad m ⇒ DSL TP.DimensionI m → DSL (width ∷ I|i) m
+setWidth dsl = do
+  keys ← lastWithKeys ["pixels", "percents"] dsl
+  F.for_ (keys ∷ Array Foreign) $ set "width"
 
-buildGaugeRadius ∷ ∀ i. DSL TP.DimensionI → DSL (gaugeRadius ∷ I|i)
-buildGaugeRadius dsl =
-  F.traverse_ (set "radius") $ lastWithKeys ["pixels", "percents"] dsl
+buildGaugeRadius ∷ ∀ i m. Monad m ⇒ DSL TP.DimensionI m → DSL (gaugeRadius ∷ I|i) m
+buildGaugeRadius dsl = do
+  keys ← lastWithKeys ["pixels", "percents"] dsl
+  F.for_ (keys ∷ Array Foreign) $ set "radius"
 
-buildOffsetCenter ∷ ∀ i. DSL TP.PointI → DSL (offsetCenter ∷ I|i)
-buildOffsetCenter dsl =
-  let
-    xx = get "x" dsl
-    yy = get "y" dsl
-  in
-    set "offsetCenter" $ toForeign $ Arr.catMaybes [ xx, yy ]
+buildOffsetCenter ∷ ∀ i m. Monad m ⇒ DSL TP.PointI m → DSL (offsetCenter ∷ I|i) m
+buildOffsetCenter dsl = do
+  xx ← get "x" dsl
+  yy ← get "y" dsl
+  set "offsetCenter" $ toForeign $ Arr.catMaybes [ xx, yy ]
 
-containLabel ∷ ∀ i. Boolean → DSL (containLabel ∷ I|i)
+containLabel ∷ ∀ i m. Monad m ⇒ Boolean → DSL (containLabel ∷ I|i) m
 containLabel = set "containLabel" <<< toForeign
 
-polarCoordinateSystem ∷ ∀ i. DSL (coordinateSystem ∷ I|i)
+polarCoordinateSystem ∷ ∀ i m. Monad m ⇒ DSL (coordinateSystem ∷ I|i) m
 polarCoordinateSystem = set "coordinateSystem" $ toForeign "polar"
 
-cartesianCoordinateSystem ∷ ∀ i. DSL (coordinateSystem ∷ I|i)
+cartesianCoordinateSystem ∷ ∀ i m. Monad m ⇒ DSL (coordinateSystem ∷ I|i) m
 cartesianCoordinateSystem = set "coordinateSystem" $ toForeign "cartesian2d"
 
-geoCoordinateSystem ∷ ∀ i. DSL (coordinateSystem ∷ I|i)
+geoCoordinateSystem ∷ ∀ i m. Monad m ⇒ DSL (coordinateSystem ∷ I|i) m
 geoCoordinateSystem = set "coordinateSystem" $ toForeign "geo"
 
-calendarCoordinateSystem ∷ ∀ i. DSL (coordinateSystem ∷ I|i)
+calendarCoordinateSystem ∷ ∀ i m. Monad m ⇒ DSL (coordinateSystem ∷ I|i) m
 calendarCoordinateSystem = set "coordinateSystem" $ toForeign "calendar"
 
-dim ∷ ∀ i. Int → DSL (dim ∷ I|i)
+dim ∷ ∀ i m. Monad m ⇒ Int → DSL (dim ∷ I|i) m
 dim = set "dim" <<< toForeign
 
-nameLocationStart ∷ ∀ i. DSL (nameLocation ∷ I|i)
+nameLocationStart ∷ ∀ i m. Monad m ⇒ DSL (nameLocation ∷ I|i) m
 nameLocationStart = set "nameLocation" $ toForeign "start"
 
-nameLocationEnd ∷ ∀ i. DSL (nameLocation ∷ I|i)
+nameLocationEnd ∷ ∀ i m. Monad m ⇒ DSL (nameLocation ∷ I|i) m
 nameLocationEnd = set "nameLocation" $ toForeign "end"
 
-buildCellSize ∷ ∀ i. DSL TP.ValuesI → DSL (cellSize ∷ I|i)
-buildCellSize = set "cellSize" <<< buildArr
+nameLocationMiddle ∷ ∀ i m. Monad m ⇒ DSL (nameLocation ∷ I|i) m
+nameLocationMiddle = set "nameLocation" $ toForeign "middle"
 
-buildRange ∷ ∀ i. DSL TP.ValuesI → DSL (range ∷ I|i)
-buildRange = set "range" <<< buildArr
+nameTextStyle ∷ ∀ i m. Monad m ⇒ DSL TP.TextStyleI m → DSL (nameTextStyle ∷ I|i) m
+nameTextStyle o = set "nameTextStyle" =<< buildObj o
 
-addDateValue ∷ ∀ i. Date → DSL (addValue ∷ I|i)
+nameRotate ∷ ∀ i m. Monad m ⇒ Number → DSL (nameRotate ∷ I|i) m
+nameRotate o = set "nameRotate" $ toForeign o
+
+buildCellSize ∷ ∀ i m. Monad m ⇒ DSL TP.ValuesI m → DSL (cellSize ∷ I|i) m
+buildCellSize = set "cellSize" <=< buildArr
+
+buildRange ∷ ∀ i m. Monad m ⇒ DSL TP.ValuesI m → DSL (range ∷ I|i) m
+buildRange = set "range" <=< buildArr
+
+addDateValue ∷ ∀ i m. Monad m ⇒ Date → DSL (addValue ∷ I|i) m
 addDateValue dt =
-  set "" <<< toForeign
-    $ year' dt
-    <> "-"
-    <> month' dt
-    <> "-"
-    <> day' dt
-  where
-    year' = show <<< fromEnum <<< year
-    month' = show <<< fromEnum <<< month
-    day' = show <<< fromEnum <<< day
+ set "" <<< toForeign
+   $ year' dt
+   <> "-"
+   <> month' dt
+   <> "-"
+   <> day' dt
+ where
+ year' = show <<< fromEnum <<< year
+ month' = show <<< fromEnum <<< month
+ day' = show <<< fromEnum <<< day
