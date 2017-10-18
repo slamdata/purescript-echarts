@@ -358,6 +358,9 @@ formatterString a = set "formatter" $ toForeign a
 formatterValue ∷ ∀ i m. Monad m ⇒ (Number → String) → DSL (formatter ∷ I|i) m
 formatterValue = set "formatter" <<< toForeign
 
+formatterLabel ∷ ∀ i m. Monad m ⇒ (String → String) → DSL (formatter ∷ I|i) m
+formatterLabel = set "formatter" <<< toForeign
+
 animationEnabled ∷ ∀ i m. Monad m ⇒ Boolean → DSL (animation ∷ I|i) m
 animationEnabled a = set "animation" $ toForeign a
 
