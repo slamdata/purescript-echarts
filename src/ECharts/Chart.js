@@ -29,8 +29,11 @@ exports.registerTheme = function(name) {
 exports.setOptionImpl = function(option) {
     return function(chart) {
         return function() {
-            chart.setOption(option, false, false);
-            return {};
+            try {
+                chart.setOption(option, false, false);
+            } catch (e) {
+                connsole.error(e);
+            }
         };
     };
 };
@@ -41,9 +44,8 @@ exports.resetOptionImpl = function(option) {
             try {
                 chart.setOption(option, true, false);
             } catch (e) {
-                console.log(e)
+                console.error(e);
             }
-            return {};
         };
     };
 };
