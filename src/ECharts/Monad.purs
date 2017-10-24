@@ -14,11 +14,12 @@ import Control.Monad.Rec.Class (class MonadRec)
 import Control.Monad.State.Class (class MonadState)
 import Control.Monad.Trans.Class (class MonadTrans, lift)
 import Control.Monad.Writer.Class (class MonadTell, class MonadWriter, tell)
-import Control.Monad.Writer.Trans (WriterT, execWriterT)
+import Control.Monad.Writer.Trans (WriterT, execWriterT, runWriterT)
 import Control.MonadPlus (class MonadPlus)
 import Control.MonadZero (class MonadZero)
 import Control.Plus (class Plus, empty)
 import Data.Array as Arr
+import Data.Bifunctor (rmap)
 import Data.Foldable as F
 import Data.Foreign (Foreign, toForeign)
 import Data.Identity (Identity)
@@ -83,8 +84,13 @@ derive newtype instance monadStateCommandsT
 
 derive newtype instance monadTransCommandsT ∷ MonadTrans (CommandsT i)
 
-set ∷ ∀ m. MonadTell Pairs m ⇒ String → Foreign → m Unit
-set k v = tell $ Arr.singleton $ Tuple k v
+set' ∷ ∀ m. MonadTell Pairs m ⇒ String → Foreign → m Unit
+set' k v = tell $ Arr.singleton $ Tuple k v
+
+set ∷ ∀ m a. MonadTell Pairs m ⇒ String → Tuple a Foreign → m a
+set k (Tuple a v) = do
+  tell $ Arr.singleton $ Tuple k v
+  pure a
 
 get
   ∷ ∀ i m f a ii
@@ -92,9 +98,12 @@ get
   ⇒ Alternative f
   ⇒ String
   → CommandsT i m a
-  → CommandsT ii m (f Foreign)
+  → CommandsT ii m (Tuple a (f Foreign))
 get k cs =
-  lift $ unwrap cs # execWriterT >>> map (maybe empty pure <<< lookup k)
+  lift
+    $ unwrap cs
+    # runWriterT
+    >>> map (rmap (maybe empty pure <<< lookup k))
 
 lastWithKeys
   ∷ ∀ i f m w a ii
@@ -103,9 +112,12 @@ lastWithKeys
   ⇒ Alternative w
   ⇒ f String
   → CommandsT i m a
-  → CommandsT ii m (w Foreign)
+  → CommandsT ii m (Tuple a (w Foreign))
 lastWithKeys ks cs =
-  lift $ unwrap cs # execWriterT >>> map (maybe empty pure <<< F.foldl (lookup' ks) Nothing)
+  lift
+    $ unwrap cs
+    # runWriterT
+    >>> map (rmap (maybe empty pure <<< F.foldl (lookup' ks) Nothing))
   where
   lookup' ∷ f String → Maybe Foreign → Tuple String Foreign → Maybe Foreign
   lookup' ks' Nothing (Tuple kk f) | F.elem kk ks' = Just f
@@ -116,20 +128,21 @@ applyOnePair opt obj = uncurry (unsafeSetField obj) opt
 
 interpretT ∷ ∀ i m a. Functor m ⇒ CommandsT i m a → m ET.Option
 interpretT cs =
-  map ET.Option $ unwrap cs # execWriterT >>> map (F.foldr applyOnePair $ emptyObject unit)
+  map ET.Option $ unwrap cs # execWriterT >>> map (F.foldl (flip applyOnePair) $ emptyObject unit)
 
 interpret ∷ ∀ i. DSL' i → ET.Option
 interpret = unwrap <<< interpretT
 
-buildObj ∷ ∀ i m a ii. Monad m ⇒ CommandsT i m a → CommandsT ii m Foreign
-buildObj cs = lift $ unwrap cs # execWriterT >>> map (F.foldr applyOnePair $ emptyObject unit)
+buildObj ∷ ∀ i m a ii. Monad m ⇒ CommandsT i m a → CommandsT ii m (Tuple a Foreign)
+buildObj cs =
+  lift $ unwrap cs # runWriterT >>> map (rmap $ F.foldl (flip applyOnePair) $ emptyObject unit)
 
-buildSeries ∷ ∀ i m a ii. Monad m ⇒ CommandsT i m a → CommandsT ii m Foreign
+buildSeries ∷ ∀ i m a ii. Monad m ⇒ CommandsT i m a → CommandsT ii m (Tuple a Foreign)
 buildSeries cs =
-  lift $ unwrap cs # execWriterT >>> map (toForeign <<< typify)
+  lift $ unwrap cs # runWriterT >>> map (rmap $ toForeign <<< typify)
   where
   typify = map \(Tuple ty f) → unsafeSetField f "type" $ toForeign ty
 
-buildArr ∷ ∀ i m a ii. Monad m ⇒ CommandsT i m a → CommandsT ii m Foreign
+buildArr ∷ ∀ i m a ii. Monad m ⇒ CommandsT i m a → CommandsT ii m (Tuple a Foreign)
 buildArr cs =
-  lift $ unwrap cs # execWriterT >>> map (toForeign <<< map snd)
+  lift $ unwrap cs # runWriterT >>> map (rmap $ toForeign <<< map snd)

@@ -38,7 +38,11 @@ exports.setOptionImpl = function(option) {
 exports.resetOptionImpl = function(option) {
     return function(chart) {
         return function() {
-            chart.setOption(option, true, false);
+            try {
+                chart.setOption(option, true, false);
+            } catch (e) {
+                console.log(e)
+            }
             return {};
         };
     };
