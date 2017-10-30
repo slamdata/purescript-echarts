@@ -64,7 +64,7 @@ type Accum =
 dataStream
   ∷ ∀ e i. Accum → Signal (Eff (random ∷ RANDOM|e) (DSL' (items ∷ I|i)))
 dataStream start =
-  accumStream ~> map (E.itemsDSL <<< _.values)
+  accumStream ~> map (void <<< E.itemsDSL <<< _.values)
   where
   accumStream =
     foldp foldFn (pure start) (every 2000.0)
