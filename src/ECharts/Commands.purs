@@ -16,8 +16,7 @@ import ECharts.Types.Phantom as TP
 import ECharts.Internal (undefinedValue)
 
 series ∷ ∀ i m. Monad m ⇒ CommandsT TP.SeriesI m ~> CommandsT (series ∷ I|i) m
-series a = do
- set "series" =<< buildSeries a
+series a = set "series" =<< buildSeries a
 
 tooltip ∷ ∀ i m. Monad m ⇒ CommandsT TP.TooltipI m ~> CommandsT (tooltip ∷ I|i) m
 tooltip a = set "tooltip" =<< buildObj a

@@ -32,7 +32,7 @@ exports.setOptionImpl = function(option) {
             try {
                 chart.setOption(option, false, false);
             } catch (e) {
-                connsole.error(e);
+                console.error(e);
             }
         };
     };
