@@ -507,6 +507,15 @@ clear = set' "" $ toForeign "clear"
 setClear ∷ ∀ i m. Monad m ⇒ String → DSL (clear ∷ I|i) m
 setClear a = set' "clear" $ toForeign a
 
+dataZoom ∷ ∀ i m. Monad m ⇒ CommandsT TP.DataZoomI m ~> CommandsT (dataZoom ∷ I|i) m
+dataZoom = set "dataZoom" <=< buildSeries
+
+insideDataZoom ∷ ∀ i m. Monad m ⇒ CommandsT TP.InsideDataZoomI m ~> CommandsT (insideDataZoom ∷ I|i) m
+insideDataZoom = set "inside" <=< buildObj
+
+sliderDataZoom ∷ ∀ i m. Monad m ⇒ CommandsT TP.SliderDataZoomI m ~> CommandsT (sliderDataZoom ∷ I|i) m
+sliderDataZoom = set "slider" <=< buildObj 
+
 toolbox ∷ ∀ i m. Monad m ⇒ CommandsT TP.ToolboxI m ~> CommandsT (toolbox ∷ I|i) m
 toolbox a = set "toolbox" =<< buildObj a
 
@@ -536,6 +545,9 @@ magicTiled = set' "" $ toForeign "tiled"
 
 dataView ∷ ∀ i m. Monad m ⇒ CommandsT TP.DataViewI m ~> CommandsT (dataView ∷ I|i) m
 dataView a = set "dataView" =<< buildObj a
+
+dataZoomFeature ∷ ∀ i m. Monad m ⇒ CommandsT TP.DataZoomFeatureI m ~> CommandsT (dataZoom ∷ I|i) m
+dataZoomFeature = set "dataZoom" <=< buildObj
 
 splitArea ∷ ∀ i m. Monad m ⇒ CommandsT TP.SplitAreaI m ~> CommandsT (splitArea ∷ I|i) m
 splitArea a = set "splitArea" =<< buildObj a
