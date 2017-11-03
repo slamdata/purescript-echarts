@@ -314,7 +314,7 @@ type DataZoomMixinI i =
 
 type InsideDataZoomI = DataZoomMixinI ()
 
-type SliderDataZoom =
+type SliderDataZoomI =
   PositionMixin
   (ZMixin
    ( show ∷ I

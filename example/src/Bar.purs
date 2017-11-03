@@ -66,6 +66,7 @@ options inp = do
         E.magics do
           E.magicStack
           E.magicTiled
+      E.dataZoomFeature E.shown
       E.dataView $ pure unit
 
 

@@ -95,6 +95,10 @@ options sinData cosData = do
       E.symbolSize 2
       E.items cosData
 
+  E.dataZoom do
+    E.sliderDataZoom E.shown
+    E.insideDataZoom $ pure unit
+
 chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, exception ∷ EXCEPTION, random ∷ RANDOM|e) Unit
 chart = do
   chart' (ElementId "scatter-1") Nothing
