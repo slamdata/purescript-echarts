@@ -1174,3 +1174,6 @@ addDateValue dt =
  year' = show <<< fromEnum <<< year
  month' = show <<< fromEnum <<< month
  day' = show <<< fromEnum <<< day
+
+useUTC ∷ ∀ i m. Monad m ⇒ Boolean → DSL (useUTC ∷ I|i) m
+useUTC = set' "useUTC" <<< toForeign
