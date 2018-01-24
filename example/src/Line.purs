@@ -34,6 +34,7 @@ import Utils as U
 
 startOptions ∷ DSL' ETP.OptionI
 startOptions = do
+  E.useUTC true
   E.title do
     E.text "Dynamic line"
   E.tooltip do

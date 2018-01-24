@@ -197,6 +197,7 @@ type OptionI =
   , progressive ∷ I
   , progressiveThreshold ∷ I
   , blendMode ∷ I
+  , useUTC :: I
   , hoverLayerThreshold ∷ I)
 
 type TimelineI =
