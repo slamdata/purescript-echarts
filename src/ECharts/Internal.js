@@ -1,4 +1,4 @@
-exports.unsafeSetField = function(obj) {
+export function unsafeSetField(obj) {
     return function(key) {
         return function(val) {
             obj[key] = val;
@@ -7,8 +7,8 @@ exports.unsafeSetField = function(obj) {
     };
 };
 
-exports.emptyObject = function() {
+export function emptyObject() {
     return {};
 };
 
-exports.undefinedValue = undefined;
+export const undefinedValue = undefined;

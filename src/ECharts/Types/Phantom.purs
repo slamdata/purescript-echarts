@@ -1,11 +1,14 @@
 module ECharts.Types.Phantom where
 
-import Control.Monad.Eff (kind Effect)
-
+-- import Control.Monad.Eff (kind Effect)
+import Effect (Effect)
+import Prelude (Unit)
+-- import Type.RowList
+-- data Effect2Effect :: Effect -> Effect
 -- | Phantom effect for DSL
-foreign import data I ∷ Effect
+foreign import data I ∷ Effect Unit -- Row (Effect -> Effect)
 -- | Takes row of effects and returns an effect. Useful for emulating structural polymorphism.
-foreign import data R ∷ (# Effect → Effect)
+foreign import data R ∷ Effect Unit -> Effect Unit
 
 -- | Open rows synonims are for mixins
 -- | closed rows are for complete dsls
@@ -216,7 +219,7 @@ type TimelineI =
     , controlPosition ∷ I
     , orient ∷ I
     , inverse ∷ I
-    , lineStyle ∷ R LineStyleI
+    -- , lineStyle ∷ R LineStyleI
     , label ∷ I
     , itemStyle ∷ I
     , checkpointStyle ∷ I
@@ -333,9 +336,9 @@ type SliderDataZoomI =
    , realtime ∷ I
    , textStyle ∷ I))
 
-type DataBackgroundI =
-  ( lineStyle ∷ R LineStyleI
-  , areaStyle ∷ R AreaStyleI)
+-- type DataBackgroundI =
+--   ( lineStyle ∷ R LineStyleI
+--   , areaStyle ∷ R AreaStyleI)
 
 type HandleStyleI =
   ShadowMixin
@@ -445,7 +448,7 @@ type ToolboxI =
     , showTitle ∷ I
     , iconStyle ∷ I)))
 
-type IconStyleI = NormalAndEmphasis IconStyleInnerI
+-- type IconStyleI = NormalAndEmphasis IconStyleInnerI
 
 type IconStyleInnerI =
   ShadowMixin
@@ -621,12 +624,14 @@ type AxisI i =
 type SplitAreaI =
   ( show ∷ I
   , interval ∷ I
-  , areaStyle ∷ R AreaStyleI)
+  --, areaStyle ∷ R AreaStyleI
+  )
 
 type AxisLineI =
   ( show ∷ I
   , onZero ∷ I
-  , lineStyle ∷ R LineStyleI)
+  -- , lineStyle ∷ R LineStyleI
+  )
 
 type ParallelAxesI =
   ( addParallelAxis ∷ I )
@@ -687,9 +692,9 @@ type LineSeriesI =
        , connectNulls ∷ I
        , clipOverflow ∷ I
        , step ∷ I
-       , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
+       -- , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
        , itemStyle ∷ I
-       , areaStyle ∷ R (NormalAndEmphasis AreaStyleI)
+       -- , areaStyle ∷ R (NormalAndEmphasis AreaStyleI)
        , smooth ∷ I
        , smoothMonotone ∷ I
        , sampling ∷ I
@@ -772,8 +777,8 @@ type RadarSeriesI =
     ( name ∷ I
     , items ∷ I
     , itemStyle ∷ I
-    , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
-    , areaStyle ∷ R (NormalAndEmphasis AreaStyleI)
+    -- , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
+    -- , areaStyle ∷ R (NormalAndEmphasis AreaStyleI)
     , axisLine ∷ I
     , radarIndex ∷ I
     , label ∷ I
@@ -884,7 +889,7 @@ type ParallelSeriesI =
    (ZMixin
     ( parallelIndex ∷ I
     , name ∷ I
-    , lineStyle ∷ R LineStyleI
+    -- , lineStyle ∷ R LineStyleI
     , inactiveOpacity ∷ I
     , activeOpacity ∷ I
     , parallelAxisDefault ∷ I
@@ -904,7 +909,7 @@ type LinesI =
       , geoIndex ∷ I
       , polyline ∷ I
       , effect ∷ I
-      , lineStyle ∷ R LineStyleI
+      -- , lineStyle ∷ R LineStyleI
       , label ∷ I
       , items ∷ I
       , silent ∷ I)))))
@@ -930,7 +935,7 @@ type GraphI =
          , draggable ∷ I
          , focusNodeAdjancency ∷ I
          , itemStyle ∷ I
-         , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
+         -- , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
          , label ∷ I
          , categories ∷ I
          , items ∷ I
@@ -944,7 +949,7 @@ type GraphI =
          , silent ∷ I))))))))
 
 
-type EdgeLabelI = NormalAndEmphasis EdgeLabelInnerI
+-- type EdgeLabelI = NormalAndEmphasis EdgeLabelInnerI
 
 type EdgeLabelInnerI =
   ( show ∷ I
@@ -960,7 +965,7 @@ type LinkI =
   , target ∷ I
   , label ∷ I
   , symbol ∷ I
-  , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
+  -- , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
   , value ∷ I
   , symbolSize ∷ I)
 
@@ -977,7 +982,7 @@ type SankeyI =
      , layoutIterations ∷ I
      , label ∷ I
      , itemStyle ∷ I
-     , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
+     -- , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
      , items ∷ I
      , nodes ∷ I
      , links ∷ I
@@ -1042,8 +1047,8 @@ type ItemI =
   , label ∷ I
   , labelLine ∷ I
   , itemStyle ∷ I
-  , lineStyle ∷ R LineStyleI
-  , areaStyle ∷ R AreaStyleI
+  -- , lineStyle ∷ R LineStyleI
+  -- , areaStyle ∷ R AreaStyleI
   , selected ∷ I
   , icon ∷ I
   , color ∷ I
@@ -1072,7 +1077,7 @@ type AxisPointerI =
   , pointerType ∷ I
   , axisPointerType ∷ I
   , shadowStyle ∷ I
-  , lineStyle ∷ R LineStyleI
+  -- , lineStyle ∷ R LineStyleI
   , crossStyle ∷ I)
 
 type ShadowStyleI =
@@ -1080,7 +1085,7 @@ type ShadowStyleI =
   ( color ∷ I
   , opacity ∷ I)
 
-type LineStylePairI = NormalAndEmphasis LineStyleI
+-- type LineStylePairI = NormalAndEmphasis LineStyleI
 
 type LineStyleI =
   ShadowMixin
@@ -1092,11 +1097,11 @@ type LineStyleI =
 
 type SplitLineI =
   ( show ∷ I
-  , lineStyle ∷ R LineStyleI
+  -- , lineStyle ∷ R LineStyleI
   , interval ∷ I
   , length ∷ I)
 
-type LabelI = NormalAndEmphasis LabelInnerI
+-- type LabelI = NormalAndEmphasis LabelInnerI
 
 type LabelInnerI =
   ( show ∷ I
@@ -1108,7 +1113,7 @@ type LabelInnerI =
 type ItemsI =
   ( item ∷ I )
 
-type ItemStyleI = NormalAndEmphasis IStyleI
+-- type ItemStyleI = NormalAndEmphasis IStyleI
 
 type IStyleI =
   ShadowMixin
@@ -1125,7 +1130,7 @@ type TextStyleI =
   , fontStyle ∷ I
   , fontFamily ∷ I)
 
-type AreaStylePairI = NormalAndEmphasis AreaStyleI
+-- type AreaStylePairI = NormalAndEmphasis AreaStyleI
 
 type AreaStyleI =
   ShadowMixin
@@ -1138,7 +1143,7 @@ type AxisTickI =
   , inside ∷ I
   , interval ∷ I
   , alignWithLabel ∷ I
-  , lineStyle ∷ R LineStyleI
+  -- , lineStyle ∷ R LineStyleI
   , splitNumber ∷ I)
 
 type AxisLabelI =
@@ -1156,7 +1161,7 @@ type DetailI =
   , offsetCenter ∷ I
   , show ∷ I)
 
-type LabelLineI = NormalAndEmphasis LabelLineInnerI
+-- type LabelLineI = NormalAndEmphasis LabelLineInnerI
 
 type LabelLineInnerI =
   ( show ∷ I )
@@ -1181,7 +1186,7 @@ type MarkLineI =
    ( precision ∷ I
    , label ∷ I
    , silent ∷ I
-   , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
+   -- , lineStyle ∷ R (NormalAndEmphasis LineStyleI)
    , markItems ∷ I))
 
 type MarkAreaI =

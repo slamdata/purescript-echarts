@@ -2,26 +2,27 @@ module Scatter where
 
 import Prelude
 
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Exception (EXCEPTION)
-import Control.Monad.Eff.Random (RANDOM)
+import Effect (Effect)
+-- import Control.Monad.Eff (Eff)
+-- import Control.Monad.Eff.Exception (EXCEPTION)
+-- import Control.Monad.Eff.Random (RANDOM)
 import Data.Array (zipWith)
 import Data.Maybe (Maybe(..), maybe)
 import Data.NonEmpty as NE
 import Data.Tuple (Tuple(..), uncurry)
-import Debug.Trace as DT
-import DOM (DOM)
-import DOM.Node.Types (ElementId(..))
+-- import Debug.Trace as DT
+-- import DOM (DOM)
+import DOM.Node.Types (ElementId)
 import ECharts.Chart as EC
 import ECharts.Theme as ETheme
 import ECharts.Types as ET
-import ECharts.Types.Phantom as ETP
+-- import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
 import ECharts.Monad (DSL', interpret)
-import Math (cos, sin, (%))
+import Data.Number (cos, sin, (%))
 import Utils as U
 
-genSinData ∷ ∀ e. Eff (random ∷ RANDOM|e) (Array ET.Item)
+genSinData ∷ Effect (Array ET.Item)
 genSinData = do
   randomIs ← map NE.oneOf $ U.randomArray 10000
   randomXs ← map NE.oneOf $ U.randomArray 10000
@@ -34,7 +35,7 @@ genSinData = do
       $ Tuple i (U.precise 3.0 $ sin i - i * (if i `mod` 2.0 > 0.0 then 0.1 else -0.1) * rnd)
   pure $ map mapfn randoms
 
-genCosData ∷ ∀ e. Eff (random ∷ RANDOM|e) (Array ET.Item)
+genCosData ∷ Effect (Array ET.Item)
 genCosData = do
   randomIs ← map NE.oneOf $ U.randomArray 10000
   randomXs ← map NE.oneOf $ U.randomArray 10000
@@ -46,7 +47,7 @@ genCosData = do
       $ Tuple i (U.precise 3.0 $ cos i - i * (if i % 2.0 > 0.0 then 0.1 else -0.1) * rnd)
   pure $ map mapfn randoms
 
-options ∷ Array ET.Item → Array ET.Item → DSL' ETP.OptionI
+options ∷ Array ET.Item → Array ET.Item → DSL' -- ETP.OptionI
 options sinData cosData = do
   E.title do
     E.text "SIN and COS random scatter"
@@ -99,17 +100,17 @@ options sinData cosData = do
     E.sliderDataZoom E.shown
     E.insideDataZoom $ pure unit
 
-chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, exception ∷ EXCEPTION, random ∷ RANDOM|e) Unit
+chart ∷ Effect Unit
 chart = do
-  chart' (ElementId "scatter-1") Nothing
-  chart' (ElementId "scatter-2") (Just (ETheme.dark))
-  chart' (ElementId "scatter-3") (Just (ETheme.macarons))
+  chart' ("scatter-1") Nothing
+  chart' ("scatter-2") (Just (ETheme.dark))
+  chart' ("scatter-3") (Just (ETheme.macarons))
 
-chart' ∷ ∀ e. ElementId → Maybe ETheme.Theme → Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, exception ∷ EXCEPTION, random ∷ RANDOM|e) Unit
+chart' ∷ ElementId → Maybe ETheme.Theme → Effect Unit
 chart' id theme = do
   mbEl ← U.getElementById id
   case mbEl of
-    Nothing → DT.traceAnyA "There is no element with scatter id"
+    Nothing → pure unit -- DT.traceAnyA "There is no element with scatter id"
     Just el → do
       ch ← maybe EC.init EC.initWithTheme theme el
       sinData ← genSinData

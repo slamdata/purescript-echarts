@@ -4,24 +4,27 @@ import Prelude
 
 import Color as C
 
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Exception (EXCEPTION)
-import Control.Monad.Eff.Random (RANDOM, random)
-import DOM (DOM)
-import DOM.Node.Types (ElementId(..))
+-- nimport Control.Monad.Eff (Eff)
+-- import Control.Monad.Eff.Exception (EXCEPTION)
+-- import Control.Monad.Eff.Random (RANDOM, random)
+-- import DOM (DOM)
+import Effect (Effect)
+import Effect.Random (random)
+
+-- import DOM.Node.Types (ElementId)
 import Data.Array as Arr
 import Data.Maybe (Maybe(..))
 import Data.Traversable as F
-import Debug.Trace as DT
+-- import Debug.Trace as DT
 import ECharts.Chart as EC
 import ECharts.Commands as E
 import ECharts.Event as EE
 import ECharts.Monad (DSL', interpret)
 import ECharts.Types as ET
-import ECharts.Types.Phantom as ETP
+--- import ECharts.Types.Phantom as ETP
 import Utils as U
 
-itemStyle ∷ DSL' ETP.ItemStyleI
+itemStyle ∷ DSL'
 itemStyle = do
   E.normalItemStyle $ pure unit
   E.emphasisItemStyle do
@@ -39,7 +42,7 @@ type OptionInput =
   , four ∷ Number
   }
 
-options ∷ Array OptionInput → DSL' ETP.OptionI
+options ∷ Array OptionInput → DSL' -- ETP.OptionI
 options inp = do
   F.for_ (C.fromHexString "#eee") E.backgroundColor
 
@@ -130,7 +133,7 @@ options inp = do
       E.items $ map (ET.numItem <<< _.four) inp
 
 
-genInp ∷ ∀ e. Eff (random ∷ RANDOM|e) (Array OptionInput)
+genInp ∷ Effect (Array OptionInput)
 genInp = F.for (Arr.range 0 10) \i → do
   let label = "Class " <> show i
   one ← random <#> ((_ * 2.0) >>> U.precise 2.0)
@@ -139,14 +142,14 @@ genInp = F.for (Arr.range 0 10) \i → do
   four ← random <#> ((_ + 0.3) >>> U.precise 2.0)
   pure {label, one, two, three, four}
 
-chart ∷ ∀ e. Eff (random ∷ RANDOM, dom ∷ DOM, echarts ∷ ET.ECHARTS, exception ∷ EXCEPTION|e) Unit
+chart ∷ Effect Unit
 chart = do
-  mbEl ← U.getElementById $ ElementId "bar"
+  mbEl ← U.getElementById "bar"
   case mbEl of
-    Nothing → DT.traceAnyA "There is no element with 'bar' id"
+    Nothing → pure unit -- DT.traceAnyA "There is no element with 'bar' id"
     Just el → do
       ch ← EC.init el
       inp ← genInp
       EC.setOption (interpret $ options inp)  ch
-      EC.getOption ch >>= DT.traceAnyA
-      EE.listenAll ch DT.traceAnyA
+      EC.getOption ch >>= \_ -> pure unit -- DT.traceAnyA
+      EE.listenAll ch (\_ -> pure unit) --- DT.traceAnyA

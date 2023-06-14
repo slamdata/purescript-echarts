@@ -1,6 +1,7 @@
-var echarts = require("echarts");
+"use strict";
+const echarts = require("echarts");
 
-exports.initImpl = function(theme) {
+export function initImpl(theme) {
     return function(el) {
         return function() {
             return echarts.init(el, theme);
@@ -14,7 +15,7 @@ function isObject(o) {
       Object.prototype.toString.call(o) === '[object Object]';
 }
 
-exports.registerTheme = function(name) {
+export function registerTheme(name) {
     return function(theme) {
         return function() {
             // if value is not `undefined` and is not of type `string` then it must be `Foreign` for which we only permit plain Objects.
@@ -26,7 +27,7 @@ exports.registerTheme = function(name) {
     };
 };
 
-exports.setOptionImpl = function(option) {
+export function setOptionImpl(option) {
     return function(chart) {
         return function() {
             try {
@@ -38,7 +39,7 @@ exports.setOptionImpl = function(option) {
     };
 };
 
-exports.resetOptionImpl = function(option) {
+export function resetOptionImpl(option) {
     return function(chart) {
         return function() {
             try {
@@ -50,28 +51,28 @@ exports.resetOptionImpl = function(option) {
     };
 };
 
-exports.resizeImpl = function(chart) {
+export function resizeImpl(chart) {
     return function() {
         chart.resize();
         return {};
     };
 };
 
-exports.clearImpl = function(chart) {
+export function clearImpl(chart) {
     return function() {
         chart.clear();
         return {};
     };
 };
 
-exports.disposeImpl = function(chart) {
+export function disposeImpl(chart) {
     return function() {
         chart.dispose();
         return {};
     };
 };
 
-exports.getOptionImpl = function(chart) {
+export function getOptionImpl(chart) {
     return function() {
         return chart.getOption();
     };

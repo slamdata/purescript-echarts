@@ -4,26 +4,27 @@ import Prelude
 
 import Color as C
 
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Exception (EXCEPTION)
+import Effect (Effect)
+-- import Control.Monad.Eff (Eff)
+-- import Control.Monad.Eff.Exception (EXCEPTION)
 
 import Data.Foldable as F
 import Data.Maybe (Maybe(..))
 
-import Debug.Trace as DT
+-- import Debug.Trace as DT
 
-import DOM (DOM)
-import DOM.Node.Types (ElementId(..))
+-- import DOM (DOM)
+-- import DOM.Node.Types (ElementId)
 
 import ECharts.Chart as EC
 import ECharts.Types as ET
-import ECharts.Types.Phantom as ETP
+-- import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
 import ECharts.Monad (DSL', interpret)
 
 import Utils as U
 
-options ∷ DSL' ETP.OptionI
+options ∷ DSL' -- ETP.OptionI
 options = do
   E.title do
     E.text "Funnel example"
@@ -114,11 +115,11 @@ options = do
           E.name "five"
           E.value 80.0
 
-chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, exception ∷ EXCEPTION|e) Unit
+chart ∷ Effect Unit
 chart = do
-  mbEl ← U.getElementById $ ElementId "funnel"
+  mbEl ← U.getElementById "funnel"
   case mbEl of
-    Nothing → DT.traceAnyA "There is no element with 'funnel' id"
+    Nothing → pure unit --- DT.traceAnyA "There is no element with 'funnel' id"
     Just el → do
       ch ← EC.init el
       EC.setOption (interpret options) ch

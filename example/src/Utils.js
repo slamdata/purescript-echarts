@@ -1,4 +1,4 @@
-exports.randomArrayImpl = function(NonEmpty) {
+export function randomArrayImpl(NonEmpty) {
     return function(count) {
         return function() {
             if (count < 1) count = 1;

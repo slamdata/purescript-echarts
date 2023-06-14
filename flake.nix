@@ -42,7 +42,7 @@
           '';
           buildInputs = (with pkgs; [
             nginx
-            nodejs-16_x
+            nodejs-18_x
             nixpkgs-fmt
           ]) ++ (with easy-ps; [
             purs

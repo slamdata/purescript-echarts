@@ -1,59 +1,63 @@
 module ECharts.Event (listenAll, dispatch, on_) where
 
-import Prelude
+import Prelude (Unit, when, ($), (==), (>>=))
 
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Class (liftEff, class MonadEff)
+import Effect (Effect)
+import Effect.Class (class MonadEffect, liftEffect)
+-- Control.Monad.Eff (Eff)
+-- import Control.Monad.Eff.Class (liftEff, class MonadEff)
 import Control.Monad.Except (runExcept)
 import Data.Foldable (for_)
-import Data.Foreign (Foreign, readString)
-import Data.Foreign.Index (readProp)
+import Foreign (Foreign, readString)
+import Foreign.Index (readProp)
 import Data.List as L
-import Data.Record.Unsafe as R
+import Record.Unsafe as R
 import Data.Tuple (Tuple(..), fst, snd)
-import Data.Variant.Internal (RLProxy(..), variantTags, class VariantTags)
-import ECharts.Types (EChartsEvent, EChartsEventR, Chart, ECHARTS)
-import Type.Row (class RowToList)
+import Type.Proxy (Proxy(..))
+-- import Data.Variant.Internal (RLProxy(..), variantTags, class VariantTags)
+import Data.Variant.Internal (variantTags, class VariantTags)
+import ECharts.Types (EChartsEvent, EChartsEventR, Chart)
+import Prim.RowList (class RowToList)
+-- import Type.Row (class RowToList)
 import Unsafe.Coerce (unsafeCoerce)
 
 foreign import on_
-  ∷ ∀ e
-  . Chart
+  ∷ Chart
   → String
-  → ( Foreign → Eff (echarts ∷ ECHARTS|e) Unit )
-  → Eff (echarts ∷ ECHARTS|e) Unit
+  → ( Foreign → Effect Unit )
+  → Effect Unit
 
 listenAll
-  ∷ ∀ e m
-  . MonadEff ( echarts ∷ ECHARTS |e ) m
+  ∷ ∀ m
+  . MonadEffect m
   ⇒ Chart
-  → ( EChartsEvent → Eff (echarts ∷ ECHARTS|e) Unit )
+  → ( EChartsEvent → Effect Unit )
   → m Unit
-listenAll chart cb = liftEff $
+listenAll chart cb = liftEffect $
   for_ eventNames \en → on_ chart en \frn →
     for_ (runExcept $ readProp "type" frn >>= readString) \tp →
       when (tp == en) $ cb $ toEChartsEvent $ Tuple tp frn
   where
   eventNames ∷ ∀ rl. RowToList EChartsEventR rl ⇒ VariantTags rl ⇒ L.List String
-  eventNames = variantTags (RLProxy ∷ RLProxy rl)
+  eventNames = variantTags (Proxy ∷ Proxy rl)
 
   toEChartsEvent ∷ ∀ ω. Tuple String ω → EChartsEvent
   toEChartsEvent = unsafeCoerce
 
 foreign import dispatchAction_
-  ∷ ∀ e action
+  ∷ ∀ action
   . action
   → Chart
-  → Eff ( echarts ∷ ECHARTS |e ) Unit
+  → Effect Unit
 
 dispatch
-  ∷ ∀ e m
-  . MonadEff ( echarts ∷ ECHARTS | e ) m
+  ∷ ∀ m
+  . MonadEffect m
   ⇒ EChartsEvent
   → Chart
   → m Unit
 dispatch vaction chart =
-  liftEff $ dispatchAction_ action chart
+  liftEffect $ dispatchAction_ action chart
   where
   variantPair ∷ Tuple String {}
   variantPair = unsafeCoerce vaction

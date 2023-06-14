@@ -8,7 +8,8 @@
   "scripts": {
     "build": "spago build",
     "test": "spago test",
-    "esbuild --bundle index.js --servedir=dist"
+    "bb": "purs-backend-es build",
+    "bundle": "purs-backend-es bundle-app --main Main --to dist/index.js"
   },
   "dependencies": {
     "esbuild": "^0.14.54",

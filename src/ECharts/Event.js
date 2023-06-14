@@ -78,7 +78,7 @@ function addAll(option, e) {
     return addSeriesAndTitles(option, addYAxisData(option, addXAxisData(option, e)));
 }
 
-exports.on_ = function(chart) {
+export function on_(chart) {
     return function(eName) {
         return function(callback) {
             return function() {
@@ -93,7 +93,7 @@ exports.on_ = function(chart) {
     };
 };
 
-exports.dispatchAction_ = function(action) {
+export function dispatchAction_(action) {
     return function(chart) {
         return function() {
             try {

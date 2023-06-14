@@ -2,26 +2,28 @@ module K where
 
 import Prelude
 
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Exception (EXCEPTION)
+--  import Control.Monad.Eff (Eff)
+--- import Control.Monad.Eff.Exception (EXCEPTION)
+
+import Effect (Effect)
 
 import Data.Foldable as F
 import Data.Maybe (Maybe(..))
 
-import Debug.Trace as DT
+--- import Debug.Trace as DT
 
-import DOM (DOM)
-import DOM.Node.Types (ElementId(..))
+--- import DOM (DOM)
+--- import DOM.Node.Types (ElementId)
 
 import ECharts.Chart as EC
 import ECharts.Types as ET
-import ECharts.Types.Phantom as ETP
+--- import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
 import ECharts.Monad (DSL', interpret)
 
 import Utils as U
 
-options ∷ DSL' ETP.OptionI
+options ∷ DSL' -- ETP.OptionI
 options = do
   E.xAxis do
     E.axisType ET.Category
@@ -55,11 +57,11 @@ options = do
       , [ 2360.75, 2382.48, 2347.89, 2383.76 ]
       ]
 
-chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, exception ∷ EXCEPTION|e) Unit
+chart ∷ Effect Unit
 chart = do
-  mbEl ← U.getElementById $ ElementId "k"
+  mbEl ← U.getElementById "k"
   case mbEl of
-    Nothing → DT.traceAnyA "There is no element with 'k' id"
+    Nothing → pure unit --- DT.traceAnyA "There is no element with 'k' id"
     Just el → do
       ch ← EC.init el
       EC.setOption (interpret options) ch

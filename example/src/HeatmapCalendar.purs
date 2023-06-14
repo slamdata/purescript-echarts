@@ -2,8 +2,9 @@ module HeatmapCalendar where
 
 import Prelude
 
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Exception (EXCEPTION)
+-- import Control.Monad.Eff (Eff)
+-- import Control.Monad.Eff.Exception (EXCEPTION)
+import Effect (Effect)
 
 import Data.Array as A
 import Data.Date as D
@@ -11,14 +12,14 @@ import Data.Enum (toEnum)
 import Data.Foldable (traverse_)
 import Data.Maybe (Maybe(..), fromJust)
 
-import Debug.Trace as DT
+-- import Debug.Trace as DT
 
-import DOM (DOM)
-import DOM.Node.Types (ElementId(..))
+--- import DOM (DOM)
+--- import DOM.Node.Types (ElementId)
 
 import ECharts.Chart as EC
 import ECharts.Types as ET
-import ECharts.Types.Phantom as ETP
+-- import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
 import ECharts.Monad (DSL', interpret)
 
@@ -48,14 +49,14 @@ arrValues =
   , [ "2017-02-24", "528" ], [ "2017-02-25", "859" ], [ "2017-02-26", "802" ]
   , [ "2017-02-27", "992" ], [ "2017-02-28", "342" ] ]
 
-values ∷ ∀ i. Array (DSL' (value ∷ ETP.I|i))
+values ∷ Array (DSL')
 values = A.catMaybes $ arrValues <#> case _ of
   [x, y] → pure $ E.buildValues do
     E.addStringValue x
     E.addStringValue y
   _ → Nothing
 
-options ∷ DSL' ETP.OptionI
+options ∷ DSL' -- ETP.OptionI
 options = do
   E.tooltip do
     E.positionTop
@@ -98,11 +99,11 @@ options = do
     day' = unsafePartial $ fromJust <<< toEnum $ 31
 
 
-chart ∷ ∀ e. Eff (dom ∷ DOM,  echarts ∷ ET.ECHARTS, exception ∷ EXCEPTION|e) Unit
+chart ∷ Effect Unit
 chart = do
-  mbEl ← U.getElementById $ ElementId "heatmap-calendar"
+  mbEl ← U.getElementById "heatmap-calendar"
   case mbEl of
-    Nothing → DT.traceAnyA "There is no element with 'heatmap-calendar' id"
+    Nothing → pure unit -- DT.traceAnyA "There is no element with 'heatmap-calendar' id"
     Just el → do
       ch ← EC.init el
       EC.setOption (interpret options) ch

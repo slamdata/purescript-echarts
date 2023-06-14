@@ -2,20 +2,22 @@ module Gauge where
 
 import Prelude
 
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Exception (EXCEPTION)
-import Control.Monad.Eff.Random (RANDOM, random)
+-- import Control.Monad.Eff (Eff)
+-- import Control.Monad.Eff.Exception (EXCEPTION)
+---import Control.Monad.Eff.Random (RANDOM, random)
+import Effect (Effect)
+import Effect.Random (random)
 
 import Data.Maybe (Maybe(..))
 
-import Debug.Trace as DT
+--- import Debug.Trace as DT
 
-import DOM (DOM)
-import DOM.Node.Types (ElementId(..))
+--- import DOM (DOM)
+-- import DOM.Node.Types (ElementId)
 
 import ECharts.Chart as EC
 import ECharts.Types as ET
-import ECharts.Types.Phantom as ETP
+--- import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
 import ECharts.Monad (DSL', interpret)
 
@@ -24,7 +26,7 @@ import Signal.Time (every)
 
 import Utils as U
 
-options ∷ {speed ∷ Number, r ∷ Number, gas ∷ Number, water ∷ Number} → DSL' ETP.OptionI
+options ∷ {speed ∷ Number, r ∷ Number, gas ∷ Number, water ∷ Number} → DSL' -- ETP.OptionI
 options obj = do
   E.tooltip $ E.formatterString "{a} <br />{c} {b}"
 
@@ -152,7 +154,7 @@ initialVal =
 
 
 dataStream
-  ∷ ∀ e. Signal (Eff (random ∷ RANDOM|e) {speed ∷ Number, r ∷ Number, gas ∷ Number, water ∷ Number })
+  ∷ Signal (Effect {speed ∷ Number, r ∷ Number, gas ∷ Number, water ∷ Number })
 dataStream =
   every 2000.0 ~> \_ → do
     speed ← random <#> (mul 100.0 >>> U.precise 2.0)
@@ -163,11 +165,11 @@ dataStream =
 
 
 
-chart ∷ ∀ e. Eff (random ∷ RANDOM, dom ∷ DOM, echarts ∷ ET.ECHARTS, exception ∷ EXCEPTION|e) Unit
+chart ∷ Effect Unit
 chart = do
-  mbEl ← U.getElementById $ ElementId "gauge"
+  mbEl ← U.getElementById "gauge"
   case mbEl of
-    Nothing → DT.traceAnyA "There is no element with 'gauge' id"
+    Nothing → pure unit -- DT.traceAnyA "There is no element with 'gauge' id"
     Just el → do
       ch ← EC.init el
       EC.setOption (interpret $ options initialVal) ch

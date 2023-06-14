@@ -2,23 +2,25 @@ module Pie where
 
 import Prelude
 
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.Exception (EXCEPTION)
+import Effect (Effect)
+-- import Control.Monad.Eff (Eff)
+-- import Control.Monad.Eff.Exception (EXCEPTION)
 import Data.Maybe (Maybe(..))
-import Data.Symbol (SProxy(..))
+--- import Data.Symbol (SProxy(..))
+import Type.Proxy (Proxy (..))
 import Data.Variant as V
-import Debug.Trace as DT
-import DOM (DOM)
-import DOM.Node.Types (ElementId(..))
+-- import Debug.Trace as DT
+-- import DOM (DOM)
+-- import DOM.Node.Types (ElementId)
 import ECharts.Chart as EC
 import ECharts.Event as EE
 import ECharts.Types as ET
-import ECharts.Types.Phantom as ETP
+-- import ECharts.Types.Phantom as ETP
 import ECharts.Commands as E
 import ECharts.Monad (DSL', interpret)
 import Utils as U
 
-options ∷ DSL' ETP.OptionI
+options ∷ DSL' -- ETP.OptionI
 options = do
   E.tooltip do
     E.trigger ET.ItemTrigger
@@ -77,17 +79,17 @@ options = do
           E.name "eight"
 
 
-chart ∷ ∀ e. Eff (dom ∷ DOM, echarts ∷ ET.ECHARTS, exception ∷ EXCEPTION|e) Unit
+chart ∷ Effect Unit
 chart = do
-  mbEl ← U.getElementById $ ElementId "pie"
+  mbEl ← U.getElementById "pie"
   case mbEl of
-    Nothing → DT.traceAnyA "There is no element with pie id"
+    Nothing → pure unit -- DT.traceAnyA "There is no element with pie id"
     Just el → do
       ch ← EC.init el
       EC.setOption (interpret options) ch
-      EE.listenAll ch DT.traceAnyA
+      EE.listenAll ch (\_ -> pure unit) --- DT.traceAnyA
       EE.dispatch
-        (V.inj (SProxy ∷ SProxy "pieselected")
+        (V.inj (Proxy ∷ Proxy "pieselected")
            $  { seriesIndex: 1
               , seriesName: "Outer"
               , name: "seven"

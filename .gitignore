@@ -2,7 +2,9 @@
 /node_modules/
 /bower_components/
 /tmp/
-/dist/
+/dist/*.js
+.spago
+/output-es/
 public/*.js
 .psci_modules
 .psci
